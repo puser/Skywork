@@ -1,0 +1,513 @@
+function check_login(){
+	$.ajax({url:'/users/login/ajax',data:{'login':$('#loginUser').val(),'password':$('#loginPass').val()},type:'POST',success:function(r){
+		if(r == 1) window.location = '/dashboard/';
+		else{
+			$('#loginError').html('Email and password combination do not match!');
+			$('.errorNotification').show();
+		}
+	}});
+}
+
+function send_password_reset(){
+	if(!$('#loginUser').val()){
+		$('#loginError').html('Please specify your email address in the field above.');
+		$('.errorNotification').show();
+		return false;
+	}
+	$.ajax({url:'/users/send_password_reset/'+$('#loginUser').val(),type:'POST',success:function(r){
+		if(r == 1){
+			$('#loginError').html('<span style="text-decoration:underline;">Email sent to inbox for new password!</span>');
+			$('.errorNotification').show();
+		}else{
+			$('#loginError').html('<span style="text-decoration:underline;">Email not recognized in records!</span>');
+			$('.errorNotification').show();
+		}
+	}});
+}
+
+function init_pagination(){
+	$('.pagination-prev').hide();
+	$('.pagination li a').click(function(){
+		show_page($(this));
+		return false;
+	});
+	$('.pagination-prev').click(function(){
+		show_page($('.pagination li.active').prev().children('a'));
+		return false;
+	});
+	$('.pagination-next').click(function(){
+		show_page($('.pagination li.active').next().children('a'));
+		return false;
+	});
+}
+
+function show_page(e){
+	var pagenum = parseInt(e.html());
+	
+	$('.pagination li.active').removeClass('active');
+	e.parent().addClass('active');
+	
+	$('.listingPage').hide()
+	$('#listingPage'+(pagenum-1)).show();
+	
+	if(pagenum == 1){
+		$('.pagination-prev').hide();
+		$('.pagination-next').show();
+	}else if(pagenum == $('.pagination li').length){
+		$('.pagination-next').hide();
+		$('.pagination-prev').show();
+	}else{
+		$('.pagination-prev').show();
+		$('.pagination-next').show();
+	}
+}
+
+function save_challenge(redirect){
+	$.ajax({url:'/challenges/update/',data:$('#challengeData').serialize(),type:'POST',success:function(r){
+		if(redirect == 'questions') $('#maincol').load('/challenges/update/'+r+'/update_people/');
+		else if(redirect == 'ajax') return true;
+		else if(redirect) window.location = redirect;
+		else $('#maincol').load('/questions/update/'+r);
+	}});
+}
+
+function save_challenge_final(){
+	$('#challengeStatus').val('C');
+	$.ajax({url:'/challenges/update/0/ajax',data:$('#challengeData').serialize(),type:'POST',success:function(r){
+		setTimeout('window.location = "/dashboard/";',1000);
+	}});
+}
+
+function add_question(){
+	var newQ = $('.fieldset2:first li:last').clone();
+	$(newQ).children('.fieldsetNumberList').html((parseInt($('.fieldset2:first li:last').children('.fieldsetNumberList').html())+1)+'.');
+	$(newQ).children('.hQuestionId').remove();
+	
+	$(newQ).children('p').children('.inputtext').attr('name','question['+$('.fieldset2:first li').length+'][section]');
+	$(newQ).children('p').children('.inputtext').val('');
+	
+	$(newQ).children('.fullwidth').attr('name','question['+$('.fieldset2:first li').length+'][question]');
+	$(newQ).children('.fullwidth').val('');
+	
+	$(newQ).children('.hChallengeId').attr('name','question['+$('.fieldset2:first li').length+'][challenge_id]');
+	
+	$('.fieldset2:first').append(newQ);
+}
+
+function add_attachment(){
+	var newA = $('.attachment_fields:first').clone();
+	$(newA).children('input').each(function(){ $(this).attr('name',$(this).attr('name').replace('attachment[1]','attachment['+($('.attachment_fields').length+1)+']')); });
+	$('.attachment_fields:last').after(newA);
+}
+
+function remove_attachment(e,id){
+	$('#'+e).fadeOut('normal',function(){
+		$('#'+e).append('<input type="hidden" name="remove_attachment[]" value="'+id+'" />');
+	});
+}
+
+function save_user(){
+	$.ajax({url:'/users/update/',data:$('#userData').serialize(),type:'POST'});
+	$('.btn-savecontinue').hide();
+	$('#savedNotify').show();
+	setTimeout("$('.btn-savecontinue').show();$('#savedNotify').hide();",3000);
+}
+
+function show_question(q_id){
+	$('li.active').removeClass('active');
+	$('#questionNav'+q_id).addClass('active');
+	$('#questionWrapperBody').height($('#questionContent').height()+1);
+	$('#questionContent').fadeOut('normal',function(){
+		$.ajax({url:'/questions/view/'+q_id,success:function(r){
+			$('#questionContent').html(r);
+			$('#questionContent').fadeIn();
+			
+			$textAreaOrigHeight = 264;
+			$("textarea.niceTextarea").keyup(function(){ 
+				expandtext(this); 
+			});
+			$("textarea.niceTextarea").each(function(){ expandtext(this); });
+			$('#questionWrapperBody').css('height','auto');
+		}});
+	});
+}
+
+function show_response(q_id,u_id){
+	$('#leftcol li.active').removeClass('active');
+	$('#questionNav'+q_id).addClass('active');
+	
+	$('#leftcol li').each(function(){
+		if($(this).index() < $('#questionNav'+q_id).index()) $(this).children('a').click(function(){ $.bbq.pushState({'q_id':$(this).attr('id').replace('respNav_',''),'select':''});return false; });
+		else $(this).children('a').unbind('click');
+	});
+	
+	$('#mainResponseBody').fadeOut('normal',function(){
+		$.ajax({url:'/responses/view/'+q_id+'/'+u_id+'?ajax=1',success:function(r){
+			$('#mainResponseBody').html(r);
+			$('#mainResponseBody').fadeIn();
+			
+			$(window).trigger('hashchange');
+		}});
+	});
+}
+
+function show_question_responses(q_id){
+	$('#leftcol li.active').removeClass('active');
+	$('#questionNav'+q_id).addClass('active');
+	$('#mainResponseBody').fadeOut('normal',function(){
+		$.ajax({url:'/responses/view/'+q_id+'?ajax=1&type='+($('.tab-agreed').hasClass('active') ? 'agree' : ($('.tab-disagreed').hasClass('active') ? 'disagree' : 'response')),success:function(r){
+			$('#mainResponseBody').html(r);
+			$('#mainResponseBody').fadeIn();
+			
+			$(".mcs_containers").each(function(){ $(this).mCustomScrollbar("vertical",350,"easeOutCirc",1.05,"auto","yes","yes",15); });
+		}});
+	});
+}
+
+function save_response(redirect){
+	if($('.attachmentType').length){
+		$('#responseData').submit();
+		return false;
+	}
+	
+	if(!$('.niceTextarea:first').val()){
+		$('#fieldValidate').show();
+		return false;
+	}
+	
+	$.ajax({url:'/responses/update/',data:$('#responseData').serialize(),type:'POST',success:function(r){
+		if(redirect == 'ajax'){
+			if($('#next_id').val() == 'attachments') add_attachments($('#challenge_id').val());
+			else if($('#next_id').val() == 'dashboard') window.location = '/dashboard/';
+			else window.location = '#' + $('#next_id').val();
+		}else if(redirect) window.location = redirect;
+		else{ /* */ }
+	}});
+}
+
+function save_second_response(redirect){
+	if($('textarea[name="response_body"]').length && !$('[name="response_body"]').val()){
+		$('#fieldValidate').show();
+		return false;
+	}
+	
+	$.ajax({url:'/responses/update/',data:$('#responseData').serialize(),type:'POST',success:function(r){
+		if(redirect=='next') $.bbq.pushState({'q_id':next_q_id,'select':''});
+		else if(redirect) window.location = redirect;
+		else if(!$('input[name="id"]').val()) $('input[name="id"]').val(r);
+		// else $('#responseID').val(r);
+	}});
+}
+
+function add_attachments(c_id){
+	$('li.active').removeClass('active');
+	$('#questionNavAttach').addClass('active');
+	$('#questionWrapperBody').height($('#questionContent').height());
+	$('#questionContent').fadeOut('normal',function(){
+		$.ajax({url:'/attachments/update/'+c_id,success:function(r){
+			$('#questionContent').html(r);
+			$('#attachmentStepNumber').html($('#caseclubmenu li').length);
+			$('#questionContent').fadeIn();
+		}})
+	});
+}
+
+function add_response_attachment(){
+	var newA = $('ol.fieldset2 li:first').clone();
+	$(newA).children('input').each(function(){ $(this).attr('name',$(this).attr('name').replace('attachment[0]','attachment['+($('ol.fieldset2 li').length)+']')); });
+	$(newA).find('input[type=text]').val('');
+	$(newA).children('p').children('input').each(function(){ $(this).attr('name',$(this).attr('name').replace('attachment[0]','attachment['+($('ol.fieldset2 li').length)+']')); });
+	$(newA).children('.fieldsetNumberList').html(($('ol.fieldset2 li').length+1)+'.');
+	
+	$('ol.fieldset2').append(newA);
+}
+
+function challenge_invite_user(c_id){
+	var uType = $('#inviteUserU').attr('checked') ? 'P' : 'L';
+	$.ajax({url:'/challenges/queue_invite/'+c_id+'/'+$('#inviteGroup').val()+'/0/'+$('#inviteFName').val()+'/'+$('#inviteLName').val()+'/'+$('#inviteEmail').val()+'/'+uType,success:function(r){
+		jQuery.fancybox.close();
+		// window.location = '/challenges/update/' + c_id + '/update_people/';
+		$('#challengeData').attr('action','/challenges/update/'+c_id+'/update_people/').submit();
+	}});
+}
+
+function show_user_list(e,cid,view){
+	e = e.parent();
+	var prevOpen = $('li.opened').length;
+	$('.viewAllRequests').hide();
+	
+	if(e.hasClass('opened')){
+		$('.pagination').show();
+		
+		e.children('.opened-users').slideUp('normal',function(){
+			e.removeClass('opened');
+			e.children('div.alignleft').removeClass('colgroup');
+		});
+		
+		$('#home-leaderboard').animate({width:0},function(){ $('#home-leaderboard').hide(); });
+		$('#caseclub-list').animate({width:994},function(){ $('.graphIcon').show(); });
+		
+		$('#caseclub-list-table .col1').animate({width:390},'fast');
+		$('#thinListBorder').hide();
+		$('#caseclub-list-table .col5').show();
+	}else{
+		$('.graphIcon').hide();
+		$('.pagination').hide();
+		
+		$('li.opened').children('div.alignleft').removeClass('colgroup');
+		$('li.opened').removeClass('opened').find('.opened-users').slideUp();
+		
+		e.addClass('opened');
+		e.children('div.alignleft').addClass('colgroup');
+		if(!e.find('.graphIcon').length) e.children('.opened-users').slideDown();
+		
+		$('#caseclub-list-table .col1').animate({width:490},'fast');
+		$('#thinListBorder').show();
+		$('#caseclub-list-table .col5').hide();
+		
+		e.find('.viewAllRequests').show();
+				
+		$.ajax({url:'/challenges/view/'+cid+'/'+(view ? 'stats' : 'leaderboard')+'/',success:function(r){
+			$('#caseclub-list').css({'float':'left'});
+			$('#caseclub-list').animate({width:500});
+			if(prevOpen){
+				$("#home-leaderboard .content").fadeOut('slow',function(){
+					$('#home-leaderboard').html(r).find('.content').hide();
+					$('#home-leaderboard .content').css({height:$('#caseclub-list .content').height()});
+					//$("#home-leaderboard .content").hide();
+					$("#home-leaderboard .content").fadeIn('slow');
+				});
+			}else{
+				$('#home-leaderboard').html(r);
+				$('#home-leaderboard .content').css({height:$('#caseclub-list .content').height()});
+				$('#home-leaderboard').show();
+				$('#home-leaderboard').animate({width:475});
+			}
+		}});
+	}
+}
+
+function response_agree(){
+	$('#chooseResponse').hide();
+	$('.agreeAction').show();
+	$('.responseActions').show();
+	
+	$('.agreeAction').children('input').attr('name','response_body');
+	$('#responseValue').val('A');
+}
+
+function response_disagree(){
+	$('#chooseResponse').hide();
+	$('.disagreeAction').show();
+	$('.responseActions').show();
+	
+	$('.disagreeAction').children('textarea').attr('name','response_body');	
+	$('#responseValue').val('D');
+}
+
+function response_reconsider(){
+	$('.responseActions').hide();
+	$('.disagreeAction').hide();
+	$('.agreeAction').hide();
+	$('#chooseResponse').show();
+	
+	$('#responseValue').val('');
+	$('.disagreeAction').children('textarea').attr('name','');	
+	$('.agreeAction').children('input').attr('name','');
+}
+
+function invited_show_new(){
+	$('#inviteData').show();
+	$('#existingInviteData').hide();
+	$('.tab-basics').addClass('active');
+	$('.tab-questions').removeClass('active');
+}
+
+function invited_show_existing(){
+	$('#inviteData').hide();
+	$('#existingInviteData').show();
+	$('.tab-basics').removeClass('active');
+	$('.tab-questions').addClass('active');
+}
+
+function remove_challenge_group(id){
+	$('#challengeGroup'+id).remove();
+}
+
+function create_group(){
+	$('.add-link.add-link-creategroup').hide();
+	$('#new_group_form').show();
+}
+
+function show_group_members(g_id){
+	$('.simpletable.groupmemberlist').remove();
+	$('#inviteUserGroup').val(g_id);
+	$.ajax({url:'/groups/view_members/'+g_id,success:function(r){
+		$('.viewGroupMembersButtons').before(r);
+	}});
+}
+
+function delete_group_member(g_id,u_id){
+	$('#groupMemberRow'+u_id).fadeOut();
+	$.ajax({url:'/groups/remove_member/'+g_id+'/'+u_id});
+}
+
+function group_invite_user(){
+	var uType = $('#inviteUserU').attr('checked') ? 'P' : 'L';
+	show_group_delayed();
+	$.ajax({url:'/users/invite/'+$('#inviteUserGroup').val()+'/0/'+$('#inviteUserFirst').val()+'/'+$('#inviteUserLast').val()+'/'+$('#inviteUserEmail').val()+'/'+uType,success:function(){
+		$('.inviteField').val('');
+	}});
+}
+
+function select_listed_group(id,e){
+	if(!e.hasClass('groupPicked')) $('#joinAGroup').append('<input type="hidden" id="addSelectedGroup'+id+'" value="'+id+'" name="groups[]" class="addSelectedGroupInput" />');
+	else $('#addSelectedGroup'+id).remove();
+	e.toggleClass('groupPicked');
+}
+
+function add_selected_groups(){
+	$.ajax({url:'/groups/request_join/',data:$('#joinAGroup input').serialize(),type:'POST',success:function(){
+		$('.addSelectedGroupInput').remove();
+	}});
+}
+
+function select_listed_user(id,e){
+	if(!e.hasClass('groupPicked')) $('#viewRequestsGroup').append('<input type="hidden" id="addSelectedUser'+id+'" value="'+id+'" name="users[]" class="addSelectedUserInput" />');
+	else $('#addSelectedUser'+id).remove();
+	e.toggleClass('groupPicked');
+}
+
+function process_selected_requests(g_id,action){
+	$.ajax({url:'/groups/process_requests/'+g_id+'/'+action,data:$('#viewRequestsGroup input').serialize(),type:'POST',success:function(){
+		$('.addSelectedUserInput').remove();
+		window.location = '/users/view/groups/';
+	}});
+}
+
+function switch_response_view(tab){
+	$('.mcs_containers').hide();
+	$('#'+tab+'Responses').show();
+	
+	$('.caseclub-tab').removeClass('active');
+	$('#'+tab+'Tab').addClass('active');
+	
+	$(".mcs_containers").each(function(){ $(this).mCustomScrollbar("vertical",350,"easeOutCirc",1.05,"auto","yes","yes",15); });
+}
+
+function flip_details(cid,view){
+	$('#home-leaderboard').css({height:$('#caseclub-list').height()});
+	$.ajax({url:'/challenges/view/'+cid+'/'+view+'/',data:{'permitStats':1},success:function(r){
+		$("#home-leaderboard .content").fadeOut('slow',function(){
+			$("#home-leaderboard .content").html($(r).find('.content').hide());
+
+			$("#home-leaderboard .content").height($('#caseclub-list .content').height());
+			$("#home-leaderboard .content").fadeIn();
+			
+			if(view == 'stats') drawChart();
+		});
+		/*
+		$("#home-leaderboard").flip({
+			direction:(view == 'stats' ? 'lr' : 'rl'),
+			content:r,
+			onEnd:function(){
+				$("#home-leaderboard .content").height($('#caseclub-list .content').height());
+				$('#home-leaderboard').css('background-color','transparent');
+			} 
+		});
+		*/
+	}});
+}
+
+function challenge_select_group(gid,name){
+	if(gid){
+		$('#create-challenge-validate').hide();
+		$('#create-challenge-now').show();
+		
+		$('.tmpGroupAdd').remove();
+		$('#inviteGroup').append('<option class="tmpGroupAdd" value="'+gid+'">'+name+'</option>');
+		$('#inviteNewUserLink').attr('onclick',"");
+		$('#inviteNewUserLink').fancybox({
+			'hideOnOverlayClick' : false,
+			'showCloseButton' : false,
+			'centerOnScroll' : true	
+		});
+	}else{
+		if(!$('input[name="challenge[Group][]"]').length){
+			$('#create-challenge-validate').css('display','block');
+			$('#create-challenge-now').hide();
+		}
+		
+		$('.tmpGroupAdd').remove();
+		$('#inviteNewUserLink').attr('onclick',"alert('Please add at least one group to this challenge to continue');return false;");
+	}
+}
+
+function setup_response_hashchange(ini_id,challenge_id){
+	$(window).bind('hashchange',function(e){
+		var qid = $.param.fragment();
+		if(qid == 'attachments') add_attachments(challenge_id);
+		else if(qid) show_question(qid);
+		else show_question(ini_id);
+	});
+	$(window).trigger('hashchange');
+}
+
+function setup_second_response_hashchange(ini,q_id,u_id){
+	var response_q_id = q_id;
+	$(window).bind('hashchange',function(e){
+		var state = $.bbq.getState('select');
+		var question = $.bbq.getState('q_id');
+		
+		if(question && question != response_q_id) show_response(question,u_id);
+		else{		
+			if(state == 'agree') response_agree();
+			else if(state == 'disagree') response_disagree();
+			else if(state == 'reconsider') response_reconsider();
+			else if(ini == 'agree') response_agree();
+			else if(ini == 'disagree') response_disagree();
+			else response_reconsider();
+		}
+		response_q_id = question;
+	});
+	$(window).trigger('hashchange');
+}
+
+function setup_view_hashchange(ini){
+	$(window).bind('hashchange',function(e){
+		var qid = $.param.fragment();
+		if(qid) show_question_responses(qid);
+	});
+	$(window).trigger('hashchange');
+}
+
+function disable_user_email(){
+	$('#notify_groups').attr('checked',false);
+	$('#notify_challenges').attr('checked',false);
+	$('#notify_expiration').attr('checked',false);
+	$('#notify_responses').attr('checked',false);
+}
+
+function enable_user_email(){
+	$('#notify_groups').attr('checked',true);
+	$('#notify_challenges').attr('checked',true);
+	$('#notify_expiration').attr('checked',true);
+}
+
+function set_email_prefs(){
+	$('input[name="notify_groups"]').val($('#notify_groups').attr('checked') ? 1 : 0);
+	$('input[name="notify_challenges"]').val($('#notify_challenges').attr('checked') ? 1 : 0);
+	$('input[name="notify_expiration"]').val($('#notify_expiration').attr('checked') ? 1 : 0);
+	$('input[name="notify_responses"]').val($('#notify_responses').attr('checked') ? 1 : 0);
+}
+
+function show_group_delayed(){
+	setTimeout("$('#viewGroupLink'+$('#inviteUserGroup').val()).click();",600);
+}
+
+function save_group_name(){
+	var form_data = $('#updateGroupName').serialize();
+	jQuery.fancybox.close();
+	
+	$.ajax({url:'/groups/update/',data:form_data,type:'POST'});
+}
