@@ -1,91 +1,75 @@
-<div id="leftcol" class="alignleft">
-	<h1 class="page-title">My Account</h1>
-	<div id="caseclubmenu">
-
+<div id="sidebarleft">
+	<h1>My Account</h1>
+	<div id="sidemenu">
 		<ul>
-			<li class="myaccount active"><a href="#">My Account</a></li>
-			<?php if($_SESSION['User']['user_type']=='L'){ ?><li class="template "><a href="/challenges/update/0/template_basics/">Template</a></li><?php } ?>
-			<li class="people2 "><a href="/users/view/groups/">Group(s)</a></li>
+			<li class="active"><a class="icon icon-calendar" href="#">My Account</a></li>
+			<li><a class="icon icon-class" href="/users/view/groups/">Classes</a></li>
 		</ul>
 	</div>
-</div>		
-<div id="maincol" class="alignright">
+</div>
 
-
-	<div class="caseclub-links-wrap">
-		
-		<div class="clear"></div>
-	</div>
-	
-	<div id="myaccountform" class="form-fields-wrap form-fields-disabled round round-white">
-		<div class="head"><span class="tl"></span><span class="tr"></span></div>
-		<div class="body">
-			<div class="body-r">
-				<div class="content">
-					<div class="box-heading">
-
-						<span class="icon icon-userblack"></span>
-						<h2 class="page-subtitle">My Account</h2>
-					</div>
-					<form id="userData">
-						<input type="hidden" name="id" value="<?php echo $user['User']['id']; ?>" />
-						<ul class="fieldset2">
-							<li><span class="field-separator">Personal Info</span></li>
-							<li><span class="label alignleft" >First Name</span> <input type="text" size="40" name="firstname" value="<?php echo $user['User']['firstname']; ?>" /></li>
-
-							<li><span class="label alignleft" >Last Name</span> <input type="text" size="40" name="lastname" value="<?php echo $user['User']['lastname']; ?>" /></li>
-							<li><span class="label alignleft" >E-mail</span> <input type="text" size="40" name="email" value="<?php echo $user['User']['email']; ?>" />
-							<a href="#emailPreferences" class="show-overlay">Preferences</a></li>
-							
-							<li><span class="label alignleft">City</span> <input type="text" size="15" class="width15" name="city" value="<?php echo $user['User']['city']; ?>" /></li>
-							<li><span class="label alignleft">State</span> 
-								<select name="state">
-									<?php foreach($states as $state){ ?>
-										<option value="<?php echo $state['State']['abbreviation']; ?>" <?php if($user['User']['state'] == $state['State']['abbreviation']) echo 'selected="selected"'; ?>><?php echo $state['State']['state']; ?></option>
-									<?php } ?>
-								</select>
-							</li>
-							
-							<li><span class="field-separator">Change Password</span></li>
-							<li><span class="label alignleft">Type Password</span> <input type="password" size="40" name="new_pass1" /></li>
-
-							<li><span class="label alignleft">Re-type Password</span> <input type="password" size="40" name="new_pass2" /></li>
-							<li><span class="field-separator">&nbsp;</span></li>
-							<li>
-								<span class="label-text alignleft" >Allow people to search for me?</span> 
-								<input type="checkbox" id="show-animations-yes" name="search_visible" value="1" <?php if($user['User']['search_visible']) echo 'checked="checked"'; ?> /> 
-							</li>
-							<li><span class="label alignleft" >Language</span> 
-								<select >
-
-									<option value="English" selected="selected">English</option>
-								</select>
-							</li>
-
-							
-							<li><span class="field-separator">Account Termination</span></li>
-							<li>
-								<a href="#terminateAccount" onclick="$('.terminateInputField').val('');" class="btn2 btn-terminate show-overlay"><span class="inner">Terminate My Account </span></a>
-							</li>
-						</ul>
-						
-						<input type="hidden" name="notify_groups" value="<?php echo $user['User']['notify_groups']; ?>" />
-						<input type="hidden" name="notify_challenges" value="<?php echo $user['User']['notify_challenges']; ?>" />
-						<input type="hidden" name="notify_expiration" value="<?php echo $user['User']['notify_expiration']; ?>" />
-						<input type="hidden" name="notify_responses" value="<?php echo $user['User']['notify_responses']; ?>" />
-					</form>
-				</div>
-			</div>
+<div id="maincolumn">
+	<div id="myaccount-box" class="box-startbridge box-white rounded">
+		<div class="box-head">
+			<span class="icon2 icon2-calendar"></span>
+			<h2>My Account</h2>
+			<div class="clear"></div>
 		</div>
-		<div class="foot"><div class="fl"></div><div class="fr"></div></div>
-	</div><!-- #myaccountform-->
+		<div class="box-content">
+			<form id="userData">
+				<input type="hidden" name="id" value="<?php echo $user['User']['id']; ?>" />
+				<p>Personal Info</p>
+				<ul class="fieldset2">
+					<li><label>First Name</label> <input type="text" size="60" name="firstname" value="<?php echo $user['User']['firstname']; ?>" /></li>
+					<li><label>Last Name</label> <input type="text" size="60" name="lastname" value="<?php echo $user['User']['lastname']; ?>" /></li>
+					<li>
+						<label>E-mail</label>
+						<input type="text" size="60" name="email" value="<?php echo $user['User']['email']; ?>" />
+						<a href="#emailPreferences" class="show-overlay modal-link" style="color: #666666; font-size: 12px; ">Preferences</a>
+					</li>
+					<li><label>City</label> <input type="text" size="20" class="width15" name="city" value="<?php echo $user['User']['city']; ?>" /></li>
+					<li>
+						<label>State</label> 
+						<select name="state" style="width: 120px;">
+							<?php foreach($states as $state){ ?>
+								<option value="<?php echo $state['State']['abbreviation']; ?>" <?php if($user['User']['state'] == $state['State']['abbreviation']) echo 'selected="selected"'; ?>><?php echo $state['State']['state']; ?></option>
+							<?php } ?>
+						</select>
+					</li>
+					<li>
+						<label>Language</label> 
+						<select style="width: 120px;">
+							<option value="English" selected="selected">English</option>
+						</select>
+					</li>
+				</ul>
+				<br /><br />
+				<p>Change Password</p>
+				<ul class="fieldset2">	
+					<li><label>Type Password</label> <input type="password" size="60" name="new_pass1" /></li>
+					<li><label>Re-type Password</label> <input type="password" size="60" name="new_pass2" /></li>
+				</ul>
+				<br /><br /><br />
+				<p style="font-size: 12px; color: #777777; margin-bottom: 20px; ">Allow other Professors to search for my classes <input type="checkbox" id="show-animations-yes" name="search_visible" value="1" <?php if($user['User']['search_visible']) echo 'checked="checked"'; ?> /></p>
+
+				<p>Terminate my Account</p>
+				<a href="#terminateAccount" onclick="$('.terminateInputField').val('');" class="btn3" style="width: 120px;"><span>Terminate</span></a>
+
+				<input type="hidden" name="notify_groups" value="<?php echo $user['User']['notify_groups']; ?>" />
+				<input type="hidden" name="notify_challenges" value="<?php echo $user['User']['notify_challenges']; ?>" />
+				<input type="hidden" name="notify_expiration" value="<?php echo $user['User']['notify_expiration']; ?>" />
+				<input type="hidden" name="notify_responses" value="<?php echo $user['User']['notify_responses']; ?>" />
+			</form>
+		</div>
+	</div>
+	<div class="clear"></div>
 	
 	<a href="#" class="btn1 btn-savecontinue aligncenter" onclick="save_user();return false;"><span class="inner">Save</span></a>
 	<span id="savedNotify" style="display:none;">
-		<p class="textAlignCenter red">Saved!</p>
+		<p style="display:block;text-align:center;color:#ff0000;">Saved!</p>
 	</span>
 	
-</div><!-- #maincol-->
+</div>
 <div class="clear"></div>
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Case Club Online</title>
+	<title>Puentes</title>
 	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
 	<link rel="stylesheet" media="all" href="/js/mcs/jquery.mCustomScrollbar.css" />
@@ -50,48 +50,41 @@
 <div id="wrapper">
 
 	<div id="header" class="round round-main <?php if(!@$_SESSION['User']['id']){ ?>corp-website<?php } ?>">
-		<div class="head"><div class="tl"></div><div class="tr"></div></div>
-		<div class="body">
+		<div class="content rounded-top">
+			<div id="logo"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>"></a></div>
+			<?php if(@$_SESSION['User']['id']){ ?>
+			<div id="topmenu">
+				<span class="user-name"><a><?php echo (strlen($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) > 17 ? substr($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname'],0,15).'...' : "{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']}"); ?></a></span>
+				<span class="user-home"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>">Home</a></span>
+				<span class="user-account"><a href="/users/view/">My Account</a></span>
+				<span class="user-logout"><a href="#logoutModal" class="show-overlay">Logout</a></span>
+			</div><!-- #topmenu -->
+			<?php }else{ ?>
+			<div id="subtitle">Case Club Online is currently in 'invite only' beta.</div>
+			<a href="#" id="overlayLoginLink" >Login</a>
+			<div id="overlayLoginForm" class="rounded">
+				<ul class="fieldset2">
+					<li>
+						<div class="label alignleft">
+							<span class="red">*</span> Email
+						</div>
+						<input type="text" class="inputText" id="loginUser" />
+					</li>
+					<li>
+						<div class="label alignleft">
+							<span class="red">*</span> Password
+						</div> 
+						<input type="password" class="inputText" id="loginPass" />
+					</li>
+					<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
+				</ul>
+				<div class="clear"></div>
 
-			<div class="content">
-				
-				<div id="logo"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>"></a></div><!-- #logo -->
-				
-				<?php if(@$_SESSION['User']['id']){ ?>
-				<div id="topmenu">
-					<span class="user-name"><a><?php echo (strlen($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) > 17 ? substr($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname'],0,15).'...' : "{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']}"); ?></a></span>
-					<span class="user-home"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>">Home</a></span>
-					<span class="user-account"><a href="/users/view/">My Account</a></span>
-					<span class="user-logout"><a href="#logoutModal" class="show-overlay">Logout</a></span>
-				</div><!-- #topmenu -->
-				<?php }else{ ?>
-				<div id="subtitle">Case Club Online is currently in 'invite only' beta.</div>
-				<a href="#" id="overlayLoginLink" >Login</a>
-				<div id="overlayLoginForm" class="rounded">
-					<ul class="fieldset2">
-						<li>
-							<div class="label alignleft">
-								<span class="red">*</span> Email
-							</div>
-							<input type="text" class="inputText" id="loginUser" />
-						</li>
-						<li>
-							<div class="label alignleft">
-								<span class="red">*</span> Password
-							</div> 
-							<input type="password" class="inputText" id="loginPass" />
-						</li>
-						<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
-					</ul>
-					<div class="clear"></div>
-
-					<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();">I forgot my password</a>
-					<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner">Log in</span></a>
-					<div class="clear"></div>
-				</div>
-				<?php } ?>
-				
+				<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();">I forgot my password</a>
+				<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner">Log in</span></a>
+				<div class="clear"></div>
 			</div>
+			<?php } ?>
 		</div>
 	</div><!-- #header -->
 	
@@ -123,7 +116,7 @@
 	</div><!-- #modals -->
 
 	<div id="footer">
-		<div class="alignleft" id="logofooter"><a href="/"><img src="/images/logo-footer.png" /></a></div>
+		<!-- <div class="alignleft" id="logofooter"><a href="/"><img src="/images/logo-footer.png" /></a></div> -->
 		<div class="alignright" id="footermenu">
 			<ul>
 				<li><a href="#">Privacy Policy</a></li>
