@@ -1,64 +1,42 @@
-<div id="leftcol" class="alignleft">
-	<h1 class="page-title">My Account</h1>
-	<div id="caseclubmenu">
-
+<div id="sidebarleft">
+	<h1>My Account</h1>
+	<div id="sidemenu">
 		<ul>
-			<li class="myaccount"><a href="/users/view/">My Account</a></li>
-			<?php if($_SESSION['User']['user_type']=='L'){ ?><li class="template "><a href="/challenges/update/0/template_basics/">Template</a></li><?php } ?>
-			<li class="people2 active"><a href="#">Group(s)</a></li>
+			<li><a class="icon icon-calendar" href="/users/view/">My Account</a></li>
+			<li class="active"><a class="icon icon-class" href="#">Classes</a></li>
 		</ul>
 	</div>
-</div>		
-<div id="maincol" class="alignright">
+</div>
 
+<div id="maincolumn">
+	<div id="classes-box" class="box-startbridge box-white rounded">
+		<div class="box-head">
+			
+			<div class="box-actions">
+				<ul>
+					<li><a class="icon4 icon4-plus" href="myaccount-classes-create.html" onclick="create_group();return false;">Create Class</a></li>
+					<li><a class="icon4 icon4-plus modal-link" href="#joinAGroup">Join shared class</a></li>
+				</ul>
+			</div>
+			
+			<span class="icon2 icon2-class"></span>
+			<h2>Edit Classes</h2>
+			<div class="clear"></div>
+		</div>
+		<div class="box-content">
 
-	<div id="myaccountGroupsForm" class="form-fields-wrap form-fields-disabled round round-white">
-		<div class="head"><span class="tl"></span><span class="tr"></span></div>
-		<div class="body">
-			<div class="body-r">
-				<div class="content">
-					<div class="box-heading">
-						<span class="icon icon-people2"></span>
-						<h2 class="page-subtitle">My Group(s)</h2>
-
-						<div class="groupsAddLinks alignright">
-							<?php if($_SESSION['User']['user_type']=='L'){ ?>
-								<a href="#" class="add-link add-link-creategroup alignleft" onclick="create_group();return false;">Create a group</a> 
-							<?php } ?>
-							<a href="#joinAGroup" class="add-link alignleft show-overlay">Join a group</a> 
-						</div>
-						<div class="clear"></div>
-					</div>
 					<form action="/groups/update/" method="post" id="newGroupForm">
 						<input type="hidden" name="group[Group][owner_id]" value="<?php echo $user['User']['id']; ?>" />
 						<input type="hidden" name="group[User][][user_id]" value="<?php echo $user['User']['id']; ?>" />
-						<table class="simpletable">
+						<table class="table-type-1" id="table-classes">
 							<thead>
-
 								<tr>
-									<th width="180px">
-										<a href="/users/view/groups/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>">
-											Group Name <img src="/images/arrow-<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>.png" />
-										</a>
-									</th>
-									<th width="180px">
-										<a href="/users/view/groups/?sort=created&dir=<?php echo (@$_REQUEST['sort']=='created'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>">
-											Date Created <img src="/images/arrow-<?php echo (@$_REQUEST['sort']=='created'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>.png" />
-										</a>
-									</th>
-									<th width="180px">
-										<a href="/users/view/groups/?sort=modified&dir=<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>">
-											Last Edit <img src="/images/arrow-<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>.png" />
-										</a>
-									</th>
-									<th width="180px">
-										<a href="/users/view/groups/?sort=owner&dir=<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>">
-											Creator <img src="/images/arrow-<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>.png" />
-										</a>
-									</th>
+									<th><a href="/users/view/groups/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Class Name</a></th>
+									<th><a href="/users/view/groups/?sort=modified&dir=<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Last Edit</a></th>
+									<th><a href="#" class="sortdown">Students</a></th>
+									<th><a href="/users/view/groups/?sort=owner&dir=<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Creator</a></th>
 								</tr>
 							</thead>
-
 							<tbody>
 								<?php 
 								$ex_groups = array();
@@ -76,7 +54,7 @@
 										</a>
 									</td>
 									<td><?php echo date_format(date_create($g['date_created']),'m/d/Y'); ?></td>
-									<td><?php echo date_format(date_create($g['date_created']),'m/d/Y'); ?></td>
+									<td> </td>
 									<td style="position:relative;">
 										<?php
 										echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}";
@@ -124,7 +102,7 @@
 		<span class="inner">Save</span>
 	</a>
 	<span id="savedNotify" style="display:none;">
-		<p class="textAlignCenter red">Saved!</p>
+		<p style="display:block;text-align:center;color:#ff0000;">Saved!</p>
 	</span>
 	
 </div><!-- #maincol-->
