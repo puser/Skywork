@@ -37,7 +37,7 @@
 							<li>
 								<p class="label"><!-- <span class="red">*</span> -->Invite a group to challenge</p>
 
-								<?php if($challenge['Group'] || @$template['Group']){ ?>
+								<?php if($challenge['Class'] || @$template['Class']){ ?>
 									<table class="simpletable">
 										<thead>
 											<tr>
@@ -48,7 +48,7 @@
 										<tbody>
 											<?php
 											$ex_groups = array();
-											$group_set = $challenge['Group'] ? $challenge['Group'] : $template['Group'];
+											$group_set = $challenge['Class'] ? $challenge['Class'] : $template['Class'];
 											foreach($group_set as $k=>$g){
 												$ex_groups[] = $g['id'];
 												?>
@@ -68,9 +68,9 @@
 									<option value=""> -- </option>
 									<?php
 									foreach($groups as $group){
-										if(in_array($group['Group']['id'],$ex_groups)) continue;
+										if(in_array($group['Class']['id'],$ex_groups)) continue;
 										?>
-									<option value="<?php echo $group['Group']['id']; ?>"><?php echo $group['Group']['group_name']; ?></option>
+									<option value="<?php echo $group['Class']['id']; ?>"><?php echo $group['Class']['group_name']; ?></option>
 									<?php } ?>
 								</select>
 							</li>
@@ -101,7 +101,7 @@
 											<td><?php echo $qu['User']['email']; ?></td>
 											<td><?php echo ($qu['User']['invite_token'] ? 'Send Invite' : 'Existing User'); ?></td>
 											<td style="position:relative;">
-												<?php echo @$qu['Group']['group_name']; ?>
+												<?php echo @$qu['Class']['group_name']; ?>
 												<a href="/challenges/remove_queued_invite/<?php echo $qu['User']['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>/" style="position:absolute;right:20px;top:8px;display:none;" id="userQueueDelete<?php echo $qu['User']['id']; ?>">
 													<img src="/images/icon-x.png" style="position:absolute;">
 												</a>
@@ -114,7 +114,7 @@
 							</li>
 						</ul>
 						<br />
-						<a href="#addNewUserModal"<?php if(!$challenge['Group']){ ?> onclick="alert('Please add at least one group to this challenge to continue');return false;"  class="add-link"<?php }else{ ?> class="add-link show-overlay"<?php } ?> id="inviteNewUserLink">Add an individual</a>
+						<a href="#addNewUserModal"<?php if(!$challenge['Class']){ ?> onclick="alert('Please add at least one group to this challenge to continue');return false;"  class="add-link"<?php }else{ ?> class="add-link show-overlay"<?php } ?> id="inviteNewUserLink">Add an individual</a>
 						<br /><br />
 						<ul class="fieldset2"><li><p class="label-text"> Other</p></li></ul>
 						<input type="checkbox" name="challenge[Challenge][challenge_type]" value="A"<?php if($challenge['Challenge']['challenge_type']=='A') echo ' checked="checked"'; ?> /> Make all answers &amp; responses anonymous
@@ -130,8 +130,8 @@
 		<p class="textAlignCenter red">* You must invite at least one group/individual</p>
 	</span>
 	<br /><br />
-	<a href="#" <?php if($challenge['Group'] || @$template['Group']){ ?>style="display:none;"<?php } ?> onclick="$('#fieldValidate').show();return false;" class="btn1 btn-savecontinue aligncenter" id="create-challenge-validate"><span class="inner">Save and Finish</span></a>
-	<a href="#saveAndFinish" <?php if(!$challenge['Group'] && !@$template['Group']){ ?>style="display:none;"<?php } ?> class="btn1 btn-savecontinue aligncenter" id="create-challenge-now"><span class="inner">Save and Finish</span></a>
+	<a href="#" <?php if($challenge['Class'] || @$template['Class']){ ?>style="display:none;"<?php } ?> onclick="$('#fieldValidate').show();return false;" class="btn1 btn-savecontinue aligncenter" id="create-challenge-validate"><span class="inner">Save and Finish</span></a>
+	<a href="#saveAndFinish" <?php if(!$challenge['Class'] && !@$template['Class']){ ?>style="display:none;"<?php } ?> class="btn1 btn-savecontinue aligncenter" id="create-challenge-now"><span class="inner">Save and Finish</span></a>
 	
 	
 </div><!-- #maincol-->
@@ -181,7 +181,7 @@
 			<li >
 				<span class="label alignleft">Group</span>
 				<select id="inviteGroup">
-					<?php foreach($challenge['Group'] as $k=>$g){ ?>
+					<?php foreach($challenge['Class'] as $k=>$g){ ?>
 					<option value="<?php echo $g['id']; ?>"><?php echo $g['group_name']; ?></option>
 					<?php } ?>
 				</select>

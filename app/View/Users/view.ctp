@@ -3,7 +3,7 @@
 	<div id="sidemenu">
 		<ul>
 			<li class="active"><a class="icon icon-calendar" href="#">My Account</a></li>
-			<li><a class="icon icon-class" href="/users/view/groups/">Classes</a></li>
+			<li><a class="icon icon-class" href="/users/view/classes/">Classes</a></li>
 		</ul>
 	</div>
 </div>

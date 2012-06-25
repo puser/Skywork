@@ -1,6 +1,6 @@
 <div id="viewRequestsGroup" class="groupMemberModal">
 	<div class="box-heading">
-		<h2 class="label-text alignleft">Accept/Decline Request for <?php echo $status[0]['Group']['group_name']; ?></h2> &nbsp;&nbsp;
+		<h2 class="label-text alignleft">Accept/Decline Request for <?php echo $status[0]['Class']['group_name']; ?></h2> &nbsp;&nbsp;
 		<div class="clear"></div>
 	</div>
 	
@@ -25,7 +25,7 @@
 	</table>
 	
 	<div class="viewGroupMembersButtons">
-		<a href="#" onclick="process_selected_requests(<?php echo $status[0]['Group']['id']; ?>,'a');jQuery.fancybox.close();return false;" class="btn1 btnSimple aligncenter"><span style="width:80px;" class="inner">Allow to Join</span></a>
-		<a href="#" onclick="process_selected_requests(<?php echo $status[0]['Group']['id']; ?>,'d');jQuery.fancybox.close();return false;" class="btn2 btnSimple aligncenter"><span class="inner">Decline</span></a>
+		<a href="#" onclick="process_selected_requests(<?php echo $status[0]['Class']['id']; ?>,'a');jQuery.fancybox.close();return false;" class="btn1 btnSimple aligncenter"><span style="width:80px;" class="inner">Allow to Join</span></a>
+		<a href="#" onclick="process_selected_requests(<?php echo $status[0]['Class']['id']; ?>,'d');jQuery.fancybox.close();return false;" class="btn2 btnSimple aligncenter"><span class="inner">Decline</span></a>
 	</div>
 </div>

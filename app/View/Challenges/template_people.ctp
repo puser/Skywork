@@ -35,7 +35,7 @@
 							<li>
 								<p class="label"><span class="red">*</span> Invite group to challenge</p>
 
-								<?php if($challenge['Group']){ ?>
+								<?php if($challenge['Class']){ ?>
 									<table class="simpletable">
 										<thead>
 											<tr>
@@ -46,7 +46,7 @@
 										<tbody>
 											<?php 
 											$ex_groups = array();
-											foreach($challenge['Group'] as $k=>$g){
+											foreach($challenge['Class'] as $k=>$g){
 												$ex_groups[] = $g['id']; ?>
 											<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> id="challengeGroup<?php echo $g['id']; ?>">
 												<td>
@@ -64,9 +64,9 @@
 									<option value=""> -- </option>
 									<?php
 									foreach($groups as $group){
-										if(in_array($group['Group']['id'],$ex_groups)) continue;
+										if(in_array($group['Class']['id'],$ex_groups)) continue;
 										?>
-									<option value="<?php echo $group['Group']['id']; ?>"><?php echo $group['Group']['group_name']; ?></option>
+									<option value="<?php echo $group['Class']['id']; ?>"><?php echo $group['Class']['group_name']; ?></option>
 									<?php } ?>
 								</select>
 							</li>

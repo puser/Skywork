@@ -1,8 +1,8 @@
 <div id="viewGroupMembers">
 	<div class="box-heading">
 		<form id="updateGroupName" method="POST" action="/groups/update/">
-			<input type="hidden" name="group[Group][id]" value="<?php echo $group['Group']['id']; ?>" />
-			<h2 class="label-text alignleft"><input type="text" name="group[Group][group_name]" value="<?php echo $group['Group']['group_name']; ?>" /> Members</h2> &nbsp;&nbsp;
+			<input type="hidden" name="group[Group][id]" value="<?php echo $group['Class']['id']; ?>" />
+			<h2 class="label-text alignleft"><input type="text" name="group[Group][group_name]" value="<?php echo $group['Class']['group_name']; ?>" /> Members</h2> &nbsp;&nbsp;
 		</form>
 		<!--<select class="alignleft">
 			<option value="a">A</option>
@@ -34,7 +34,7 @@
 				<td><?php echo $u['state']; ?></td>
 				<td>
 					<?php if($group['Owner']['id'] == $_SESSION['User']['id'] && $_SESSION['User']['id'] != $u['id']){ ?>
-						<a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_group_member(<?php echo $group['Group']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" id="deleteMemberLink"><img src="/images/icon-x.png" /></a>
+						<a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_group_member(<?php echo $group['Class']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" id="deleteMemberLink"><img src="/images/icon-x.png" /></a>
 					<?php } ?>
 				</td>
 			</tr>

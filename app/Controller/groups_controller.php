@@ -1,12 +1,12 @@
 <?php
 class GroupsController extends AppController{
 	var $name = 'Groups';
-	var $uses = array('User','Challenge','Group','Status');
+	var $uses = array('User','Challenge','Class','Status');
 	
 	function update(){
 		$this->checkAuth();
 		
-		if(@$_REQUEST['group']['Group']['group_name']) $this->Group->save($_REQUEST['group']);
+		if(@$_REQUEST['group']['Class']['group_name']) $this->Group->save($_REQUEST['group']);
 		$this->redirect('/users/view/groups/1');
 	}
 	
@@ -34,7 +34,7 @@ class GroupsController extends AppController{
 			
 			if($group['Owner']['notify_groups']){
 				// notify group leader
-				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your group, {$group['Group']['group_name']}, on Case Club Online.";
+				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your group, {$group['Class']['group_name']}, on Case Club Online.";
 				$message .= "\n\n<a href='http://caseclubonline.com/users/view/groups/'>Click here to view!</a>";
 				$message .= "\n\nSincerely,\n\nCase Club Online Team";
 		
@@ -68,7 +68,7 @@ class GroupsController extends AppController{
 		foreach($_REQUEST['users'] as $u){
 			$this->Status->deleteAll(array('Status.status'=>$remove_status,'Status.user_id'=>$u,'Status.group_id'=>$group_id,'Status.challenge_id IS NULL'));
 			if($action == 'a'){
-				$group_update = array('Group'=>array('id'=>$group_id));
+				$group_update = array('Class'=>array('id'=>$group_id));
 				$group_update['User'] = array($u);
 				foreach($group['User'] as $u) if(array_search($u['id'],$group_update['User']) === false) $group_update['User'][] = $u['id'];
 				$this->Group->save($group_update);

@@ -15,11 +15,11 @@ class User extends AppModel{
 							array(	'className'	=> 'Status',
 									'foreignKey'=> 'user_id',
 									'dependent'	=> true ));
-	var $hasAndBelongsToMany = array(	'Group' =>
-										array(	'className'	=> 'Group',
-												'joinTable'	=> 'users_groups',
+	var $hasAndBelongsToMany = array(	'Class' =>
+										array(	'className'	=> 'Class',
+												'joinTable'	=> 'users_classes',
 												'foreignKey'=> 'user_id',
-												'associationForeignKey' => 'group_id',
+												'associationForeignKey' => 'class_id',
 												'unique'	=> true ));
 }
 ?>

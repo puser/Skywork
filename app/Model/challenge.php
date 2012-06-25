@@ -22,11 +22,11 @@ class Challenge extends AppModel{
 									'foreignKey'=> 'challenge_id',
 									'dependent'	=> true ));
 									
-	var $hasAndBelongsToMany = array(	'Group'	=>
-										array(	'className'	=> 'Group',
-												'joinTable'	=> 'challenges_groups',
+	var $hasAndBelongsToMany = array(	'Class'	=>
+										array(	'className'	=> 'Class',
+												'joinTable'	=> 'challenges_classes',
 												'foreignKey'=> 'challenge_id',
-												'associationForeignKey'=> 'group_id',
+												'associationForeignKey'=> 'class_id',
 												'unique'	=> true ));
 }
 ?>

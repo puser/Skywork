@@ -1,7 +1,7 @@
 <?php
 class ChallengesController extends AppController{
 	var $name = 'Challenges';
-	var $uses = array('User','Challenge','Group','Status','Response');
+	var $uses = array('User','Challenge','Class','Status','Response');
 	
 	// view all challenges (dashboard)
 	function browse($status=NULL){
@@ -25,17 +25,17 @@ class ChallengesController extends AppController{
 		if(@$_REQUEST['dir']=='a' || !@$_REQUEST['sort']) $sort .= ' DESC';
 		else $sort .= ' ASC';
 		
-		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','Group'=>array('User'))));
+		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','Class'=>array('User'))));
 
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
-		foreach(@$user['Group'] as $g) $groups[$g['id']] = 1;
+		foreach(@$user['Class'] as $g) $groups[$g['id']] = 1;
 		
 		$now = date_create();
 		$now->setTime(0,0);
 		foreach($challenges as $k=>$c){
 			$vis = false;
-			foreach($c['Group'] as $g){
+			foreach($c['Class'] as $g){
 				if(@$groups[$g['id']]){
 					$vis = true;
 					break;
@@ -56,7 +56,7 @@ class ChallengesController extends AppController{
 			$answers_due = date_create($c['Challenge']['answers_due']);
 			if($answers_due < $now){
 				$ulist = $challanges[$k]['Users'] = array();
-				foreach($c['Group'] as $g){
+				foreach($c['Class'] as $g){
 					foreach($g['User'] as $u){
 						if(array_search($u['id'],$ulist) !== false) continue;
 						
@@ -118,7 +118,7 @@ class ChallengesController extends AppController{
 		
 		if($view == 'leaderboard'){
 			$users = array();
-			foreach($challenge['Group'] as $g){
+			foreach($challenge['Class'] as $g){
 				foreach($g['User'] as $u){
 					foreach($challenge['Question'] as $q){
 						$this->Response->hasMany['Responses']['conditions'][] = 'Responses.response_type = "A"';
@@ -215,7 +215,7 @@ class ChallengesController extends AppController{
 					$this->Status->id = $i['Status']['id'];
 					$this->Status->saveField('status','N');
 				}
-				foreach($challenge_record['Group'] as $g){
+				foreach($challenge_record['Class'] as $g){
 					foreach($g['User'] as $u){
 						if(@$sent_users[$u['id']]) continue;
 						else $sent_users[$u['id']] = 1;
@@ -240,7 +240,7 @@ class ChallengesController extends AppController{
 		if($view=='update_people'||$view=='template_people'){
 			if($view=='update_people') $this->set('queued_users',$this->Status->find('all',array('conditions'=>array(	'Status.challenge_id'	=> $challenge_id,
 																														'Status.status'			=> 'P' ))));
-			$this->set('groups',$this->Group->find('all',array('conditions'=>'Group.owner_id = '.$_SESSION['User']['id'],'order'=>'Group.group_name')));
+			$this->set('groups',$this->Class->find('all',array('conditions'=>'Class.owner_id = '.$_SESSION['User']['id'],'order'=>'Class.group_name')));
 		}
 		if($view=='dashboard') $this->redirect('/dashboard/');
 		if($view=='account') $this->redirect('/challenges/update/0/template_basics/');
@@ -280,7 +280,7 @@ class ChallengesController extends AppController{
 				return false;
 			}
 			$inGroup = false;
-			foreach($user['Group'] as $g){
+			foreach($user['Class'] as $g){
 				if($g['id'] == $group_id){
 					$inGroup = true;
 					break;
@@ -330,12 +330,12 @@ class ChallengesController extends AppController{
 			$message .= "http://caseclubonline.com/users/accept_invitation/{$challenge_id}/{$user['Status'][0]['group_id']}/{$user_id}/{$user['User']['invite_token']}";
 			$message .= "\n\nSincerely,\n\nCase Club Online Team";
 		}elseif($group_id){
-			$group = $this->Group->findById($group_id);
+			$group = $this->Class->findById($group_id);
 			
 			$subject = "New Case from {$challenge['User']['firstname']}";
 			$message = "Hi {$user['User']['firstname']}!\n\n";
-			$message .= "{$challenge['User']['firstname']} {$challenge['User']['lastname']} has sent you an invitation for a new challenge on Case Club Online as a member of Group {$group['Group']['group_name']} starting ".date_format(date_create(),'m/d/Y')." and ending ".date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y').".";
-			if(!$existing) $message .= "\n\n<a href='http://caseclubonline.com/users/accept_invitation/{$challenge_id}/{$group['Group']['id']}/{$user_id}'>Click here</a> to check it out.";
+			$message .= "{$challenge['User']['firstname']} {$challenge['User']['lastname']} has sent you an invitation for a new challenge on Case Club Online as a member of Group {$group['Class']['group_name']} starting ".date_format(date_create(),'m/d/Y')." and ending ".date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y').".";
+			if(!$existing) $message .= "\n\n<a href='http://caseclubonline.com/users/accept_invitation/{$challenge_id}/{$group['Class']['id']}/{$user_id}'>Click here</a> to check it out.";
 			else $message .= "\n\n<a href='http://caseclubonline.com/'>Click here</a> to check it out.";
 			$message .= "\n\n<a href='http://caseclubonline.com/attachments/view/case/{$challenge_id}/?fromEmail=1'>Click here</a> to View Case.\n\n";
 			$message .= "Sincerely,\n\nCase Club Online Team";
@@ -354,7 +354,7 @@ class ChallengesController extends AppController{
 		$sent_users = array();
 		
 		foreach($challenges as $c){
-			foreach($c['Group'] as $g){
+			foreach($c['Class'] as $g){
 				foreach($g['User'] as $u){
 					if(@$sent_users[$u['id']]) continue;
 					else $sent_users[$u['id']] = 1;

@@ -10,8 +10,8 @@ class Status extends AppModel{
 							'Challenge' =>
 							array(	'className'	=> 'Challenge',
 									'foreignKey'=> 'challenge_id' ),
-							'Group' =>
-							array(	'className'	=> 'Group',
-									'foreignKey'=> 'group_id' ));
+							'Class' =>
+							array(	'className'	=> 'Class',
+									'foreignKey'=> 'class_id' ));
 }
 ?>
