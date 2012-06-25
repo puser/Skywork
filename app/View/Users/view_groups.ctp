@@ -14,8 +14,8 @@
 			
 			<div class="box-actions">
 				<ul>
-					<li><a class="icon4 icon4-plus" href="myaccount-classes-create.html" onclick="create_group();return false;">Create Class</a></li>
-					<li><a class="icon4 icon4-plus modal-link" href="#joinAGroup">Join shared class</a></li>
+					<li><a class="icon4 icon4-plus modal-link" href="#modal-addclass">Create Class</a></li>
+					<li><a class="icon4 icon4-plus modal-link" href="#modal-joinsharedclass">Join shared class</a></li>
 				</ul>
 			</div>
 			
@@ -109,6 +109,394 @@
 
 <div class="clear"></div>
 
+
+
+
+<script type="text/javascript">
+			
+	jQuery(document).ready(function($) {
+		$(".modal-link").fancybox({
+			'hideOnOverlayClick' : false,
+			'showCloseButton' : false,
+			'centerOnScroll' : true,
+			'width' : 500
+		}); 
+	}); 
+	
+</script>
+
+<div style="display: none;">
+	<div id="modal-shareclass">
+		<div class="modal-wrapper" style="width: 600px;" >
+			<div class="modal-box-head">
+				
+				<div class="box-actions">
+					<ul>
+						<li><a class="icon4 icon4-plus modal-link" href="#modal-addprofessor" >Add a professor</a></li>
+					</ul>
+				</div>
+				
+				<span class="icon5 icon5-shake"></span>
+				<h2>Class 1 - Shared</h2>
+			</div>
+			<div class="modal-box-content">
+				
+				<table class="table-type-1">
+					<thead>
+						<tr>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Email</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="alternate">
+							<td>Anson</td>
+							<td>John</td>
+							<td>johanson@school.com</td>
+							<td><a href="#" class="icon3 icon3-close" ></a></td>
+						</tr>
+						<tr class="">
+							<td>Anson</td>
+							<td>John</td>
+							<td>johanson@school.com</td>
+							<td><a href="#" class="icon3 icon3-close" ></a></td>
+						</tr>
+						<tr class="alternate">
+							<td>Anson</td>
+							<td>John</td>
+							<td>johanson@school.com</td>
+							<td><a href="#" class="icon3 icon3-close" ></a></td>
+						</tr>
+					</tbody>
+				</table>
+				<br /><br /><br /><br />
+				<div class="clear"></div>
+				<div style="width: 80px; margin: 0 auto; ">
+					<a href="#" class="btn3" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modal-addprofessor">
+		<div id="modal-addprofessor-box" class="modal-wrapper" style="width: 600px;" >
+			<div class="modal-box-head">
+				<span class="icon icon-class-color"></span>
+				<h2>Add Professor to Shared Class</h2>
+			</div>
+			<div class="modal-box-content">
+				<p>Please enter the information below before adding to your class:</p>
+				<ul class="fieldset2">
+					<li>
+						<label>First Name</label>
+						<input type="text" size="50" />
+					</li>
+					<li>
+						<label>Last Name</label>
+						<input type="text" size="50" />
+					</li>
+					<li>
+						<label>Email</label>
+						<input type="text" size="50" />
+					</li>
+					<li>
+						<label>Permissions</label>
+						<div class="input-wrap">
+							<p>This Professor can add my class to a Bridge:</p>
+							<p><input type="checkbox" /> Only if (s)he requests and I accept</p>
+							<p><input type="checkbox" /> Without request</p>
+						</div>
+						<div class="clear"></div>
+					</li>
+				</ul>
+				<br /><br />
+				<div class="clear"></div>
+				<div style="width: 230px; margin: 0 auto; ">
+					<a href="#" class="btn2" style="width: 140px; float: left;" onclick="jQuery.fancybox.close(); return false; "><span>Send Notification</span></a>
+					<a href="#" class="btn3" style="width: 60px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="modal-editclass">
+		
+		<div id="modal-editclass-box" class="modal-wrapper" style="width: 600px;" >
+			<div class="modal-box-head">
+				
+				<div class="box-actions">
+					<ul>
+						<li><a class="icon4 icon4-plus modal-link" href="#modal-adduser" >Add a new Student</a></li>
+						<li><a class="icon4 icon4-remove modal-link" href="#" >Clean class</a></li>
+					</ul>
+				</div>
+				
+				<h2>Class 1 Students</h2>
+			</div>
+			<div class="modal-box-content">
+				
+				<table class="table-type-1">
+					<thead>
+						<tr>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Email</th>
+							<th>City</th>
+							<th>State</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="alternate">
+							<td>Anson</td>
+							<td>John</td>
+							<td>johanson@school.com</td>
+							<td>Miami</td>
+							<td>FL</td>
+							<td><a href="#" class="icon3 icon3-close" ></a></td>
+						</tr>
+						<tr class="">
+							<td>Anson</td>
+							<td>John</td>
+							<td>johanson@school.com</td>
+							<td>Miami</td>
+							<td>FL</td>
+							<td><a href="#" class="icon3 icon3-close" ></a></td>
+						</tr>
+						<tr class="alternate">
+							<td>Anson</td>
+							<td>John</td>
+							<td>johanson@school.com</td>
+							<td>Miami</td>
+							<td>FL</td>
+							<td><a href="#" class="icon3 icon3-close" ></a></td>
+						</tr>
+					</tbody>
+				</table>
+				<br /><br /><br /><br />
+				<div class="clear"></div>
+				<div style="width: 200px; margin: 0 auto; ">
+					<a href="#" class="btn2" style="width: 80px; float: left;" onclick="jQuery.fancybox.close(); return false; "><span>Add</span></a>
+					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modal-adduser">
+		<div id="modal-adduser-box" class="modal-wrapper" style="width: 600px;" >
+			<div class="modal-box-head">
+				<span class="icon icon5-people-blue"></span>
+				<h2>Add a User to Puentes</h2>
+			</div>
+			<div class="modal-box-content">
+				<ul class="fieldset2">
+					<li>
+						<label>First Name</label>
+						<input type="text" size="50" />
+					</li>
+					<li>
+						<label>Last Name</label>
+						<input type="text" size="50" />
+					</li>
+					<li>
+						<label>Email</label>
+						<input type="text" size="50" />
+					</li>
+				</ul>
+				<br /><br />
+				<div class="clear"></div>
+				<div style="width: 200px; margin: 0 auto; ">
+					<a href="#" class="btn2" style="width: 80px; float: left;" onclick="jQuery.fancybox.close(); return false; "><span>Add</span></a>
+					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="modal-addclass">
+		<div id="modal-addclass-box" class="modal-joinsharedclass-box modal-wrapper" style="width: 600px;" >
+			<div class="modal-box-head">
+				<span class="icon icon-plus"></span>
+				<h2>Create Class</h2>
+			</div>
+			<div class="modal-box-content">
+				<p>Please enter the details below to create a new class:</p>
+				<ul class="fieldset2">
+					<li>
+						<label>Class Name</label>
+						<input type="text" size="50" />
+						<div class="clear"></div>
+					</li>
+					<li class="radioinput">
+						<span class="label">Make this class searchable</span>
+						<div class="input">
+							<input type="radio" name="make_class_searchable" id="make_class_searchable_yes" /> <label for="make_class_searchable_yes">Yes </label>
+							<input type="radio" name="make_class_searchable" id="make_class_searchable_no" /> <label for="make_class_searchable_no">No </label>
+						</div>
+						<div class="clear"></div>
+					</li>
+				</ul>
+				<div class="clear"></div>
+				<p class="small">Instructors will be able to search and request to join your class. For security purposes, they must know your email address and you will always be able to Accept or Reject their request.</p>
+				<div class="clear"></div>
+				<div style="width: 250px; margin: 0 auto; ">
+					<a href="#modal-newtoken" class="btn2 modal-link" style="width: 120px; float: left;" ><span>Generate Token</span></a>
+					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modal-joinsharedclass">
+		<div id="modal-joinsharedclass-box" class="modal-joinsharedclass-box modal-wrapper" style="width: 600px;" >
+			<div class="modal-box-head">
+				<span class="icon icon-class-color"></span>
+				<h2>Request to Join Shared Class(es)</h2>
+			</div>
+			<div class="modal-box-content">
+				<br />
+				<p>Please enter the Professors' email:</p>
+				<ul class="fieldset2">
+					<li>
+						<label>Email</label>
+						<input type="text" size="50" />
+					</li>
+				</ul>
+				<br /><br />
+				<div class="clear"></div>
+				<div style="width: 200px; margin: 0 auto; ">
+					<a href="#modal-joinsharedclass-2" class="btn2 modal-link" style="width: 80px; float: left;" ><span>Continue</span></a>
+					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modal-joinsharedclass-2">
+		<div id="modal-joinsharedclass-2-box" class="modal-joinsharedclass-box modal-wrapper" style="width: 600px;" >
+			<div class="modal-box-head">
+				<span class="icon icon-class-color"></span>
+				<h2>Request to Join Shared Class(es)</h2>
+			</div>
+			<div class="modal-box-content">
+				<br />
+				<p>Please enter the Professors' email:</p>
+				<ul class="fieldset2">
+					<li>
+						<label>Email</label>
+						<input type="text" size="50" />
+					</li>
+				</ul>
+				
+				<br />
+				<p>Select the Classes you would like to join:</p>
+				<ul class="fieldset2">
+					<li>
+						<label>Class(es)</label>
+						<div class="classes-options">
+							<ul>
+								<li><input type="checkbox" /> Class XYZ</li>
+								<li><input type="checkbox" /> Class Second Class</li>
+								<li><input type="checkbox" /> Class Third Class</li>
+							</ul>
+						</div>
+						<div class="clear"></div>
+					</li>
+				</ul>
+				<br /><br />
+				<div class="clear"></div>
+				<div style="width: 200px; margin: 0 auto; ">
+					<a href="#" class="btn2" style="width: 80px; float: left;" onclick="jQuery.fancybox.close(); return false; "><span>Continue</span></a>
+					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="modal-deleteclass">
+		
+		<div id="modal-deleteclass-box" class="modal-wrapper" style="width: 600px;" >
+			
+			<div class="modal-box-head">
+				<span class="icon5 icon5-close"></span>
+				<h2><span >Delete</span></h2>
+			</div>
+			<div class="modal-box-content">
+				<p class="modal-notice" style="margin: 50px 0; ">Are you sure you want to delete?</p>
+				<div style="width: 250px; margin: 0 auto; margin-bottom: 20px; ">
+					<div style="width: 100px; float: left;">
+						<a href="#" class="btn2" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span>Yes, Delete</span></a>
+					</div>
+					<div style="width: 100px; float: right;">
+						<a href="#" class="btn3" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+	<div id="modal-viewtoken">
+		
+		<div id="modal-viewtoken-box" class="modal-wrapper" style="width: 600px;" >
+			<div class="modal-box-head">
+				<div class="box-actions">
+					<ul>
+						<li><a class="icon4 icon4-plus modal-link" href="#modal-newtoken" >Generate new</a></li>
+					</ul>
+				</div>
+				<span class="icon icon-token"></span>
+				<h2>Class 1 Token</h2>
+			</div>
+			<div class="modal-box-content">
+				<p class="modal-notice" style="margin: 50px auto; ">FHGKEAF-3637-er2dJHKDS</p>
+				<div style="width: 80px; margin: 0 auto; ">
+					<a href="#" class="btn3" onclick="jQuery.fancybox.close(); return false; "><span>Close</span></a>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+	<div id="modal-newtoken">
+		
+		<div id="modal-newtoken-box" class="modal-wrapper" style="width: 600px;" >
+			<div class="modal-box-head">
+				<span class="icon icon-token"></span>
+				<h2>New Token</h2>
+			</div>
+			<div class="modal-box-content">
+				<p class="modal-notice" style="width: 400px; margin: 40px auto; ">Generating a new token will allow students to enter this class with the new token. Are you sure you want to generate a new token?</p>
+				<div style="width: 250px; margin: 0 auto; ">
+					<div style="width: 100px; float: left; ">
+						<a class="btn2 modal-link" href="#modal-viewtoken"><span>Generate</span></a>
+					</div>
+					<div style="width: 100px; float: right; ">
+						<a class="btn3 modal-link" href="#modal-viewtoken"><span>Cancel</span></a>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+</div>
 
 
 <div style="display: none; ">	
