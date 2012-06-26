@@ -23,7 +23,7 @@ class Challenge extends AppModel{
 									'dependent'	=> true ));
 									
 	var $hasAndBelongsToMany = array(	'Class'	=>
-										array(	'className'	=> 'Class',
+										array(	'className'	=> 'ClassSet',
 												'joinTable'	=> 'challenges_classes',
 												'foreignKey'=> 'challenge_id',
 												'associationForeignKey'=> 'class_id',

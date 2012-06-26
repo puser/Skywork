@@ -25,7 +25,7 @@
 					<li>
 						<label>E-mail</label>
 						<input type="text" size="60" name="email" value="<?php echo $user['User']['email']; ?>" />
-						<a href="#emailPreferences" class="show-overlay modal-link" style="color: #666666; font-size: 12px; ">Preferences</a>
+						<a href="#modal-preferences" class="show-overlay modal-link" style="color: #666666; font-size: 12px; ">Preferences</a>
 					</li>
 					<li><label>City</label> <input type="text" size="20" class="width15" name="city" value="<?php echo $user['User']['city']; ?>" /></li>
 					<li>
@@ -75,30 +75,36 @@
 
 <div style="display: none; ">
 
-	<div id="emailPreferences">
-		<div class="box-heading">
-			<span class="icon icon-envelope"></span>
-			<h2 class="page-subtitle">My Email Preferences</h2>
+	<div id="modal-preferences">
+		<div class="modal-wrapper" style="width: 600px;" >
+			<div class="modal-box-head">
+				<span class="icon3 icon-envelope"></span>
+				<h2>My Email Preferences</h2>
+			</div>
+			<div class="modal-box-content">
+				<form action="" method="post">	
+					<ul class="fieldset">
+						<li>Check your preferences:</li>
+						<li class="alternate">
+							<input type="radio" onclick="enable_user_email();"<?php if($user['User']['notify_responses'] || $user['User']['notify_challenges'] || $user['User']['notify_expiration'] || $user['User']['notify_groups']){ ?> checked="checked"<?php } ?> name="enable_email" /> Send me email
+						</li>
+						<li>
+							<div class="send-email-preference"><input type="checkbox" id="notify_groups"<?php if($user['User']['notify_groups']){ ?> checked="checked"<?php } ?> disabled="disabled" /> Classes</div>
+							<div class="send-email-preference"><input type="checkbox" id="notify_challenges"<?php if($user['User']['notify_challenges']){ ?> checked="checked"<?php } ?> disabled="disabled" /> Challenges</div>
+							<div class="send-email-preference"><input type="checkbox" id="notify_expiration"<?php if($user['User']['notify_expiration']){ ?> checked="checked"<?php } ?> /> Due Date Expiration</div>
+							<div class="clear"></div>
+						</li>
+						<li class="alternate">
+							<input type="radio" onclick="disable_user_email();"<?php if(!($user['User']['notify_responses'] || $user['User']['notify_challenges'] || $user['User']['notify_expiration'] || $user['User']['notify_groups'])){ ?> checked="checked"<?php } ?> name="enable_email" /> Never send me email
+						</li>
+					</ul>
+				</form>
+				<div class="clear"></div>
+				<div style="width: 80px; margin: 0 auto; ">
+					<a href="#" class="btn2" style="width: 100%" onclick="set_email_prefs();jQuery.fancybox.close();save_user();return false;"><span>Save</span></a>
+				</div>
+			</div>
 		</div>
-
-		
-		<ul class="fieldset2">
-			<li class="alternate">
-				<input type="radio" onclick="enable_user_email();"<?php if($user['User']['notify_responses'] || $user['User']['notify_challenges'] || $user['User']['notify_expiration'] || $user['User']['notify_groups']){ ?> checked="checked"<?php } ?> name="enable_email"> Send me email
-			</li>
-			<li >
-				<input type="checkbox" id="notify_groups"<?php if($user['User']['notify_groups']){ ?> checked="checked"<?php } ?> disabled="disabled"> Groups &nbsp;&nbsp;
-				<input type="checkbox" id="notify_challenges"<?php if($user['User']['notify_challenges']){ ?> checked="checked"<?php } ?> disabled="disabled"> Challenges &nbsp;&nbsp;
-				
-				<input type="checkbox" id="notify_expiration"<?php if($user['User']['notify_expiration']){ ?> checked="checked"<?php } ?>> Expiration &nbsp;&nbsp;
-				<!-- <input type="checkbox" id="notify_responses"<?php if($user['User']['notify_responses']){ ?> checked="checked"<?php } ?>> Question Responses &nbsp;&nbsp; -->
-			</li>
-			<li class="alternate">
-				<input type="radio" onclick="disable_user_email();"<?php if(!($user['User']['notify_responses'] || $user['User']['notify_challenges'] || $user['User']['notify_expiration'] || $user['User']['notify_groups'])){ ?> checked="checked"<?php } ?> name="enable_email"> Never send me an email
-			</li>
-		</ul>
-
-		<a href="#"  onclick="set_email_prefs();jQuery.fancybox.close();save_user();return false;" class="btn1 aligncenter"><span class="inner">Save</span></a>
 	</div>
 	
 	<div id="terminateAccount">

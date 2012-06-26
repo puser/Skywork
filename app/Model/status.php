@@ -11,7 +11,7 @@ class Status extends AppModel{
 							array(	'className'	=> 'Challenge',
 									'foreignKey'=> 'challenge_id' ),
 							'Class' =>
-							array(	'className'	=> 'Class',
+							array(	'className'	=> 'ClassSet',
 									'foreignKey'=> 'class_id' ));
 }
 ?>

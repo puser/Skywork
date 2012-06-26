@@ -55,15 +55,20 @@
 									</td>
 									<td><?php echo date_format(date_create($g['date_created']),'m/d/Y'); ?></td>
 									<td> </td>
-									<td style="position:relative;">
-										<?php
-										echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}";
-										if($g['Owner']['id']==$_SESSION['User']['id']){ ?>
-											<div style="display:none;position:absolute;right:20px;top:9px;" class="deleteChallenge">
-												<a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/groups/delete/<?php echo $g['id']; ?>/');" class="show-overlay">
-													<img src="/images/icon-x.png" style="position:absolute;">
-												</a>
+									<td><?php echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}"; ?></td>
+									<td>
+										<?php if($g['Owner']['id']==$_SESSION['User']['id']){ ?>
+										<div class="item-actions">
+											<a href="#" class="item-actions-icon"></a>
+											<div class="item-actions-popup rounded2">
+												<ul>
+													<li><a href="#modal-shareclass" class="icon3 icon3-plus modal-link">Share Class</a></li>
+													<li><a href="#modal-viewtoken" class="icon3 icon3-token modal-link">View Token</a></li>
+													<li><a href="#modal-editclass" class="icon3 icon3-pen modal-link">Edit Class</a></li>
+													<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/groups/delete/<?php echo $g['id']; ?>/');" class="icon3 icon3-close modal-link">Delete Class</a></li>
+												</ul>
 											</div>
+										</div>
 										<?php } ?>
 									</td>
 								</tr>
