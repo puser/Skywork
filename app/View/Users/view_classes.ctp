@@ -24,75 +24,68 @@
 			<div class="clear"></div>
 		</div>
 		<div class="box-content">
-
-					<form action="/groups/update/" method="post" id="newGroupForm">
-						<input type="hidden" name="group[Group][owner_id]" value="<?php echo $user['User']['id']; ?>" />
-						<input type="hidden" name="group[User][][user_id]" value="<?php echo $user['User']['id']; ?>" />
-						<table class="table-type-1" id="table-classes">
-							<thead>
-								<tr>
-									<th><a href="/users/view/groups/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Class Name</a></th>
-									<th><a href="/users/view/groups/?sort=modified&dir=<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Last Edit</a></th>
-									<th><a href="#" class="sortdown">Students</a></th>
-									<th><a href="/users/view/groups/?sort=owner&dir=<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Creator</a></th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php 
-								$ex_groups = array();
-								foreach($user['Class'] as $k=>$g){
-									$ex_groups[$g['id']] = 1;
-									?>
-								<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.deleteChallenge').show();" onmouseout="$(this).find('.deleteChallenge').hide();">
-									<td>
-										<?php if(array_search($g['id'],$requested_groups) !== false){ ?>
-										<a href="/groups/view_request/<?php echo $g['id']; ?>" class="show-overlay" id="viewGroupLink<?php echo $g['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['id']; ?>);">
-										<?php }else{ ?>
-										<a <?php if($_SESSION['User']['id']==$g['Owner']['id']){ ?>href="/groups/view_members/<?php echo $g['id']; ?>" class="show-overlay" <?php }else echo 'href="#"'; ?> id="viewGroupLink<?php echo $g['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['id']; ?>);">
-										<?php } ?>
-											<?php echo (array_search($g['id'],$requested_groups) !== false || array_search($g['id'],$pending_groups) !== false ? '<span class="red">*</span> ' : '') . $g['group_name']; ?>
-										</a>
-									</td>
-									<td><?php echo date_format(date_create($g['date_created']),'m/d/Y'); ?></td>
-									<td> </td>
-									<td><?php echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}"; ?></td>
-									<td>
-										<?php if($g['Owner']['id']==$_SESSION['User']['id']){ ?>
-										<div class="item-actions">
-											<a href="#" class="item-actions-icon"></a>
-											<div class="item-actions-popup rounded2">
-												<ul>
-													<li><a href="#modal-shareclass" class="icon3 icon3-plus modal-link">Share Class</a></li>
-													<li><a href="#modal-viewtoken" class="icon3 icon3-token modal-link">View Token</a></li>
-													<li><a href="#modal-editclass" class="icon3 icon3-pen modal-link">Edit Class</a></li>
-													<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/groups/delete/<?php echo $g['id']; ?>/');" class="icon3 icon3-close modal-link">Delete Class</a></li>
-												</ul>
-											</div>
-										</div>
-										<?php } ?>
-									</td>
-								</tr>
-								<?php }if(@$invites){
-									foreach($invites as $k=>$g){
-										$ex_groups[$g['Class']['id']] = 1;
-										?>
-										<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?>>
-											<td>
-												<a href="/groups/view_members/<?php echo $g['Class']['id']; ?>/view_invite" class="show-overlay">
-													<?php echo '<span class="red">*</span> ' . $g['Class']['group_name']; ?>
-												</a>
-											</td>
-											<td><?php echo date_format(date_create($g['Class']['date_created']),'m/d/Y'); ?></td>
-											<td><?php echo date_format(date_create($g['Class']['date_created']),'m/d/Y'); ?></td>
-											<td><?php echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}"?></td>
-										</tr>
-									<?php }
-								} ?>
-							</tbody>
-						</table>
-					</form>
-				</div>
-			</div>
+			<table class="table-type-1" id="table-classes">
+				<thead>
+					<tr>
+						<th><a href="/users/view/groups/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Class Name</a></th>
+						<th><a href="/users/view/groups/?sort=modified&dir=<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Last Edit</a></th>
+						<th><a href="#" class="sortdown">Students</a></th>
+						<th><a href="/users/view/groups/?sort=owner&dir=<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Creator</a></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php 
+					$ex_groups = array();
+					foreach($user['Class'] as $k=>$g){
+						$ex_groups[$g['id']] = 1;
+						?>
+					<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.deleteChallenge').show();" onmouseout="$(this).find('.deleteChallenge').hide();">
+						<td>
+							<?php if(array_search($g['id'],$requested_groups) !== false){ ?>
+							<a href="/groups/view_request/<?php echo $g['id']; ?>" class="show-overlay" id="viewGroupLink<?php echo $g['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['id']; ?>);">
+							<?php }else{ ?>
+							<a <?php if($_SESSION['User']['id']==$g['Owner']['id']){ ?>href="/groups/view_members/<?php echo $g['id']; ?>" class="show-overlay" <?php }else echo 'href="#"'; ?> id="viewGroupLink<?php echo $g['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['id']; ?>);">
+							<?php } ?>
+								<?php echo (array_search($g['id'],$requested_groups) !== false || array_search($g['id'],$pending_groups) !== false ? '<span class="red">*</span> ' : '') . $g['group_name']; ?>
+							</a>
+						</td>
+						<td><?php echo date_format(date_create($g['date_created']),'m/d/Y'); ?></td>
+						<td> </td>
+						<td><?php echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}"; ?></td>
+						<td>
+							<?php if($g['Owner']['id']==$_SESSION['User']['id']){ ?>
+							<div class="item-actions">
+								<a href="#" class="item-actions-icon"></a>
+								<div class="item-actions-popup rounded2">
+									<ul>
+										<li><a href="#modal-shareclass" class="icon3 icon3-plus modal-link">Share Class</a></li>
+										<li><a href="#modal-viewtoken" class="icon3 icon3-token modal-link">View Token</a></li>
+										<li><a href="#modal-editclass" class="icon3 icon3-pen modal-link">Edit Class</a></li>
+										<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/groups/delete/<?php echo $g['id']; ?>/');" class="icon3 icon3-close modal-link">Delete Class</a></li>
+									</ul>
+								</div>
+							</div>
+							<?php } ?>
+						</td>
+					</tr>
+					<?php }if(@$invites){
+						foreach($invites as $k=>$g){
+							$ex_groups[$g['Class']['id']] = 1;
+							?>
+							<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?>>
+								<td>
+									<a href="/groups/view_members/<?php echo $g['Class']['id']; ?>/view_invite" class="show-overlay">
+										<?php echo '<span class="red">*</span> ' . $g['Class']['group_name']; ?>
+									</a>
+								</td>
+								<td><?php echo date_format(date_create($g['Class']['date_created']),'m/d/Y'); ?></td>
+								<td><?php echo date_format(date_create($g['Class']['date_created']),'m/d/Y'); ?></td>
+								<td><?php echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}"?></td>
+							</tr>
+						<?php }
+					} ?>
+				</tbody>
+			</table>
 		</div>
 		<div class="foot"><div class="fl"></div><div class="fr"></div></div>
 	</div><!-- #myaccountGroupsForm-->
@@ -321,38 +314,43 @@
 	
 	
 	<div id="modal-addclass">
-		<div id="modal-addclass-box" class="modal-joinsharedclass-box modal-wrapper" style="width: 600px;" >
-			<div class="modal-box-head">
-				<span class="icon icon-plus"></span>
-				<h2>Create Class</h2>
-			</div>
-			<div class="modal-box-content">
-				<p>Please enter the details below to create a new class:</p>
-				<ul class="fieldset2">
-					<li>
-						<label>Class Name</label>
-						<input type="text" size="50" name="group[Group][group_name]" />
-						<div class="clear"></div>
-					</li>
-					<li class="radioinput">
-						<span class="label">Make this class searchable</span>
-						<div class="input">
-							<input type="radio" name="make_class_searchable" id="make_class_searchable_yes" /> <label for="make_class_searchable_yes">Yes </label>
-							<input type="radio" name="make_class_searchable" id="make_class_searchable_no" /> <label for="make_class_searchable_no">No </label>
-						</div>
-						<div class="clear"></div>
-					</li>
-				</ul>
-				<div class="clear"></div>
-				<p class="small">Instructors will be able to search and request to join your class. For security purposes, they must know your email address and you will always be able to Accept or Reject their request.</p>
-				<div class="clear"></div>
-				<div style="width: 250px; margin: 0 auto; ">
-					<a href="#modal-newtoken" class="btn2 modal-link" style="width: 120px; float: left;" ><span>Generate Token</span></a>
-					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+		<a style="display:none;" href="#modal-newtoken" class="btn2 modal-link" id="showGenerateToken"> </a>
+		<form id="create_class">
+			<input type="hidden" name="class[Class][owner_id]" value="<?php echo $user['User']['id']; ?>" />
+			<input type="hidden" name="class[User][][user_id]" value="<?php echo $user['User']['id']; ?>" />
+			<div id="modal-addclass-box" class="modal-joinsharedclass-box modal-wrapper" style="width: 600px;" >
+				<div class="modal-box-head">
+					<span class="icon icon-plus"></span>
+					<h2>Create Class</h2>
+				</div>
+				<div class="modal-box-content">
+					<p>Please enter the details below to create a new class:</p>
+					<ul class="fieldset2">
+						<li>
+							<label>Class Name</label>
+							<input type="text" size="50" id="createClassName" name="class[Class][group_name]" />
+							<div class="clear"></div>
+						</li>
+						<li class="radioinput">
+							<span class="label">Make this class searchable</span>
+							<div class="input">
+								<input type="radio" name="class[Class][public]" value="1" id="make_class_searchable_yes" /> <label for="make_class_searchable_yes">Yes </label>
+								<input type="radio" name="class[Class][public]" value="0" id="make_class_searchable_no" /> <label for="make_class_searchable_no">No </label>
+							</div>
+							<div class="clear"></div>
+						</li>
+					</ul>
 					<div class="clear"></div>
+					<p class="small">Instructors will be able to search and request to join your class. For security purposes, they must know your email address and you will always be able to Accept or Reject their request.</p>
+					<div class="clear"></div>
+					<div style="width: 250px; margin: 0 auto; ">
+						<a href="#" onclick="create_class();" class="btn2" style="width: 120px; float: left;" ><span>Generate Token</span></a>
+						<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+						<div class="clear"></div>
+					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 	
 	<div id="modal-joinsharedclass">
@@ -459,10 +457,10 @@
 					</ul>
 				</div>
 				<span class="icon icon-token"></span>
-				<h2>Class 1 Token</h2>
+				<h2 id="tokenClassName">Token</h2>
 			</div>
 			<div class="modal-box-content">
-				<p class="modal-notice" style="margin: 50px auto; ">FHGKEAF-3637-er2dJHKDS</p>
+				<p class="modal-notice" style="margin: 50px auto; " id="token_value"> </p>
 				<div style="width: 80px; margin: 0 auto; ">
 					<a href="#" class="btn3" onclick="jQuery.fancybox.close(); return false; "><span>Close</span></a>
 				</div>
@@ -475,6 +473,8 @@
 	<div id="modal-newtoken">
 		
 		<div id="modal-newtoken-box" class="modal-wrapper" style="width: 600px;" >
+			<a style="display:none;" href="#modal-viewtoken" class="btn2 modal-link" id="showNewToken"> </a>
+			<input type="hidden" id="newTokenClassID" />
 			<div class="modal-box-head">
 				<span class="icon icon-token"></span>
 				<h2>New Token</h2>
@@ -483,10 +483,10 @@
 				<p class="modal-notice" style="width: 400px; margin: 40px auto; ">Generating a new token will allow students to enter this class with the new token. Are you sure you want to generate a new token?</p>
 				<div style="width: 250px; margin: 0 auto; ">
 					<div style="width: 100px; float: left; ">
-						<a class="btn2 modal-link" href="#modal-viewtoken"><span>Generate</span></a>
+						<a class="btn2" href="#" onclick="update_token();"><span>Generate</span></a>
 					</div>
 					<div style="width: 100px; float: right; ">
-						<a class="btn3 modal-link" href="#modal-viewtoken"><span>Cancel</span></a>
+						<a class="btn3" href="#" onclick="jQuery.fancybox.close(); return false;"><span>Cancel</span></a>
 					</div>
 					<div class="clear"></div>
 				</div>

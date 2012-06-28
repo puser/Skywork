@@ -1,13 +1,25 @@
 <?php
-class GroupsController extends AppController{
-	var $name = 'Groups';
+class ClassesController extends AppController{
+	var $name = 'Classes';
 	var $uses = array('User','Challenge','Class','Status');
 	
 	function update(){
 		$this->checkAuth();
+			
+		if(@$_REQUEST['class']['Class']['group_name']){
+			$this->Class->save($_REQUEST['class']);
+			die($this->Class->id);
+		}
+		else die('Invalid parameters');
+	}
+	
+	function update_token($id){
+		$this->checkAuth();
 		
-		if(@$_REQUEST['group']['Class']['group_name']) $this->Group->save($_REQUEST['group']);
-		$this->redirect('/users/view/groups/1');
+		$token = sha1(time().rand(1000,10000));
+		$this->Class->save(array('Class'=>array('id'=>$id,'auth_token'=>$token)));
+		
+		die($token);
 	}
 	
 	function view_members($group_id,$view='view_members'){

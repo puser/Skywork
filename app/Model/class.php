@@ -6,19 +6,19 @@ class ClassSet extends AppModel{
 	
 	var $belongsTo = array(	'Owner' =>
 														array(	'className'	=> 'User',
-														'foreignKey'=> 'owner_id' ));
+																		'foreignKey'=> 'owner_id' ));
 										
 	var $hasAndBelongsToMany = array(	'User' =>
-																array(	'className' => 'User',
-																		'joinTable'	=> 'users_classes',
-																		'foreignKey'=> 'class_id',
-																		'associationForeignKey'=> 'class_id',
-																		'unique'	=> true ),
-																'Challenge'	=>
-																array(	'className'	=> 'Challenge',
-																		'joinTable'	=> 'challenges_classes',
-																		'foreignKey'=> 'class_id',
-																		'associationForeignKey'=> 'challenge_id',
-																		'unique'	=> true ));
+																		array(	'className' => 'User',
+																						'joinTable'	=> 'users_classes',
+																						'foreignKey'=> 'class_id',
+																						'associationForeignKey'=> 'user_id',
+																						'unique'	=> true ),
+																		'Challenge'	=>
+																		array(	'className'	=> 'Challenge',
+																						'joinTable'	=> 'challenges_classes',
+																						'foreignKey'=> 'class_id',
+																						'associationForeignKey'=> 'challenge_id',
+																						'unique'	=> true ));
 }
 ?>

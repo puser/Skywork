@@ -361,6 +361,21 @@ function create_group(){
 	$('#new_group_form').show();
 }
 
+function create_class(){
+	$.ajax({url:'/classes/update/',data:$('#create_class').serialize(),type:'POST',success:function(r){
+		$('#newTokenClassID').val(r);
+		$('#tokenClassName').html($('#createClassName').val() + ' Token');
+		$('#showGenerateToken').click();
+	}});
+}
+
+function update_token(){
+	$.ajax({url:'/classes/update_token/' + $('#newTokenClassID').val(),success:function(r){
+		$('#token_value').html(r);
+		$('#showNewToken').click();
+	}});
+}
+
 function show_group_members(g_id){
 	$('.simpletable.groupmemberlist').remove();
 	$('#inviteUserGroup').val(g_id);
