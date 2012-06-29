@@ -1,0 +1,106 @@
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-06-29 02:05-0500\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: View/Users/view.ctp:2;5;15
+msgid "My Account"
+msgstr ""
+
+#: View/Users/view.ctp:6;92
+msgid "Classes"
+msgstr ""
+
+#: View/Users/view.ctp:21
+msgid "Personal Info"
+msgstr ""
+
+#: View/Users/view.ctp:23
+msgid "First Name"
+msgstr ""
+
+#: View/Users/view.ctp:24
+msgid "Last Name"
+msgstr ""
+
+#: View/Users/view.ctp:26
+msgid "E-mail"
+msgstr ""
+
+#: View/Users/view.ctp:28
+msgid "Preferences"
+msgstr ""
+
+#: View/Users/view.ctp:30
+msgid "City"
+msgstr ""
+
+#: View/Users/view.ctp:32
+msgid "State"
+msgstr ""
+
+#: View/Users/view.ctp:40
+msgid "Language"
+msgstr ""
+
+#: View/Users/view.ctp:47
+msgid "Change Password"
+msgstr ""
+
+#: View/Users/view.ctp:49
+msgid "Type Password"
+msgstr ""
+
+#: View/Users/view.ctp:50
+msgid "Re-type Password"
+msgstr ""
+
+#: View/Users/view.ctp:53
+msgid "Allow other Professors to search for my classes"
+msgstr ""
+
+#: View/Users/view.ctp:55
+msgid "Terminate my Account"
+msgstr ""
+
+#: View/Users/view.ctp:56
+msgid "Terminate"
+msgstr ""
+
+#: View/Users/view.ctp:67;104
+msgid "Save"
+msgstr ""
+
+#: View/Users/view.ctp:69
+msgid "Saved!"
+msgstr ""
+
+#: View/Users/view.ctp:82
+msgid "My Email Preferences"
+msgstr ""
+
+#: View/Users/view.ctp:87
+msgid "Check your preferences:"
+msgstr ""
+
+#: View/Users/view.ctp:89
+msgid "Send me email"
+msgstr ""
+
+#: View/Users/view.ctp:93
+msgid "Challenges"
+msgstr ""
+
+#: View/Users/view.ctp:94
+msgid "Due Date Expiration"
+msgstr ""
+
+#: View/Users/view.ctp:98
+msgid "Never send me email"
+msgstr ""
+

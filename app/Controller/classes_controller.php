@@ -1,14 +1,14 @@
 <?php
 class ClassesController extends AppController{
 	var $name = 'Classes';
-	var $uses = array('User','Challenge','Class','Status');
+	var $uses = array('User','Challenge','ClassSet','Status','UserClass');
 	
 	function update(){
 		$this->checkAuth();
 			
-		if(@$_REQUEST['class']['Class']['group_name']){
-			$this->Class->save($_REQUEST['class']);
-			die($this->Class->id);
+		if(@$_REQUEST['ClassSet']['ClassSet']['group_name']){
+			$this->ClassSet->save($_REQUEST['ClassSet']);
+			die($this->ClassSet->id);
 		}
 		else die('Invalid parameters');
 	}
@@ -17,17 +17,23 @@ class ClassesController extends AppController{
 		$this->checkAuth();
 		
 		$token = sha1(time().rand(1000,10000));
-		$this->Class->save(array('Class'=>array('id'=>$id,'auth_token'=>$token)));
+		$this->ClassSet->save(array('ClassSet'=>array('id'=>$id,'auth_token'=>$token)));
 		
 		die($token);
 	}
 	
-	function view_members($group_id,$view='view_members'){
+	function view_members($class_id,$view='view_students'){
 		$this->checkAuth();
 		
-		$this->Group->hasAndBelongsToMany['User']['conditions'] = 'User.search_visible = 1';
-		$this->set('group',$this->Group->findById($group_id));
+		$this->ClassSet->hasAndBelongsToMany['User']['conditions'] = 'User.search_visible = 1 && User.user_type = "' . ($view == 'view_students' ? 'P' : 'L') . '"';
+		$this->set('class',$this->ClassSet->findById($class_id));
 		$this->render($view,'ajax');
+	}
+	
+	function create_professor($id){
+		$this->checkAuth();
+		$this->layout = 'ajax';
+		$this->set('class',$this->ClassSet->findById($id));
 	}
 	
 	function request_join(){
@@ -46,7 +52,7 @@ class ClassesController extends AppController{
 			
 			if($group['Owner']['notify_groups']){
 				// notify group leader
-				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your group, {$group['Class']['group_name']}, on Case Club Online.";
+				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your group, {$group['ClassSet']['group_name']}, on Case Club Online.";
 				$message .= "\n\n<a href='http://caseclubonline.com/users/view/groups/'>Click here to view!</a>";
 				$message .= "\n\nSincerely,\n\nCase Club Online Team";
 		
@@ -80,7 +86,7 @@ class ClassesController extends AppController{
 		foreach($_REQUEST['users'] as $u){
 			$this->Status->deleteAll(array('Status.status'=>$remove_status,'Status.user_id'=>$u,'Status.group_id'=>$group_id,'Status.challenge_id IS NULL'));
 			if($action == 'a'){
-				$group_update = array('Class'=>array('id'=>$group_id));
+				$group_update = array('ClassSet'=>array('id'=>$group_id));
 				$group_update['User'] = array($u);
 				foreach($group['User'] as $u) if(array_search($u['id'],$group_update['User']) === false) $group_update['User'][] = $u['id'];
 				$this->Group->save($group_update);
@@ -89,10 +95,10 @@ class ClassesController extends AppController{
 		die();
 	}
 	
-	function remove_member($group_id,$user_id){
+	function remove_member($class_id,$user_id){
 		$this->checkAuth();
 		
-		$this->Group->UsersGroup->deleteAll(array('UsersGroup.user_id'=>$user_id,'UsersGroup.group_id'=>$group_id),false);
+		$this->UserClass->deleteAll(array('UserClass.user_id'=>$user_id,'UserClass.class_id'=>$class_id),false);
 		die();
 	}
 	

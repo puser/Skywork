@@ -1,9 +1,9 @@
 <div id="sidebarleft">
-	<h1>My Account</h1>
+	<h1><?php echo __('My Account') ?></h1>
 	<div id="sidemenu">
 		<ul>
-			<li><a class="icon icon-calendar" href="/users/view/">My Account</a></li>
-			<li class="active"><a class="icon icon-class" href="#">Classes</a></li>
+			<li><a class="icon icon-calendar" href="/users/view/"><?php echo __('My Account') ?></a></li>
+			<li class="active"><a class="icon icon-class" href="#"><?php echo __('Classes') ?></a></li>
 		</ul>
 	</div>
 </div>
@@ -36,7 +36,7 @@
 				<tbody>
 					<?php 
 					$ex_groups = array();
-					foreach($user['Class'] as $k=>$g){
+					foreach($user['ClassSet'] as $k=>$g){
 						$ex_groups[$g['id']] = 1;
 						?>
 					<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.deleteChallenge').show();" onmouseout="$(this).find('.deleteChallenge').hide();">
@@ -44,7 +44,7 @@
 							<?php if(array_search($g['id'],$requested_groups) !== false){ ?>
 							<a href="/groups/view_request/<?php echo $g['id']; ?>" class="show-overlay" id="viewGroupLink<?php echo $g['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['id']; ?>);">
 							<?php }else{ ?>
-							<a <?php if($_SESSION['User']['id']==$g['Owner']['id']){ ?>href="/groups/view_members/<?php echo $g['id']; ?>" class="show-overlay" <?php }else echo 'href="#"'; ?> id="viewGroupLink<?php echo $g['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['id']; ?>);">
+							<a <?php if($_SESSION['User']['id']==$g['Owner']['id']){ ?>href="/classes/view_members/<?php echo $g['id']; ?>" class="show-overlay" <?php }else echo 'href="#"'; ?> id="viewGroupLink<?php echo $g['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['id']; ?>);">
 							<?php } ?>
 								<?php echo (array_search($g['id'],$requested_groups) !== false || array_search($g['id'],$pending_groups) !== false ? '<span class="red">*</span> ' : '') . $g['group_name']; ?>
 							</a>
@@ -58,9 +58,9 @@
 								<a href="#" class="item-actions-icon"></a>
 								<div class="item-actions-popup rounded2">
 									<ul>
-										<li><a href="#modal-shareclass" class="icon3 icon3-plus modal-link">Share Class</a></li>
-										<li><a href="#modal-viewtoken" class="icon3 icon3-token modal-link">View Token</a></li>
-										<li><a href="#modal-editclass" class="icon3 icon3-pen modal-link">Edit Class</a></li>
+										<li><a href="/classes/view_members/<?php echo $g['id']; ?>/view_sharing" class="icon3 icon3-plus modal-link">Share Class</a></li>
+										<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['id']; ?>,'<?php echo $g['group_name']; ?>','<?php echo ($g['auth_token'] ? $g['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link">View Token</a></li>
+										<li><a href="/classes/view_members/<?php echo $g['id']; ?>" class="icon3 icon3-pen modal-link">Edit Class</a></li>
 										<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/groups/delete/<?php echo $g['id']; ?>/');" class="icon3 icon3-close modal-link">Delete Class</a></li>
 									</ul>
 								</div>
@@ -70,16 +70,16 @@
 					</tr>
 					<?php }if(@$invites){
 						foreach($invites as $k=>$g){
-							$ex_groups[$g['Class']['id']] = 1;
+							$ex_groups[$g['ClassSet']['id']] = 1;
 							?>
 							<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?>>
 								<td>
-									<a href="/groups/view_members/<?php echo $g['Class']['id']; ?>/view_invite" class="show-overlay">
-										<?php echo '<span class="red">*</span> ' . $g['Class']['group_name']; ?>
+									<a href="/groups/view_members/<?php echo $g['ClassSet']['id']; ?>/view_invite" class="show-overlay">
+										<?php echo '<span class="red">*</span> ' . $g['ClassSet']['group_name']; ?>
 									</a>
 								</td>
-								<td><?php echo date_format(date_create($g['Class']['date_created']),'m/d/Y'); ?></td>
-								<td><?php echo date_format(date_create($g['Class']['date_created']),'m/d/Y'); ?></td>
+								<td><?php echo date_format(date_create($g['ClassSet']['date_created']),'m/d/Y'); ?></td>
+								<td><?php echo date_format(date_create($g['ClassSet']['date_created']),'m/d/Y'); ?></td>
 								<td><?php echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}"?></td>
 							</tr>
 						<?php }
@@ -118,167 +118,6 @@
 </script>
 
 <div style="display: none;">
-	<div id="modal-shareclass">
-		<div class="modal-wrapper" style="width: 600px;" >
-			<div class="modal-box-head">
-				
-				<div class="box-actions">
-					<ul>
-						<li><a class="icon4 icon4-plus modal-link" href="#modal-addprofessor" >Add a professor</a></li>
-					</ul>
-				</div>
-				
-				<span class="icon5 icon5-shake"></span>
-				<h2>Class 1 - Shared</h2>
-			</div>
-			<div class="modal-box-content">
-				
-				<table class="table-type-1">
-					<thead>
-						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr class="alternate">
-							<td>Anson</td>
-							<td>John</td>
-							<td>johanson@school.com</td>
-							<td><a href="#" class="icon3 icon3-close" ></a></td>
-						</tr>
-						<tr class="">
-							<td>Anson</td>
-							<td>John</td>
-							<td>johanson@school.com</td>
-							<td><a href="#" class="icon3 icon3-close" ></a></td>
-						</tr>
-						<tr class="alternate">
-							<td>Anson</td>
-							<td>John</td>
-							<td>johanson@school.com</td>
-							<td><a href="#" class="icon3 icon3-close" ></a></td>
-						</tr>
-					</tbody>
-				</table>
-				<br /><br /><br /><br />
-				<div class="clear"></div>
-				<div style="width: 80px; margin: 0 auto; ">
-					<a href="#" class="btn3" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div id="modal-addprofessor">
-		<div id="modal-addprofessor-box" class="modal-wrapper" style="width: 600px;" >
-			<div class="modal-box-head">
-				<span class="icon icon-class-color"></span>
-				<h2>Add Professor to Shared Class</h2>
-			</div>
-			<div class="modal-box-content">
-				<p>Please enter the information below before adding to your class:</p>
-				<ul class="fieldset2">
-					<li>
-						<label>First Name</label>
-						<input type="text" size="50" />
-					</li>
-					<li>
-						<label>Last Name</label>
-						<input type="text" size="50" />
-					</li>
-					<li>
-						<label>Email</label>
-						<input type="text" size="50" />
-					</li>
-					<li>
-						<label>Permissions</label>
-						<div class="input-wrap">
-							<p>This Professor can add my class to a Bridge:</p>
-							<p><input type="checkbox" /> Only if (s)he requests and I accept</p>
-							<p><input type="checkbox" /> Without request</p>
-						</div>
-						<div class="clear"></div>
-					</li>
-				</ul>
-				<br /><br />
-				<div class="clear"></div>
-				<div style="width: 230px; margin: 0 auto; ">
-					<a href="#" class="btn2" style="width: 140px; float: left;" onclick="jQuery.fancybox.close(); return false; "><span>Send Notification</span></a>
-					<a href="#" class="btn3" style="width: 60px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
-					<div class="clear"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	
-	<div id="modal-editclass">
-		
-		<div id="modal-editclass-box" class="modal-wrapper" style="width: 600px;" >
-			<div class="modal-box-head">
-				
-				<div class="box-actions">
-					<ul>
-						<li><a class="icon4 icon4-plus modal-link" href="#modal-adduser" >Add a new Student</a></li>
-						<li><a class="icon4 icon4-remove modal-link" href="#" >Clean class</a></li>
-					</ul>
-				</div>
-				
-				<h2>Class 1 Students</h2>
-			</div>
-			<div class="modal-box-content">
-				
-				<table class="table-type-1">
-					<thead>
-						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>City</th>
-							<th>State</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr class="alternate">
-							<td>Anson</td>
-							<td>John</td>
-							<td>johanson@school.com</td>
-							<td>Miami</td>
-							<td>FL</td>
-							<td><a href="#" class="icon3 icon3-close" ></a></td>
-						</tr>
-						<tr class="">
-							<td>Anson</td>
-							<td>John</td>
-							<td>johanson@school.com</td>
-							<td>Miami</td>
-							<td>FL</td>
-							<td><a href="#" class="icon3 icon3-close" ></a></td>
-						</tr>
-						<tr class="alternate">
-							<td>Anson</td>
-							<td>John</td>
-							<td>johanson@school.com</td>
-							<td>Miami</td>
-							<td>FL</td>
-							<td><a href="#" class="icon3 icon3-close" ></a></td>
-						</tr>
-					</tbody>
-				</table>
-				<br /><br /><br /><br />
-				<div class="clear"></div>
-				<div style="width: 200px; margin: 0 auto; ">
-					<a href="#" class="btn2" style="width: 80px; float: left;" onclick="jQuery.fancybox.close(); return false; "><span>Add</span></a>
-					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
-					<div class="clear"></div>
-				</div>
-			</div>
-		</div>
-	</div>
 	
 	<div id="modal-adduser">
 		<div id="modal-adduser-box" class="modal-wrapper" style="width: 600px;" >
@@ -316,7 +155,7 @@
 	<div id="modal-addclass">
 		<a style="display:none;" href="#modal-newtoken" class="btn2 modal-link" id="showGenerateToken"> </a>
 		<form id="create_class">
-			<input type="hidden" name="class[Class][owner_id]" value="<?php echo $user['User']['id']; ?>" />
+			<input type="hidden" name="class[ClassSet][owner_id]" value="<?php echo $user['User']['id']; ?>" />
 			<input type="hidden" name="class[User][][user_id]" value="<?php echo $user['User']['id']; ?>" />
 			<div id="modal-addclass-box" class="modal-joinsharedclass-box modal-wrapper" style="width: 600px;" >
 				<div class="modal-box-head">
@@ -328,14 +167,14 @@
 					<ul class="fieldset2">
 						<li>
 							<label>Class Name</label>
-							<input type="text" size="50" id="createClassName" name="class[Class][group_name]" />
+							<input type="text" size="50" id="createClassName" name="class[ClassSet][group_name]" />
 							<div class="clear"></div>
 						</li>
 						<li class="radioinput">
 							<span class="label">Make this class searchable</span>
 							<div class="input">
-								<input type="radio" name="class[Class][public]" value="1" id="make_class_searchable_yes" /> <label for="make_class_searchable_yes">Yes </label>
-								<input type="radio" name="class[Class][public]" value="0" id="make_class_searchable_no" /> <label for="make_class_searchable_no">No </label>
+								<input type="radio" name="class[ClassSet][public]" value="1" id="make_class_searchable_yes" /> <label for="make_class_searchable_yes">Yes </label>
+								<input type="radio" name="class[ClassSet][public]" value="0" id="make_class_searchable_no" /> <label for="make_class_searchable_no">No </label>
 							</div>
 							<div class="clear"></div>
 						</li>
@@ -565,8 +404,8 @@
 				<tbody>
 					<?php foreach($groups as $k=>$g){
 						if(@$ex_groups[$g['id']]) continue; ?>
-					<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> onclick="select_listed_group(<?php echo $g['Class']['id']; ?>,$(this));">
-						<td><?php echo $g['Class']['group_name']; ?></td>
+					<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> onclick="select_listed_group(<?php echo $g['ClassSet']['id']; ?>,$(this));">
+						<td><?php echo $g['ClassSet']['group_name']; ?></td>
 						<td class="textAlignCenter"><?php echo $g['Owner']['firstname']; ?></td>
 						<td class="textAlignCenter"><?php echo $g['Owner']['lastname']; ?></td>
 						<td class="textAlignCenter"><?php echo count($g['User']); ?></td>

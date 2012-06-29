@@ -1,6 +1,5 @@
 <?php
 class ClassSet extends AppModel{
-	var $name = 'Class';
 	var $primaryKey = 'id';
 	var $useTable = 'classes';
 	

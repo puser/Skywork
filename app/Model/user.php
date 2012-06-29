@@ -15,7 +15,7 @@ class User extends AppModel{
 							array(	'className'	=> 'Status',
 									'foreignKey'=> 'user_id',
 									'dependent'	=> true ));
-	var $hasAndBelongsToMany = array(	'Class' =>
+	var $hasAndBelongsToMany = array(	'ClassSet' =>
 										array(	'className'	=> 'ClassSet',
 												'joinTable'	=> 'users_classes',
 												'foreignKey'=> 'user_id',

@@ -1,22 +1,22 @@
 <?php
 class UsersController extends AppController{
 	var $name = 'Users';
-	var $uses = array('User','Class','Status','State');
+	var $uses = array('User','ClassSet','Status','State');
 	
 	// view account settings
 	function view($show=NULL,$saved=false){
 		$this->checkAuth();
 		
-		if(@$_REQUEST['sort']=='name') $sort = 'Class.group_name';
-		elseif(@$_REQUEST['sort']=='created') $sort = 'Class.date_created';
-		elseif(@$_REQUEST['sort']=='modified') $sort = 'Class.date_created';
-		elseif(@$_REQUEST['sort']=='owner') $sort = 'Class.owner_id';
-		else $sort = 'Class.group_name';
+		if(@$_REQUEST['sort']=='name') $sort = 'ClassSet.group_name';
+		elseif(@$_REQUEST['sort']=='created') $sort = 'ClassSet.date_created';
+		elseif(@$_REQUEST['sort']=='modified') $sort = 'ClassSet.date_created';
+		elseif(@$_REQUEST['sort']=='owner') $sort = 'ClassSet.owner_id';
+		else $sort = 'ClassSet.group_name';
 		
 		if(@$_REQUEST['dir']=='a') $sort .= ' DESC';
 		else $sort .= ' ASC';
 		
-		$this->User->hasAndBelongsToMany['Class']['order'] = $sort;
+		$this->User->hasAndBelongsToMany['ClassSet']['order'] = $sort;
 		
 		$user = $this->User->find('first',array('conditions'=>"User.id = {$_SESSION['User']['id']}",'recursive'=>2));
 		$this->set('user',$user);
@@ -24,25 +24,25 @@ class UsersController extends AppController{
 		if($show=='classes'){
 			$current_groups = $requested_groups = $pending_groups = array();
 			$pending_invites = $this->Status->find('all',array('conditions'=>array('Status.challenge_id IS NULL','Status.status'=>'P','Status.user_id'=>$_SESSION['User']['id'])));
-			foreach($pending_invites as $i) $pending_groups[] = $i['Class']['id'];
+			foreach($pending_invites as $i) $pending_groups[] = $i['ClassSet']['id'];
 			if($pending_groups){
-				$this->set('invites',$this->Class->find('all',array('conditions'=>'Class.id IN ('.implode(',',$pending_groups).')','recursive'=>2)));
+				$this->set('invites',$this->ClassSet->find('all',array('conditions'=>'ClassSet.id IN ('.implode(',',$pending_groups).')','recursive'=>2)));
 			}
 			
-			$this->Status->hasMany['Class']['conditions'] = "Class.owner_id = {$_SESSION['User']['id']}";
+			$this->Status->hasMany['ClassSet']['conditions'] = "ClassSet.owner_id = {$_SESSION['User']['id']}";
 			$pending_requests = $this->Status->find('all',array('conditions'=>array('Status.challenge_id IS NULL','Status.status'=>"R")));
 			foreach($pending_requests as $r){
-				if($r['Class']) $requested_groups[] = $r['Class']['id'];
+				if($r['ClassSet']) $requested_groups[] = $r['ClassSet']['id'];
 			}
 			
-			foreach($user['Class'] as $g) $current_groups[] = $g['id'];
-			if($current_groups) $conditions = array('Class.id NOT IN ('.implode(',',$current_groups).')');
+			foreach($user['ClassSet'] as $g) $current_groups[] = $g['id'];
+			if($current_groups) $conditions = array('ClassSet.id NOT IN ('.implode(',',$current_groups).')');
 			else $conditions = array();
-			
+				
 			$this->set('saved',$saved);
 			$this->set('requested_groups',$requested_groups);
 			$this->set('pending_groups',$pending_groups);
-			$this->set('groups',$this->Class->find('all',array('conditions'=>$conditions)));
+			$this->set('groups',$this->ClassSet->find('all',array('conditions'=>$conditions)));
 			$this->render('view_classes');
 		}else $this->set('states',$this->State->find('all'));
 	}
@@ -72,11 +72,11 @@ class UsersController extends AppController{
 	}
 	
 	// send an email invitation
-	function invite($group_id,$user_id=NULL,$fname=NULL,$lname=NULL,$email=NULL,$type=NULL,$inviter=NULL){
+	function invite($class_id,$user_id=NULL,$fname=NULL,$lname=NULL,$email=NULL,$type=NULL,$permissions=NULL){
 		$this->checkAuth();
 		$invite_token = NULL;
 		$send_invite = true;
-		$group = $this->Class->findById($group_id);
+		$class = $this->ClassSet->findById($class_id);
 		
 		// check for existing user. if new user, create user record
 		if(!$user_id){
@@ -84,11 +84,11 @@ class UsersController extends AppController{
 			if(!$user || !$email){
 				$invite_token = sha1(time().$this->salt);
 				$user = array(	'User' =>
-								array(	'invite_token'	=> $invite_token,
-										'firstname'		=> $fname,
-										'lastname'		=> $lname,
-										'login'			=> $email,
-										'email'			=> $email,
+												array(	'invite_token'=> $invite_token,
+																'firstname'		=> $fname,
+																'lastname'		=> $lname,
+																'login'				=> $email,
+																'email'				=> $email,
 										'user_type'		=> $type ));
 				$this->User->save($user);
 			}elseif($user){
@@ -105,24 +105,25 @@ class UsersController extends AppController{
 		
 		// create 'pending' status
 		$status = array('Status' =>
-						array(	'user_id'		=> $this->User->id,
-								'group_id'		=> $group_id,
-								'status'		=> 'P' ));
+										array(	'user_id'			=> $this->User->id,
+														'class_id'		=> $class_id,
+														'permissions'	=> $permissions,
+														'status'			=> 'P' ));
 		$this->Status->save($status);
 		
 		if($send_invite){
 			// build invite url & message body
-			$invite_url = 'http://caseclubonline.com/users/accept_invitation/0/'.$group_id.'/'.$this->User->id.'/'.$invite_token;
-			$message = "{$fname},\n\n{$group['Owner']['firstname']} requested you to join a new group, {$group['Class']['group_name']}, on Case Club Online.";
-			$message .= "\n\n<a href='$invite_url'>Click here to join this group!</a>";
-			$message .= "\n\nSincerely,\n\nCase Club Online Team";
+			$invite_url = 'http://caseclubonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
+			$message = "{$fname},\n\n{$class['Owner']['firstname']} requested you to join a new class, {$class['ClassSet']['group_name']}, on Puentes.";
+			$message .= "\n\n<a href='$invite_url'>Click here to join this class!</a>";
+			$message .= "\n\nSincerely,\n\nPuentes Team";
 		
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			$headers .= 'From: noreply@caseclubonline.com' . "\r\n";
 		
 			// send invite email
-			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>","{$group['Owner']['firstname']} {$group['Owner']['lastname']} asks you to join",nl2br($message),$headers);
+			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>","{$class['Owner']['firstname']} {$class['Owner']['lastname']} asks you to join",nl2br($message),$headers);
 		}
 		
 		die($this->User->id);
@@ -191,8 +192,8 @@ class UsersController extends AppController{
 				$user_update = array('User'=>array('id'=>$user['User']['id']));
 				
 				if(@$_REQUEST['group_id'] && $_REQUEST['challenge_id']){
-					$user_update['Class'] = array($_REQUEST['group_id']);
-					foreach($user['Class'] as $g) if(array_search($g['id'],$user_update['Class']) === false) $user_update['Class'][] = $g['id'];
+					$user_update['ClassSet'] = array($_REQUEST['group_id']);
+					foreach($user['ClassSet'] as $g) if(array_search($g['id'],$user_update['ClassSet']) === false) $user_update['ClassSet'][] = $g['id'];
 				}
 				$this->User->save($user_update);
 				
@@ -218,7 +219,7 @@ class UsersController extends AppController{
 												'password'		=> sha1($_REQUEST['password'].$this->salt) ));
 				
 				// if users is responding to an invitation, add the user to the relevant group
-				if(@$_REQUEST['group_id'] && $_REQUEST['challenge_id']) $user_update['Class'] = array($_REQUEST['group_id']);
+				if(@$_REQUEST['group_id'] && $_REQUEST['challenge_id']) $user_update['ClassSet'] = array($_REQUEST['group_id']);
 				
 				$this->User->save($user_update);
 				$this->Session->write('User',$user['User']);

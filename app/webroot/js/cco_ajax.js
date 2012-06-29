@@ -376,6 +376,12 @@ function update_token(){
 	}});
 }
 
+function view_token(id,name,token){
+	$('#token_value').html(token);
+	$('#tokenClassName').html(name);
+	$('#newTokenClassID').val(id);
+}
+
 function show_group_members(g_id){
 	$('.simpletable.groupmemberlist').remove();
 	$('#inviteUserGroup').val(g_id);
@@ -384,9 +390,13 @@ function show_group_members(g_id){
 	}});
 }
 
-function delete_group_member(g_id,u_id){
+function delete_class_member(g_id,u_id){
 	$('#groupMemberRow'+u_id).fadeOut();
-	$.ajax({url:'/groups/remove_member/'+g_id+'/'+u_id});
+	$.ajax({url:'/classes/remove_member/'+g_id+'/'+u_id});
+}
+
+function class_invite_professor(c_id){
+	$.ajax({url:'/users/invite/'+c_id+'/0/'+$('#firstName').val()+'/'+$('#lastName').val()+'/'+$('#emailAddr').val()+'/L/'+$('#permissions').val()});
 }
 
 function group_invite_user(){
