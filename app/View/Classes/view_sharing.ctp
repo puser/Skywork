@@ -3,7 +3,7 @@
 		
 		<div class="box-actions">
 			<ul>
-				<li><a class="icon4 icon4-plus" id="createProfessorLink" href="/classes/create_professor/<?php echo $class['ClassSet']['id']; ?>" >Add a professor</a></li>
+				<li><a class="icon4 icon4-plus" id="createProfessorLink" href="/classes/invite_member/<?php echo $class['ClassSet']['id']; ?>/professor/" >Add a professor</a></li>
 			</ul>
 		</div>
 		

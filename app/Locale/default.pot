@@ -1,5 +1,5 @@
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2012-06-29 02:05-0500\n"
+"POT-Creation-Date: 2012-06-29 05:46-0500\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -9,10 +9,12 @@
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: View/Users/view.ctp:2;5;15
+#: View/Users/view_classes.ctp:2;5
 msgid "My Account"
 msgstr ""
 
-#: View/Users/view.ctp:6;92
+#: View/Users/view.ctp:6;94
+#: View/Users/view_classes.ctp:6
 msgid "Classes"
 msgstr ""
 
@@ -60,47 +62,113 @@ msgstr ""
 msgid "Re-type Password"
 msgstr ""
 
-#: View/Users/view.ctp:53
+#: View/Users/view.ctp:54
 msgid "Allow other Professors to search for my classes"
 msgstr ""
 
-#: View/Users/view.ctp:55
+#: View/Users/view.ctp:57
 msgid "Terminate my Account"
 msgstr ""
 
-#: View/Users/view.ctp:56
+#: View/Users/view.ctp:58
 msgid "Terminate"
 msgstr ""
 
-#: View/Users/view.ctp:67;104
+#: View/Users/view.ctp:69;106
+#: View/Users/view_classes.ctp:94
 msgid "Save"
 msgstr ""
 
-#: View/Users/view.ctp:69
+#: View/Users/view.ctp:71
+#: View/Users/view_classes.ctp:97
 msgid "Saved!"
 msgstr ""
 
-#: View/Users/view.ctp:82
+#: View/Users/view.ctp:84
 msgid "My Email Preferences"
 msgstr ""
 
-#: View/Users/view.ctp:87
+#: View/Users/view.ctp:89
 msgid "Check your preferences:"
 msgstr ""
 
-#: View/Users/view.ctp:89
+#: View/Users/view.ctp:91
 msgid "Send me email"
 msgstr ""
 
-#: View/Users/view.ctp:93
+#: View/Users/view.ctp:95
 msgid "Challenges"
 msgstr ""
 
-#: View/Users/view.ctp:94
+#: View/Users/view.ctp:96
 msgid "Due Date Expiration"
 msgstr ""
 
-#: View/Users/view.ctp:98
+#: View/Users/view.ctp:100
 msgid "Never send me email"
+msgstr ""
+
+#: View/Users/view.ctp:114
+msgid "Warning!"
+msgstr ""
+
+#: View/Users/view.ctp:116
+msgid "You have clicked to Terminate your account. All data that has been stored will be permanently deleted. Are you sure you want to Terminate your account?"
+msgstr ""
+
+#: View/Users/view.ctp:119
+msgid "If you are sure you want to permanently delete your account, please type TERMINATE into the box below."
+msgstr ""
+
+#: View/Users/view.ctp:124
+msgid "Terminate My Account"
+msgstr ""
+
+#: View/Users/view.ctp:125
+msgid "Cancel"
+msgstr ""
+
+#: View/Users/view_classes.ctp:17
+msgid "Create Class"
+msgstr ""
+
+#: View/Users/view_classes.ctp:18
+msgid "Join shared class"
+msgstr ""
+
+#: View/Users/view_classes.ctp:23
+msgid "Edit Classes"
+msgstr ""
+
+#: View/Users/view_classes.ctp:30
+msgid "Class Name"
+msgstr ""
+
+#: View/Users/view_classes.ctp:31
+msgid "Last Edit"
+msgstr ""
+
+#: View/Users/view_classes.ctp:32
+msgid "Students"
+msgstr ""
+
+#: View/Users/view_classes.ctp:33
+msgid "Creator"
+msgstr ""
+
+#: View/Users/view_classes.ctp:61
+msgid "Share Class"
+msgstr ""
+
+#: View/Users/view_classes.ctp:62
+msgid "View Token"
+msgstr ""
+
+#: View/Users/view_classes.ctp:63
+msgid "Edit Class"
+msgstr ""
+
+#: View/Users/view_classes.ctp:64
+msgid "Delete Class"
 msgstr ""
 

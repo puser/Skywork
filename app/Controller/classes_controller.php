@@ -6,9 +6,10 @@ class ClassesController extends AppController{
 	function update(){
 		$this->checkAuth();
 			
-		if(@$_REQUEST['ClassSet']['ClassSet']['group_name']){
-			$this->ClassSet->save($_REQUEST['ClassSet']);
-			die($this->ClassSet->id);
+		if(@$_REQUEST['class']['ClassSet']['group_name']){
+			$this->ClassSet->save($_REQUEST['class']);
+			if(isset($_REQUEST['class']['ClassSet']['public'])) die($this->ClassSet->id);
+			else $this->redirect('/users/view/classes/');
 		}
 		else die('Invalid parameters');
 	}
@@ -30,10 +31,17 @@ class ClassesController extends AppController{
 		$this->render($view,'ajax');
 	}
 	
-	function create_professor($id){
+	function invite_member($id,$type){
+		$this->checkAuth();
+		$this->set('class',$this->ClassSet->findById($id));
+		$this->render('create_' . $type,'ajax');
+	}
+	
+	function search_shared($query){
 		$this->checkAuth();
 		$this->layout = 'ajax';
-		$this->set('class',$this->ClassSet->findById($id));
+		$this->User->hasAndBelongsToMany['ClassSet']['conditions'] = 'ClassSet.public = 1';
+		$this->set('user',$this->User->findByEmail($query));
 	}
 	
 	function request_join(){

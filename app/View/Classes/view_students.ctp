@@ -4,8 +4,8 @@
 		<div class="box-actions">
 			<ul>
 				<?php if($_SESSION['User']['id'] == $class['Owner']['id']){ ?>
-					<li><a class="icon4 icon4-plus ajax-modal-link" href="#modal-adduser" >Add a new Student</a></li>
-					<li><a class="icon4 icon4-remove ajax-modal-link" href="#" >Clean class</a></li>
+					<li><a class="icon4 icon4-plus" href="/classes/invite_member/<?php echo $class['ClassSet']['id']; ?>/student/" id="inviteNewUserLink" >Add a new Student</a></li>
+					<li><a class="icon4 icon4-remove" href="#" >Clean class</a></li>
 				<?php } ?>
 			</ul>
 		</div>

@@ -14,23 +14,23 @@
 			
 			<div class="box-actions">
 				<ul>
-					<li><a class="icon4 icon4-plus modal-link" href="#modal-addclass">Create Class</a></li>
-					<li><a class="icon4 icon4-plus modal-link" href="#modal-joinsharedclass">Join shared class</a></li>
+					<li><a class="icon4 icon4-plus modal-link" href="#modal-addclass"><?php echo __('Create Class') ?></a></li>
+					<li><a class="icon4 icon4-plus modal-link" href="#modal-joinsharedclass"><?php echo __('Join shared class') ?></a></li>
 				</ul>
 			</div>
 			
 			<span class="icon2 icon2-class"></span>
-			<h2>Edit Classes</h2>
+			<h2><?php echo __('Edit Classes') ?></h2>
 			<div class="clear"></div>
 		</div>
 		<div class="box-content">
 			<table class="table-type-1" id="table-classes">
 				<thead>
 					<tr>
-						<th><a href="/users/view/groups/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Class Name</a></th>
-						<th><a href="/users/view/groups/?sort=modified&dir=<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Last Edit</a></th>
-						<th><a href="#" class="sortdown">Students</a></th>
-						<th><a href="/users/view/groups/?sort=owner&dir=<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Creator</a></th>
+						<th><a href="/users/view/classes/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Class Name') ?></a></th>
+						<th><a href="/users/view/classes/?sort=modified&dir=<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Last Edit') ?></a></th>
+						<th><a href="#" class="sortdown"><?php echo __('Students') ?></a></th>
+						<th><a href="/users/view/classes/?sort=owner&dir=<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Creator') ?></a></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -58,10 +58,10 @@
 								<a href="#" class="item-actions-icon"></a>
 								<div class="item-actions-popup rounded2">
 									<ul>
-										<li><a href="/classes/view_members/<?php echo $g['id']; ?>/view_sharing" class="icon3 icon3-plus modal-link">Share Class</a></li>
-										<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['id']; ?>,'<?php echo $g['group_name']; ?>','<?php echo ($g['auth_token'] ? $g['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link">View Token</a></li>
-										<li><a href="/classes/view_members/<?php echo $g['id']; ?>" class="icon3 icon3-pen modal-link">Edit Class</a></li>
-										<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/groups/delete/<?php echo $g['id']; ?>/');" class="icon3 icon3-close modal-link">Delete Class</a></li>
+										<li><a href="/classes/view_members/<?php echo $g['id']; ?>/view_sharing" class="icon3 icon3-plus modal-link"><?php echo __('Share Class') ?></a></li>
+										<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['id']; ?>,'<?php echo $g['group_name']; ?>','<?php echo ($g['auth_token'] ? $g['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link"><?php echo __('View Token') ?></a></li>
+										<li><a href="/classes/view_members/<?php echo $g['id']; ?>" class="icon3 icon3-pen modal-link"><?php echo __('Edit Class') ?></a></li>
+										<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/groups/delete/<?php echo $g['id']; ?>/');" class="icon3 icon3-close modal-link"><?php echo __('Delete Class') ?></a></li>
 									</ul>
 								</div>
 							</div>
@@ -91,10 +91,10 @@
 	</div><!-- #myaccountGroupsForm-->
 	
 	<a href="#" class="btn1 btn-savecontinue aligncenter"<?php if($saved){ ?> style="display:none;"<?php } ?> id="saveGroupsBtn" onclick="$('#newGroupForm').submit();$(this).hide();$('#savedNotify').show();return false;">
-		<span class="inner">Save</span>
+		<span class="inner"><?php echo __('Save') ?></span>
 	</a>
 	<span id="savedNotify" style="display:none;">
-		<p style="display:block;text-align:center;color:#ff0000;">Saved!</p>
+		<p style="display:block;text-align:center;color:#ff0000;"><?php echo __('Saved!') ?></p>
 	</span>
 	
 </div><!-- #maincol-->
@@ -119,39 +119,6 @@
 
 <div style="display: none;">
 	
-	<div id="modal-adduser">
-		<div id="modal-adduser-box" class="modal-wrapper" style="width: 600px;" >
-			<div class="modal-box-head">
-				<span class="icon icon5-people-blue"></span>
-				<h2>Add a User to Puentes</h2>
-			</div>
-			<div class="modal-box-content">
-				<ul class="fieldset2">
-					<li>
-						<label>First Name</label>
-						<input type="text" size="50" />
-					</li>
-					<li>
-						<label>Last Name</label>
-						<input type="text" size="50" />
-					</li>
-					<li>
-						<label>Email</label>
-						<input type="text" size="50" />
-					</li>
-				</ul>
-				<br /><br />
-				<div class="clear"></div>
-				<div style="width: 200px; margin: 0 auto; ">
-					<a href="#" class="btn2" style="width: 80px; float: left;" onclick="jQuery.fancybox.close(); return false; "><span>Add</span></a>
-					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
-					<div class="clear"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	
 	<div id="modal-addclass">
 		<a style="display:none;" href="#modal-newtoken" class="btn2 modal-link" id="showGenerateToken"> </a>
 		<form id="create_class">
@@ -173,7 +140,7 @@
 						<li class="radioinput">
 							<span class="label">Make this class searchable</span>
 							<div class="input">
-								<input type="radio" name="class[ClassSet][public]" value="1" id="make_class_searchable_yes" /> <label for="make_class_searchable_yes">Yes </label>
+								<input type="radio" name="class[ClassSet][public]" value="1" id="make_class_searchable_yes" checked="checked" /> <label for="make_class_searchable_yes">Yes </label>
 								<input type="radio" name="class[ClassSet][public]" value="0" id="make_class_searchable_no" /> <label for="make_class_searchable_no">No </label>
 							</div>
 							<div class="clear"></div>
@@ -204,62 +171,19 @@
 				<ul class="fieldset2">
 					<li>
 						<label>Email</label>
-						<input type="text" size="50" />
+						<input type="text" size="50" id="queryEmail" />
 					</li>
 				</ul>
-				<br /><br />
+				<div id="sharedSearchResults"> </div>
 				<div class="clear"></div>
 				<div style="width: 200px; margin: 0 auto; ">
-					<a href="#modal-joinsharedclass-2" class="btn2 modal-link" style="width: 80px; float: left;" ><span>Continue</span></a>
+					<a href="#" class="btn2" style="width: 80px; float: left;" onclick="load_search_results();" ><span>Continue</span></a>
 					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
 					<div class="clear"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<div id="modal-joinsharedclass-2">
-		<div id="modal-joinsharedclass-2-box" class="modal-joinsharedclass-box modal-wrapper" style="width: 600px;" >
-			<div class="modal-box-head">
-				<span class="icon icon-class-color"></span>
-				<h2>Request to Join Shared Class(es)</h2>
-			</div>
-			<div class="modal-box-content">
-				<br />
-				<p>Please enter the Professors' email:</p>
-				<ul class="fieldset2">
-					<li>
-						<label>Email</label>
-						<input type="text" size="50" />
-					</li>
-				</ul>
-				
-				<br />
-				<p>Select the Classes you would like to join:</p>
-				<ul class="fieldset2">
-					<li>
-						<label>Class(es)</label>
-						<div class="classes-options">
-							<ul>
-								<li><input type="checkbox" /> Class XYZ</li>
-								<li><input type="checkbox" /> Class Second Class</li>
-								<li><input type="checkbox" /> Class Third Class</li>
-							</ul>
-						</div>
-						<div class="clear"></div>
-					</li>
-				</ul>
-				<br /><br />
-				<div class="clear"></div>
-				<div style="width: 200px; margin: 0 auto; ">
-					<a href="#" class="btn2" style="width: 80px; float: left;" onclick="jQuery.fancybox.close(); return false; "><span>Continue</span></a>
-					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
-					<div class="clear"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
 	
 	<div id="modal-deleteclass">
 		

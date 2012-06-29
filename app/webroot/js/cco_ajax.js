@@ -399,6 +399,15 @@ function class_invite_professor(c_id){
 	$.ajax({url:'/users/invite/'+c_id+'/0/'+$('#firstName').val()+'/'+$('#lastName').val()+'/'+$('#emailAddr').val()+'/L/'+$('#permissions').val()});
 }
 
+function class_invite_student(c_id){
+	$.ajax({url:'/users/invite/'+c_id+'/0/'+$('#firstName').val()+'/'+$('#lastName').val()+'/'+$('#emailAddr').val()+'/P/'});
+}
+
+function load_search_results(){
+	if($('#sharedSearchResults input').length) jQuery.fancybox.close();
+	else $('#sharedSearchResults').load('/classes/search_shared/' + $('#queryEmail').val());
+}
+
 function group_invite_user(){
 	var uType = $('#inviteUserU').attr('checked') ? 'P' : 'L';
 	show_group_delayed();
