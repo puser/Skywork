@@ -56,6 +56,11 @@ body {font-family: Helvetica, Arial, sans-serif; font-size: 12px; background: #c
 #body { background: #f2f2f2; margin-bottom: 20px; min-height: 500px; display: block; padding-bottom: 1px; }
 #footer {margin-bottom: 20px;}
 
+#header.corp-website .content {height: 67px;}
+#body-wrap {padding: 30px; }
+#homeSlider {width: 720px; margin: 0 auto; text-align: center; }
+.width50 {width: 490px; }
+
 
 /**
  * Types
@@ -251,9 +256,10 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
 #topmenu span {}
 #topmenu .user-name {margin-right: 30px;  }
 #topmenu .user-name a {font-size: 14px; color: #0071bc; font-weight: bold; text-decoration: none;}
-#topmenu .user-home, #topmenu .user-account, #topmenu .user-logout, #topmenu .user-admin {margin-right: 10px;}
-#topmenu .user-home a, #topmenu .user-account a, #topmenu .user-logout a, #topmenu .user-admin a {font-size: 11px; padding-left: 16px;  height: 12px; font-weight: normal; color: #808080;}
+#topmenu .user-home, #topmenu .user-account, #topmenu .user-logout, #topmenu .user-admin, #topmenu .user-login {margin-right: 10px;}
+#topmenu .user-home a, #topmenu .user-account a, #topmenu .user-logout a, #topmenu .user-admin a, #topmenu .user-login a {font-size: 11px; padding-left: 16px;  height: 12px; font-weight: normal; color: #808080;}
 #topmenu .user-home a:hover, #topmenu .user-account a:hover, #topmenu .user-logout a:hover, #topmenu .user-admin a:hover {text-decoration: underline;}
+#topmenu .user-login a {background: url("/images/icon-logout.png") no-repeat center left; padding-left: 18px;}
 
 
 /** Footer Menu */
@@ -694,6 +700,46 @@ a.studentwork-more:hover span {display: inline; }
 .assignment-name .icon-preview {font-family: Helvetica, Arial, sans-serif; font-weight: bold; font-size: 16px; color: #003d79; padding-left: 24px; background: url('/images/icon-magnifier-16.png') no-repeat center left; margin-right: 10px; }
 
 #modal-sendcopy .icon {position: relative; top: -5px; }
+
+
+/**
+ * Page: Corp Website
+ */
+#header.corp-website #topmenu {top: 20px; right: 30px; }
+#body #body-wrap {min-height: 460px;}
+
+#overlayLoginLink {display: block; width: 50px; height: 20px;  padding: 5px 3px 3px 30px; background: #ffffff url('/images/icon-logout.png') no-repeat 10px center; position: absolute; right: 30px; top: 20px;  border: 0px solid #cccccc; }
+#overlayLoginLink.activeForm {border: 1px solid #cccccc; }
+#overlayLoginForm {display: none; width: 500px; height: 150px; border: 2px solid #cccccc; background: #ffffff; z-index: 1000; position: absolute; right: 30px; top: 48px; padding: 10px; }
+#overlayLoginForm li {padding: 6px 0; }
+#overlayLoginForm li .label {width: 120px;}
+#overlayLoginForm li .inputText {width: 350px;height:20px; }
+#overlayForgotPasswordLink {font-size: 14px; position: relative; top: 10px; }
+#overlayLoginForm a {
+	color:#999;
+	top:5px;
+}
+#overlayLoginForm a.btn1 {
+	position:relative;
+	top:-5px;
+}
+#overlayLoginForm .label {
+	color:#356e9c;
+	font-size:14px;
+}
+#overlayLoginForm .label .red {
+	color:#ff0000;
+}
+#overlayLoginForm .errorNotification {
+	color:#ff0000;
+	padding:12px 6px 0;
+}
+#subtitle{
+	position: absolute;
+	bottom: 5px;
+	left: 220px;
+	color: #777;
+}
 
 
 

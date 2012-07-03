@@ -60,7 +60,7 @@
 				<span class="user-logout"><a href="#logoutModal" class="show-overlay">Logout</a></span>
 			</div><!-- #topmenu -->
 			<?php }else{ ?>
-			<div id="subtitle">Case Club Online is currently in 'invite only' beta.</div>
+			<div id="subtitle">Puentes Online is currently in private beta.</div>
 			<a href="#" id="overlayLoginLink" >Login</a>
 			<div id="overlayLoginForm" class="rounded">
 				<ul class="fieldset2">
