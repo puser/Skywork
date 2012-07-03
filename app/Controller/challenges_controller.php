@@ -1,7 +1,7 @@
 <?php
 class ChallengesController extends AppController{
 	var $name = 'Challenges';
-	var $uses = array('User','Challenge','Class','Status','Response');
+	var $uses = array('User','Challenge','ClassSet','Status','Response');
 	
 	// view all challenges (dashboard)
 	function browse($status=NULL){
@@ -25,17 +25,17 @@ class ChallengesController extends AppController{
 		if(@$_REQUEST['dir']=='a' || !@$_REQUEST['sort']) $sort .= ' DESC';
 		else $sort .= ' ASC';
 		
-		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','Class'=>array('User'))));
+		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','ClassSet'=>array('User'))));
 
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
-		foreach(@$user['Class'] as $g) $groups[$g['id']] = 1;
+		foreach(@$user['ClassSet'] as $g) $groups[$g['id']] = 1;
 		
 		$now = date_create();
 		$now->setTime(0,0);
 		foreach($challenges as $k=>$c){
 			$vis = false;
-			foreach($c['Class'] as $g){
+			foreach($c['ClassSet'] as $g){
 				if(@$groups[$g['id']]){
 					$vis = true;
 					break;
@@ -56,7 +56,7 @@ class ChallengesController extends AppController{
 			$answers_due = date_create($c['Challenge']['answers_due']);
 			if($answers_due < $now){
 				$ulist = $challanges[$k]['Users'] = array();
-				foreach($c['Class'] as $g){
+				foreach($c['ClassSet'] as $g){
 					foreach($g['User'] as $u){
 						if(array_search($u['id'],$ulist) !== false) continue;
 						
