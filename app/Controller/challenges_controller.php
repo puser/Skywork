@@ -4,7 +4,7 @@ class ChallengesController extends AppController{
 	var $uses = array('User','Challenge','ClassSet','Status','Response');
 	
 	// view all challenges (dashboard)
-	function browse($status=NULL){
+	function browse($status=NULL,$page=1){
 		$this->checkAuth();
 		$this->Challenge->Behaviors->attach('Containable');
 		$conditions = array();
@@ -25,7 +25,7 @@ class ChallengesController extends AppController{
 		if(@$_REQUEST['dir']=='a' || !@$_REQUEST['sort']) $sort .= ' DESC';
 		else $sort .= ' ASC';
 		
-		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','ClassSet'=>array('User'))));
+		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','ClassSet'=>array('User')),'limit'=>(($page - 1) * 10) . ',10'));
 
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
