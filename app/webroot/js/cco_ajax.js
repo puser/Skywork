@@ -567,3 +567,19 @@ function save_group_name(){
 	
 	$.ajax({url:'/groups/update/',data:form_data,type:'POST'});
 }
+
+
+
+
+function set_challenge(type){
+	
+}
+
+function set_assignment(type){
+	
+}
+
+function set_collaboration(type){
+	
+}
+
