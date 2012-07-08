@@ -51,16 +51,6 @@
 						The Instructor assigns and essay topic to students.
 					</div>
 				</li>
-				<li class="alternate">
-					<div class="accordion-trigger">
-						<a class="btn1" href="#"><span>Select</span></a>
-						<p>Create an Audio File</p>
-						<div class="clear"></div>
-					</div>
-					<div class="accordion-content">
-						The Instructor assigns one to (n) number of questions. Students then record answers through a microphone and store the answer.
-					</div>
-				</li>
 			</ul>
 		</div>
 	</div>

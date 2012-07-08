@@ -57,26 +57,6 @@
 								<img src="/images/icons/icon-movieclip-23x29.png" /> In this challenge, the Instructor assigns a YouTube video for students to watch. In the Information section you will copy and paste the YouTube link.
 							</div>
 						</li>
-						<li class="alternate">
-							<div class="accordion-trigger">
-								<a class="btn1" href="#"><span>Select</span></a>
-								<p>Listen to an Audio File</p>
-								<div class="clear"></div>
-							</div>
-							<div class="accordion-content">
-								<img src="/images/icons/icon-note-23x19.png" /> In this challenge, the Instructor assigns an audio video for students to watch. Simply copy & paste a YouTube link into the box below.
-							</div>
-						</li>
-						<li>
-							<div class="accordion-trigger">
-								<a class="btn1" href="#"><span>Select</span></a>
-								<p>View a Picture Gallery</p>
-								<div class="clear"></div>
-							</div>
-							<div class="accordion-content">
-								<img src="/images/icons/icon-image-28x27.png" /> In this challenge, the Instructor has students view a series of phots and/or pictures. Simply upload the picture gallery.
-							</div>
-						</li>
 					</ul>
 				</div>
 			</div>

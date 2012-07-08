@@ -31,16 +31,6 @@
 		<div class="box-content">
 			<p>How will students collaborate on their Assignment?</p>
 			<ul id="challenges-accordion" class="accordion">
-				<li class="alternate">
-					<div class="accordion-trigger">
-						<a class="btn1" href="#"><span>Select</span></a>
-						<p>Agree/Disagree</p>
-						<div class="clear"></div>
-					</div>
-					<div class="accordion-content">
-						<p><img src="/images/chart-small.png" /> Once students complete their Assignments, students then Agree or Disagree with each other's work. This promotes lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut laboore et dolore magna aliqua.</p>
-					</div>
-				</li>
 				<li>
 					<div class="accordion-trigger">
 						<a class="btn1" href="#"><span>Select</span></a>
