@@ -570,13 +570,29 @@ function save_group_name(){
 
 
 
+function render_update_challenge(view,id){
+	$('#sidemenu li').removeClass('active');
+	$('#menu_' + view).addClass('active');
+	
+	$('#edit_content').load('/challenges/update/' + id + '/update_' + view,function(){
+		$(".accordion-trigger p").click(function(){
+			$("li.open .accordion-content", $(this).closest("ul.accordion")).slideUp(300); 
+			$("li", $(this).closest("ul.accordion")).removeClass("open"); 
+			$(this).closest("li").addClass("open"); 
+			$(".accordion-content", $(this).closest("li")).slideDown(300); 
+		}); 
+		$("ul.accordion li:first-child .accordion-trigger p").trigger("click"); 
+	});
+}
 
 function set_challenge(type){
-	
+	$('#challenge_type').val(type);
+	render_update_challenge('assignment',$('#id').val());
 }
 
 function set_assignment(type){
-	
+	$('#responses_type').val(type);
+	render_update_challenge('collaboration',$('#id').val());
 }
 
 function set_collaboration(type){

@@ -228,9 +228,11 @@ class ChallengesController extends AppController{
 			}
 		}
 		
+		/*	TEMPLATES DEPRECIATED FOR PUENTES v1
 		if(!@$challenge_record || ($challenge_record['Challenge']['status'] != 'C' && @$_REQUEST['challenge']['Challenge']['status'] != 'C')){
 			$this->set('template',$this->Challenge->find('first',array('conditions'=>array('Challenge.challenge_type'=>'T','Challenge.user_id'=>$_SESSION['User']['id']))));
 		}
+		*/
 		
 		if(@$challenge_record){
 			$this->set('challenge',$challenge_record);
@@ -240,11 +242,12 @@ class ChallengesController extends AppController{
 		if($view=='update_people'||$view=='template_people'){
 			if($view=='update_people') $this->set('queued_users',$this->Status->find('all',array('conditions'=>array(	'Status.challenge_id'	=> $challenge_id,
 																														'Status.status'			=> 'P' ))));
-			$this->set('groups',$this->Class->find('all',array('conditions'=>'Class.owner_id = '.$_SESSION['User']['id'],'order'=>'Class.group_name')));
+			$this->set('groups',$this->ClassSet->find('all',array('conditions'=>'ClassSet.owner_id = '.$_SESSION['User']['id'],'order'=>'ClassSet.group_name')));
 		}
 		if($view=='dashboard') $this->redirect('/dashboard/');
 		if($view=='account') $this->redirect('/challenges/update/0/template_basics/');
-		elseif($view) $this->render($view);
+		elseif($view) $this->render($view,'ajax');
+		else $this->render('update_container');
 	}
 	
 	// create invited user, pending final submission
@@ -330,7 +333,7 @@ class ChallengesController extends AppController{
 			$message .= "http://caseclubonline.com/users/accept_invitation/{$challenge_id}/{$user['Status'][0]['group_id']}/{$user_id}/{$user['User']['invite_token']}";
 			$message .= "\n\nSincerely,\n\nCase Club Online Team";
 		}elseif($group_id){
-			$group = $this->Class->findById($group_id);
+			$group = $this->ClassSet->findById($group_id);
 			
 			$subject = "New Case from {$challenge['User']['firstname']}";
 			$message = "Hi {$user['User']['firstname']}!\n\n";
