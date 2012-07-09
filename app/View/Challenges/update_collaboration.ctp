@@ -9,7 +9,7 @@
 		<ul id="challenges-accordion" class="accordion">
 			<li>
 				<div class="accordion-trigger">
-					<a class="btn1" href="#"><span>Select</span></a>
+					<a class="btn1" onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'RATE'}});"><span>Select</span></a>
 					<p>Rate each other's work</p>
 					<div class="clear"></div>
 				</div>
@@ -18,5 +18,7 @@
 				</div>
 			</li>
 		</ul>
+		
+		<a onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'NONE'}});">I want to skip the student collaboration</a>
 	</div>
 </div>

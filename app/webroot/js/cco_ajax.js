@@ -79,19 +79,13 @@ function save_challenge_final(){
 }
 
 function add_question(){
-	var newQ = $('.fieldset2:first li:last').clone();
-	$(newQ).children('.fieldsetNumberList').html((parseInt($('.fieldset2:first li:last').children('.fieldsetNumberList').html())+1)+'.');
-	$(newQ).children('.hQuestionId').remove();
+	var newQ = $('.fieldset:last li:last').clone();
 	
-	$(newQ).children('p').children('.inputtext').attr('name','question['+$('.fieldset2:first li').length+'][section]');
-	$(newQ).children('p').children('.inputtext').val('');
+	$(newQ).find('input:first').attr('name','question['+$('.fieldset:last li').length+'][section]');
+	$(newQ).find('input:last').attr('name','question['+$('.fieldset:last li').length+'][question]');
+	$(newQ).find('input').val('');
 	
-	$(newQ).children('.fullwidth').attr('name','question['+$('.fieldset2:first li').length+'][question]');
-	$(newQ).children('.fullwidth').val('');
-	
-	$(newQ).children('.hChallengeId').attr('name','question['+$('.fieldset2:first li').length+'][challenge_id]');
-	
-	$('.fieldset2:first').append(newQ);
+	$('.fieldset:last').append(newQ);
 }
 
 function add_attachment(){
@@ -570,11 +564,12 @@ function save_group_name(){
 
 
 
-function render_update_challenge(view,id){
+function render_update_challenge(view){
 	$('#sidemenu li').removeClass('active');
 	$('#menu_' + view).addClass('active');
 	
-	$('#edit_content').load('/challenges/update/' + id + '/update_' + view,function(){
+	// TODO: if id, serialize & save form
+	$('#edit_content').load('/challenges/update/' + ($('#id').val() ? $('#id').val() : '0') + '/update_' + view,function(){
 		$(".accordion-trigger p").click(function(){
 			$("li.open .accordion-content", $(this).closest("ul.accordion")).slideUp(300); 
 			$("li", $(this).closest("ul.accordion")).removeClass("open"); 
@@ -587,15 +582,22 @@ function render_update_challenge(view,id){
 
 function set_challenge(type){
 	$('#challenge_type').val(type);
-	render_update_challenge('assignment',$('#id').val());
 }
 
 function set_assignment(type){
-	$('#responses_type').val(type);
-	render_update_challenge('collaboration',$('#id').val());
+	$('#response_types').val(type);
 }
 
 function set_collaboration(type){
-	
+	$('#collaboration_type').val(type);
 }
 
+function setup_challenge_hashchange(){
+	$(window).bind('hashchange',function(e){
+		var view = $.bbq.getState('view');
+		var state = $.bbq.getState('state');
+		
+		if(state) eval('set_' + state.type + '("' + state.val + '")');
+		render_update_challenge(view);
+	});
+}

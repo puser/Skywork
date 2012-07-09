@@ -164,10 +164,13 @@ class ChallengesController extends AppController{
 		if(@$_REQUEST['challenge']){
 			$this->Challenge->save($_REQUEST['challenge']);
 			$challenge_id = $this->Challenge->id;
-			if(@$_REQUEST['question']){
-				foreach($_REQUEST['question'] as $k=>$q) if(!@$q['question']) unset($_REQUEST['question'][$k]);
+			if(@$_REQUEST['challenge']['Question']){
+				foreach($_REQUEST['challenge']['Question'] as $k=>$q){
+					if(!@$q['question']) unset($_REQUEST['question'][$k]);
+					else $_REQUEST['challenge']['Question'][$k]['challenge_id'] = $challenge_id;
+				}
 				$this->Challenge->Question->deleteAll(array('challenge_id'=>$challenge_id));
-				$this->Challenge->Question->saveAll($_REQUEST['question']);
+				$this->Challenge->Question->saveAll($_REQUEST['challenge']['Question']);
 			}
 			$challenge_record = $this->Challenge->find('first',array('conditions'=>"Challenge.id = {$challenge_id}",'recursive'=>2));
 			// upload files
@@ -247,7 +250,10 @@ class ChallengesController extends AppController{
 		if($view=='dashboard') $this->redirect('/dashboard/');
 		if($view=='account') $this->redirect('/challenges/update/0/template_basics/');
 		elseif($view) $this->render($view,'ajax');
-		else $this->render('update_container');
+		else{
+			if(@$_REQUEST['next_step']) $this->set('ini_view',$_REQUEST['next_step']);
+			$this->render('update_container');
+		}
 	}
 	
 	// create invited user, pending final submission

@@ -1,3 +1,56 @@
+<div id="startbridge-sendtoclass" class="box-startbridge box-white rounded">
+	<div class="box-head">
+		<span class="icon2 icon2-envelope"></span>
+		<h2>Send to Class</h2>
+		<div class="clear"></div>
+	</div>
+	<div class="box-content">
+		<ul class="fieldset">
+			<li>
+				<p class="label">Select Class(es) you would like to invite:</p>
+				<select style="width: 150px;">
+					<option value="" >Class 1</option>
+					<option value="" >Class 2</option>
+				</select>
+				<a href="startbridge-sendtoclass-2.html" class="add-class">Add &gt;</a>
+			</li>
+			<li>
+				<a href="#" class="icon-add">Add another</a>
+			</li>
+		</ul>
+		<br /><br />
+		<p>Invite an individual:</p>
+		<table class="table-type-1">
+			<thead>
+				<tr>
+					<th width="20%">First Name</th>
+					<th  width="20%">Last Name</th>
+					<th width="30%">Email</th>
+					<th width="20%">Already in Case Club?</th>
+					<th  width="10%">Class</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="alternate">
+					<td>John</td>
+					<td>Smith</td>
+					<td>johnsmith@gmail.com</td>
+					<td>Send Invite</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="#" class="icon-add">Add another</a>
+					
+		
+	</div>
+	
+</div>
+
+
+
+
+
 <div id="leftcol" class="alignleft">
 	<h1 class="page-title">Create Challenge</h1>
 	<div id="caseclubmenu">

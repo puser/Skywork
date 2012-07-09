@@ -9,7 +9,7 @@
 		<ul id="challenges-accordion" class="accordion">
 			<li class="alternate">
 				<div class="accordion-trigger">
-					<a class="btn1" href="#" onclick="set_assignment('Q');"><span>Select</span></a>
+					<a class="btn1" onclick="$.bbq.pushState({view:'collaboration',state:{type:'assignment',val:'Q'}});"><span>Select</span></a>
 					<p>Answer Questions</p>
 					<div class="clear"></div>
 				</div>
@@ -19,7 +19,7 @@
 			</li>
 			<li>
 				<div class="accordion-trigger">
-					<a class="btn1" href="#" onclick="set_assignment('E');"><span>Select</span></a>
+					<a class="btn1" onclick="$.bbq.pushState({view:'collaboration',state:{type:'assignment',val:'E'}});"><span>Select</span></a>
 					<p>Write an Essay</p>
 					<div class="clear"></div>
 				</div>
