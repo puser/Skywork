@@ -20,7 +20,11 @@ class Challenge extends AppModel{
 							'Status' =>
 							array(	'className'	=> 'Status',
 									'foreignKey'=> 'challenge_id',
-									'dependent'	=> true ));
+									'dependent'	=> true ),
+							'Group' =>
+							array(	'className'	=> 'Group',
+											'foreignKey'=> 'challenge_id',
+											'dependent'	=> true ));
 									
 	var $hasAndBelongsToMany = array(	'ClassSet'	=>
 										array(	'className'	=> 'ClassSet',

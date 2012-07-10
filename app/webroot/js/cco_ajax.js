@@ -62,27 +62,11 @@ function show_page(e){
 	}
 }
 
-function save_challenge(redirect){
-	$.ajax({url:'/challenges/update/',data:$('#challengeData').serialize(),type:'POST',success:function(r){
-		if(redirect == 'questions') $('#maincol').load('/challenges/update/'+r+'/update_people/');
-		else if(redirect == 'ajax') return true;
-		else if(redirect) window.location = redirect;
-		else $('#maincol').load('/questions/update/'+r);
-	}});
-}
-
-function save_challenge_final(){
-	$('#challengeStatus').val('C');
-	$.ajax({url:'/challenges/update/0/ajax',data:$('#challengeData').serialize(),type:'POST',success:function(r){
-		setTimeout('window.location = "/dashboard/";',1000);
-	}});
-}
-
 function add_question(){
 	var newQ = $('.fieldset:last li:last').clone();
 	
-	$(newQ).find('input:first').attr('name','question['+$('.fieldset:last li').length+'][section]');
-	$(newQ).find('input:last').attr('name','question['+$('.fieldset:last li').length+'][question]');
+	$(newQ).find('input:first').attr('name','challenge[Question]['+$('.fieldset:last li').length+'][section]');
+	$(newQ).find('input:last').attr('name','challenge[Question]['+$('.fieldset:last li').length+'][question]');
 	$(newQ).find('input').val('');
 	
 	$('.fieldset:last').append(newQ);
@@ -238,15 +222,6 @@ function add_response_attachment(){
 	$('ol.fieldset2').append(newA);
 }
 
-function challenge_invite_user(c_id){
-	var uType = $('#inviteUserU').attr('checked') ? 'P' : 'L';
-	$.ajax({url:'/challenges/queue_invite/'+c_id+'/'+$('#inviteGroup').val()+'/0/'+$('#inviteFName').val()+'/'+$('#inviteLName').val()+'/'+$('#inviteEmail').val()+'/'+uType,success:function(r){
-		jQuery.fancybox.close();
-		// window.location = '/challenges/update/' + c_id + '/update_people/';
-		$('#challengeData').attr('action','/challenges/update/'+c_id+'/update_people/').submit();
-	}});
-}
-
 function show_user_list(e,cid,view){
 	e = e.parent();
 	var prevOpen = $('li.opened').length;
@@ -346,8 +321,9 @@ function invited_show_existing(){
 	$('.tab-questions').addClass('active');
 }
 
-function remove_challenge_group(id){
+function remove_challenge_group(id,c_id){
 	$('#challengeGroup'+id).remove();
+	$.ajax({url:'/challenges/clear_groups/' + c_id});
 }
 
 function create_group(){
@@ -564,6 +540,34 @@ function save_group_name(){
 
 
 
+function invite_collaborator(c_id){
+	var uType = $('#inviteUserU').attr('checked') ? 'P' : 'L';
+	$.ajax({url:'/challenges/queue_invite/'+c_id+'/0/0/'+$('#firstName').val()+'/'+$('#lastName').val()+'/'+$('#emailAddr').val()+'/C',success:function(r){
+		jQuery.fancybox.close();
+		// window.location = '/challenges/update/' + c_id + '/update_people/';
+		render_update_challenge('people');
+	}});
+}
+
+function save_challenge(redirect){
+	$.ajax({url:'/challenges/update/0/' + (redirect != 'ajax' ? redirect : ''),data:$('#challenge_data').serialize(),type:'POST',success:function(r){
+		if(redirect == 'ajax') return true;
+		else if(redirect != 'quiet') $('#edit_content').html(r);
+		
+		if(redirect == 'update_people') $.ajax({url:'/challenges/clear_groups/' + $('#id').val()});
+	}});
+}
+
+function save_challenge_final(){
+	$('#challengeStatus').val('C');
+	/*
+	$.ajax({url:'/challenges/update/0/ajax',data:$('#challengeData').serialize(),type:'POST',success:function(r){
+		setTimeout('window.location = "/dashboard/";',1000);
+	}});
+	*/
+	window.location = '/challenges/update/0/dashboard?' + $('#challenge_data').serialize();
+}
+
 function render_update_challenge(view){
 	$('#sidemenu li').removeClass('active');
 	$('#menu_' + view).addClass('active');
@@ -600,4 +604,19 @@ function setup_challenge_hashchange(){
 		if(state) eval('set_' + state.type + '("' + state.val + '")');
 		render_update_challenge(view);
 	});
+}
+
+function save_groups(c_id){
+	$.ajax({url:'/challenges/clear_groups/' + c_id,success:function(){
+		$('.connectedSortable').each(function(){
+			$.ajax({url:'/challenges/save_groups/' + c_id,data:$(this).sortable('serialize')});
+		});
+		render_update_challenge('people');
+	}});
+}
+
+function delete_queued_invite(u_id,c_id){
+	$.ajax({url:'/challenges/remove_queued_invite/' + u_id + '/' + c_id,success:function(){
+		render_update_challenge('people');
+	}});
 }

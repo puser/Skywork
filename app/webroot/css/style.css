@@ -68,7 +68,7 @@ body {font-family: Helvetica, Arial, sans-serif; font-size: 12px; background: #c
 h2 {font-family: Helvetica, Arial, sans-serif; font-size: 18px; color: #f5866c; font-weight: normal; }
 a.sortdown {display: inline-block; padding-right: 15px; background: url('/images/arrow-down-purple.png') no-repeat center right; position: relative; }
 a.sortup {display: inline-block; padding-right: 15px; background: url('/images/arrow-up-purple.png') no-repeat center right; position: relative;}
-span.super {text-transform: uppercase; color: #c1272d; font-size: 8px; position: absolute; top: -5px; right: -20px; text-decoration: none; }
+span.super {text-transform: uppercase; color: #c1272d; font-size: 8px; position: absolute; top: 0px; right: 10px; text-decoration: none; }
 a:hover span.super {text-decoration: none; }
 a.read-more-arrow {display: block; width: 15px; height: 10px; background: url('/images/arrow-right-red.png') no-repeat center center; }
 
@@ -278,7 +278,7 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
 .box-head {padding: 10px 0 10px 10px; border-bottom: 1px solid #e6e6e6; margin-bottom: 10px; position: relative; }
 
 
-
+a{ cursor:pointer; }
 
 /**
  * Home
@@ -293,9 +293,9 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
 #bridgelist {width: 954px; margin: 0 auto; margin-bottom: 30px; display: block; }
 #bridgelist h2 {float: left; margin: 0; }
 #bridgelist .box-head .filterbox{ float: right; }
-
+/*
 #bridgelist .pagination-pages li.first-child a {border-right: none;}
-
+*/
 #bridgetable .col1 {width: 400px; }
 #bridgetable .col2 {width: 130px; }
 #bridgetable .col3 {width: 130px; }
@@ -500,7 +500,7 @@ a.add-class {font-size: 12px; }
 .remove-class a.remove-class-icon {background: url('/images/arrow-down-purple.png') no-repeat center center; }
 .remove-class a.remove-class-link {position: absolute; color: #666666; border: 1px solid #aaaaaa; background: #ffffff url('/images/icons/icon-close-15x15.png') no-repeat 5px center; padding: 5px 5px 5px 25px; font-size: 13px; top: 100%; right: -5px; display: none; }
 .remove-class:hover, .remove-class.open {border: 1px solid #aaaaaa; width: 28px; height: 18px; }
-.remove-class:hover a.remove-class-link, .remove-class.open a.remove-class-link {display: block; }
+.remove-class:hover a.remove-class-link, .remove-class.open a.remove-class-link {display: block;z-index:1; }
 .remove-class:hover a.remove-class-icon, .remove-class.open a.remove-class-icon {background: #ffffff url('/images/arrow-up-purple.png') no-repeat center center; }
 
 

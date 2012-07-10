@@ -20,6 +20,12 @@ class User extends AppModel{
 												'joinTable'	=> 'users_classes',
 												'foreignKey'=> 'user_id',
 												'associationForeignKey' => 'class_id',
-												'unique'	=> true ));
+												'unique'	=> true ),
+										'Group' => array(
+											'className'	=> 'Group',
+											'joinTable'	=> 'users_groups',
+											'foreignKey'=> 'user_id',
+											'associationForeignKey' => 'group_id',
+											'unique'	=> true ));
 }
 ?>

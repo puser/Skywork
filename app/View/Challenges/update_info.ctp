@@ -14,15 +14,33 @@
 				<div class="col1">
 					<p class="label">Due Date 1 <a href="#" class="tooltip-mark-question" ></a></p>
 					<div class="date-input">
-						<input type="text" value="<?php echo (@$challenge['Challenge']['answers_due']?$challenge['Challenge']['answers_due']:date('Y-m-d')); ?>" name="challenge[Challenge][answers_due]" id="answers_due" />
+						<input type="text" value="<?php echo (@$challenge['Challenge']['answers_due']?substr($challenge['Challenge']['answers_due'],0,10):date('Y-m-d')); ?>" name="challenge[Challenge][answers_due]" id="answers_due" />
 						<a onclick="$('#answers_due').datepicker('show');return false;" class="datepicker"></a>
+					</div>
+					<p class="label" style="clear:both;margin-top:10px;">Due Date 1 Time Deadline:</p>
+					<div class="date-input">
+						<input name="answers_due_hour" style="width:20px;" value="<?php echo (@$challenge ? (substr($challenge['Challenge']['answers_due'],11,2) > 12 ? substr($challenge['Challenge']['answers_due'],11,2) - 12 : substr($challenge['Challenge']['answers_due'],12,2)) : '08'); ?>" /> :
+						<input name="answers_due_minute" style="width:20px;" value="<?php echo (@$challenge ? substr($challenge['Challenge']['answers_due'],14,2) : '00'); ?>"  />
+						<select name="answers_due_meridian">
+							<option value="AM" <?php echo (@$challenge && substr($challenge['Challenge']['answers_due'],11,2) <= 12 ? 'selected="selected"' : ''); ?>>AM</option>
+							<option value="PM" <?php echo (!@$challenge || substr($challenge['Challenge']['answers_due'],11,2) > 12 ? 'selected="selected"' : ''); ?>>PM</option>
+						<select>
 					</div>
 				</div>
 				<div class="col2">
 					<p class="label">Due Date 2 <a href="#" class="tooltip-mark-question" ></a></p>
 					<div class="date-input">
-						<input type="text" value="<?php echo (@$challenge['Challenge']['responses_due']?$challenge['Challenge']['responses_due']:date('Y-m-d')); ?>" name="challenge[Challenge][responses_due]" id="responses_due" />
+						<input type="text" value="<?php echo (@$challenge['Challenge']['responses_due']?substr($challenge['Challenge']['responses_due'],0,10):date('Y-m-d')); ?>" name="challenge[Challenge][responses_due]" id="responses_due" />
 						<a onclick="$('#responses_due').datepicker('show');return false;" class="datepicker"></a>
+					</div>
+					<p class="label" style="clear:both;margin-top:10px;">Due Date 2 Time Deadline:</p>
+					<div class="date-input">
+						<input name="responses_due_hour" style="width:20px;" value="<?php echo (@$challenge['Challenge']['responses_due'] ? (substr($challenge['Challenge']['responses_due'],11,2) > 12 ? substr($challenge['Challenge']['responses_due'],11,2) - 12 : substr($challenge['Challenge']['responses_due'],12,2)) : '08'); ?>" /> :
+						<input name="responses_due_minute" style="width:20px;" value="<?php echo (@$challenge['Challenge']['responses_due'] ? substr($challenge['Challenge']['responses_due'],14,2) : '00'); ?>"  />
+						<select name="responses_due_meridian">
+							<option value="AM" <?php echo (@$challenge && substr($challenge['Challenge']['responses_due'],11,2) <= 12 ? 'selected="selected"' : ''); ?>>AM</option>
+							<option value="PM" <?php echo (!@$challenge || substr($challenge['Challenge']['responses_due'],11,2) > 12 ? 'selected="selected"' : ''); ?>>PM</option>
+						<select>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -31,16 +49,18 @@
 				<p class="label">Document</p>
 				<!-- <a href="#" class="icon-add"> Add document</a> -->
 				
-				<?php if(@$challenge['Attachment'][0]['type'] == 'C'){ ?>
-					Current Document: 
-					<a href="/uploads/<?php echo $challenge['Attachment'][0]['file_location']; ?>" target="_blank">
-						<?php echo @$challenge['Attachment'][0]['name']; ?>
-					</a><br />
-					<a href="#" onclick="remove_attachment('curCaseFile',<?php echo $challenge['Attachment'][0]['id']; ?>);return false;">Remove Document</a>
-				<?php } ?>
+				<div id="curCaseFile" style="font-size:12px;">
+					<?php if(@$challenge['Attachment'][0]['type'] == 'C'){ ?>
+						Current Document: 
+						<a href="/uploads/<?php echo $challenge['Attachment'][0]['file_location']; ?>" target="_blank">
+							<?php echo @$challenge['Attachment'][0]['name']; ?>
+						</a>&nbsp;&nbsp;
+						(<a href="#" onclick="remove_attachment('curCaseFile',<?php echo $challenge['Attachment'][0]['id']; ?>);return false;">Remove Document</a>)<br /><br />
+					<?php } ?>
+				</div>
 				
 				<?php if(@$challenge['Attachment'][0]['type'] == 'C'){ ?>Replace current document: <?php } ?>
-				<input type="file" name="attachment[0]" onchange="$('.tmpl_case_field').remove();" />
+				<input type="file" name="attachment[0]" />
 				<input type="hidden" name="attachment[0][type]" value="C" />
 				
 			</li>

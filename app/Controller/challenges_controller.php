@@ -1,7 +1,7 @@
 <?php
 class ChallengesController extends AppController{
 	var $name = 'Challenges';
-	var $uses = array('User','Challenge','ClassSet','Status','Response');
+	var $uses = array('User','Challenge','ClassSet','Status','Response','Group');
 	
 	// view all challenges (dashboard)
 	function browse($status=NULL,$page=1){
@@ -25,7 +25,7 @@ class ChallengesController extends AppController{
 		if(@$_REQUEST['dir']=='a' || !@$_REQUEST['sort']) $sort .= ' DESC';
 		else $sort .= ' ASC';
 		
-		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','ClassSet'=>array('User')),'limit'=>(($page - 1) * 10) . ',10'));
+		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','ClassSet'=>array('User'))));
 
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
@@ -92,8 +92,12 @@ class ChallengesController extends AppController{
 			}
 		}
 		
-		$this->set('challenges',$challenges);
+		$challenges = array_filter($challenges);
+		
+		$this->set('challenges',array_slice($challenges,($page - 1) * 10,10));
 		$this->set('status',$status);
+		$this->set('total',count($challenges));
+		$this->set('page',$page);
 	}
 	
 	// view a single challenge or stats/leaderboard
@@ -162,6 +166,12 @@ class ChallengesController extends AppController{
 	
 		if($challenge_id) $challenge_record = $this->Challenge->find('first',array('conditions'=>"Challenge.id = ".$challenge_id,'recursive'=>2));
 		if(@$_REQUEST['challenge']){
+			// preprocess date/time inputs
+			if(@$_REQUEST['answers_due_hour']){
+				$_REQUEST['challenge']['Challenge']['answers_due'] = $_REQUEST['challenge']['Challenge']['answers_due'] . ' ' . ($_REQUEST['answers_due_meridian'] == 'AM' ? $_REQUEST['answers_due_hour'] : $_REQUEST['answers_due_hour'] + 12) . ':' . $_REQUEST['answers_due_minute'];
+				$_REQUEST['challenge']['Challenge']['responses_due'] = $_REQUEST['challenge']['Challenge']['responses_due'] . ' ' . ($_REQUEST['responses_due_meridian'] == 'AM' ? $_REQUEST['responses_due_hour'] : $_REQUEST['responses_due_hour'] + 12) . ':' . $_REQUEST['responses_due_minute'];
+			}
+			
 			$this->Challenge->save($_REQUEST['challenge']);
 			$challenge_id = $this->Challenge->id;
 			if(@$_REQUEST['challenge']['Question']){
@@ -178,7 +188,7 @@ class ChallengesController extends AppController{
 				foreach($_FILES['attachment']['name'] as $k=>$n){
 					if(!$_FILES['attachment']['tmp_name'][$k]) continue;
 					$filename = md5(uniqid(rand())).strrchr($n,'.');
-					if(!move_uploaded_file($_FILES['attachment']['tmp_name'][$k],$_SERVER['DOCUMENT_ROOT'].'/dev/app/webroot/uploads/'.$filename)){
+					if(!move_uploaded_file($_FILES['attachment']['tmp_name'][$k],str_replace('index.php','uploads/',$_SERVER['SCRIPT_FILENAME']).$filename)){
 						print_r($_FILES);
 						die("<br>Upload error<br>");
 					}
@@ -214,11 +224,11 @@ class ChallengesController extends AppController{
 					if(@$sent_users[$i['User']['id']]) continue;
 					else $sent_users[$i['User']['id']] = 1;
 					
-					if($i['User']['notify_challenges']) $this->send_invite($i['User']['id'],$challenge_id,$i['Status']['group_id']);
+					if($i['User']['notify_challenges']) $this->send_invite($i['User']['id'],$challenge_id,NULL);
 					$this->Status->id = $i['Status']['id'];
 					$this->Status->saveField('status','N');
 				}
-				foreach($challenge_record['Class'] as $g){
+				foreach($challenge_record['ClassSet'] as $g){
 					foreach($g['User'] as $u){
 						if(@$sent_users[$u['id']]) continue;
 						else $sent_users[$u['id']] = 1;
@@ -256,6 +266,33 @@ class ChallengesController extends AppController{
 		}
 	}
 	
+	function split_groups($challenge_id,$group_count = NULL){
+		$this->layout = 'ajax';
+		$challenge = $this->Challenge->find('first',array('conditions'=>"Challenge.id = ".$challenge_id,'recursive'=>2));
+		
+		$students = array();
+		foreach($challenge['ClassSet'] as $c){
+			foreach($c['User'] as $u){
+				if($u['id'] != $c['owner_id']) array_push($students,$u);
+			}
+		}
+		if($group_count) $students = array_chunk($students,$group_count);
+		
+		$this->set('challenge',$challenge);
+		$this->set('students',$students);
+		$this->set('group_count',$group_count);
+	}
+	
+	function save_groups($challenge_id){
+		$group['Group']['challenge_id'] = $challenge_id;
+		foreach($_REQUEST['user'] as $u) $group['User'][] = array('user_id' => $u);
+		die($this->Group->save($group));
+	}
+	
+	function clear_groups($challenge_id){
+		die($this->Group->deleteAll(array('Group.challenge_id' => $challenge_id)));
+	}
+	
 	// create invited user, pending final submission
 	function queue_invite($challenge_id,$group_id,$user_id=NULL,$fname=NULL,$lname=NULL,$email=NULL,$type=NULL){
 		$this->checkAuth();
@@ -267,19 +304,19 @@ class ChallengesController extends AppController{
 			if(!$user){
 				$this->User->id = NULL;
 				$new_user = array(	'User' =>
-									array(	'invite_token'			=> $invite_token,
-											'firstname'				=> $fname,
-											'lastname'				=> $lname,
-											'login'					=> $email,
-											'email'					=> $email,
-											'user_type'				=> $type ));
+														array(	'invite_token'	=> $invite_token,
+																		'firstname'			=> $fname,
+																		'lastname'			=> $lname,
+																		'login'					=> $email,
+																		'email'					=> $email,
+																		'user_type'			=> $type ));
 				$this->User->save($new_user);
 				
-				$status = array('Status' =>
-								array(	'user_id'		=> $this->User->id,
-										'group_id'		=> $group_id,
-										'challenge_id'	=> $challenge_id,
-										'status'		=> 'P' ));
+				$status = array(	'Status' =>
+													array(	'user_id'		=> $this->User->id,
+															'group_id'			=> $group_id,
+															'challenge_id'	=> $challenge_id,
+															'status'				=> 'P' ));
 				$this->Status->save($status);
 			}
 		}
@@ -336,15 +373,13 @@ class ChallengesController extends AppController{
 			$message .= "You will have until\n\n".date_format(date_create($challenge['Challenge']['answers_due']),'l, F jS')." to complete a series of questions.\n\n";
 			$message .= date_format(date_create($challenge['Challenge']['responses_due']),'l, F jS')." to respond (Agree/Disagree) to other participants' questions.\n\n";
 			$message .= "Click here to check it out\n\n";
-			$message .= "http://caseclubonline.com/users/accept_invitation/{$challenge_id}/{$user['Status'][0]['group_id']}/{$user_id}/{$user['User']['invite_token']}";
+			$message .= "http://caseclubonline.com/users/accept_invitation/{$challenge_id}/{$user['Status'][0]['class_id']}/{$user_id}/{$user['User']['invite_token']}";
 			$message .= "\n\nSincerely,\n\nCase Club Online Team";
-		}elseif($group_id){
-			$group = $this->ClassSet->findById($group_id);
-			
+		}else{
 			$subject = "New Case from {$challenge['User']['firstname']}";
 			$message = "Hi {$user['User']['firstname']}!\n\n";
-			$message .= "{$challenge['User']['firstname']} {$challenge['User']['lastname']} has sent you an invitation for a new challenge on Case Club Online as a member of Group {$group['Class']['group_name']} starting ".date_format(date_create(),'m/d/Y')." and ending ".date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y').".";
-			if(!$existing) $message .= "\n\n<a href='http://caseclubonline.com/users/accept_invitation/{$challenge_id}/{$group['Class']['id']}/{$user_id}'>Click here</a> to check it out.";
+			$message .= "{$challenge['User']['firstname']} {$challenge['User']['lastname']} has sent you an invitation for a new challenge on Case Club Online starting ".date_format(date_create(),'m/d/Y')." and ending ".date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y').".";
+			if(!$existing) $message .= "\n\n<a href='http://caseclubonline.com/users/accept_invitation/{$challenge_id}/0/{$user_id}'>Click here</a> to check it out.";
 			else $message .= "\n\n<a href='http://caseclubonline.com/'>Click here</a> to check it out.";
 			$message .= "\n\n<a href='http://caseclubonline.com/attachments/view/case/{$challenge_id}/?fromEmail=1'>Click here</a> to View Case.\n\n";
 			$message .= "Sincerely,\n\nCase Club Online Team";

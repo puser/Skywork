@@ -71,6 +71,11 @@ class UsersController extends AppController{
 		$this->redirect('/');
 	}
 	
+	function invite_collaborator($id){
+		$this->layout = 'ajax';
+		$this->set('id',$id);
+	}
+	
 	// send an email invitation
 	function invite($class_id,$user_id=NULL,$fname=NULL,$lname=NULL,$email=NULL,$type=NULL,$permissions=NULL){
 		$this->checkAuth();
