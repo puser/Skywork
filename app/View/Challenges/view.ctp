@@ -1,46 +1,46 @@
-<div id="leftcol" class="alignleft">
-	<h1 class="page-title">Answer Questions</h1>
-	<div id="caseclubmenu" class="no-icon">
-
+<div id="sidebarleft">
+	<h1>Answer Questions</h1>
+	<div id="sidemenu" >
 		<ul>
 			<?php foreach($challenge['Question'] as $k=>$q){ if(!$q['question']) continue; ?>
-			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a href="#<?php echo $q['id']; ?>"><?php echo stripslashes($q['section']); ?></a></li>
+			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a class="no-icon" href="#<?php echo $q['id']; ?>"><?php echo stripslashes($q['section']); ?></a></li>
 			<?php }if($challenge['Challenge']['allow_attachments']){ ?>
 			<li id="questionNavAttach"><a href="#attachments">Attach File(s)</a></li>
 			<?php } ?>
 		</ul>
 	</div>
+</div>
 
-</div>		
-<div id="maincol" class="alignright">
-
-	<div class="caseclub-links-wrap">
-		<div class="alignleft caseclub-location"><?php echo stripslashes($challenge['Challenge']['name']); ?></div>
-		<div class="alignright caseclub-links">
-			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?><a href="/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>" class="caseclub-preview">See Case</a><?php } ?>
-			<a href="#" onclick="save_response();return false;" class="caseclub-save">Save</a>
-			<a href="#modalExitChoices" class="caseclub-withdraw">Exit</a>
-		</div>
+<div id="maincolumn">
+	
+	<div class="alignleft page-toptitle"><?php echo stripslashes($challenge['Challenge']['name']); ?></div>
+	
+	<div class="actionmenu">
+		<ul>
+			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?><li class="action-preview"><a href="/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>">Assignment</a></li><?php } ?>
+			<li class="action-save"><a href="#" onclick="save_response();return false;">Save</a></li>
+			<li class="action-exit"><a href="#modalExitChoices" class="show-overlay">Exit</a></li>
+		</ul>
 		<div class="clear"></div>
 	</div>
+	<div class="clear"></div>
 	
-	<div id="answerQuestionsFormThemes" class="form-fields-wrap round round-white">
-		<div class="head"><span class="tl"></span><span class="tr"></span></div>
-		<div class="body" id="questionWrapperBody" style="overflow:hidden; min-height: 400px;">
-			<div class="body-r">
-				<div class="content" id="questionContent">
+	<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded">
+		<div id="questionContent"> </div>
+	</div>
+	
+	<div class="clear"></div>
+	
+	<div class="bottom-notification" id="fieldValidate" style="display:none;">
+		*You must complete this section
+	</div>
+	
+	<div style="width: 80px; margin: 0 auto;">
+		<a href="#" class="btn2" onclick="save_response('ajax');return false;"><span>Next</span></a>
+	</div>
 
-				</div>
-			</div>
-		</div>
-		<div class="foot"><div class="fl"></div><div class="fr"></div></div>
-	</div><!-- #answerQuestionsFormThemes-->
-	
-	<p class="textAlignCenter red" id="fieldValidate" style="display:none;">* You must complete this section</p>
-	<br /><br />
-	<a href="#" onclick="save_response('ajax');return false;" class="btn1 btn-savecontinue aligncenter"><span class="inner">Save and Continue</span></a>
-	
-</div><!-- #maincol-->
+</div>
+
 <div class="clear"></div>
 
 <div style="display: none;">

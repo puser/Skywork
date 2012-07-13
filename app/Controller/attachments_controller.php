@@ -18,7 +18,7 @@ class AttachmentsController extends AppController{
 				foreach($_FILES['attachment']['name'] as $k=>$n){
 					if(!$_FILES['attachment']['tmp_name'][$k]) continue;
 					$filename = md5(uniqid(rand())).strrchr($n,'.');
-					if(!move_uploaded_file($_FILES['attachment']['tmp_name'][$k],$_SERVER['DOCUMENT_ROOT'].'/dev/app/webroot/uploads/'.$filename)){
+					if(!move_uploaded_file($_FILES['attachment']['tmp_name'][$k],str_replace('index.php','uploads/',$_SERVER['SCRIPT_FILENAME']).$filename)){
 						print_r($_FILES);
 						die("<br>Upload error<br>");
 					}
