@@ -5,18 +5,15 @@ class Response extends AppModel{
 	var $primaryKey = 'id';
 	
 	var $belongsTo = array(	'Question' =>
-							array(	'className'	=> 'Question',
-									'foreignKey'=> 'question_id' ),
-							//'Response' =>
-							//array(	'className'	=> 'Response',
-							//		'foreignKey'=> 'response_id' ),
-							'User' =>
-							array(	'className'	=> 'User',
-									'foreignKey'=> 'user_id' ));
+													array(	'className'	=> 'Question',
+																	'foreignKey'=> 'question_id' ),
+													'User' =>
+													array(	'className'	=> 'User',
+																	'foreignKey'=> 'user_id' ));
 	
-	var $hasMany = array(	'Responses' =>
-							array(	'className'	=> 'Response',
-									'foreignKey'=> 'response_id' ));
+	var $hasMany = array(	'ResponseComment' =>
+												array(	'className'	=> 'ResponseComment',
+																'foreignKey'=> 'response_id',
+																'dependent'	=> true ));
 }
-
 ?>

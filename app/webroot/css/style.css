@@ -634,30 +634,31 @@ a.customize-link {display: block; padding-left: 25px; background: url('/images/i
 /**
  * Page: Dashboard - Instructor
  */
-.puentes-table {padding: 0 0 10px 0; color: #808080; }
-.puentes-table .cl-head {height: 20px;}
-.puentes-table .cl-body {height: 1%;}
-.puentes-table .cl-head li  {float: left; padding: 0; position: relative; }
-.puentes-table .cl-head li.col1 {padding-left: 6px;}
-.puentes-table .cl-head li a {color: #00467f;}
-.puentes-table .cl-head li a img {position: relative; top: 4px; }
-.puentes-table .col1 {width: 390px;}
-.puentes-table .col2 {width: 120px;}
-.puentes-table .col3 {width: 120px;}
-.puentes-table .col4 {width: 120px;}
-.puentes-table .col5 {width: 130px;}
-.puentes-table .col6 {width: 40px;}
-.puentes-table .cl-body li {padding: 8px 6px;}
-.puentes-table .cl-body li.alternate {background: #f2f2f2;}
-.puentes-table .cl-body li a {color: #808080;}
-.puentes-table .cl-body li a:hover .new {text-decoration: none;}
-.puentes-table.width50 .cl-body li .col1 {}
-.puentes-table .cl-body li.opened {padding: 0; background: #d9e8f1; }
-.puentes-table .cl-body li.opened a {padding: 0; }
-.puentes-table .cl-body li.opened li {background: #ffffff; padding: 2px 2px 2px 30px; font-size: 12px; }
-.puentes-table .cl-body li.opened li.alternate {background-color: #d9e8f1; }
-.puentes-table .cl-body li.opened li.dot-red {background-image: url('/images/dot-red.png'); background-position: 10px center; background-repeat: no-repeat;}
-.puentes-table .cl-body li.opened .colgroup { padding: 8px 6px; }
+#bridgetable {padding: 0 0 10px 0; color: #808080; }
+#bridgetable .cl-head {height: 20px;}
+#bridgetable .cl-body {height: 1%;}
+#bridgetable .cl-head li  {float: left; padding: 0; position: relative; }
+#bridgetable .cl-head li.col1 {padding-left: 6px;}
+#bridgetable .cl-head li a {color: #00467f;}
+#bridgetable .cl-head li a img {position: relative; top: 4px; }
+#bridgetable .col1 {width: 390px;}
+#bridgetable .col2 {width: 120px;}
+#bridgetable .col3 {width: 120px;}
+#bridgetable .col4 {width: 120px;}
+#bridgetable .col5 {width: 130px;}
+#bridgetable .col6 {width: 40px;}
+#bridgetable .cl-body li {padding: 8px 6px;}
+#bridgetable .cl-body li.alternate {background: #f2f2f2;}
+#bridgetable .cl-body li a {color: #808080;}
+#bridgetable .cl-body li a:hover .new {text-decoration: none;}
+#bridgetable.width50 .cl-body li .col1 {}
+#bridgetable .opened {padding: 0; background: #d9e8f1 !important; }
+#bridgetable td.opened {background:#fff !important;}
+#bridgetable .opened a {padding: 0; }
+#bridgetable .opened li {background: #ffffff; padding: 2px 2px 2px 30px; font-size: 12px; }
+#bridgetable .opened li.alternate {background-color: #d9e8f1; }
+#bridgetable .opened li.dot-red {background-image: url('/images/dot-red.png'); background-position: 10px center; background-repeat: no-repeat;}
+#bridgetable .opened .colgroup { padding: 8px 6px; }
 .viewAllRequests {}
 
 #puentes-list-table {min-height: 380px; height: auto !important; height: 300px;  }

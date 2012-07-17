@@ -4,7 +4,7 @@ class Attachment extends AppModel{
 	var $primaryKey = 'id';
 	
 	var $belongsTo = array(	'Challenge' =>
-							array(	'className' => 'Challenge',
-									'foreignKey'=> 'challenge_id' ));
+													array(	'className' => 'Challenge',
+																	'foreignKey'=> 'challenge_id' ));
 }
 ?>

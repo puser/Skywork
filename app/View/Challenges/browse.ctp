@@ -8,7 +8,7 @@
 	</div>
 <?php } ?>
 
-<div id="bridgelist" class="rounded box-white">
+<div id="bridgelist" class="rounded box-white" style="overflow:hidden;margin-left:25px;">
 	<div class="box-head">
 		<h2>My Portfolio</h2>
 		<div class="filterbox">
@@ -23,7 +23,7 @@
 	</div>
 	
 	<div class="box-content">
-		<table id="bridgetable">
+		<table id="bridgetable" style="width:954px;">
 			<thead>
 				<tr>
 					<th class="col1"><a href="/dashboard/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>">Case Name</a></th>
@@ -66,7 +66,25 @@
 						<?php } ?>
 					</td>
 				</tr>
-				<?php } ?>
+				<?php if(@$challenge['Users']){ ?>
+				<tr style="display:none;"><td colspan="7" width="500" class="opened">
+					<ul class="opened-users">
+						<li>You</li>
+						<?php
+						$user_count = 0;
+						$l = 0;
+						foreach($challenge['Users'] as $u){ 
+							if($u['id']==$_SESSION['User']['id']) continue;
+							$user_count++; ?>
+							<li class="<?php if(!@$u['completed_responses']){ ?>dot-red<?php }if(!(@$l%2)){ ?> alternate<?php } ?>">
+								<a href="/responses/view/<?php echo $u['next_question']; ?>/<?php echo $u['id']; ?>"<?php if(date_create($challenge['Challenge']['responses_due']) < $now){ ?> onclick="alert('This challenge has expired.');return false;"<?php } ?>>
+									<?php echo ($challenge['Challenge']['anonymous'] == 'A' ? 'Anonymous User #'.$user_count : "{$u['firstname']} {$u['lastname']}"); ?>
+								</a><!-- <span class="draft">DRAFT</span> -->
+							</li>
+						<?php @$l++; } ?>
+					</ul>
+				</td></tr>
+				<?php }} ?>
 			</tbody>
 		</table>
 		<?php if(!$challenges){ ?>You do not yet have access to any challenges.<?php } ?>

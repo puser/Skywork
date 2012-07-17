@@ -3,12 +3,12 @@ class ResponsesController extends AppController{
 	var $name = 'Responses';
 	var $uses = array('Response','Question','Status');
 	
-	// view own responses for a question; view another user's response for a question; view responses to own answer for a question
+	// view another user's response for a question; view own answer for a question
 	function view($question_id,$user_id=NULL){
 		$this->checkAuth(@$_REQUEST['ajax'] ? true : false);
 		
 		$this->Question->hasMany['Response']['conditions'] = "Response.user_id = " . ($user_id ? $user_id : $_SESSION['User']['id']);
-		$question = $this->Question->find('first',array('conditions'=>"Question.id = $question_id",'recursive'=>2));
+		$question = $this->Question->find('all',array('conditions'=>"Question.id = $question_id",'recursive'=>2));
 		$this->set('question',$question);
 		
 		$q_num = $this->Question->find('count',array('conditions'=>array("Question.id < {$question['Question']['id']}","Question.challenge_id = {$question['Question']['challenge_id']}"))) + 1;

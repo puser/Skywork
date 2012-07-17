@@ -122,7 +122,7 @@ class ChallengesController extends AppController{
 		
 		if($view == 'leaderboard'){
 			$users = array();
-			foreach($challenge['Class'] as $g){
+			foreach($challenge['ClassSet'] as $g){
 				foreach($g['User'] as $u){
 					foreach($challenge['Question'] as $q){
 						$this->Response->hasMany['Responses']['conditions'][] = 'Responses.response_type = "A"';

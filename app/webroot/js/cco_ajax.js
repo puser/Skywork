@@ -223,24 +223,23 @@ function add_response_attachment(){
 }
 
 function show_user_list(e,cid,view){
-	e = e.parent();
-	var prevOpen = $('li.opened').length;
+	e = e.parents('tr');
+	var prevOpen = $('tr.opened').length;
 	$('.viewAllRequests').hide();
 	
 	if(e.hasClass('opened')){
 		$('.pagination').show();
 		
-		e.children('.opened-users').slideUp('normal',function(){
+		e.next().slideUp('normal',function(){
 			e.removeClass('opened');
-			e.children('div.alignleft').removeClass('colgroup');
 		});
 		
 		$('#home-leaderboard').animate({width:0},function(){ $('#home-leaderboard').hide(); });
-		$('#caseclub-list').animate({width:994},function(){ $('.graphIcon').show(); });
+		$('#bridgelist').animate({width:994},function(){ $('.graphIcon').show(); });
 		
-		$('#caseclub-list-table .col1').animate({width:390},'fast');
+		$('#bridgetable .col1').animate({width:390},'fast');
 		$('#thinListBorder').hide();
-		$('#caseclub-list-table .col5').show();
+		$('#bridgetable td,#bridgetable th').show();
 	}else{
 		$('.graphIcon').hide();
 		$('.pagination').hide();
@@ -249,31 +248,35 @@ function show_user_list(e,cid,view){
 		$('li.opened').removeClass('opened').find('.opened-users').slideUp();
 		
 		e.addClass('opened');
-		e.children('div.alignleft').addClass('colgroup');
-		if(!e.find('.graphIcon').length) e.children('.opened-users').slideDown();
+		if(!e.find('.graphIcon').length) e.next().slideDown();
 		
-		$('#caseclub-list-table .col1').animate({width:490},'fast');
+		$('#bridgetable .col1').animate({width:465},'fast');
 		$('#thinListBorder').show();
-		$('#caseclub-list-table .col5').hide();
+		$('#bridgetable td:not(:first-child),#bridgetable th:not(".col1")').hide();
 		
 		e.find('.viewAllRequests').show();
 				
 		$.ajax({url:'/challenges/view/'+cid+'/'+(view ? 'stats' : 'leaderboard')+'/',success:function(r){
-			$('#caseclub-list').css({'float':'left'});
-			$('#caseclub-list').animate({width:500});
+			$('#bridgelist').css({'float':'left'});
+			$('#bridgelist').animate({width:450});
 			if(prevOpen){
 				$("#home-leaderboard .content").fadeOut('slow',function(){
 					$('#home-leaderboard').html(r).find('.content').hide();
-					$('#home-leaderboard .content').css({height:$('#caseclub-list .content').height()});
+					$('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});
 					//$("#home-leaderboard .content").hide();
 					$("#home-leaderboard .content").fadeIn('slow');
 				});
 			}else{
 				$('#home-leaderboard').html(r);
-				$('#home-leaderboard .content').css({height:$('#caseclub-list .content').height()});
+				$('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});
 				$('#home-leaderboard').show();
+				$('#home-studentwork').width(470);
 				$('#home-leaderboard').animate({width:475});
 			}
+			
+			setTimeout(function(){
+				$('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});
+			},500);
 		}});
 	}
 }

@@ -5,12 +5,12 @@ class Question extends AppModel{
 	var $primaryKey = 'id';
 	
 	var $belongsTo = array(	'Challenge' =>
-							array(	'className'	=> 'Challenge',
-									'foreignKey'=> 'challenge_id' ));
+													array(	'className'	=> 'Challenge',
+																	'foreignKey'=> 'challenge_id' ));
 	
 	var $hasMany = array(	'Response' =>
-							array(	'className'	=> 'Response',
-									'foreignKey'=> 'question_id',
-									'dependent'	=> true ));
+												array(	'className'	=> 'Response',
+																'foreignKey'=> 'question_id',
+																'dependent'	=> true ));
 }
 ?>

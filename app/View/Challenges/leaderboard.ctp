@@ -1,56 +1,47 @@
-<div class="head"><div class="tl"></div><div class="tr"></div></div>
-<div class="body">
-	<div class="body-r">
-		<div class="content">
-			<div class="box-heading">
-				<span class="icon icon-star"></span>
-				<?php if(@$_REQUEST['permitStats']){ ?>
-					<select style="margin-left: 50px;margin-top: 9px;" onchange="if($(this).val()) flip_details(<?php echo $challenge['Challenge']['id']; ?>,'stats');">
-						<option value="">Leaderboard</option>
-						<option value="stats">My Statistics</option>
-					</select>
-				<?php }else{ ?>
-					<h2 class="page-subtitle">Leaderboard</h2>
-				<?php } ?>
-			</div>
-			
-			<div id="leaderboard-current-standings" class="caseclub-table">
-				<div class="cl-head">
-					<ul>
-						<li class="col1"><a style="text-decoration:none !important;">Current Top 10</a> <?php echo date_format(date_create(),'m/d/Y'); ?></li>
-
-						<li class="col6">
-							<a href="#">Score </a>
-							<a href="#" class="tooltip-q">
-								<span class="tooltip-q-text">Agree vs Disagree Ratio</span>
-							</a>
-						</li>
-					</ul>
-					<div class="clear"></div>
-
-				</div>
-				<div class="cl-body">
-					<?php if(!$users) echo "Not enough data exists to display details for this challenge."; ?>
-					<ul>
-						<?php
-						$k = 0;
-						$current = false;
-						foreach($users as $n=>$r){
-							$k++;
-							if($n == $_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) $current = true;
-							// elseif($challenge['Challenge']['challenge_type'] == 'A') $n = 'Anonymous User #'.($current ? $k - 1 : $k);
-							?>						
-						<li<?php if($k%2){ ?> class="alternate"<?php } ?>>
-							<div class="col1 alignleft"><?php echo $k; ?>. <?php echo $n; ?></div>
-							<div class="col6 alignleft score-count"> <?php echo ($r * 5); ?> </div>
-							<div class="clear"></div>
-						</li>
-						<?php } ?>
-					</ul>
-				</div>
-			</div><!-- #leaderboard-current-standings -->
-			
-		</div>
+<div id="home-studentwork" class="rounded box-white width50 alignright">
+	
+	<div class="box-head ">
+		<span class="icon5 icon5-star"></span>
+		<h2 class="page-subtitle">Group Activity</h2>
+		<div class="clear"></div>
 	</div>
-</div>
-<div class="foot"><div class="fl"></div><div class="fr"></div></div>
+	
+	<div class="box-content">
+		
+		
+		<table id="students-active-questions" class="table-type-1">
+			<thead>
+				<tr>
+					<th class="col1" width="70%">Group Members <span style="color: #666666; margin-left: 30px;"><?php echo date_format(date_create(),'m/d/Y'); ?></span></th>
+					<th class="col2" width="10%"><img src="/images/icons/icon-like-19x21.png" /></th>
+					<th class="col3" width="10%">
+						<div class="tooltip-wrap">
+							<img src="/images/icons/icon-like2-20x20.png" />
+							<a href="#" title="this is a tooltip" class="tooltip-mark tooltip-mark-question"></a>
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php if(!$users){ ?>
+				<tr><td colspan="3">Not enough data exists to display details for this challenge</td></tr>
+			<?php }
+			$k = 0;
+			$current = false;
+			foreach($users as $n=>$r){
+				$k++;
+				if($n == $_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) $current = true;
+				// elseif($challenge['Challenge']['challenge_type'] == 'A') $n = 'Anonymous User #'.($current ? $k - 1 : $k);
+				?>
+				<tr<?php if($k%2){ ?> class="alternate"<?php } ?>>
+					<td class="col1"><?php echo $k; ?>. <?php echo $n; ?></td>
+					<td class="col2"><?php echo ($r * 5); ?></td>
+					<td class="col3"><?php echo ($r * 5); ?></td>
+				</tr>
+				<?php } ?>
+			</tbody>
+		</table>
+		<a href="#" class="studentwork-more" id="students-active-questions-more"><img src="/images/arrow-right-red.png" /> <span>More Info</span></a>
+		
+	</div>
+</div><!-- #home-leaderboard -->
