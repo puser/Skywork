@@ -11,9 +11,12 @@ class Response extends AppModel{
 													array(	'className'	=> 'User',
 																	'foreignKey'=> 'user_id' ));
 	
-	var $hasMany = array(	'ResponseComment' =>
-												array(	'className'	=> 'ResponseComment',
+	var $hasMany = array(	'Comment' =>
+												array(	'className'	=> 'Comment',
 																'foreignKey'=> 'response_id',
-																'dependent'	=> true ));
+																'dependent'	=> true ),
+												'Responses' =>
+												array(	'className'	=> 'Response',
+																'foreignKey'=> 'response_id' ));
 }
 ?>

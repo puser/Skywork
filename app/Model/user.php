@@ -26,7 +26,6 @@ class User extends AppModel{
 																		array(	'className'	=> 'Group',
 																						'joinTable'	=> 'users_groups',
 																						'foreignKey'=> 'user_id',
-																						'associationForeignKey' => 'group_id',
-																						'unique'	=> true ));
+																						'associationForeignKey' => 'group_id' ));
 }
 ?>

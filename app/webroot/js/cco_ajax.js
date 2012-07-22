@@ -235,7 +235,7 @@ function show_user_list(e,cid,view){
 		});
 		
 		$('#home-leaderboard').animate({width:0},function(){ $('#home-leaderboard').hide(); });
-		$('#bridgelist').animate({width:994},function(){ $('.graphIcon').show(); });
+		$('#bridgelist').animate({width:954},function(){ $('.graphIcon').show(); });
 		
 		$('#bridgetable .col1').animate({width:390},'fast');
 		$('#thinListBorder').hide();

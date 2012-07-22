@@ -77,9 +77,9 @@
 							if($u['id']==$_SESSION['User']['id']) continue;
 							$user_count++; ?>
 							<li class="<?php if(!@$u['completed_responses']){ ?>dot-red<?php }if(!(@$l%2)){ ?> alternate<?php } ?>">
-								<a href="/responses/view/<?php echo $u['next_question']; ?>/<?php echo $u['id']; ?>"<?php if(date_create($challenge['Challenge']['responses_due']) < $now){ ?> onclick="alert('This challenge has expired.');return false;"<?php } ?>>
+								<a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/<?php echo $u['id']; ?>"<?php if(date_create($challenge['Challenge']['responses_due']) < $now){ ?> onclick="alert('This challenge has expired.');return false;"<?php } ?>>
 									<?php echo ($challenge['Challenge']['anonymous'] == 'A' ? 'Anonymous User #'.$user_count : "{$u['firstname']} {$u['lastname']}"); ?>
-								</a><!-- <span class="draft">DRAFT</span> -->
+								</a><!-- <span class="draft">DRAFT</span> /responses/view/<?php echo $u['next_question']; ?>/<?php echo $u['id']; ?> -->
 							</li>
 						<?php @$l++; } ?>
 					</ul>

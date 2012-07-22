@@ -847,7 +847,7 @@ a.studentwork-more:hover span {display: inline; }
 /**
  * Pop Comments Box
  */
-.answer-comment-box {background: #eff3fa; border: 1px solid #949494; display: block; width: 200px; height: 90px; padding: 10px; position: absolute; top: 70px; left: 260px; }
+.answer-comment-box {background: #eff3fa; border: 1px solid #949494; display: block; width: 200px; height: 90px; padding: 10px; position: absolute; top: -125px; left: 20px; }
 .answer-comment-box textarea {display: block; width: 190px; height: 40px; padding: 5px; font-family: Arial, sans-serif; font-size: 12px; margin-bottom: 10px; }
 .answer-comment-box .vote {width: 90px; float: left; }
 .answer-comment-box .vote li {float: left; margin-right: 0px; }
@@ -856,7 +856,7 @@ a.studentwork-more:hover span {display: inline; }
 .answer-comment-box .vote li.votedown a, .answer-comment-box .vote.voted li.selected.votedown a  {background: url('/images/icons/icon-like2-20x20.png') no-repeat center center; }
 .answer-comment-box .vote.voted li.voteup a {background: url('/images/icons/icon-like-19x21-bw.png') no-repeat center center; }
 .answer-comment-box .vote.voted li.votedown a {background: url('/images/icons/icon-like2-20x20-bw.png') no-repeat center center; }
-.answer-comment-box .vote li:hover {background: url('/images/circle-white.png') no-repeat center center; }
+.answer-comment-box .vote li:hover,.answer-comment-box .vote li.active {background: url('/images/circle-white.png') no-repeat center center; }
 .answer-comment-box .vote li a img {position: relative; top: 4px; left: 6px; }
 .answer-comment-box .comment-submit {width: 90px; float: right; }
 .answer-comment-box .callout-corner {display: block; width: 18px; height: 12px; background: url('/images/comment-box-corner.png') no-repeat; position: absolute; bottom: -2px; left: -17px; }

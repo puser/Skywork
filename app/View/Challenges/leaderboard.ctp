@@ -35,8 +35,8 @@
 				?>
 				<tr<?php if($k%2){ ?> class="alternate"<?php } ?>>
 					<td class="col1"><?php echo $k; ?>. <?php echo $n; ?></td>
-					<td class="col2"><?php echo ($r * 5); ?></td>
-					<td class="col3"><?php echo ($r * 5); ?></td>
+					<td class="col2"><?php echo ($r[1]); ?></td>
+					<td class="col3"><?php echo ($r[0]); ?></td>
 				</tr>
 				<?php } ?>
 			</tbody>

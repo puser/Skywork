@@ -1,6 +1,5 @@
 <div id="seeCase" class="round round-white">
 	<div class="inner-seeCase">
-		<div class="head"><span class="tl"></span><span class="tr"></span></div>
 		<div class="body">
 			<div class="body-r">
 				<div class="content">
@@ -18,7 +17,7 @@
 
 						</div>
 					</div>
-					<div id="preview-case">
+					<div id="preview-case" style="clear:both;text-align:center;">
 
 						<iframe src="http://docs.google.com/viewer?url=http%3A%2F%2Fcaseclubonline.com%2Fuploads%2F<?php echo $attachment['Attachment']['file_location']; ?>&embedded=true" width="720" height="500" />
 						

@@ -1,36 +1,29 @@
 <?php
 class ResponsesController extends AppController{
 	var $name = 'Responses';
-	var $uses = array('Response','Question','Status');
+	var $uses = array('Response','Question','Status','Challenge');
 	
 	// view another user's response for a question; view own answer for a question
-	function view($question_id,$user_id=NULL){
+	function view($challenge_id,$user_id=NULL){
 		$this->checkAuth(@$_REQUEST['ajax'] ? true : false);
 		
-		$this->Question->hasMany['Response']['conditions'] = "Response.user_id = " . ($user_id ? $user_id : $_SESSION['User']['id']);
-		$question = $this->Question->find('all',array('conditions'=>"Question.id = $question_id",'recursive'=>2));
-		$this->set('question',$question);
-		
-		$q_num = $this->Question->find('count',array('conditions'=>array("Question.id < {$question['Question']['id']}","Question.challenge_id = {$question['Question']['challenge_id']}"))) + 1;
-		$this->set('q_num',$q_num);
-		
-		$neighbors = $this->Question->find('neighbors',array(	'field'		=> 'id',
-																'value'		=> $question['Question']['id'],
-																'conditions'=> array("Question.challenge_id = {$question['Question']['challenge_id']}","Question.question != ''")));
-		$this->set('next_id',@$neighbors['next']['Question']['id']);
+		$this->Challenge->Behaviors->attach('Containable');
+		$contains = array(	'ClassSet'	=> array('User'),
+												'Group'			=> array('User'),
+												'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . ($user_id ? $user_id : $_SESSION['User']['id'] ),
+																																	'Responses'		=> array(	'conditions'	=> "Responses.user_id = " . ($_SESSION['User']['id'] )),
+																																	'Comment' 	 	=> array(	'conditions'	=> "Comment.user_id = " . ($_SESSION['User']['id'] ), 'order' => 'Comment.segment_start DESC'))));
+												
+		$challenge = $this->Challenge->find('all',array('conditions'=>"Challenge.id = $challenge_id",'contain'=>$contains));
+		$this->set('challenge',$challenge);
+			
 		if(@$_REQUEST['ajax']){
 			$this->set('ajax',true);
 			$this->layout = 'ajax';
 		}
 		
-		if(!$user_id){
-			$this->set('response',$this->Response->find('first',array('conditions'=>array('Question.id'=>$question_id,'User.id'=>$_SESSION['User']['id']),'recursive'=>2)));
-			$this->render('view_all');
-		}else{
-			$this->set('own_response',$this->Response->find('first',array(	'conditions'=>array(	'Response.user_id'		=> $_SESSION['User']['id'],
-																									'Response.response_id'	=> $question['Response'][0]['id'] ),
-																			'recursive'	=> -1 )));
-		}
+		if($_SESSION['User']['user_type'] == 'P') $this->render('student_view');
+		else $this->render('instructor_view');
 	}
 	
 	// create or update own answer to a question or own response to another user's answer

@@ -46,6 +46,21 @@ jQuery(function($) {
 	$(".graph1 .bars-q3 .bar-disagree").height(120);
 	
 	
+	/** 
+	 * Sidemenu 2
+	 */ 
+	$("a.sidemenu2-title").click(function(){
+		$("li.active ul", $(this).closest("#sidemenu2")).slideUp(300, function(){
+			$(this).closest("li").removeClass("active"); 
+		}); 
+		$("ul", $(this).closest("li")).slideDown(300, function(){
+			$(this).closest("li").addClass("active"); 
+		}); 
+	
+	}); 
+	$("#sidemenu2 li:first-child a.sidemenu2-title").trigger("click");
+	
+	
 	
 	/**
 	 * Login Form

@@ -8,7 +8,6 @@ class Group extends AppModel{
 											'className'	=> 'User',
 											'joinTable'	=> 'users_groups',
 											'foreignKey'=> 'group_id',
-											'associationForeignKey' => 'user_id',
-											'unique'	=> true ));
+											'associationForeignKey' => 'user_id' ));
 }
 ?>

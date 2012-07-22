@@ -15,13 +15,15 @@ class UsersController extends AppController{
 		
 		if(@$_REQUEST['dir']=='a') $sort .= ' DESC';
 		else $sort .= ' ASC';
-		
 		$this->User->hasAndBelongsToMany['ClassSet']['order'] = $sort;
 		
-		$user = $this->User->find('first',array('conditions'=>"User.id = {$_SESSION['User']['id']}",'recursive'=>2));
-		$this->set('user',$user);
-		
+		$user = $this->User->find('first',array('conditions'=>"User.id = {$_SESSION['User']['id']}"));
+
 		if($show=='classes'){
+			$this->ClassSet->Behaviors->attach('Containable');
+			$user['ClassSet'] = $this->ClassSet->find('all',array('conditions'=>"owner_id = {$_SESSION['User']['id']}",'contain'=>array('User'=>array('conditions'=>'User.user_type = "P"'),'Owner')));
+			$this->set('user',$user);
+		
 			$current_groups = $requested_groups = $pending_groups = array();
 			$pending_invites = $this->Status->find('all',array('conditions'=>array('Status.challenge_id IS NULL','Status.status'=>'P','Status.user_id'=>$_SESSION['User']['id'])));
 			foreach($pending_invites as $i) $pending_groups[] = $i['Class']['id'];
@@ -35,7 +37,7 @@ class UsersController extends AppController{
 				if($r['ClassSet']) $requested_groups[] = $r['ClassSet']['id'];
 			}
 			
-			foreach($user['ClassSet'] as $g) $current_groups[] = $g['id'];
+			foreach($user['ClassSet'] as $g) $current_groups[] = $g['ClassSet']['id'];
 			if($current_groups) $conditions = array('ClassSet.id NOT IN ('.implode(',',$current_groups).')');
 			else $conditions = array();
 				
@@ -44,7 +46,10 @@ class UsersController extends AppController{
 			$this->set('pending_groups',$pending_groups);
 			$this->set('groups',$this->ClassSet->find('all',array('conditions'=>$conditions)));
 			$this->render('view_classes');
-		}else $this->set('states',$this->State->find('all'));
+		}else{
+			$this->set('user',$user);
+			$this->set('states',$this->State->find('all'));
+		}
 	}
 	
 	// save updated account settings

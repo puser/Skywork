@@ -124,12 +124,16 @@ class ChallengesController extends AppController{
 			$users = array();
 			foreach($challenge['ClassSet'] as $g){
 				foreach($g['User'] as $u){
+					@$users["{$u['firstname']} {$u['lastname']}"][0] = 0;
+					@$users["{$u['firstname']} {$u['lastname']}"][1] = 0;
 					foreach($challenge['Question'] as $q){
-						$this->Response->hasMany['Responses']['conditions'][] = 'Responses.response_type = "A"';
+						//$this->Response->hasMany['Responses']['conditions'][] = 'Responses.response_type = "A"';
 						//$this->Response->hasMany['Responses']['conditions'][] = "Responses.user_id = {$u['id']}";
 						$res = $this->Response->find('first',array('conditions'=>array('Question.id'=>$q['id'],'User.id'=>$u['id'])));
-
-						@$users["{$u['firstname']} {$u['lastname']}"] += count($res['Responses']);
+						
+						if(@$res['Comment']){
+							foreach($res['Comment'] as $c) @$users["{$u['firstname']} {$u['lastname']}"][$c['type']]++;
+						}
 					}
 				}
 			}
@@ -284,9 +288,11 @@ class ChallengesController extends AppController{
 	}
 	
 	function save_groups($challenge_id){
-		$group['Group']['challenge_id'] = $challenge_id;
-		foreach($_REQUEST['user'] as $u) $group['User'][] = array('user_id' => $u);
-		die($this->Group->save($group));
+		$this->Group->save(array('challenge_id' => $challenge_id));
+		$group = array();
+		foreach($_REQUEST['user'] as $u) array_push($group,array('Group' => array('id' => $this->Group->id), 'User' => array('id' => $u)));
+		$this->Group->saveAll($group);
+		die(print_r($group));
 	}
 	
 	function clear_groups($challenge_id){
