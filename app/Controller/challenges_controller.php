@@ -1,7 +1,7 @@
 <?php
 class ChallengesController extends AppController{
 	var $name = 'Challenges';
-	var $uses = array('User','Challenge','ClassSet','Status','Response','Group');
+	var $uses = array('User','Challenge','ClassSet','Status','Response','Group','UsersGroup');
 	
 	// view all challenges (dashboard)
 	function browse($status=NULL,$page=1){
@@ -290,9 +290,8 @@ class ChallengesController extends AppController{
 	function save_groups($challenge_id){
 		$this->Group->save(array('challenge_id' => $challenge_id));
 		$group = array();
-		foreach($_REQUEST['user'] as $u) array_push($group,array('Group' => array('id' => $this->Group->id), 'User' => array('id' => $u)));
-		$this->Group->saveAll($group);
-		die(print_r($group));
+		foreach($_REQUEST['user'] as $u) $this->UsersGroup->save(array('group_id'=>$this->Group->id,'user_id'=>$u));
+		die();
 	}
 	
 	function clear_groups($challenge_id){

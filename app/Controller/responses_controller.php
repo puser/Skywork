@@ -16,6 +16,7 @@ class ResponsesController extends AppController{
 												
 		$challenge = $this->Challenge->find('all',array('conditions'=>"Challenge.id = $challenge_id",'contain'=>$contains));
 		$this->set('challenge',$challenge);
+		$this->set('user_id',$user_id);
 			
 		if(@$_REQUEST['ajax']){
 			$this->set('ajax',true);

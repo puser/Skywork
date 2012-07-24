@@ -58,7 +58,6 @@ jQuery(function($) {
 		}); 
 	
 	}); 
-	$("#sidemenu2 li:first-child a.sidemenu2-title").trigger("click");
 	
 	
 	

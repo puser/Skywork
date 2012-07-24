@@ -11,7 +11,7 @@
 		</div>
 		
 		<form id="updateClassName" method="POST" action="/classes/update/">
-			<h2><input type="text" name="class[ClassSet][group_name]" value="<?php echo $class['ClassSet']['group_name']; ?>" /> Students</h2>
+			<h2><?php echo $class['ClassSet']['group_name']; ?> Students</h2>
 			<input type="hidden" name="class[ClassSet][id]" value="<?php echo $class['ClassSet']['id']; ?>" />
 		</form>
 	</div>

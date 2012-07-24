@@ -444,6 +444,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 /** 12x12 */
 .icon3-plus {background-image: url('/images/icons/icon-plus-13x13.png'); }
 .icon3-token {background-image: url('/images/icons/icon-token-12x13.png'); }
+.icon3-sm_green {background-image: url('/images/icons/icon-people-green-13x13.png'); }
 .icon3-pen {background-image: url('/images/icons/icon-pen-12x12.png'); }
 .icon3-close {background-image: url('/images/icons/icon-close-13x13.png'); }
 
@@ -877,3 +878,50 @@ a.studentwork-more:hover span {display: inline; }
 
 
 #ui-datepicker-div { clip:auto; }
+
+
+
+
+.annotated{
+  position: relative;
+  background-color:#FFEFD8;
+}
+
+.annotated[annotateLevel="0"] {
+  background-color:#ffaaaa;
+}
+
+.annotated[annotateLevel="1"] {
+  background-color:#ff8888;
+}
+
+.annotated[annotateLevel="2"] {
+  background-color:#ff4444;
+}
+
+.beingAnnotated {
+  background-color:#F90;
+}
+
+.annotationFocus, .annotationFocus[annotatelevel='0']{
+  background-color:#9F0;
+}
+
+.annotationFocus[annotatelevel='1']{
+  background-color:#C2DCAB;
+}
+
+.annotationFocus[annotatelevel='2']{
+  background-color:#D6F0BF;
+}
+
+.jQueryTextAnnotaterDialog{
+  z-index: 999;
+  position:absolute;
+  display:none;
+		border:0 !important;
+}
+
+.jQueryTextAnnotaterDialogRemoveButton {
+	display:none;
+}

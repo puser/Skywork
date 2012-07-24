@@ -3,15 +3,18 @@ class ClassesController extends AppController{
 	var $name = 'Classes';
 	var $uses = array('User','Challenge','ClassSet','Status','UserClass');
 	
-	function update(){
+	function update($id = NULL){
 		$this->checkAuth();
 			
 		if(@$_REQUEST['class']['ClassSet']['group_name']){
 			$this->ClassSet->save($_REQUEST['class']);
-			if(isset($_REQUEST['class']['ClassSet']['public'])) die($this->ClassSet->id);
+			if(!isset($_REQUEST['class']['ClassSet']['id'])) die($this->ClassSet->id);
 			else $this->redirect('/users/view/classes/');
 		}
-		else die('Invalid parameters');
+		else{
+			$this->layout = 'ajax';
+			$this->set('class',$this->ClassSet->findById($id));
+		}
 	}
 	
 	function update_token($id){
