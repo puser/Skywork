@@ -25,7 +25,7 @@ class ChallengesController extends AppController{
 		if(@$_REQUEST['dir']=='a' || !@$_REQUEST['sort']) $sort .= ' DESC';
 		else $sort .= ' ASC';
 		
-		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','ClassSet'=>array('User'))));
+		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','ClassSet'=>array('User'),'Group'=>array('User'))));
 
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
@@ -56,9 +56,13 @@ class ChallengesController extends AppController{
 			$answers_due = date_create($c['Challenge']['answers_due']);
 			if($answers_due < $now){
 				$ulist = $challanges[$k]['Users'] = array();
-				foreach($c['ClassSet'] as $g){
+				
+				foreach(($_SESSION['User']['user_type'] == 'P' && $c['Group'] ? $c['Group'] : $c['ClassSet']) as $g){
+					$user_group = false;
+					$user_buffer = array();
 					foreach($g['User'] as $u){
 						if(array_search($u['id'],$ulist) !== false) continue;
+						if($u['id'] == $_SESSION['User']['id']) $user_group = true;
 						
 						$check_responses = $this->Challenge->find('first',array('conditions'	=> "Challenge.id = {$c['Challenge']['id']}",
 																				'contain'		=> array('Question'=>array('Response'=>array('conditions'=>"Response.user_id = {$u['id']}")))));
@@ -84,8 +88,11 @@ class ChallengesController extends AppController{
 							else $u['next_question'] = $c['Question'][$r_count]['id'];
 							if($r_count >= count($c['Question'])) $u['completed_responses'] = true;
 							
-							$challenges[$k]['Users']["{$u['firstname']} {$u['lastname']}"] = $u;
+							$user_buffer["{$u['firstname']} {$u['lastname']}"] = $u;
 						}
+					}
+					if(($_SESSION['User']['user_type'] == 'P' && $c['Group'] && $user_group) || (!($_SESSION['User']['user_type'] == 'P' && $c['Group']))){
+						@$challenges[$k]['Users'] = is_array($challenges[$k]['Users']) ? array_merge($challenges[$k]['Users'],$user_buffer) : $user_buffer;
 					}
 				}
 				@ksort($challenges[$k]['Users']);
@@ -122,19 +129,26 @@ class ChallengesController extends AppController{
 		
 		if($view == 'leaderboard'){
 			$users = array();
-			foreach($challenge['ClassSet'] as $g){
+			foreach(($_SESSION['User']['user_type'] == 'P' && $challenge['Group'] ? $challenge['Group'] : $challenge['ClassSet']) as $g){
+				$user_group = false;
+				$user_buffer = array();
 				foreach($g['User'] as $u){
-					@$users["{$u['firstname']} {$u['lastname']}"][0] = 0;
-					@$users["{$u['firstname']} {$u['lastname']}"][1] = 0;
+					if($u['id'] == $_SESSION['User']['id']) $user_group = true;
+					
+					@$user_buffer["{$u['firstname']} {$u['lastname']}"][0] = 0;
+					@$user_buffer["{$u['firstname']} {$u['lastname']}"][1] = 0;
 					foreach($challenge['Question'] as $q){
 						//$this->Response->hasMany['Responses']['conditions'][] = 'Responses.response_type = "A"';
 						//$this->Response->hasMany['Responses']['conditions'][] = "Responses.user_id = {$u['id']}";
 						$res = $this->Response->find('first',array('conditions'=>array('Question.id'=>$q['id'],'User.id'=>$u['id'])));
 						
 						if(@$res['Comment']){
-							foreach($res['Comment'] as $c) @$users["{$u['firstname']} {$u['lastname']}"][$c['type']]++;
+							foreach($res['Comment'] as $c) @$user_buffer["{$u['firstname']} {$u['lastname']}"][$c['type']]++;
 						}
 					}
+				}
+				if(($_SESSION['User']['user_type'] == 'P' && $challenge['Group'] && $user_group) || (!($_SESSION['User']['user_type'] == 'P' && $challenge['Group']))){
+					$users = @is_array($users) ? array_merge($users,$user_buffer) : $user_buffer;
 				}
 			}
 			arsort($users);

@@ -1,20 +1,47 @@
 <?php
 class ResponsesController extends AppController{
 	var $name = 'Responses';
-	var $uses = array('Response','Question','Status','Challenge');
+	var $uses = array('Response','Question','Status','Challenge','User');
 	
 	// view another user's response for a question; view own answer for a question
-	function view($challenge_id,$user_id=NULL){
+	function view($challenge_id,$user_id=NULL,$question_id=NULL){
 		$this->checkAuth(@$_REQUEST['ajax'] ? true : false);
 		
+		$this->Challenge->id = $challenge_id;
+		$completed = $this->Challenge->field('if(responses_due < NOW(),1,0)');
+			
 		$this->Challenge->Behaviors->attach('Containable');
 		$contains = array(	'ClassSet'	=> array('User'),
 												'Group'			=> array('User'),
-												'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . ($user_id ? $user_id : $_SESSION['User']['id'] ),
-																																	'Responses'		=> array(	'conditions'	=> "Responses.user_id = " . ($_SESSION['User']['id'] )),
-																																	'Comment' 	 	=> array(	'conditions'	=> "Comment.user_id = " . ($_SESSION['User']['id'] ), 'order' => 'Comment.segment_start DESC'))));
+												'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . ($user_id ? $user_id : $_SESSION['User']['id']),
+																																	'Responses'		=> array(	'conditions'	=> ($completed	? '' : "Responses.user_id = " . $_SESSION['User']['id'])),
+																																	'Comment' 	 	=> array(	'conditions'	=> "Comment.user_id = " . $_SESSION['User']['id'], 'order' => 'Comment.segment_start DESC'))));
 												
 		$challenge = $this->Challenge->find('all',array('conditions'=>"Challenge.id = $challenge_id",'contain'=>$contains));
+		
+		if($completed){
+			foreach($challenge[0]['Question'] as $k=>$q){
+				foreach($q['Response'][0]['Responses'] as $r) @$challenge[0]['Question'][$k]['Response']['response_total'] += $r['response_body'];
+				@$challenge[0]['Question'][$k]['Response']['response_total'] /= count($q['Response'][0]['Responses']);
+			}
+		}
+		
+		if($_SESSION['User']['user_type'] == 'P'){
+			foreach($challenge[0]['Group'] as $k=>$g){
+				$user_group = false;
+				foreach($g['User'] as $u){
+					if($u['id'] == $_SESSION['User']['id']){
+						$user_group = true;
+						break;
+					}
+				}
+				if(!$user_group) unset($challenge[0]['Group'][$k]);
+			}
+			
+			$this->set('question_id',$question_id ? $question_id : @$challenge[0]['Question'][0]['id']);
+			$this->set('user',$this->User->findById($user_id));
+		}
+		
 		$this->set('challenge',$challenge);
 		$this->set('user_id',$user_id);
 			
@@ -22,9 +49,6 @@ class ResponsesController extends AppController{
 			$this->set('ajax',true);
 			$this->layout = 'ajax';
 		}
-		
-		if($_SESSION['User']['user_type'] == 'P') $this->render('student_view');
-		else $this->render('instructor_view');
 	}
 	
 	// create or update own answer to a question or own response to another user's answer
@@ -36,6 +60,7 @@ class ResponsesController extends AppController{
 				$this->Response->saveAll($_REQUEST['responses']);
 			}else{
 				$_REQUEST['user_id'] = $_SESSION['User']['id'];
+				if(@$_REQUEST['response_id']) $this->Response->deleteAll(array('Response.response_id' => $_REQUEST['response_id'],'Response.user_id' => $_SESSION['User']['id']));
 				$this->Response->save($_REQUEST);
 			}
 				

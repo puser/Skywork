@@ -879,6 +879,10 @@ a.studentwork-more:hover span {display: inline; }
 
 #ui-datepicker-div { clip:auto; }
 
+#sidemenu2 li a.active {
+	color:#000;
+}
+
 
 
 
