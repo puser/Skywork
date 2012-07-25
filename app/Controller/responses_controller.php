@@ -8,24 +8,26 @@ class ResponsesController extends AppController{
 		$this->checkAuth(@$_REQUEST['ajax'] ? true : false);
 		
 		$this->Challenge->id = $challenge_id;
-		$completed = $this->Challenge->field('if(responses_due < NOW(),1,0)');
+		$completed = 1;#$this->Challenge->field('if(responses_due < NOW(),1,0)');
 			
 		$this->Challenge->Behaviors->attach('Containable');
 		$contains = array(	'ClassSet'	=> array('User'),
 												'Group'			=> array('User'),
 												'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . ($user_id ? $user_id : $_SESSION['User']['id']),
 																																	'Responses'		=> array(	'conditions'	=> ($completed	? '' : "Responses.user_id = " . $_SESSION['User']['id'])),
-																																	'Comment' 	 	=> array(	'conditions'	=> "Comment.user_id = " . $_SESSION['User']['id'], 'order' => 'Comment.segment_start DESC'))));
+																																	'Comment' 	 	=> array(	'conditions'	=> ($completed	? '' : "Comment.user_id = " . $_SESSION['User']['id']), 
+																																													'order' => 'Comment.segment_start DESC',
+																																													'User' ))));
 												
 		$challenge = $this->Challenge->find('all',array('conditions'=>"Challenge.id = $challenge_id",'contain'=>$contains));
-		
+	
 		if($completed){
 			foreach($challenge[0]['Question'] as $k=>$q){
-				foreach($q['Response'][0]['Responses'] as $r) @$challenge[0]['Question'][$k]['Response']['response_total'] += $r['response_body'];
-				@$challenge[0]['Question'][$k]['Response']['response_total'] /= count($q['Response'][0]['Responses']);
+				foreach($q['Response'][0]['Responses'] as $r) @$challenge[0]['Question'][$k]['response_total'] += $r['response_body'];
+				@$challenge[0]['Question'][$k]['response_total'] = round(@$challenge[0]['Question'][$k]['response_total']/count($q['Response'][0]['Responses']));
 			}
 		}
-		
+				
 		if($_SESSION['User']['user_type'] == 'P'){
 			foreach($challenge[0]['Group'] as $k=>$g){
 				$user_group = false;
@@ -44,6 +46,7 @@ class ResponsesController extends AppController{
 		
 		$this->set('challenge',$challenge);
 		$this->set('user_id',$user_id);
+		$this->set('completed',$completed);
 			
 		if(@$_REQUEST['ajax']){
 			$this->set('ajax',true);

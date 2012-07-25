@@ -97,15 +97,24 @@
 				<div class="box-head">
 					<span class="icon2 icon2-listcountgreen"><?php echo ($k+1); ?></span>
 					<h2><?php echo $q['section']; ?></h2>
-					<div class="like-scale">
-						<ul id="response_scale_<?php echo $q['Response'][0]['id']; ?>">
-							<li class="scale1<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 1) echo ' selected'; ?>"><span>Very High Quality</span></li>
-							<li class="scale2<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 2) echo ' selected'; ?>"><span>Good Quality</span></li>
-							<li class="scale3<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 3) echo ' selected'; ?>"><span>Average Quality</span></li>
-							<li class="scale4<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 4) echo ' selected'; ?>"><span>Below Average Quality</span></li>
-							<li class="scale5<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 5) echo ' selected'; ?>"><span>Poor Quality</span></li>
-						</ul>
-					</div>
+					<?php if($completed){ ?>
+						<div class="summary-quality">
+							<span class="<?php echo ($q['response_total'] == 1 ? 'good' : ($q['response_total'] == 2 ? 'good' : ($q['response_total'] == 3 ? 'average' : ($q['response_total'] == 4 ? 'poor' : 'poor')))); ?>">
+								<?php echo ($q['response_total'] == 1 ? 'Very High' : ($q['response_total'] == 2 ? 'Good' : ($q['response_total'] == 3 ? 'Average' : ($q['response_total'] == 4 ? 'Below Average' : 'Poor')))); ?> Quality
+							</span>
+							<a class="tooltip-mark tooltip-mark-question" title="this is a tooltip"></a>
+						</div>
+					<?php }else{ ?>
+						<div class="like-scale">
+							<ul id="response_scale_<?php echo $q['Response'][0]['id']; ?>">
+								<li class="scale1<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 1) echo ' selected'; ?>"><span>Very High Quality</span></li>
+								<li class="scale2<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 2) echo ' selected'; ?>"><span>Good Quality</span></li>
+								<li class="scale3<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 3) echo ' selected'; ?>"><span>Average Quality</span></li>
+								<li class="scale4<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 4) echo ' selected'; ?>"><span>Below Average Quality</span></li>
+								<li class="scale5<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 5) echo ' selected'; ?>"><span>Poor Quality</span></li>
+							</ul>
+						</div>
+					<?php } ?>
 					<div class="clear"></div>
 				</div>
 				<div class="box-content">
@@ -119,12 +128,25 @@
 							<div class="textvalue">
 								<p id="responseBody<?php echo $k; ?>">
 									<?php 
+									$mod_response = '';
 									foreach(@$q['Response'][0]['Comment'] as $c){
-										$q['Response'][0]['response_body'] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:#ff0000;">&nbsp;</span>' . substr($q['Response'][0]['response_body'],$c['segment_start']);
+										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:#ff0000 !important;" onmouseover="$(\'#responseBody'.$k.'_'.$c['id'].'\').show();$(\'#comment_detail_'.$c['id'].'\').show();$(this).parent().hide();">&nbsp;</span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
 									}
-									echo nl2br($q['Response'][0]['response_body']);
+									echo nl2br($mod_response);
 									?>
 								</p>
+								<?php 
+								if($completed){
+									foreach(@$q['Response'][0]['Comment'] as $c){
+										$mod_response = '';
+										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($q['Response'][0]['response_body'],$c['segment_start']+$c['segment_length']);
+										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:#ccc;">' . substr($mod_response,$c['segment_start']);
+										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:#ff0000 !important;" onmouseout="$(this).parent().hide();$(\'#responseBody'.$k.'\').show();$(\'#comment_detail_'.$c['id'].'\').hide();">&nbsp;</span>' . substr($mod_response,$c['segment_start']); ?>
+										<p onmouseout="$('#responseBody<?php echo $k; ?>').show();$(this).hide();$('.question-comments').hide();" id="responseBody<?php echo $k; ?>_<?php echo $c['id']; ?>" style="display:none;">
+											<?php echo nl2br($mod_response); ?>
+										</p>
+									<?php }
+								} ?>
 								
 								<div style="display:none;" class="notice-for-edit">
 									Highlight a section of the text to add a comment.
@@ -132,6 +154,14 @@
 							</div>
 						</li>
 					</ul>
+					<?php foreach(@$q['Response'][0]['Comment'] as $c){ ?>
+					<div class="question-comments <?php echo ($c['type'] ? 'like' : 'dislike'); ?>" style="display:none;" id="comment_detail_<?php echo $c['id']; ?>">
+						<p>
+							<span class="highlight-blue"><?php echo "{$c['User']['firstname']} {$c['User']['lastname']}"; ?></span>
+							<?php echo $c['comment']; ?>
+						</p>
+					</div>
+					<?php } ?>
 				</div>
 			</div>
 			<?php }
