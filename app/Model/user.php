@@ -14,6 +14,14 @@ class User extends AppModel{
 												'Status' =>
 												array(	'className'	=> 'Status',
 																'foreignKey'=> 'user_id',
+																'dependent'	=> true ),
+												'Response' =>
+												array(	'className'	=> 'Response',
+																'foreignKey'=> 'user_id',
+																'dependent'	=> true ),
+												'Comment' =>
+												array(	'className'	=> 'Comment',
+																'foreignKey'=> 'user_id',
 																'dependent'	=> true ));
 																
 	var $hasAndBelongsToMany = array(	'ClassSet' =>

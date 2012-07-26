@@ -23,7 +23,7 @@ class ResponsesController extends AppController{
 	
 		if($completed){
 			foreach($challenge[0]['Question'] as $k=>$q){
-				foreach($q['Response'][0]['Responses'] as $r) @$challenge[0]['Question'][$k]['response_total'] += $r['response_body'];
+				foreach((@$q['Response'][0]['Responses'] ? @$q['Response'][0]['Responses'] : array()) as $r) @$challenge[0]['Question'][$k]['response_total'] += $r['response_body'];
 				@$challenge[0]['Question'][$k]['response_total'] = round(@$challenge[0]['Question'][$k]['response_total']/count($q['Response'][0]['Responses']));
 			}
 		}

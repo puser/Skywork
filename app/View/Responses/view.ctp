@@ -214,7 +214,9 @@ $(document).ready(function(){
 	
 	if(!$('.question-item').length) $('#puentes-answer-questions').html('This user has not submitted responses');
 	
-	annotaterInit(".textvalue p");
+	<?php if(!$completed){ ?>
+		annotaterInit(".textvalue p");
+	<?php } ?>
 	
 	$('.like-scale li').click(function(){
 		$(this).siblings().removeClass('selected');
