@@ -21,6 +21,7 @@ class ClassesController extends AppController{
 		$this->checkAuth();
 		
 		$token = sha1(time().rand(1000,10000));
+		$token = substr($token,0,3).'-'.substr($token,4,3).'-'.substr($token,8,3).'-'.substr($token,11,1);
 		$this->ClassSet->save(array('ClassSet'=>array('id'=>$id,'auth_token'=>$token)));
 		
 		die($token);
@@ -115,11 +116,11 @@ class ClassesController extends AppController{
 	
 	function delete($id){
 		$this->checkAuth();
-		$group = $this->Group->findById($id);
+		$group = $this->ClassSet->findById($id);
 		if($group['Owner']['id'] != $_SESSION['User']['id']) return false;
 		
-		$this->Group->delete($id);
-		$this->redirect('/users/view/groups/');
+		$this->ClassSet->delete($id);
+		$this->redirect('/users/view/classes/');
 	}
 }
 ?>

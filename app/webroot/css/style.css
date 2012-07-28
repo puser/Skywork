@@ -66,8 +66,8 @@ body {font-family: Helvetica, Arial, sans-serif; font-size: 12px; background: #c
  * Types
  */
 h2 {font-family: Helvetica, Arial, sans-serif; font-size: 18px; color: #f5866c; font-weight: normal; }
-a.sortdown {display: inline-block; padding-right: 15px; background: url('/images/arrow-down-purple.png') no-repeat center right; position: relative; }
-a.sortup {display: inline-block; padding-right: 15px; background: url('/images/arrow-up-purple.png') no-repeat center right; position: relative;}
+th.sortdown a, a.sortdown {display: inline-block; padding-right: 15px; background: url('/images/arrow-down-purple.png') no-repeat center right; position: relative; }
+th.sortup a, a.sortup {display: inline-block; padding-right: 15px; background: url('/images/arrow-up-purple.png') no-repeat center right; position: relative;}
 span.super {text-transform: uppercase; color: #c1272d; font-size: 8px; position: absolute; top: 0px; right: 10px; text-decoration: none; }
 a:hover span.super {text-decoration: none; }
 a.read-more-arrow {display: block; width: 15px; height: 10px; background: url('/images/arrow-right-red.png') no-repeat center center; }
@@ -128,7 +128,7 @@ a.icon-add {display: inline-block; padding: 5px 5px 5px 30px; font-size: 12px; b
 /**
  * Form Elements
  */
-input, select, textarea {color: #666666; padding: 2px 3px; background: #ffffff; border: 1px solid #cccccc; }
+input, select, textarea {color: #666666; padding: 2px 3px; background: #ffffff; border: 1px solid #cccccc; resize: none; }
  
 .fieldset {}
 .fieldset li {padding: 5px 0; }

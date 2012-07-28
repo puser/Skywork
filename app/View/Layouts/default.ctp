@@ -22,14 +22,13 @@
 	<script type="text/javascript" src="/js/jquery.ba-bbq.min.js"></script>
 	<script type="text/javascript" src="/js/mcs/jquery.mCustomScrollbar.js"></script>
 	<script type="text/javascript" src="/js/textAnnotater.js"></script>
+	<script type="text/javascript" src="/js/jquery.tablesorter.min.js"></script>
 
 	<script type="text/javascript" src="/js/custom.js" ></script>
 	<script type="text/javascript" src="/js/cco_ajax.js" ></script>
-	<!--
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">
-	// Load the Visualization API and the piechart package.
 	google.load('visualization', '1.0', {'packages':['corechart']});
 	</script>
 	

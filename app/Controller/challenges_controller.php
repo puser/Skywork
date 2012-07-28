@@ -1,7 +1,7 @@
 <?php
 class ChallengesController extends AppController{
 	var $name = 'Challenges';
-	var $uses = array('User','Challenge','ClassSet','Status','Response','Group','UsersGroup');
+	var $uses = array('User','Challenge','ClassSet','Status','Response','Group','UsersGroup','Comment');
 	
 	// view all challenges (dashboard)
 	function browse($status=NULL,$page=1){
@@ -110,7 +110,6 @@ class ChallengesController extends AppController{
 	// view a single challenge or stats/leaderboard
 	function view($challenge_id,$view=NULL){
 		$this->checkAuth($view);
-		if($view == 'stats') $this->Challenge->Question->hasMany['Response']['conditions'] = 'Response.user_id = '.$_SESSION['User']['id'];
 		$challenge = $this->Challenge->find('first',array('conditions'=>"Challenge.id = {$challenge_id}",'recursive'=>2));
 		
 		// if this is the first time the user is viewing the challenge, set status to Draft
@@ -154,21 +153,36 @@ class ChallengesController extends AppController{
 			arsort($users);
 			$this->set('users',$users);
 		}elseif($view == 'stats'){
+			// create an index of users
+			$bridge_users = array();
+			foreach($challenge['ClassSet'] as $c){
+				foreach($c['User'] as $u) $bridge_users[$u['id']] = "{$u['firstname']} {$u['lastname']}";
+			}
+			
+			// establish rankings
+			$quality = $activity = array();
 			foreach($challenge['Question'] as $k=>$q){
-				if(!$q['question']){
-					$challenge['Question'][$k] = NULL;
-					continue;
-				}
-				foreach($q['Response'] as $r){
-					@$challenge['Question'][$k]['disagrees'] += $this->Response->find('count',array('conditions'=>array('Response.response_id' => $r['id'],'Response.response_type' => 'D')));
-					@$challenge['Question'][$k]['agrees'] += $this->Response->find('count',array('conditions'=>array('Response.response_id' => $r['id'],'Response.response_type' => 'A')));
+				foreach($q['Response'] as $i=>$r){
+					$ratings = $this->Response->find('all',array('fields'=>'Response.response_body','conditions'=>'Response.response_id = '.$r['id']));
+					foreach($ratings as $rating){
+						@$quality[$bridge_users[$r['user_id']]]['response_total'] += $rating['Response']['response_body'];
+						@$quality[$bridge_users[$r['user_id']]]['response_count']++;
+					}
+					$activity[$bridge_users[$r['user_id']].', '.$q['section']][0] = $this->Comment->find('count',array('conditions'=>'Comment.response_id = '.$r['id'].' && Comment.type = 0'));
+					$activity[$bridge_users[$r['user_id']].', '.$q['section']][1] = $this->Comment->find('count',array('conditions'=>'Comment.response_id = '.$r['id'].' && Comment.type = 1'));
 				}
 			}
+			
+			uasort($quality,array($this,"quality_sort"));
+			uasort($activity,array($this,"activity_sort"));
+			
+			$this->set('quality',$quality);
+			$this->set('activity',$activity);
 		}
 		
 		$this->set('challenge',$challenge);
 		
-		if($view) $this->render($view == 'stats' ? 'stats_graph' : 'leaderboard','ajax');
+		if($view) $this->render($view == 'stats' ? 'stats_table' : 'leaderboard','ajax');
 		else{
 			$answers_due = date_create($challenge['Challenge']['answers_due']);
 			$now = date_create();
@@ -447,6 +461,16 @@ class ChallengesController extends AppController{
 		$this->checkAuth();
 		$this->Challenge->delete($id);
 		$this->redirect('/dashboard/');
+	}
+	
+	function quality_sort($a,$b){
+		if($a['response_total']/$a['response_count'] == $b['response_total']/$b['response_count']) return 0;
+		return ($a['response_total']/$a['response_count'] < $b['response_total']/$b['response_count']) ? -1 : 1;
+	}
+	
+	function activity_sort($a,$b){
+		if($a[0] + $a[1] == $b[0] + $b[1]) return 0;
+		return ($a[0] + $a[1] > $b[0] + $b[1]) ? -1 : 1;
 	}
 }
 ?>

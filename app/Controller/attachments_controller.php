@@ -2,10 +2,13 @@
 class AttachmentsController extends AppController{
 	var $name = 'Attachments';
 	
-	function view($id,$challenge_id=NULL){
+	function view($id,$challenge_id=NULL,$ajax=false){
 		$this->checkAuth();
 		if($id == 'case' && $challenge_id) $attachment = $this->Attachment->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id,'Attachment.type'=>'C')));
 		else $attachment = $this->Attachment->findById($id);
+		
+		if($ajax) $this->layout = 'ajax';
+		$this->set('ajax',$ajax);
 		$this->set('attachment',$attachment);
 	}
 	

@@ -8,14 +8,14 @@ class ResponsesController extends AppController{
 		$this->checkAuth(@$_REQUEST['ajax'] ? true : false);
 		
 		$this->Challenge->id = $challenge_id;
-		$completed = 1;#$this->Challenge->field('if(responses_due < NOW(),1,0)');
+		$completed = $this->Challenge->field('if(responses_due < NOW(),1,0)');
 			
 		$this->Challenge->Behaviors->attach('Containable');
 		$contains = array(	'ClassSet'	=> array('User'),
 												'Group'			=> array('User'),
 												'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . ($user_id ? $user_id : $_SESSION['User']['id']),
-																																	'Responses'		=> array(	'conditions'	=> ($completed	? '' : "Responses.user_id = " . $_SESSION['User']['id'])),
-																																	'Comment' 	 	=> array(	'conditions'	=> ($completed	? '' : "Comment.user_id = " . $_SESSION['User']['id']), 
+																																	'Responses'		=> array(	'conditions'	=> ($completed ? '' : "Responses.user_id = " . $_SESSION['User']['id'])),
+																																	'Comment' 	 	=> array(	'conditions'	=> ($completed ? '' : "Comment.user_id = " . $_SESSION['User']['id']), 
 																																													'order' => 'Comment.segment_start DESC',
 																																													'User' ))));
 												
@@ -40,8 +40,8 @@ class ResponsesController extends AppController{
 				if(!$user_group) unset($challenge[0]['Group'][$k]);
 			}
 			
-			$this->set('question_id',$question_id ? $question_id : @$challenge[0]['Question'][0]['id']);
 			$this->set('user',$this->User->findById($user_id));
+			$this->set('question_id',$question_id ? $question_id : @$challenge[0]['Question'][0]['id']);
 		}
 		
 		$this->set('challenge',$challenge);

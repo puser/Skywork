@@ -19,7 +19,7 @@
 				</ul>
 			</div>
 			
-			<span class="icon2 icon2-class"></span>
+			<span class="icon2 icon2-class" style="width:56px;"></span>
 			<h2><?php echo __('Edit Classes') ?></h2>
 			<div class="clear"></div>
 		</div>
@@ -42,7 +42,7 @@
 					<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.deleteChallenge').show();" onmouseout="$(this).find('.deleteChallenge').hide();">
 						<td>
 							<?php if(array_search($g['ClassSet']['id'],$requested_groups) !== false){ ?>
-							<a href="/groups/view_request/<?php echo $g['ClassSet']['id']; ?>" class="show-overlay" id="viewGroupLink<?php echo $g['ClassSet']['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['ClassSet']['id']; ?>);">
+							<a href="/classes/view_request/<?php echo $g['ClassSet']['id']; ?>" class="show-overlay" id="viewGroupLink<?php echo $g['ClassSet']['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['ClassSet']['id']; ?>);">
 							<?php }else{ ?>
 							<a <?php if($_SESSION['User']['id']==$g['Owner']['id']){ ?>href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="show-overlay" <?php }else echo 'href="#"'; ?> id="viewGroupLink<?php echo $g['ClassSet']['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['ClassSet']['id']; ?>);">
 							<?php } ?>
@@ -62,7 +62,7 @@
 										<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['ClassSet']['id']; ?>,'<?php echo $g['ClassSet']['group_name']; ?>','<?php echo ($g['ClassSet']['auth_token'] ? $g['ClassSet']['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link"><?php echo __('View Token') ?></a></li>
 										<li><a href="/classes/update/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen modal-link"><?php echo __('Edit Class') ?></a></li>
 										<li><a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-sm_green modal-link"><?php echo __('Edit Students') ?></a></li>
-										<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/groups/delete/<?php echo $g['ClassSet']['id']; ?>/');" class="icon3 icon3-close modal-link"><?php echo __('Delete Class') ?></a></li>
+										<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/classes/delete/<?php echo $g['ClassSet']['id']; ?>/');" class="icon3 icon3-close modal-link"><?php echo __('Delete Class') ?></a></li>
 									</ul>
 								</div>
 							</div>
@@ -75,7 +75,7 @@
 							?>
 							<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?>>
 								<td>
-									<a href="/groups/view_members/<?php echo $g['ClassSet']['id']; ?>/view_invite" class="show-overlay">
+									<a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_invite" class="show-overlay">
 										<?php echo '<span class="red">*</span> ' . $g['ClassSet']['group_name']; ?>
 									</a>
 								</td>

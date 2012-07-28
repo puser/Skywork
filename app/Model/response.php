@@ -9,7 +9,10 @@ class Response extends AppModel{
 																	'foreignKey'=> 'question_id' ),
 													'User' =>
 													array(	'className'	=> 'User',
-																	'foreignKey'=> 'user_id' ));
+																	'foreignKey'=> 'user_id' ),
+													'Parent' =>
+													array(	'className'	=> 'Response',
+																	'foreignKey'=> 'response_id' ));
 	
 	var $hasMany = array(	'Comment' =>
 												array(	'className'	=> 'Comment',

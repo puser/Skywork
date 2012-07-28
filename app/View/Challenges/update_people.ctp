@@ -80,10 +80,10 @@
 						<td><?php echo $qu['User']['email']; ?></td>
 						<td><?php echo ($qu['User']['invite_token'] ? 'Send Invite' : 'Existing User'); ?></td>
 						<td style="position:relative;">
-							<?php echo @$qu['ClassSet']['group_name']; ?>
-							<a onclick="delete_queued_invite(<?php echo $qu['User']['id']; ?>,<?php echo $challenge['Challenge']['id']; ?>);" style="position:absolute;right:20px;top:8px;display:none;" id="userQueueDelete<?php echo $qu['User']['id']; ?>">
-								<img src="/images/icon-x.png" style="position:absolute;">
-							</a>
+							<div class="remove-class">
+								<a href="#" class="remove-class-icon"></a>
+								<a href="#" onclick="delete_queued_invite(<?php echo $qu['User']['id']; ?>,<?php echo $challenge['Challenge']['id']; ?>);" class="remove-class-link icon-close rounded2">Remove</a>
+							</div>
 						</td>
 					</tr>
 					<?php } ?>

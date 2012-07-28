@@ -68,26 +68,40 @@
 	</div>
 	
 	<div class="box-content">
-		<p>Write the questions for your Assignment here:</p>
-		<ol class="fieldset">
-			<?php 
-			if(@$challenge['Question']){
-				foreach(@$challenge['Question'] as $k=>$question){ ?>
-			<li>
-				<p><input type="text" class="checkdefault assignment-section-title" default="Section Title" value="<?php echo $question['section']; ?>" name="challenge[Question][<?php echo $k; ?>][section]" /> &nbsp;<a href="#" class="tooltip-mark-question" ></a></p>
-				<input type="text" class="checkdefault" default="Type name here" value="<?php echo $question['question']; ?>" name="challenge[Question][<?php echo $k; ?>][question]" size="60"/>
-			</li>
-				<?php }
-			}else{
-				for($i=0;$i<2;$i++){ ?>
-			<li>
-				<p><input type="text" class="checkdefault assignment-section-title" default="Section Title" value="" name="challenge[Question][<?php echo $i; ?>][section]" /><p>
-				<input type="text" class="checkdefault" default="Type name here" value="" name="challenge[Question][<?php echo $i; ?>][question]" size="60"/>
-			</li>
-				<?php }
-			} ?>
-		</ol>
-		<p><a href="#" onclick="add_question();return false" class="icon-add">Add another</a></p>
+		<span  id="compose_questions">
+			<p>Write the questions for your Assignment here:</p>
+			<ol class="fieldset">
+				<?php 
+				if(@$challenge['Question']){
+					foreach(@$challenge['Question'] as $k=>$question){ ?>
+				<li>
+					<p><input type="text" class="checkdefault assignment-section-title" default="Section Title" value="<?php echo $question['section']; ?>" name="challenge[Question][<?php echo $k; ?>][section]" /> &nbsp;<a href="#" class="tooltip-mark-question" ></a></p>
+					<input type="text" class="checkdefault" default="Type name here" value="<?php echo $question['question']; ?>" name="challenge[Question][<?php echo $k; ?>][question]" size="60"/>
+				</li>
+					<?php }
+				}else{
+					for($i=0;$i<2;$i++){ ?>
+				<li>
+					<p><input type="text" class="checkdefault assignment-section-title" default="Section Title" value="" name="challenge[Question][<?php echo $i; ?>][section]" /></p>
+					<input type="text" class="checkdefault" default="Type name here" value="" name="challenge[Question][<?php echo $i; ?>][question]" size="60"/>
+				</li>
+					<?php }
+				} ?>
+			</ol>
+			<p><a href="#" onclick="add_question();return false" class="icon-add">Add another</a></p>
+		</span>
+		
+		<span id="compose_essay">
+			<p>Write the essay topic in one or two words:</p>
+			<p>
+				<input type="text" class="checkdefault" default="Essay Topic" value="<?php echo @$challenge['Question'][0]['section']; ?>" name="challenge[Question][0][section]" style="width:155px;padding:5px 7px;" />
+			</p>
+			<p>Write a description of this essay topic:</p>
+			<p>
+				<textarea class="checkdefault" default="Write description here" name="challenge[Question][0][question]" style="width:550px;height:75px;padding:5px 7px;"><?php echo @$challenge['Question'][0]['question']; ?></textarea>
+			</p>
+		</div>
+		
 		<p class="input">
 			<input type="checkbox" name="challenge[Challenge][allow_attachments]" value="1"<?php if(@$challenge['Challenge']['allow_attachments']){ ?> checked="checked"<?php } ?> />
 			Allow students to attach documents, photos, etc.
@@ -107,4 +121,7 @@
 <script type="text/javascript">
 $('#answers_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date()});
 $('#responses_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date()});
+
+if($('#response_types').val() == 'E') $('#compose_questions').remove();
+else $('#compose_essay').remove();
 </script>

@@ -1,28 +1,24 @@
+<div id="assignmentDialog" style="display:none;"> </div>
+
 <div id="sidebarleft">
 	<h1>Metrics Section</h1>
 	<div id="sidemenu" >
 		<ul>
 			<li class="active">
-				<a class="icon icon4-student" href="metrics-section-students.html">Students</a>
+				<a class="icon icon4-student" href="#">Students</a>
 				<ul>
-					<li id="groupNavAll"><a href="#" class="active">All Students</a></li>
+					<li id="groupNavAll"><a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/" class="active">All Students</a></li>
 					<?php if($challenge['Group']){
 						foreach($challenge['Group'] as $k=>$g){ ?>
 							<li id="groupNav<?php echo $g['id']; ?>">
-								<a href="#">Group <?php echo ($k + 1); ?></a>
-							</li>
-						<?php }
-					}else{
-						foreach($challenge['ClassSet'] as $c){ ?>
-							<li id="groupNav<?php echo $c['id']; ?>">
-								<a href="#"><?php echo $c['group_name']; ?></a>
+								<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/<?php echo $g['id']; ?>">Group <?php echo ($k + 1); ?></a>
 							</li>
 						<?php }
 					} ?>
 				</ul>
 			</li>
-			<li ><a class="icon icon4-question" href="metrics-section-question-activity.html">Question Activity</a></li>
-			<li ><a class="icon icon4-graph" href="metrics-section-charting.html">Charting</a></li>
+			<li ><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/">Question Activity</a></li>
+			<li ><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1">Charting</a></li>
 		</ul>
 	</div>
 </div>
@@ -33,9 +29,9 @@
 	
 	<div class="actionmenu">
 		<ul>
-			<li class="action-notes"><a href="#" >Student Work</a></li>
-			<li class="action-preview"><a href="#" >Assignment</a></li>
-			<li class="action-exit"><a href="#" >Exit</a></li>
+			<li class="action-notes"><a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/">Summary</a></li>
+			<li class="action-preview"><a href="#" onclick="$('#assignmentDialog').dialog('open');return false;">Assignment</a></li>
+			<li class="action-exit"><a href="/">Exit</a></li>
 		</ul>
 		<div class="clear"></div>
 	</div>
@@ -53,10 +49,10 @@
 				<table id="metrics-students-analysis" class="table-type-1">
 					<thead>
 						<tr>
-							<th class="col1" width="20%"><a href="#" class="sort sortdown">Student Name</a></th>
-							<th class="col2" width="23%"><a href="#" class="sort sortdown">Completion Level</a></th>
-							<th class="col3" width="23%"><a href="#" class="sort sortdown">Average Quality Level</a></th>
-							<th class="col4" width="23%"><a href="#" class="sort sortdown">Students Activity Level</a></th>
+							<th class="col1" width="20%"><a href="#" class="sort">Student Name</a></th>
+							<th class="col2" width="23%"><a href="#" class="sort">Completion Level</a></th>
+							<th class="col3" width="23%"><a href="#" class="sort">Average Quality Level</a></th>
+							<th class="col4" width="23%"><a href="#" class="sort">Students Activity Level</a></th>
 							<th class="col5" width="7%"></th>
 						</tr>
 					</thead>
@@ -79,9 +75,9 @@
 									</td>
 									<td class="col3">
 										<div class="activity-level activity-level-red">
-											<span style="width: <?php echo ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 4) * 100); ?>%"></span>
+											<span style="width: <?php echo ($quality[$u['id']][0] ? (100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0); ?>%"></span>
 										</div>
-										<div class="activity-level-percentage"><?php echo round((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 4) * 100); ?>%</div>
+										<div class="activity-level-percentage"><?php echo ($quality[$u['id']][0] ? round(100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0); ?>%</div>
 										<div class="clear"></div>
 									</td>
 									<td class="col4">
@@ -113,7 +109,7 @@
 	<div class="clear"></div>
 	
 	<div style="width: 80px; margin: 0 auto;">
-		<a href="#" class="btn2"><span>Next</span></a>
+		<a href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/" class="btn2"><span>Next</span></a>
 	</div>
 
 </div>
@@ -153,7 +149,7 @@
 						</p>
 					</li>
 					<li style="margin-bottom: 40px;">
-						<p>2. View quality of studentís work based on:</p>
+						<p>2. View quality of students' work based on:</p>
 						<p>
 							<select >
 								<option value="">- Select Ordering Type - </option>
@@ -181,7 +177,28 @@
 <script type="text/javascript">
 
 	jQuery(document).ready(function($){
+		
+		$("#metrics-students-analysis").tablesorter({ 
+				sortList: [[0,0]],
+				cssDesc: 'sortup',
+				cssAsc: 'sortdown',
+        textExtraction: function(node){ 
+					return $(node).children('a').length ? $(node).children('a').html() : ($(node).children('div').length ? $(node).children('.activity-level').children('span').first().css('width') : $(node).html());
+        } 
+    });
+
+		$("#metrics-students-analysis").bind("sortEnd",function() { 
+			$('#metrics-students-analysis tbody tr').removeClass('alternate');
+			var idx = 0;
+			$('#metrics-students-analysis tbody tr').each(function(){
+				if(++idx % 2) $(this).addClass('alternate');
+			});
+		});
 	
+		$('#assignmentDialog').load('/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>/1',function(){
+			$("#assignmentDialog").dialog({ autoOpen: false,minWidth: 740,minHeight: 500 });
+		});
+		
 		$(".table-toggle-button li").click(function(){
 			if(!$(this).hasClass("active")) {
 				$(".table-toggle-button li").removeClass("active"); 

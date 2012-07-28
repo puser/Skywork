@@ -327,6 +327,7 @@ function invited_show_existing(){
 function remove_challenge_group(id,c_id){
 	$('#challengeGroup'+id).remove();
 	$.ajax({url:'/challenges/clear_groups/' + c_id});
+	save_challenge('update_people');
 }
 
 function create_group(){
