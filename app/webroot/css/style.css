@@ -885,6 +885,14 @@ a.studentwork-more:hover span {display: inline; }
 
 
 
+.caseclub-tabs {margin-bottom: 2px; padding-left: 20px; }
+.caseclub-tabs ul {display: block; list-style: none; }
+.caseclub-tabs li {float: left; margin-right: 2px;}
+.caseclub-tabs li:last-child , .caseclub-tabs li.last-child {margin-right: 0; }
+.caseclub-tabs li a {display: block; width: 100px; padding: 6px 10px; border: 1px solid #e6e6e6; background: #f2f2f2; font-family: Georgia, Times New Roman, serif; color: #999999; text-align: center; text-decoration: none; }
+.caseclub-tabs li a img {vertical-align: middle; margin-right: 10px; }
+.caseclub-tabs li.active a {background: #ffffff; }
+
 
 .annotated{
   position: relative;

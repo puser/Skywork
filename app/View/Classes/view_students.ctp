@@ -41,7 +41,7 @@
 						<td><?php echo $u['state']; ?></td>
 						<td>
 							<?php if($class['Owner']['id'] == $_SESSION['User']['id'] && $_SESSION['User']['id'] != $u['id']){ ?>
-								<a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" id="deleteMemberLink"><img src="/images/icon-x.png" /></a>
+								<a href="#modalDeleteMember" onclick="$('#modalDeleteMember .exitSaveOptions a').attr('href','/classes/view_members/<?php echo $class['ClassSet']['id']; ?>');$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" id="deleteMemberLink"><img src="/images/icon-x.png" /></a>
 							<?php } ?>
 						</td>
 					</tr>

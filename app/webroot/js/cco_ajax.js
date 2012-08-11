@@ -89,6 +89,7 @@ function save_user(){
 	$('.btn-savecontinue').hide();
 	$('#savedNotify').show();
 	setTimeout("$('.btn-savecontinue').show();$('#savedNotify').hide();",3000);
+	$('.user-name a').html($('input[name="firstname"]').val() + ' ' + $('input[name="lastname"]').val());
 }
 
 function show_question(q_id){
@@ -244,8 +245,8 @@ function show_user_list(e,cid,view){
 		$('.graphIcon').hide();
 		$('.pagination').hide();
 		
-		$('li.opened').children('div.alignleft').removeClass('colgroup');
-		$('li.opened').removeClass('opened').find('.opened-users').slideUp();
+		$('tr.opened').next().children('div.alignleft').removeClass('colgroup');
+		$('tr.opened').removeClass('opened').next().slideUp();
 		
 		e.addClass('opened');
 		if(!e.find('.graphIcon').length) e.next().slideDown();
@@ -260,11 +261,12 @@ function show_user_list(e,cid,view){
 			$('#bridgelist').css({'float':'left'});
 			$('#bridgelist').animate({width:450});
 			if(prevOpen){
-				$("#home-leaderboard .content").fadeOut('slow',function(){
-					$('#home-leaderboard').html(r).find('.content').hide();
+				$("#home-leaderboard .box-content").fadeOut('slow',function(){
+					$('#home-leaderboard').html(r).find('.box-content').hide();
 					$('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});
 					//$("#home-leaderboard .content").hide();
-					$("#home-leaderboard .content").fadeIn('slow');
+					$("#home-leaderboard .box-content").fadeIn('slow');
+					$('#home-studentwork').width(470);
 				});
 			}else{
 				$('#home-leaderboard').html(r);
@@ -409,9 +411,9 @@ function select_listed_user(id,e){
 }
 
 function process_selected_requests(g_id,action){
-	$.ajax({url:'/groups/process_requests/'+g_id+'/'+action,data:$('#viewRequestsGroup input').serialize(),type:'POST',success:function(){
+	$.ajax({url:'/classes/process_requests/'+g_id+'/'+action,data:$('#viewRequestsGroup input').serialize(),type:'POST',success:function(){
 		$('.addSelectedUserInput').remove();
-		window.location = '/users/view/groups/';
+		window.location = '/users/view/classes/';
 	}});
 }
 

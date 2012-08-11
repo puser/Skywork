@@ -1,4 +1,4 @@
-<div id="home-studentwork" class="rounded box-white width50 alignright">
+<div id="home-studentwork" class="rounded box-white width50 alignright" style="overflow:hidden;">
 	
 	<div class="box-head ">
 		<span class="icon5 icon5-star"></span>
@@ -9,34 +9,41 @@
 	
 	<div class="box-content">
 		
-		<table id="students-highest-quality" class="table-type-1">
-			<thead>
-				<tr>
-					<th class="col1"><span class="blue">Students with highest quality work</span></th>
-					<th class="col2" width="30%"><select >
-							<option value="">According to You and Groups</option>
-							<option value="">According to You</option>
-							<option value="">According to Groups</option>
-						</select>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				$idx = 0;
-				foreach($quality as $k=>$q){
-					$idx++;
-					?>
-					<tr<?php if($idx % 2){ ?> class="alternate"<?php } ?>>
-						<td class="col1"><?php echo $idx; ?>. <?php echo $k; ?></td>
-						<td class="col2"></td>
+		<?php
+		$now = date_create();
+		$now->setTime(0,0);
+		if($quality){ ?>
+			<table id="students-highest-quality" class="table-type-1">
+				<thead>
+					<tr>
+						<th class="col1"><span class="blue">Students with highest quality work</span></th>
+						<th class="col2" width="30%"><select >
+								<option value="">According to You and Groups</option>
+								<option value="">According to You</option>
+								<option value="">According to Groups</option>
+							</select>
+						</th>
 					</tr>
-				<?php } ?>
-			</tbody>
-		</table>
-		<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-highest-quality-more">
-			<img src="/images/arrow-right-red.png" /> <span>More Info</span>
-		</a>
+				</thead>
+				<tbody>
+					<?php
+					$idx = 0;
+					foreach($quality as $k=>$q){
+						$idx++;
+						?>
+						<tr<?php if($idx % 2){ ?> class="alternate"<?php } ?>>
+							<td class="col1"><?php echo $idx; ?>. <?php echo $k; ?></td>
+							<td class="col2"></td>
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+			<?php if(date_create($challenge['Challenge']['responses_due']) < $now){ ?>
+				<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-highest-quality-more">
+					<img src="/images/arrow-right-red.png" /> <span>More Info</span>
+				</a>
+			<?php } ?>
+		<?php } ?>
 		
 		<table id="students-active-questions" class="table-type-1">
 			<thead>
@@ -60,7 +67,10 @@
 				<?php } ?>
 			</tbody>
 		</table>
+		
+		<?php if(date_create($challenge['Challenge']['responses_due']) < $now){ ?>
 		<a href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-active-questions-more"><img src="/images/arrow-right-red.png" /> <span>More Info</span></a>
+		<?php } ?>
 		
 	</div>
 </div><!-- #home-leaderboard -->

@@ -198,6 +198,7 @@ class ChallengesController extends AppController{
 	
 		if($challenge_id) $challenge_record = $this->Challenge->find('first',array('conditions'=>"Challenge.id = ".$challenge_id,'recursive'=>2));
 		if(@$_REQUEST['challenge']){
+			
 			// preprocess date/time inputs
 			if(@$_REQUEST['answers_due_hour']){
 				$_REQUEST['challenge']['Challenge']['answers_due'] = $_REQUEST['challenge']['Challenge']['answers_due'] . ' ' . ($_REQUEST['answers_due_meridian'] == 'AM' ? $_REQUEST['answers_due_hour'] : $_REQUEST['answers_due_hour'] + 12) . ':' . $_REQUEST['answers_due_minute'];
@@ -215,12 +216,13 @@ class ChallengesController extends AppController{
 				$this->Challenge->Question->saveAll($_REQUEST['challenge']['Question']);
 			}
 			$challenge_record = $this->Challenge->find('first',array('conditions'=>"Challenge.id = {$challenge_id}",'recursive'=>2));
-			// upload files
+			
+			// process files/embedded videos
 			if(@$_FILES['attachment']){
 				foreach($_FILES['attachment']['name'] as $k=>$n){
 					if(!$_FILES['attachment']['tmp_name'][$k]) continue;
 					$filename = md5(uniqid(rand())).strrchr($n,'.');
-					if(!move_uploaded_file($_FILES['attachment']['tmp_name'][$k],str_replace('index.php','uploads/',$_SERVER['SCRIPT_FILENAME']).$filename)){
+					if(!move_uploaded_file($_FILES['attachment']['tmp_name'][$k],$_SERVER['DOCUMENT_ROOT'].'/uploads/'.$filename)){
 						print_r($_FILES);
 						die("<br>Upload error<br>");
 					}
@@ -231,7 +233,7 @@ class ChallengesController extends AppController{
 											'type'			=> @$_REQUEST['attachment'][$k]['type'] );
 				}
 				if(@$attachments) $this->Challenge->Attachment->saveAll($attachments);
-			}
+			}elseif(@$_REQUEST['video_embed']) $this->Challenge->Attachment->saveAll(array(array('challenge_id'=>$challenge_id,'file_location'=>$_REQUEST['video_embed'],'type'=>'C')));
 			// save attachments from template
 			if(@$_REQUEST['tmpl_attachment']){
 				$tmpl_attachment = $_REQUEST['tmpl_attachment'];

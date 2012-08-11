@@ -27,17 +27,17 @@
 			<div class="caseclub-tabs">
 				<ul >
 					<li class="caseclub-tab tab-basics<?php if(!@$force_existing){ ?> active<?php } ?>">
-						<a href="#"<?php if(!@$force_existing){ ?> onclick="invited_show_new();return false;"<?php }else{ ?> onclick="alert('Your email address already exists in the system. Please log in with your current details.');return false;"<?php } ?>>I'm a new user</a>
+						<a href="#"<?php if(!@$force_existing){ ?> onclick="invited_show_new();return false;"<?php }else{ ?> onclick="alert('Your email address already exists in the system. Please log in with your current details.');return false;"<?php } ?>><?php echo __('I\'m a new user') ?></a>
 					</li>
 					<li class="caseclub-tab tab-questions<?php if(@$force_existing){ ?> active<?php } ?>">
-						<a href="#" style="width:145px;" onclick="invited_show_existing();return false;">I already have an account</a>
+						<a href="#" style="width:145px;" onclick="invited_show_existing();return false;"><?php echo __('I already have an account') ?></a>
 					</li>
 				</ul>
 				<div class="clear"></div>
 			</div>
 			
 			<div class="clear"></div>
-		</div>
+		</div><br /><br />
 		
 		<form id="inviteData" action="/users/login/" method="POST"<?php if(@$force_existing){ ?> style="display:none;"<?php } ?>>
 			<input type="hidden" name="token" value="<?php echo $user['User']['invite_token']; ?>" />
@@ -46,20 +46,20 @@
 			<input type="hidden" name="user_id" value="<?php echo $user['User']['id']; ?>" />
 			<ul class="fieldset2">
 				<li>
-					<span class="label alignleft">Preferred Email</span>
+					<label><?php echo __('Preferred Email') ?></label>
 					<input type="text" name="email" />
 				</li>
 				<li>
-					<span class="label alignleft">Choose a Password</span>
+					<label><?php echo __('Choose a Password') ?></label>
 					<input type="password" name="password" />
 				</li>
 				<li >
-					<span class="label alignleft">Confirm Password</span>
+					<label><?php echo __('Confirm Password') ?></label>
 					<input type="password" name="password_confirm" />
 				</li>
 			</ul>
 			<div class="modalActionButtons">
-				<a href="#" onclick="$('#inviteData').submit();return false;" class="btn1 modalActionButton modalActionButtonSave aligncenter"><span class="inner">Save and Continue</span></a>
+				<a href="#" onclick="$('#inviteData').submit();return false;" class="btn1 modalActionButton modalActionButtonSave aligncenter" style="width:250px;"><span class="inner"><?php echo __('Save and Continue') ?></span></a>
 			</div>
 		</form>
 		
@@ -69,39 +69,39 @@
 			<input type="hidden" name="user_id" value="<?php echo $user['User']['id']; ?>" />
 			<ul class="fieldset2">
 				<li>
-					<span class="label alignleft">Email</span>
+					<label><?php echo __('Email') ?></label>
 					<input type="text" name="login" />
 				</li>
 				<li>
-					<span class="label alignleft">Password</span>
+					<label><?php echo __('Password') ?></label>
 					<input type="password" name="password" />
 				</li>
 			</ul>
 			<div class="modalActionButtons">
-				<a href="#" onclick="$('#existingInviteData').submit();return false;" class="btn1 modalActionButton modalActionButtonSave aligncenter"><span class="inner">Log In</span></a>
+				<a href="#" onclick="$('#existingInviteData').submit();return false;" class="btn1 modalActionButton modalActionButtonSave aligncenter" style="width:200px;"><span class="inner"><?php echo __('Log In') ?></span></a>
 			</div>
 		</form>
 	</div><!-- #addNewUserModal -->
 	
-	<div id="resetPasswordModal" style="width:460px;height:220px;overflow:hidden;">
+	<div id="resetPasswordModal" style="width:380px;height:170px;overflow:hidden;">
 		<div class="box-heading">
 			<span class="icon icon-key"></span>
-			<h2 class="page-subtitle label-text">New Password</h2>
-		</div>
+			<h2 class="page-subtitle label-text"><?php echo __('New Password') ?></h2>
+		</div><br />
 		<form id="passwordResetData" action="/users/password_reset/<?php echo $user['User']['invite_token']; ?>" method="POST">
 			<input type="hidden" name="user_id" value="<?php echo $user['User']['id']; ?>" />
 			<ul class="fieldset2">
 				<li>
-					<span class="label alignleft">New Password</span>
-					<input type="password" name="new_password" id="pwdR1" />
+					<span class="label alignleft" style="width:130px;display:block;"><?php echo __('New Password') ?></span>
+					<input type="password" name="new_password" id="pwdR1" style="width:200px;" />
 				</li>
 				<li>
-					<span class="label alignleft">Confirm Password</span>
-					<input type="password" name="password" id="pwdR2" />
+					<span class="label alignleft" style="width:130px;display:block;"><?php echo __('Confirm Password') ?></span>
+					<input type="password" name="password" id="pwdR2" style="width:200px;" />
 				</li>
-			</ul>
+			</ul><br />
 			<div class="modalActionButtons">
-				<a href="#" onclick="if($('#pwdR1').val() != $('#pwdR2').val()){ alert('The passwords you entered do not match!'); }else{ $('#passwordResetData').submit(); }return false;" class="btn1 modalActionButton modalActionButtonSave aligncenter"><span class="inner">Save and Continue</span></a>
+				<a href="#" onclick="if($('#pwdR1').val() != $('#pwdR2').val()){ alert('The passwords you entered do not match!'); }else{ $('#passwordResetData').submit(); }return false;" class="btn1 modalActionButton modalActionButtonSave aligncenter" style="width:150px;"><span class="inner"><?php echo __('Save and Continue') ?></span></a>
 			</div>
 		</form>
 	</div>

@@ -20,9 +20,11 @@
 					</div>
 <?php } ?>
 					<div id="preview-case" style="clear:both;text-align:center;">
-
+						<?php
+						if($attachment['Challenge']['challenge_type'] == 'VID') echo stripslashes($attachment['Attachment']['file_location']);
+						else{ ?>
 						<iframe src="http://docs.google.com/viewer?url=http%3A%2F%2Fcaseclubonline.com%2Fuploads%2F<?php echo $attachment['Attachment']['file_location']; ?>&embedded=true" width="720" height="500" />
-						
+						<?php } ?>
 					</div><!-- #preview-case-->
 <?php if(!$ajax){ ?>
 				</div>

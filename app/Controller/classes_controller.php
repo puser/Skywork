@@ -48,18 +48,30 @@ class ClassesController extends AppController{
 		$this->set('user',$this->User->findByEmail($query));
 	}
 	
+	function join_with_token(){
+		$this->checkAuth();
+		$group = $this->ClassSet->findByAuthToken($_REQUEST['joinClassToken']);
+		if($group){
+			$group_update = array('ClassSet'=>array('id'=>$group['ClassSet']['id']));
+			$group_update['User'] = array($_SESSION['User']['id']);
+			foreach($group['User'] as $u) if($u['id'] != $_SESSION['User']['id']) $group_update['User'][] = $u['id'];
+			$this->ClassSet->save($group_update);
+		}
+		$this->redirect('/users/view/classes');
+	}
+	
 	function request_join(){
 		$this->checkAuth();
 		
 		// create pending status
 		foreach(@$_REQUEST['groups'] as $group_id){
-			$group = $this->Group->findById($group_id);
+			$group = $this->ClassSet->findById($group_id);
 		
 			// create pending status
 			$status = array('Status' =>
-							array(	'user_id'		=> $_SESSION['User']['id'],
-									'group_id'		=> $group_id,
-									'status'		=> 'R' ));
+											array(	'user_id'		=> $_SESSION['User']['id'],
+															'class_id'	=> $group_id,
+															'status'		=> 'R' ));
 			$this->Status->save($status);
 			
 			if($group['Owner']['notify_groups']){
@@ -88,7 +100,7 @@ class ClassesController extends AppController{
 	
 	function process_requests($group_id,$action){
 		$this->checkAuth();
-		$group = $this->Group->findById($group_id);
+		$group = $this->ClassSet->findById($group_id);
 		
 		if(!@$_REQUEST['users']){
 			$_REQUEST['users'][] = $_SESSION['User']['id'];
@@ -96,12 +108,12 @@ class ClassesController extends AppController{
 		}else $remove_status = 'R';
 		
 		foreach($_REQUEST['users'] as $u){
-			$this->Status->deleteAll(array('Status.status'=>$remove_status,'Status.user_id'=>$u,'Status.group_id'=>$group_id,'Status.challenge_id IS NULL'));
+			$this->Status->deleteAll(array('Status.status'=>$remove_status,'Status.user_id'=>$u,'Status.class_id'=>$group_id,'Status.challenge_id IS NULL'));
 			if($action == 'a'){
 				$group_update = array('ClassSet'=>array('id'=>$group_id));
 				$group_update['User'] = array($u);
 				foreach($group['User'] as $u) if(array_search($u['id'],$group_update['User']) === false) $group_update['User'][] = $u['id'];
-				$this->Group->save($group_update);
+				$this->ClassSet->save($group_update);
 			}
 		}
 		die();

@@ -1,4 +1,4 @@
-<div id="home-studentwork" class="rounded box-white width50 alignright">
+<div id="home-studentwork" class="rounded box-white width50 alignright" style="overflow:hidden;">
 	
 	<div class="box-head ">
 		<span class="icon5 icon5-star"></span>
@@ -41,7 +41,6 @@
 				<?php } ?>
 			</tbody>
 		</table>
-		<a href="#" class="studentwork-more" id="students-active-questions-more"><img src="/images/arrow-right-red.png" /> <span>More Info</span></a>
 		
 	</div>
 </div><!-- #home-leaderboard -->

@@ -45,7 +45,7 @@
 				</div>
 				<div class="clear"></div>
 			</li>
-			<li>
+			<li id="add_document">
 				<p class="label">Document</p>
 				<!-- <a href="#" class="icon-add"> Add document</a> -->
 				
@@ -63,6 +63,10 @@
 				<input type="file" name="attachment[0]" />
 				<input type="hidden" name="attachment[0][type]" value="C" />
 				
+			</li>
+			<li id="add_youtube">
+				<p class="label">Video Embed Code</p>
+				<textarea name="video_embed" style="width: 350px;height: 90px;"><?php echo (@$challenge['Attachment'][0]['type'] == 'C' ? $challenge['Attachment'][0]['file_location'] : '' ); ?></textarea>
 			</li>
 		</ul>
 	</div>
@@ -124,4 +128,7 @@ $('#responses_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date()});
 
 if($('#response_types').val() == 'E') $('#compose_questions').remove();
 else $('#compose_essay').remove();
+
+if($('#challenge_type').val() == 'VID') $('#add_document').remove();
+else $('#add_youtube').remove();
 </script>

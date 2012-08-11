@@ -42,7 +42,7 @@
 				foreach($challenges as $k=>$challenge){ ?>
 				<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?>>
 					<td>
-						<a href="/challenges/<?php echo ($challenge['Challenge']['status'] == 'D' ? 'update' : 'view') . '/' . $challenge['Challenge']['id'] . ($challenge['Challenge']['status'] == 'D' ? '#view=info' : ''); ?>"<?php if(@$challenge['Users']){ ?> onclick="show_user_list($(this).parent(),<?php echo $challenge['Challenge']['id']; ?>,<?php echo ($_SESSION['User']['user_type'] == 'L' ? '1' : '0'); ?>);return false;"<?php }elseif(date_create($challenge['Challenge']['answers_due']) < $now){ ?> onclick="alert('None of this challenge\'s other participants have met the response deadline.');return false;"<?php } ?>>
+						<a href="/challenges/<?php echo ($challenge['Challenge']['status'] == 'D' ? 'update' : 'view') . '/' . $challenge['Challenge']['id'] . ($challenge['Challenge']['status'] == 'D' ? '#view=info' : ''); ?>"<?php if($_SESSION['User']['user_type']=='L' && date_create($challenge['Challenge']['answers_due']) > $now){ ?> onclick="$('#date1_exp_warning').html('<?php echo date_format(date_create($challenge['Challenge']['answers_due']),'m/d/Y'); ?>');$('#date2_exp_warning').html('<?php echo date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y'); ?>');$('#duedate_warning_link').click();return false;"<?php }elseif(@$challenge['Users']){ ?> onclick="show_user_list($(this).parent(),<?php echo $challenge['Challenge']['id']; ?>,<?php echo ($_SESSION['User']['user_type'] == 'L' ? '1' : '0'); ?>);return false;"<?php }elseif(date_create($challenge['Challenge']['answers_due']) < $now){ ?> onclick="alert('None of this challenge\'s other participants have met the response deadline.');return false;"<?php } ?>>
 							<?php echo $challenge['Challenge']['name']; ?>
 						</a>
 					</td>
@@ -123,3 +123,25 @@
 
 <div id="home-leaderboard" class="alignright round round-white width50" style="display:none;width:0px;height:430px;"> </div>
 <div class="clear"></div>
+
+<div style="display:none;">
+	<a href="#modal-duedate-warning" class="show-overlay" id="duedate_warning_link"> </a>
+	<div id="modal-duedate-warning" class="modal-wrapper" style="width: 600px;" >
+		<div class="modal-box-head">
+			<h2>Due Date 1</h2>
+		</div>
+		<div class="modal-box-content">
+			<div style="text-align:center;margin:20px;line-height:25px;">
+				Your students are currently completing the assignment. Due Date 1 expires <span id="date1_exp_warning"> </span>.
+				You will then have until <span id="date2_exp_warning"> </span> to complete Due Date 2.
+			</div>
+			
+			<br />
+			<div class="clear"></div>
+			<div style="width: 100px; margin: 0 auto; ">
+				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Close</span></a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>

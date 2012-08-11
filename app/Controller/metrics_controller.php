@@ -80,9 +80,9 @@ class MetricsController extends AppController{
 				$challenge['ClassSet'][$k]['User'][$i]['comments'] = count($u['Comment']);
 				
 				$users_in_group = $users_groups ? count(array_keys($users_groups,$users_groups[$u['id']])) : $ucount;
-				$possible_responses = $users_in_group + (($users_in_group - 1) * count($challenge['Question']));
+				$possible_responses = count($challenge['Question']) + (($users_in_group - 1) * count($challenge['Question']));
 				$challenge['ClassSet'][$k]['User'][$i]['completion'] = count($u['Response']) / $possible_responses;
-				
+
 				if(!@$quality[$u['id']]){
 					@$quality[$u['id']][0] = 0;
 					@$quality[$u['id']][1] = 0;

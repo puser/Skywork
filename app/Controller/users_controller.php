@@ -18,10 +18,12 @@ class UsersController extends AppController{
 		$this->User->hasAndBelongsToMany['ClassSet']['order'] = $sort;
 		
 		$user = $this->User->find('first',array('conditions'=>"User.id = {$_SESSION['User']['id']}"));
+		$class_ids = '';
+		foreach($user['ClassSet'] as $c) $class_ids .= ($class_ids ? ',' : '') . $c['id'];
 
 		if($show=='classes'){
 			$this->ClassSet->Behaviors->attach('Containable');
-			$user['ClassSet'] = $this->ClassSet->find('all',array('conditions'=>"owner_id = {$_SESSION['User']['id']}",'contain'=>array('User'=>array('conditions'=>'User.user_type = "P"'),'Owner')));
+			$user['ClassSet'] = $class_ids ? $this->ClassSet->find('all',array('conditions'=>"ClassSet.id IN($class_ids)",'contain'=>array('User'=>array('conditions'=>'User.user_type = "P"'),'Owner'))) : array();
 			$this->set('user',$user);
 		
 			$current_groups = $requested_groups = $pending_groups = array();
@@ -37,8 +39,7 @@ class UsersController extends AppController{
 				if($r['ClassSet']) $requested_groups[] = $r['ClassSet']['id'];
 			}
 			
-			foreach($user['ClassSet'] as $g) $current_groups[] = $g['ClassSet']['id'];
-			if($current_groups) $conditions = array('ClassSet.id NOT IN ('.implode(',',$current_groups).')');
+			if($class_ids) $conditions = array('ClassSet.id NOT IN ('.$class_ids.')');
 			else $conditions = array();
 				
 			$this->set('saved',$saved);
@@ -65,6 +66,12 @@ class UsersController extends AppController{
 		
 		if(!@$_REQUEST['search_visible']) $_REQUEST['search_visible'] = 0;
 		$this->User->save($_REQUEST);
+
+		if($_REQUEST['firstname']){
+			$_SESSION['User']['firstname'] = $_REQUEST['firstname'];
+			$_SESSION['User']['lastname'] = $_REQUEST['lastname'];
+		}
+
 		$this->redirect('/users/view/');
 	}
 	
@@ -124,16 +131,16 @@ class UsersController extends AppController{
 		if($send_invite){
 			// build invite url & message body
 			$invite_url = 'http://caseclubonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
-			$message = "{$fname},\n\n{$class['Owner']['firstname']} requested you to join a new class, {$class['ClassSet']['group_name']}, on Puentes.";
+			$message = "{$fname},\n\n{$class['Owner']['firstname']} requested for you to join the class {$class['ClassSet']['group_name']} on Puentes Online - the world’s first feedback learning system.";
 			$message .= "\n\n<a href='$invite_url'>Click here to join this class!</a>";
-			$message .= "\n\nSincerely,\n\nPuentes Team";
+			$message .= "\n\nSincerely,\n\nThe Puentes Team";
 		
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			$headers .= 'From: noreply@caseclubonline.com' . "\r\n";
 		
 			// send invite email
-			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>","{$class['Owner']['firstname']} {$class['Owner']['lastname']} asks you to join",nl2br($message),$headers);
+			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>","{$class['Owner']['firstname']} {$class['Owner']['lastname']} wants you to join their Class",nl2br($message),$headers);
 		}
 		
 		die($this->User->id);
