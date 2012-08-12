@@ -1,30 +1,30 @@
 <div id="startbridge-assignment" class="box-startbridge box-white rounded">
 	<div class="box-head">
 		<span class="icon2 icon2-docopen"></span>
-		<h2>Select Assignment</h2>
+		<h2><?php echo __('Select Assignment') ?></h2>
 		<div class="clear"></div>
 	</div>
 	<div class="box-content">
-		<p>What is the Assignment?</p>
+		<p><?php echo __('What is the Assignment?') ?></p>
 		<ul id="challenges-accordion" class="accordion">
 			<li class="alternate">
 				<div class="accordion-trigger">
-					<a class="btn1" onclick="$.bbq.pushState({view:'collaboration',state:{type:'assignment',val:'Q'}});"><span>Select</span></a>
-					<p>Answer Questions</p>
+					<a class="btn1" onclick="$.bbq.pushState({view:'collaboration',state:{type:'assignment',val:'Q'}});"><span><?php echo __('Select') ?></span></a>
+					<p><?php echo __('Answer Questions') ?></p>
 					<div class="clear"></div>
 				</div>
 				<div class="accordion-content">
-					<p>The Instructor writes a series of (n) questions. Students then answer the questions assigned by the Instructor. </p>
+					<p><?php echo __('The Instructor writes a series of (n) questions. Students then answer the questions assigned by the Instructor.') ?></p>
 				</div>
 			</li>
 			<li>
 				<div class="accordion-trigger">
-					<a class="btn1" onclick="$.bbq.pushState({view:'collaboration',state:{type:'assignment',val:'E'}});"><span>Select</span></a>
-					<p>Write an Essay</p>
+					<a class="btn1" onclick="$.bbq.pushState({view:'collaboration',state:{type:'assignment',val:'E'}});"><span><?php echo __('Select') ?></span></a>
+					<p><?php echo __('Write an Essay') ?></p>
 					<div class="clear"></div>
 				</div>
 				<div class="accordion-content">
-					The Instructor assigns and essay topic to students.
+					<?php echo __('The Instructor assigns and essay topic to students.') ?>
 				</div>
 			</li>
 		</ul>

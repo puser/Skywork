@@ -6,13 +6,15 @@
 				<div class="content">
 					<div class="box-heading">
 						<div class="icon icon-preview"></div>
-						<h2 class="page-subtitle">See Case</h2>
+						<h2 class="page-subtitle"><?php echo __('See Case') ?></h2>
 						<div class="action-buttons">
 							<div class="action-button action-buttons-notokay alignright">
 								<?php if(@$_REQUEST['fromEmail']){ ?>
-									<a href="/challenges/view/<?php echo $attachment['Challenge']['id']; ?>" style="width:120px;" class="btn2"><span style="width:105px;" class="inner">Go to Questions</span></a>
+									<a href="/challenges/view/<?php echo $attachment['Challenge']['id']; ?>" style="width:120px;" class="btn2">
+										<span style="width:105px;" class="inner"><?php echo __('Go to Questions') ?></span>
+									</a>
 								<?php }else{ ?>
-									<a style="cursor:pointer;" onclick="window.history.go(-1);" class="btn2"><span class="inner">Back</span></a>
+									<a style="cursor:pointer;" onclick="window.history.go(-1);" class="btn2"><span class="inner"><?php echo __('Back') ?></span></a>
 								<?php } ?>
 							</div>
 

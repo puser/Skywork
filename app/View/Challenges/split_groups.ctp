@@ -20,17 +20,17 @@
 			</div>
 			
 			<span class="icon5 icon5-flash"></span>
-			<h2>Split class into groups</h2>
+			<h2><?php echo __('Split class into groups') ?></h2>
 		</div>
 		<div class="modal-box-content">
 			<?php if(!$group_count){ ?>
-				Number of Students per Group <div class="input-roller"><input type="text" value="1" size="2"/> <span class="roll-up"></span><span class="roll-down" ></span></div> &nbsp;&nbsp;&nbsp;
-				<a href="/challenges/split_groups/<?php echo $challenge['Challenge']['id']; ?>/1" class="show-overlay" id="run_split">Go</a>
+				<?php echo __('Number of Students per Group') ?> <div class="input-roller"><input type="text" value="1" size="2"/> <span class="roll-up"></span><span class="roll-down" ></span></div> &nbsp;&nbsp;&nbsp;
+				<a href="/challenges/split_groups/<?php echo $challenge['Challenge']['id']; ?>/1" class="show-overlay" id="run_split"><?php echo __('Go') ?></a>
 			
 				<br /><br /><br /><br /><br /><br />
 				<div class="clear"></div>
 				<div style="width: 80px; margin: 0 auto; ">
-					<a href="#" class="btn3" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+					<a href="#" class="btn3" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 				</div>
 			<?php }else{ ?>
 				<div class="table-split" style="width: <?php echo ceil(count($students) * 145); ?>px; margin: 0 auto;">
@@ -44,8 +44,12 @@
 				<br /><br />
 				<div class="clear"></div>
 				<div style="width: 175px; margin: 0 auto; ">
-					<a href="#" class="btn2" style="width:80px;float:left;" onclick="save_groups(<?php echo $challenge['Challenge']['id']; ?>); jQuery.fancybox.close(); return false; "><span>Add</span></a>
-					<a href="#" class="btn3" style="width:80px;float:left;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+					<a href="#" class="btn2" style="width:80px;float:left;" onclick="save_groups(<?php echo $challenge['Challenge']['id']; ?>); jQuery.fancybox.close(); return false; ">
+						<span><?php echo __('Add') ?></span>
+					</a>
+					<a href="#" class="btn3" style="width:80px;float:left;" onclick="jQuery.fancybox.close(); return false; ">
+						<span><?php echo __('Cancel') ?></span>
+					</a>
 				</div>
 			<?php } ?>
 		</div>

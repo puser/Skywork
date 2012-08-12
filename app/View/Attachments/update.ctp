@@ -1,6 +1,6 @@
 <div class="box-head">
 	<span class="icon2 icon2-listcountgreen"> </span>
-	<h2 >Attach File(s)</h2>
+	<h2 ><?php echo __('Attach File(s)') ?></h2>
 	<div class="clear"></div>
 </div>
 <div class="box-content">
@@ -10,7 +10,7 @@
 			<?php foreach($attachments as $k=>$a){ ?>
 			<li id="exAttach<?php echo $k; ?>">
 				<a href="/uploads/<?php echo $a['Attachment']['file_location']; ?>" target="_blank"><?php echo $a['Attachment']['name']; ?></a> &nbsp;
-				(<a href="#" onclick="remove_attachment('exAttach<?php echo $k; ?>',<?php echo $a['Attachment']['id']; ?>);return false;">Remove</a>)
+				(<a href="#" onclick="remove_attachment('exAttach<?php echo $k; ?>',<?php echo $a['Attachment']['id']; ?>);return false;"><?php echo __('Remove') ?></a>)
 			</li>
 			<?php } ?>
 			<li>
@@ -21,6 +21,6 @@
 			</li>
 		</ol>
 		<br />
-		<a href="#" class="add-link" onclick="add_response_attachment();return false;">Add another attachment</a>
+		<a href="#" class="add-link" onclick="add_response_attachment();return false;"><?php echo __('Add another attachment') ?></a>
 	</form>
 </div>

@@ -1,25 +1,25 @@
 <div id="assignmentDialog" style="display:none;"> </div>
 
 <div id="sidebarleft">
-	<h1>Metrics Section</h1>
+	<h1><?php echo __('Metrics Section') ?></h1>
 	<div id="sidemenu" >
 		<ul>
-			<li><a class="icon icon4-student" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/">Students</a></li>
-			<li><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/">Question Activity</a></li>
-			<li class="active"><a class="icon icon4-graph" href="#">Charting</a></li>
+			<li><a class="icon icon4-student" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Students') ?></a></li>
+			<li><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Question Activity') ?></a></li>
+			<li class="active"><a class="icon icon4-graph" href="#"><?php echo __('Charting') ?></a></li>
 		</ul>
 	</div>
 </div>
 
 <div id="maincolumn">
 	
-	<div class="alignleft page-toptitle" style="margin-left: 20px; "><?php echo $challenge['Challenge']['name']; ?></div>
+	<div class="alignleft page-toptitle" style="margin-left: 20px;"><?php echo $challenge['Challenge']['name']; ?></div>
 	
 	<div class="actionmenu">
 		<ul>
-			<li class="action-notes"><a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/">Summary</a></li>
-			<li class="action-preview"><a href="#" onclick="$('#assignmentDialog').dialog('open');return false;">Assignment</a></li>
-			<li class="action-exit"><a href="/">Exit</a></li>
+			<li class="action-notes"><a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Summary') ?></a></li>
+			<li class="action-preview"><a href="#" onclick="$('#assignmentDialog').dialog('open');return false;"><?php echo __('Assignment') ?></a></li>
+			<li class="action-exit"><a href="/"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>
 	</div>
@@ -29,8 +29,8 @@
 		<div class="question-item">
 			<div class="box-head">
 				<span class="icon2 icon2-graph"></span>
-				<h2 >Charting</h2>
-				<a href="#" class="customize-link">Customize</a>
+				<h2><?php echo __('Charting') ?></h2>
+				<a href="#" class="customize-link"><?php echo __('Customize') ?></a>
 				<div class="clear"></div>
 			</div>
 			<div class="box-content" style="text-align:center">
@@ -38,8 +38,8 @@
 				      google.setOnLoadCallback(drawChart);
 				      function drawChart() {
 								var data = new google.visualization.DataTable();
-								data.addColumn('number', 'Quality');
-								data.addColumn('number', 'Activity');
+								data.addColumn('number', '<?php echo __('Quality') ?>');
+								data.addColumn('number', '<?php echo __('Activity') ?>');
 								data.addColumn({type:'string', role:'tooltip'});
 					
 				        data.addRows([
@@ -57,9 +57,9 @@
 				        ]);
 
 				        var options = {
-				          title: 'Student Quality / Activity in Bridge',
-				          hAxis: {title: 'Quality', minValue: 0, maxValue: 100},
-				          vAxis: {title: 'Activity', minValue: 0, maxValue: 100},
+				          title: '<?php echo __('Student Quality / Activity in Bridge') ?>',
+				          hAxis: {title: '<?php echo __('Quality') ?>', minValue: 0, maxValue: 100},
+				          vAxis: {title: '<?php echo __('Activity') ?>', minValue: 0, maxValue: 100},
 				          legend: 'none'
 				        };
 

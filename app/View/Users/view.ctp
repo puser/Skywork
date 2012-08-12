@@ -39,7 +39,7 @@
 					<li>
 						<label><?php echo __('Language') ?></label> 
 						<select style="width: 120px;">
-							<option value="English" selected="selected">English</option>
+							<option value="English" selected="selected"><?php echo __('English') ?></option>
 						</select>
 					</li>
 				</ul>

@@ -1,12 +1,12 @@
 <div id="assignmentDialog" style="display:none;"> </div>
 
 <div id="sidebarleft">
-	<h1>Metrics Section</h1>
+	<h1><?php echo __('Metrics Section') ?></h1>
 	<div id="sidemenu" >
 		<ul>
-			<li><a class="icon icon4-student" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/">Students</a></li>
-			<li class="active"><a class="icon icon4-question" href="#">Question Activity</a></li>
-			<li ><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1">Charting</a></li>
+			<li><a class="icon icon4-student" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Students') ?></a></li>
+			<li class="active"><a class="icon icon4-question" href="#"><?php echo __('Question Activity') ?></a></li>
+			<li ><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
 		</ul>
 	</div>
 </div>
@@ -17,9 +17,9 @@
 	
 	<div class="actionmenu">
 		<ul>
-			<li class="action-notes"><a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/">Summary</a></li>
-			<li class="action-preview"><a href="#" onclick="$('#assignmentDialog').dialog('open');return false;">Assignment</a></li>
-			<li class="action-exit"><a href="/">Exit</a></li>
+			<li class="action-notes"><a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Summary') ?></a></li>
+			<li class="action-preview"><a href="#" onclick="$('#assignmentDialog').dialog('open');return false;"><?php echo __('Assignment') ?></a></li>
+			<li class="action-exit"><a href="/"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>
 	</div>
@@ -29,18 +29,18 @@
 		<div class="question-item">
 			<div class="box-head">
 				<span class="icon2 icon2-question"></span>
-				<h2 >Question Activity</h2>
+				<h2><?php echo __('Question Activity') ?></h2>
 				<div class="clear"></div>
 			</div>
 			<div class="box-content">
 				<table id="metrics-question-activity" class="table-type-1">
 					<thead>
 						<tr>
-							<th class="col1" width=""><a href="#" class="sort">Student Name</a></th>
-							<th class="col2" width="15%"><a href="#" class="sort">Question</th>
+							<th class="col1" width=""><a href="#" class="sort"><?php echo __('Student Name') ?></a></th>
+							<th class="col2" width="15%"><a href="#" class="sort"><?php echo __('Question') ?></th>
 							<th class="col3" width="15%"><a href="#" class="sort image-btn"><img src="/images/icons/icon-like-19x21.png" /></th>
 							<th class="col4" width="15%"><a href="#" class="sort image-btn"><img src="/images/icons/icon-like2-20x20.png" /></th>
-							<th class="col5" width="20%"><a href="#" class="sort">Activity Level<span class="question tooltip-mark-question"></span></a></th>
+							<th class="col5" width="20%"><a href="#" class="sort"><?php echo __('Activity Level') ?><span class="question tooltip-mark-question" title="<?php echo __('These are questions with the most activity') ?>"></span></a></th>
 							<th class="col6" width="10%"></th>
 						</tr>
 					</thead>
@@ -78,7 +78,7 @@
 	<div class="clear"></div>
 	
 	<div style="width: 80px; margin: 0 auto;">
-		<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1" class="btn2"><span>Next</span></a>
+		<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1" class="btn2"><span><?php echo __('Next') ?></span></a>
 	</div>
 
 </div>

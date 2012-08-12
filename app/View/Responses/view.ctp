@@ -152,7 +152,7 @@
 							<span class="<?php echo ($q['response_total'] == 1 ? 'good' : ($q['response_total'] == 2 ? 'good' : ($q['response_total'] == 3 ? 'average' : ($q['response_total'] == 4 ? 'poor' : 'poor')))); ?>">
 								<?php echo ($q['response_total'] == 1 ? __('Very High') : ($q['response_total'] == 2 ? __('Good') : ($q['response_total'] == 3 ? __('Average') : ($q['response_total'] == 4 ? __('Below Average') : __('Poor'))))); ?> <?php echo __('Quality') ?>
 							</span>
-							<a class="tooltip-mark tooltip-mark-question" title="this is a tooltip"></a>
+							<a class="tooltip-mark tooltip-mark-question" title="<?php echo __('Average quality for this Question') ?>"></a>
 						</div>
 					<?php }elseif(!$completed){ ?>
 						<div class="like-scale">

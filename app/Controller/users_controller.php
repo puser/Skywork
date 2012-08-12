@@ -131,16 +131,24 @@ class UsersController extends AppController{
 		if($send_invite){
 			// build invite url & message body
 			$invite_url = 'http://caseclubonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
-			$message = "{$fname},\n\n{$class['Owner']['firstname']} requested for you to join the class {$class['ClassSet']['group_name']} on Puentes Online - the world’s first feedback learning system.";
-			$message .= "\n\n<a href='$invite_url'>Click here to join this class!</a>";
-			$message .= "\n\nSincerely,\n\nThe Puentes Team";
-		
+			
+			$message = __("{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world’s first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team");
+			$message = str_replace('{first_name_1}',$fname,$message);
+			$message = str_replace('{first_name_2}',$class['Owner']['firstname'],$message);
+			$message = str_replace('{classname}',$class['ClassSet']['group_name'],$message);
+			$message = str_replace('{begin_link}',"<a href='$invite_url'>",$message);
+			$message = str_replace('{end_link}',"</a>",$message);
+			
+			$subject = __("{first_name} {last_name} wants you to join their Class");
+			$subject = str_replace('{first_name}',$class['Owner']['firstname'],$subject);
+			$subject = str_replace('{last_name}',$class['Owner']['lastname'],$subject);
+			
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			$headers .= 'From: noreply@caseclubonline.com' . "\r\n";
 		
 			// send invite email
-			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>","{$class['Owner']['firstname']} {$class['Owner']['lastname']} wants you to join their Class",nl2br($message),$headers);
+			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",$subject,nl2br($message),$headers);
 		}
 		
 		die($this->User->id);
@@ -163,9 +171,12 @@ class UsersController extends AppController{
 		$user = $this->User->findByLogin($login);
 		if($user){
 			$reminder_token = sha1(time().$this->salt);
-			$message = "{$user['User']['firstname']},\n\nSomeone (probably you), forgot the password to Case Club Online. Click on the link below to create a new password.";
-			$message .= "\n\nhttp://caseclubonline.com/users/password_reset/".$reminder_token."\n\nSincerely,\nCase Club Online Team";
-			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>","New Password (CaseClubOnline)",$message,'From: noreply@caseclubonline.com');
+			
+			$message = __("{first_name},\n\nSomeone (probably you), forgot the password on Puentes Online. Click on the link below to create a new password.\n\n{link}\n\nSincerely,\nThe Puentes Team");
+			$message = str_replace('{first_name}',$user['User']['firstname'],$message);
+			$message = str_replace('{link}',"http://caseclubonline.com/users/password_reset/".$reminder_token,$message);
+			
+			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",__("New Password"),$message,'From: noreply@caseclubonline.com');
 			
 			$this->User->id = $user['User']['id'];
 			$this->User->saveField('invite_token',$reminder_token);

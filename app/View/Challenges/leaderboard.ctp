@@ -2,7 +2,7 @@
 	
 	<div class="box-head ">
 		<span class="icon5 icon5-star"></span>
-		<h2 class="page-subtitle">Group Activity</h2>
+		<h2 class="page-subtitle"><?php echo __('Group Activity') ?></h2>
 		<div class="clear"></div>
 	</div>
 	
@@ -12,19 +12,19 @@
 		<table id="students-active-questions" class="table-type-1">
 			<thead>
 				<tr>
-					<th class="col1" width="70%">Group Members <span style="color: #666666; margin-left: 30px;"><?php echo date_format(date_create(),'m/d/Y'); ?></span></th>
+					<th class="col1" width="70%"><?php echo __('Group Members') ?> <span style="color: #666666; margin-left: 30px;"><?php echo date_format(date_create(),'m/d/Y'); ?></span></th>
 					<th class="col2" width="10%"><img src="/images/icons/icon-like-19x21.png" /></th>
 					<th class="col3" width="10%">
 						<div class="tooltip-wrap">
 							<img src="/images/icons/icon-like2-20x20.png" />
-							<a href="#" title="this is a tooltip" class="tooltip-mark tooltip-mark-question"></a>
+							<a href="#" title="<?php echo __('Likes vs dislikes for their work') ?>" class="tooltip-mark tooltip-mark-question"></a>
 						</div>
 					</th>
 				</tr>
 			</thead>
 			<tbody>
 			<?php if(!$users){ ?>
-				<tr><td colspan="3">Not enough data exists to display details for this challenge</td></tr>
+				<tr><td colspan="3"><?php echo __('Not enough data exists to display details for this bridge') ?></td></tr>
 			<?php }
 			$k = 0;
 			$current = false;

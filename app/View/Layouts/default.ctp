@@ -55,24 +55,24 @@
 			<?php if(@$_SESSION['User']['id']){ ?>
 			<div id="topmenu">
 				<span class="user-name"><a><?php echo (strlen($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) > 17 ? substr($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname'],0,15).'...' : "{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']}"); ?></a></span>
-				<span class="user-home"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>">Home</a></span>
-				<span class="user-account"><a href="/users/view/">My Account</a></span>
-				<span class="user-logout"><a href="#logoutModal" class="show-overlay">Logout</a></span>
+				<span class="user-home"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>"><?php echo __('Home') ?></a></span>
+				<span class="user-account"><a href="/users/view/"><?php echo __('My Account') ?></a></span>
+				<span class="user-logout"><a href="#logoutModal" class="show-overlay"><?php echo __('Logout') ?></a></span>
 			</div><!-- #topmenu -->
 			<?php }else{ ?>
-			<div id="subtitle">Puentes Online is currently in private beta.</div>
-			<a href="#" id="overlayLoginLink" >Login</a>
+			<div id="subtitle"><?php echo __('Puentes Online is currently in private beta.') ?></div>
+			<a href="#" id="overlayLoginLink" ><?php echo __('Login') ?></a>
 			<div id="overlayLoginForm" class="rounded">
 				<ul class="fieldset2">
 					<li>
 						<div class="label alignleft">
-							<span class="red">*</span> Email
+							<span class="red">*</span> <?php echo __('Email') ?>
 						</div>
 						<input type="text" class="inputText" id="loginUser" />
 					</li>
 					<li>
 						<div class="label alignleft">
-							<span class="red">*</span> Password
+							<span class="red">*</span> <?php echo __('Password') ?>
 						</div> 
 						<input type="password" class="inputText" id="loginPass" />
 					</li>
@@ -80,8 +80,8 @@
 				</ul>
 				<div class="clear"></div>
 
-				<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();">I forgot my password</a>
-				<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner">Log in</span></a>
+				<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();"><?php echo __('I forgot my password') ?></a>
+				<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner"><?php echo __('Log in') ?></span></a>
 				<div class="clear"></div>
 			</div>
 			<?php } ?>
@@ -99,15 +99,15 @@
 			<div id="logoutModal">
 				<div class="box-heading">
 					<span class="icon icon-key"></span>
-					<h2 class="page-subtitle label-text">Logout</h2>
+					<h2 class="page-subtitle label-text"><?php echo __('Logout') ?></h2>
 
 				</div>
 				<br />
-				<p class="caseclubFont18 blue textAlignCenter">Are you sure you want to logout?</p>
+				<p class="caseclubFont18 blue textAlignCenter"><?php echo __('Are you sure you want to logout?') ?></p>
 				<br /><br /><br />
 				<div class="exitSaveOptions">
-					<a href="/users/logout/" class="btn1 btn-savecontinue aligncenter"><span class="inner">Yes, Logout</span></a>
-					<a href="#" onclick="jQuery.fancybox.close(); return false; " class="btn2 btn-savecontinue aligncenter"><span class="inner">Cancel</span></a>
+					<a href="/users/logout/" class="btn1 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Logout') ?></span></a>
+					<a href="#" onclick="jQuery.fancybox.close(); return false; " class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Cancel') ?></span></a>
 				</div>
 			</div><!-- #logoutModal -->
 
@@ -119,9 +119,9 @@
 		<!-- <div class="alignleft" id="logofooter"><a href="/"><img src="/images/logo-footer.png" /></a></div> -->
 		<div class="alignright" id="footermenu">
 			<ul>
-				<li><a href="#">Privacy Policy</a></li>
+				<li><a href="#"><?php echo __('Privacy Policy') ?></a></li>
 
-				<li><a href="#">Terms and Conditions</a></li>
+				<li><a href="#"><?php echo __('Terms and Conditions') ?></a></li>
 			</ul>
 		</div>
 		<div class="clear"></div>

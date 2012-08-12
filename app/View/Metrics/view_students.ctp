@@ -1,24 +1,24 @@
 <div id="assignmentDialog" style="display:none;"> </div>
 
 <div id="sidebarleft">
-	<h1>Metrics Section</h1>
+	<h1><?php echo __('Metrics Section') ?></h1>
 	<div id="sidemenu" >
 		<ul>
 			<li class="active">
-				<a class="icon icon4-student" href="#">Students</a>
+				<a class="icon icon4-student" href="#"><?php echo __('Students') ?></a>
 				<ul>
-					<li id="groupNavAll"><a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/" class="active">All Students</a></li>
+					<li id="groupNavAll"><a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/" class="active"><?php echo __('All Students') ?></a></li>
 					<?php if($challenge['Group']){
 						foreach($challenge['Group'] as $k=>$g){ ?>
 							<li id="groupNav<?php echo $g['id']; ?>">
-								<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/<?php echo $g['id']; ?>">Group <?php echo ($k + 1); ?></a>
+								<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/<?php echo $g['id']; ?>"><?php echo __('Group') ?> <?php echo ($k + 1); ?></a>
 							</li>
 						<?php }
 					} ?>
 				</ul>
 			</li>
-			<li ><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/">Question Activity</a></li>
-			<li ><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1">Charting</a></li>
+			<li ><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Question Activity') ?></a></li>
+			<li ><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
 		</ul>
 	</div>
 </div>
@@ -29,9 +29,9 @@
 	
 	<div class="actionmenu">
 		<ul>
-			<li class="action-notes"><a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/">Summary</a></li>
-			<li class="action-preview"><a href="#" onclick="$('#assignmentDialog').dialog('open');return false;">Assignment</a></li>
-			<li class="action-exit"><a href="/">Exit</a></li>
+			<li class="action-notes"><a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Summary') ?></a></li>
+			<li class="action-preview"><a href="#" onclick="$('#assignmentDialog').dialog('open');return false;"><?php echo __('Assignment') ?></a></li>
+			<li class="action-exit"><a href="/"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>
 	</div>
@@ -41,18 +41,18 @@
 		<div class="question-item">
 			<div class="box-head">
 				<span class="icon2 icon2-people-green"></span>
-				<h2 >Student Analysis: All Students</h2>
-				<a href="#modal-customize" class="modal-link customize-link">Customize</a>
+				<h2><?php echo __('Student Analysis:') ?> <?php echo __('All Students') ?></h2>
+				<a href="#modal-customize" class="modal-link customize-link"><?php echo __('Customize') ?></a>
 				<div class="clear"></div>
 			</div>
 			<div class="box-content">
 				<table id="metrics-students-analysis" class="table-type-1">
 					<thead>
 						<tr>
-							<th class="col1" width="20%"><a href="#" class="sort">Student Name</a></th>
-							<th class="col2" width="23%"><a href="#" class="sort">Completion Level</a></th>
-							<th class="col3" width="23%"><a href="#" class="sort">Average Quality Level</a></th>
-							<th class="col4" width="23%"><a href="#" class="sort">Students Activity Level</a></th>
+							<th class="col1" width="20%"><a href="#" class="sort"><?php echo __('Student Name') ?></a></th>
+							<th class="col2" width="23%"><a href="#" class="sort"><?php echo __('Completion Level') ?></a></th>
+							<th class="col3" width="23%"><a href="#" class="sort"><?php echo __('Average Quality Level') ?></a></th>
+							<th class="col4" width="23%"><a href="#" class="sort"><?php echo __('Students Activity Level') ?></a></th>
 							<th class="col5" width="7%"></th>
 						</tr>
 					</thead>
@@ -109,7 +109,7 @@
 	<div class="clear"></div>
 	
 	<div style="width: 80px; margin: 0 auto;">
-		<a href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/" class="btn2"><span>Next</span></a>
+		<a href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/" class="btn2"><span><?php echo __('Next') ?></span></a>
 	</div>
 
 </div>
@@ -123,7 +123,7 @@
 			
 			<div class="modal-box-head">
 				<span class="icon icon-customize"></span>
-				<h2><span >Customize</span></h2>
+				<h2><span><?php echo __('Customize') ?></span></h2>
 			</div>
 			<div class="modal-box-content">
 				
@@ -161,10 +161,10 @@
 				
 				<div style="width: 210px; margin: 0 auto 20px auto; ">
 					<div style="width: 80px; float: left;">
-						<a href="#" class="btn2" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span>Run</span></a>
+						<a href="#" class="btn2" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Run') ?></span></a>
 					</div>
 					<div style="width: 80px; float: right;">
-						<a href="#" class="btn3" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+						<a href="#" class="btn3" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -207,7 +207,6 @@
 				else $(".activity-level-percentage").hide(); 
 			}
 		}); 
-		
 		
 		$(".modal-link").fancybox({
 			'hideOnOverlayClick' : false,

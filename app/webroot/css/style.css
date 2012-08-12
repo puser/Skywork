@@ -723,7 +723,9 @@ a.studentwork-more:hover span {display: inline; }
 }
 #overlayLoginForm a.btn1 {
 	position:relative;
-	top:-5px;
+	top:-10px;
+	right:22px;
+	width:105px;
 }
 #overlayLoginForm .label {
 	color:#356e9c;

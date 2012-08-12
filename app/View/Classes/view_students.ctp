@@ -4,30 +4,30 @@
 		<div class="box-actions">
 			<ul>
 				<?php if($_SESSION['User']['id'] == $class['Owner']['id']){ ?>
-					<li><a class="icon4 icon4-plus" href="/classes/invite_member/<?php echo $class['ClassSet']['id']; ?>/student/" id="inviteNewUserLink" >Add a new Student</a></li>
-					<li><a class="icon4 icon4-remove" href="#" >Clean class</a></li>
+					<li><a class="icon4 icon4-plus" href="/classes/invite_member/<?php echo $class['ClassSet']['id']; ?>/student/" id="inviteNewUserLink" ><?php echo __('Add a new Student') ?></a></li>
+					<li><a class="icon4 icon4-remove" href="#" ><?php echo __('Clean class') ?></a></li>
 				<?php } ?>
 			</ul>
 		</div>
 		
 		<form id="updateClassName" method="POST" action="/classes/update/">
-			<h2><?php echo $class['ClassSet']['group_name']; ?> Students</h2>
+			<h2><?php echo $class['ClassSet']['group_name']; ?> <?php echo __('Students') ?></h2>
 			<input type="hidden" name="class[ClassSet][id]" value="<?php echo $class['ClassSet']['id']; ?>" />
 		</form>
 	</div>
 	<div class="modal-box-content">
 		
 		<?php if(!count($class['User'])){ ?>
-			<div style="text-align:center;margin:20px;">There are no students in this class.</div>
+			<div style="text-align:center;margin:20px;"><?php echo __('There are no students in this class.') ?></div>
 		<?php }else{ ?>
 			<table class="table-type-1">
 				<thead>
 					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Email</th>
-						<th>City</th>
-						<th>State</th>
+						<th><?php echo __('First Name') ?></th>
+						<th><?php echo __('Last Name') ?></th>
+						<th><?php echo __('Email') ?></th>
+						<th><?php echo __('City') ?></th>
+						<th><?php echo __('State') ?></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -52,8 +52,8 @@
 		<br /><br /><br /><br />
 		<div class="clear"></div>
 		<div style="width: 200px; margin: 0 auto; ">
-			<a href="#" class="btn2" style="width: 80px; float: left;" onclick="$('#updateClassName').submit(); "><span>Save</span></a>
-			<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+			<a href="#" class="btn2" style="width: 80px; float: left;" onclick="$('#updateClassName').submit(); "><span><?php echo __('Save') ?></span></a>
+			<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 			<div class="clear"></div>
 		</div>
 	</div>

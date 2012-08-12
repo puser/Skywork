@@ -1,11 +1,11 @@
 <div id="sidebarleft">
-	<h1>Answer Questions</h1>
+	<h1><?php echo __('Answer Questions') ?></h1>
 	<div id="sidemenu" >
 		<ul>
 			<?php foreach($challenge['Question'] as $k=>$q){ if(!$q['question']) continue; ?>
 			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a class="no-icon" href="#<?php echo $q['id']; ?>"><?php echo stripslashes($q['section']); ?></a></li>
 			<?php }if($challenge['Challenge']['allow_attachments']){ ?>
-			<li id="questionNavAttach"><a href="#attachments">Attach File(s)</a></li>
+			<li id="questionNavAttach"><a href="#attachments"><?php echo __('Attach File(s)') ?></a></li>
 			<?php } ?>
 		</ul>
 	</div>
@@ -17,9 +17,9 @@
 	
 	<div class="actionmenu">
 		<ul>
-			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?><li class="action-preview"><a href="/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>">Assignment</a></li><?php } ?>
-			<li class="action-save"><a href="#" onclick="save_response();return false;">Save</a></li>
-			<li class="action-exit"><a href="#modalExitChoices" class="show-overlay">Exit</a></li>
+			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?><li class="action-preview"><a href="/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>"><?php echo __('Assignment') ?></a></li><?php } ?>
+			<li class="action-save"><a href="#" onclick="save_response();return false;"><?php echo __('Save') ?></a></li>
+			<li class="action-exit"><a href="#modalExitChoices" class="show-overlay"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>
 	</div>
@@ -32,11 +32,11 @@
 	<div class="clear"></div>
 	
 	<div class="bottom-notification" id="fieldValidate" style="display:none;">
-		*You must complete this section
+		*<?php echo __('You must complete this section') ?>
 	</div>
 	
 	<div style="width: 80px; margin: 0 auto;">
-		<a href="#" class="btn2" onclick="save_response('ajax');return false;"><span>Next</span></a>
+		<a href="#" class="btn2" onclick="save_response('ajax');return false;"><span><?php echo __('Next') ?></span></a>
 	</div>
 
 </div>
@@ -65,15 +65,15 @@
 	<div id="modalExitChoices">
 		<div class="box-heading">
 			<span class="icon icon-warning"></span>
-			<h2 class="page-subtitle label-text">Exit</h2>
+			<h2 class="page-subtitle label-text"><?php echo __('Exit') ?></h2>
 		</div>
 		<br />
-		<p class="caseclubFont18 blue textAlignCenter">Would you like to save before returning to Home?</p>
+		<p class="caseclubFont18 blue textAlignCenter"><?php echo __('Would you like to save before returning to Home?') ?></p>
 		<br /><br /><br />
 		<div class="exitSaveOptions">
-			<a href="#" onclick="if(!$('.niceTextarea:first').val()){ window.location='/dashboard/'; }else{ save_response('/dashboard/'); }" class="btn1 btn-savecontinue aligncenter"><span class="inner">Yes, Save Current</span></a>
-			<a href="/dashboard/" class="btn2 btn-savecontinue aligncenter"><span class="inner">No, Don't Save</span></a>
-			<a href="#" onclick="jQuery.fancybox.close(); return false; ">Cancel</a>
+			<a href="#" onclick="if(!$('.niceTextarea:first').val()){ window.location='/dashboard/'; }else{ save_response('/dashboard/'); }" class="btn1 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save Current') ?></span></a>
+			<a href="/dashboard/" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('No, Don\'t Save') ?></span></a>
+			<a href="#" onclick="jQuery.fancybox.close(); return false; "><?php echo __('Cancel') ?></a>
 		</div>
 	</div><!-- #modalExitChoices -->
 </div>

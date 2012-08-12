@@ -3,21 +3,21 @@
 		
 		<div class="box-actions">
 			<ul>
-				<li><a class="icon4 icon4-plus" id="createProfessorLink" href="/classes/invite_member/<?php echo $class['ClassSet']['id']; ?>/professor/" >Add a professor</a></li>
+				<li><a class="icon4 icon4-plus" id="createProfessorLink" href="/classes/invite_member/<?php echo $class['ClassSet']['id']; ?>/professor/" ><?php echo __('Add a professor') ?></a></li>
 			</ul>
 		</div>
 		
 		<span class="icon5 icon5-shake"></span>
-		<h2><?php echo $class['ClassSet']['group_name']; ?> - Shared</h2>
+		<h2><?php echo $class['ClassSet']['group_name']; ?> - <?php echo __('Shared') ?></h2>
 	</div>
 	<div class="modal-box-content">
 		
 		<table class="table-type-1">
 			<thead>
 				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Email</th>
+					<th><?php echo __('First Name') ?></th>
+					<th><?php echo __('Last Name') ?></th>
+					<th><?php echo __('Email') ?></th>
 					<th></th>
 				</tr>
 			</thead>
@@ -39,7 +39,7 @@
 		<br /><br /><br /><br />
 		<div class="clear"></div>
 		<div style="width: 80px; margin: 0 auto; ">
-			<a href="#" class="btn3" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span>Cancel</span></a>
+			<a href="#" class="btn3" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 		</div>
 	</div>
 </div>

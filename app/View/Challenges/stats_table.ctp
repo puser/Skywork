@@ -2,8 +2,8 @@
 	
 	<div class="box-head ">
 		<span class="icon5 icon5-star"></span>
-		<h2 class="page-subtitle">Student Work</h2>
-		<span class="due-date">Due Date 2: <?php echo date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y'); ?></span>
+		<h2 class="page-subtitle"><?php echo __('Student Work') ?></h2>
+		<span class="due-date"><?php echo __('Due Date 2:') ?> <?php echo date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y'); ?></span>
 		<div class="clear"></div>
 	</div>
 	
@@ -16,11 +16,11 @@
 			<table id="students-highest-quality" class="table-type-1">
 				<thead>
 					<tr>
-						<th class="col1"><span class="blue">Students with highest quality work</span></th>
-						<th class="col2" width="30%"><select >
-								<option value="">According to You and Groups</option>
-								<option value="">According to You</option>
-								<option value="">According to Groups</option>
+						<th class="col1"><span class="blue"><?php echo __('Students with highest quality work') ?></span></th>
+						<th class="col2" width="30%"><select>
+								<option value=""><?php echo __('According to You and Groups') ?></option>
+								<option value=""><?php echo __('According to You') ?></option>
+								<option value=""><?php echo __('According to Groups') ?></option>
 							</select>
 						</th>
 					</tr>
@@ -40,7 +40,7 @@
 			</table>
 			<?php if(date_create($challenge['Challenge']['responses_due']) < $now){ ?>
 				<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-highest-quality-more">
-					<img src="/images/arrow-right-red.png" /> <span>More Info</span>
+					<img src="/images/arrow-right-red.png" /> <span><?php echo __('More Info') ?></span>
 				</a>
 			<?php } ?>
 		<?php } ?>
@@ -48,9 +48,14 @@
 		<table id="students-active-questions" class="table-type-1">
 			<thead>
 				<tr>
-					<th class="col1" width="70%"><span class="blue">Most active questions:</span></th>
+					<th class="col1" width="70%"><span class="blue"><?php echo __('Most active questions:') ?></span></th>
 					<th class="col2" width="10%"><img src="/images/icons/icon-like-19x21.png" /></th>
-					<th class="col3" width="10%"><img src="/images/icons/icon-like2-20x20.png" /></th>
+					<th class="col3" width="10%">
+						<div class="tooltip-wrap">
+							<img src="/images/icons/icon-like2-20x20.png" />
+							<a href="#" title="<?php echo __('Likes vs dislikes for their work') ?>" class="tooltip-mark tooltip-mark-question"></a>
+						</div>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -69,7 +74,9 @@
 		</table>
 		
 		<?php if(date_create($challenge['Challenge']['responses_due']) < $now){ ?>
-		<a href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-active-questions-more"><img src="/images/arrow-right-red.png" /> <span>More Info</span></a>
+		<a href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-active-questions-more">
+			<img src="/images/arrow-right-red.png" /> <span><?php echo __('More Info') ?></span>
+		</a>
 		<?php } ?>
 		
 	</div>
