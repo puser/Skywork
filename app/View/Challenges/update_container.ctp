@@ -38,19 +38,19 @@
 <div class="clear"></div>
 
 <div style="display: none;">
-	<div id="modalExitChoices" style="width:380px;">
-		<div class="box-heading">
-			<span class="icon icon-warning"></span>
-			<h2 class="page-subtitle label-text"><?php echo __('Exit') ?></h2>
+	<div id="modalExitChoices" style="width:440px;height:190px;">
+		<div class="modal-box-head">
+			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><span class="icon5 icon5-close" style="margin:0;height:24px;"></span><?php echo __('Exit') ?></h2>
 		</div>
 
-		<br />
-		<p class="caseclubFont18 blue textAlignCenter"><?php echo __('Would you like to save before returning to Home?') ?></p>
-		<br />
-		<div style="width: 335px; margin: 0 auto; ">
-			<a onclick="$('#challenge_data').attr('action','/challenges/update/0/dashboard/').submit();return false;" style="float:left;width:130px;" class="btn1 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save Current') ?></span></a>
-			<a href="/dashboard/" class="btn2 btn-savecontinue aligncenter" style="float:left;width:130px;"><span class="inner"><?php echo __('No, Don\'t Save') ?></span></a>
-			<a onclick="jQuery.fancybox.close(); return false; " style="display:inline-block;padding-left:10px;padding-top:7px;"><?php echo __('Cancel') ?></a>
+		<div class="modal-box-content">
+			<div style="text-align:center;margin:20px;"><p class="caseclubFont18 blue textAlignCenter"><?php echo __('Would you like to save before returning to Home?') ?></p></div>
+			<br />
+			<div style="width: 335px; margin: 0 auto; ">
+				<a onclick="$('#challenge_data').attr('action','/challenges/update/0/dashboard/').submit();return false;" style="float:left;width:130px;" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save Current') ?></span></a>
+				<a href="/dashboard/" class="btn3 btn-savecontinue aligncenter" style="float:left;width:130px;"><span class="inner"><?php echo __('No, Don\'t Save') ?></span></a>
+				<a onclick="jQuery.fancybox.close(); return false; " style="display:inline-block;padding-left:10px;padding-top:7px;"><?php echo __('Cancel') ?></a>
+			</div>
 		</div>
 	</div><!-- #modalExitChoices -->
 </div>

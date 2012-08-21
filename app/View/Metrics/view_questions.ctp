@@ -1,3 +1,4 @@
+<style type="text/css"> .activity-level span{ display:none; } </style>
 <div id="assignmentDialog" style="display:none;"> </div>
 
 <div id="sidebarleft">
@@ -17,7 +18,7 @@
 	
 	<div class="actionmenu">
 		<ul>
-			<li class="action-notes"><a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Summary') ?></a></li>
+			<li class="action-notes"><a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/0"><?php echo __('Summary') ?></a></li>
 			<li class="action-preview"><a href="#" onclick="$('#assignmentDialog').dialog('open');return false;"><?php echo __('Assignment') ?></a></li>
 			<li class="action-exit"><a href="/"><?php echo __('Exit') ?></a></li>
 		</ul>
@@ -50,6 +51,8 @@
 						$idx = 0;
 						foreach($challenge['Question'] as $k=>$q){
 							foreach($q['Response'] as $r){
+								if(!$r['positive_comments'] && !$r['negative_comments']) continue;
+								elseif($idx >= 10) break;
 								$idx++; ?>
 								<tr<?php if($idx % 2){ ?> class="alternate"<?php } ?>>
 									<td class="col1"><a href="#"><?php echo "{$r['User']['firstname']} {$r['User']['lastname']}"; ?></a></td>
@@ -88,6 +91,16 @@
 <script type="text/javascript">
 
 	jQuery(document).ready(function($){
+		
+		setTimeout(function(){
+			$('.activity-level span').each(function(){
+				w = $(this).width();
+				$(this).width(0);
+				$(this).css('display','inline-block');
+				$(this).animate({'width':w});
+			});
+		},320);
+		
 		$('#assignmentDialog').load('/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>/1',function(){
 			$("#assignmentDialog").dialog({ autoOpen: false,minWidth: 740 });
 		});

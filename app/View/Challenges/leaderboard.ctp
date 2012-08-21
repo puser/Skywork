@@ -1,6 +1,6 @@
 <div id="home-studentwork" class="rounded box-white width50 alignright" style="overflow:hidden;">
 	
-	<div class="box-head ">
+	<div class="box-head" style="padding-bottom:4px;">
 		<span class="icon5 icon5-star"></span>
 		<h2 class="page-subtitle"><?php echo __('Group Activity') ?></h2>
 		<div class="clear"></div>
@@ -30,6 +30,7 @@
 			$current = false;
 			foreach($users as $n=>$r){
 				$k++;
+				if($k > 6) break;
 				if($n == $_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) $current = true;
 				// elseif($challenge['Challenge']['challenge_type'] == 'A') $n = 'Anonymous User #'.($current ? $k - 1 : $k);
 				?>

@@ -10,6 +10,7 @@
 			<li class="alternate">
 				<div class="accordion-trigger">
 					<a class="btn1" onclick="$.bbq.pushState({view:'assignment',state:{type:'challenge',val:'DOC'}});"><span><?php echo __('Select') ?></span></a>
+					<div style="width: 21px;height: 24px;float:right;background: transparent url(/images/icon_greencheck.png);margin: 6px 12px 0;display:none;" id="doc_active"></div>
 					<p><?php echo __('Read a Document') ?></p>
 					<div class="clear"></div>
 				</div>
@@ -20,6 +21,7 @@
 			<li>
 				<div class="accordion-trigger">
 					<a class="btn1" onclick="$.bbq.pushState({view:'assignment',state:{type:'challenge',val:'VID'}});"><span><?php echo __('Select') ?></span></a>
+					<div style="width: 21px;height: 24px;float:right;background: transparent url(/images/icon_greencheck.png);margin: 6px 12px 0;display:none;" id="vid_active"></div>
 					<p><?php echo __('Watch a YouTube video') ?></p>
 					<div class="clear"></div>
 				</div>
@@ -30,3 +32,12 @@
 		</ul>
 	</div>
 </div>
+
+<script type="text/javascript">
+if($('#challenge_type').val()=='DOC') $('#doc_active').show();
+else if($('#challenge_type').val()=='VID') $('#vid_active').show();
+setTimeout(function(){
+	if($('#challenge_type').val() == 'VID') $("ul.accordion li:last-child .accordion-trigger p").trigger("click"); 
+	else $("ul.accordion li:first-child .accordion-trigger p").trigger("click"); 
+},50);
+</script>

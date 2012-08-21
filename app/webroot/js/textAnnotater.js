@@ -127,25 +127,18 @@
       //annotation focus to be gone when hovering the dialog)
       userDialog.hover(function(){
         var element = userDialog.data('textAnnotate.element');
-        if (element){
-          setElementAnnotationFocus(element);
+        if (element && element.hasClass('annotated')){
+          //setElementAnnotationFocus(element);
         }
       });
 
       //remove annotation focus when leaving the dialog
       userDialog.mouseleave(function(){
         userDialog.removeData('element');
-        removeAnnotationFocus();
+        //if($('.jQueryTextAnnotaterDialogForm textarea').val() != '') removeAnnotationFocus();
       })
 
-      //add button to dialog
-      var userDialogRemoveAnnotationButton = $(options.formDeleteAnnotationButton);
-      userDialogRemoveAnnotationButton.click(function(){
-        textHiglighterOnAction = '';
-        removeAnnotationWithFocus();
-      });
-
-      userDialog.append(userDialogRemoveAnnotationButton);
+      
 
       //add form to dialog
       if (options.form){
@@ -163,6 +156,12 @@
       _enableTextSelect(userDialog);
 
       $('body').append(userDialog);
+
+	  $('.answer-comment-box .close').click(function(){
+		if(!$('.answer-comment-box .close').hasClass('removeAnnotationBtn')) removeAnnotationFocus();
+	  });
+      // userDialog.append(userDialogRemoveAnnotationButton);
+
 			
       /* disable text selection */
       _disableTextSelect(jQueryElement);
@@ -194,12 +193,12 @@
             removeElementAnnotation(element, indexesOfAnnotationsWithFocus);
           }
         } else if(element.data('textAnnotate.annotationIndexes') && element.data('textAnnotate.annotationIndexes').length>0){
-          setElementAnnotationFocus(element);
+          setElementAnnotationFocus(element.nextUntil(':not(".annotated")').last().length ? element.nextUntil(':not(".annotated")').last() : element);
         }
       });
 		
       $("."+options.elementClassName, jQueryElement).mouseout(function(){
-        removeAnnotationFocus();
+        //if($('.jQueryTextAnnotaterDialogForm textarea').val() != '') removeAnnotationFocus();
       });
 
       /* store global annotations */
@@ -653,7 +652,7 @@
       var element;
 
       /* user userDialog */
-	
+removeAnnotationFocus();	
       //show the dialog and position it
       showUserDialog(elementInAnnotation)
       loadElementForm(elementInAnnotation);
@@ -691,6 +690,12 @@
       if (notifyListeners('beforeshowdialog', listenerData)==false){
         return;
       }     
+
+      var userDialogRemoveAnnotationButton = $(options.formDeleteAnnotationButton);
+      userDialogRemoveAnnotationButton.click(function(){
+        textHiglighterOnAction = '';
+        removeAnnotationWithFocus();
+      });
       
       //show the dialog and position it
       userDialog.show();

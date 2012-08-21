@@ -5,7 +5,7 @@
 			<?php foreach($challenge['Question'] as $k=>$q){ if(!$q['question']) continue; ?>
 			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a class="no-icon" href="#<?php echo $q['id']; ?>"><?php echo stripslashes($q['section']); ?></a></li>
 			<?php }if($challenge['Challenge']['allow_attachments']){ ?>
-			<li id="questionNavAttach"><a href="#attachments"><?php echo __('Attach File(s)') ?></a></li>
+			<li id="questionNavAttach"><a class="no-icon" href="#attachments"><?php echo __('Attach File(s)') ?></a></li>
 			<?php } ?>
 		</ul>
 	</div>
@@ -62,21 +62,28 @@
 </div>
 
 <div style="display: none;">
-	<div id="modalExitChoices">
-		<div class="box-heading">
-			<span class="icon icon-warning"></span>
-			<h2 class="page-subtitle label-text"><?php echo __('Exit') ?></h2>
+	<div id="modalExitChoices" style="width:460px;height:215px;">
+		<div class="modal-box-head">
+			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><span class="icon5 icon5-close" style="margin:0;height:24px;"></span><?php echo __('Exit') ?></h2>
 		</div>
-		<br />
-		<p class="caseclubFont18 blue textAlignCenter"><?php echo __('Would you like to save before returning to Home?') ?></p>
-		<br /><br /><br />
-		<div class="exitSaveOptions">
-			<a href="#" onclick="if(!$('.niceTextarea:first').val()){ window.location='/dashboard/'; }else{ save_response('/dashboard/'); }" class="btn1 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save Current') ?></span></a>
-			<a href="/dashboard/" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('No, Don\'t Save') ?></span></a>
-			<a href="#" onclick="jQuery.fancybox.close(); return false; "><?php echo __('Cancel') ?></a>
+		<?php
+		$exit_text = __('You have until {due_date_time}, {due_date_day}, {due_date} to make further edits to you assignment. Would you like to save current edits before returning to Home?');
+		$exit_text = str_replace('{due_date_time}','<strong>'.date_format(date_create($challenge['Challenge']['answers_due']),'g:ia').'</strong>',$exit_text);
+		$exit_text = str_replace('{due_date_day}',date_format(date_create($challenge['Challenge']['answers_due']),'l'),$exit_text);
+		$exit_text = str_replace('{due_date}',date_format(date_create($challenge['Challenge']['answers_due']),'F j'),$exit_text);
+		?>
+		<div class="modal-box-content">
+			<div style="text-align:center;margin:20px;"><p class="caseclubFont18 blue textAlignCenter"><?php echo $exit_text; ?></p></div>
+			<br />
+			<div style="width: 345px; margin: 0 auto; ">
+				<a onclick="if(!$('.niceTextarea:first').val()){ window.location='/dashboard/'; }else{ save_response('/dashboard/'); }" style="float:left;width:130px;" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save Current') ?></span></a>
+				<a href="/dashboard/" class="btn3 btn-savecontinue aligncenter" style="float:left;width:130px;"><span class="inner"><?php echo __('No, Don\'t Save') ?></span></a>
+				<a onclick="jQuery.fancybox.close(); return false; " style="display:inline-block;padding-left:10px;padding-top:7px;"><?php echo __('Cancel') ?></a>
+			</div>
 		</div>
 	</div><!-- #modalExitChoices -->
 </div>
+
 
 <script type="text/javascript">
 $(document).ready(function(){

@@ -9,5 +9,11 @@ class CommentsController extends AppController{
 		$this->Comment->save($_REQUEST['comment']);
 		die();
 	}
+	
+	function delete($id){
+		$this->checkAuth();
+		$this->Comment->delete($id);
+		die();
+	}
 }
 ?>

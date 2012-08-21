@@ -214,16 +214,16 @@ function add_attachments(c_id){
 }
 
 function add_response_attachment(){
-	var newA = $('ol.fieldset2 li:first').clone();
+	var newA = $('ol.fieldset2 li:last').clone();
 	$(newA).children('input').each(function(){ $(this).attr('name',$(this).attr('name').replace('attachment[0]','attachment['+($('ol.fieldset2 li').length)+']')); });
-	$(newA).find('input[type=text]').val('');
+	$(newA).find('input[type=text]').val('').after($(newA).find('a').length ? '' : '&nbsp;&nbsp;&nbsp;(<a onclick="$(this).parents(\'li\').remove();return false;">Remove</a>)');
 	$(newA).children('p').children('input').each(function(){ $(this).attr('name',$(this).attr('name').replace('attachment[0]','attachment['+($('ol.fieldset2 li').length)+']')); });
 	$(newA).children('.fieldsetNumberList').html(($('ol.fieldset2 li').length+1)+'.');
 	
 	$('ol.fieldset2').append(newA);
 }
 
-function show_user_list(e,cid,view){
+function show_user_list(e,cid,view,metrics){
 	e = e.parents('tr');
 	var prevOpen = $('tr.opened').length;
 	$('.viewAllRequests').hide();
@@ -236,11 +236,10 @@ function show_user_list(e,cid,view){
 		});
 		
 		$('#home-leaderboard').animate({width:0},function(){ $('#home-leaderboard').hide(); });
-		$('#bridgelist').animate({width:954},function(){ $('.graphIcon').show(); });
+		$('#bridgelist').animate({width:954},function(){ $('.graphIcon').show();$('#bridgetable td,#bridgetable th').fadeIn(); });
 		
 		$('#bridgetable .col1').animate({width:390},'fast');
 		$('#thinListBorder').hide();
-		$('#bridgetable td,#bridgetable th').show();
 	}else{
 		$('.graphIcon').hide();
 		$('.pagination').hide();
@@ -249,7 +248,7 @@ function show_user_list(e,cid,view){
 		$('tr.opened').removeClass('opened').next().slideUp();
 		
 		e.addClass('opened');
-		if(!e.find('.graphIcon').length) e.next().slideDown();
+		if(!e.find('.graphIcon').length && !(view && metrics)) e.next().slideDown();
 		
 		$('#bridgetable .col1').animate({width:465},'fast');
 		$('#thinListBorder').show();
@@ -556,11 +555,10 @@ function invite_collaborator(c_id){
 }
 
 function save_challenge(redirect){
+	if(redirect == 'update_people') $.ajax({url:'/challenges/clear_groups/' + $('#id').val()});
 	$.ajax({url:'/challenges/update/0/' + (redirect != 'ajax' ? redirect : ''),data:$('#challenge_data').serialize(),type:'POST',success:function(r){
 		if(redirect == 'ajax') return true;
 		else if(redirect != 'quiet') $('#edit_content').html(r);
-		
-		if(redirect == 'update_people') $.ajax({url:'/challenges/clear_groups/' + $('#id').val()});
 	}});
 }
 
@@ -585,8 +583,7 @@ function render_update_challenge(view){
 			$("li", $(this).closest("ul.accordion")).removeClass("open"); 
 			$(this).closest("li").addClass("open"); 
 			$(".accordion-content", $(this).closest("li")).slideDown(300); 
-		}); 
-		$("ul.accordion li:first-child .accordion-trigger p").trigger("click"); 
+		});
 	});
 }
 
@@ -617,6 +614,7 @@ function save_groups(c_id){
 		$('.connectedSortable').each(function(){
 			$.ajax({url:'/challenges/save_groups/' + c_id,data:$(this).sortable('serialize')});
 		});
+		jQuery.fancybox.close();
 		render_update_challenge('people');
 	}});
 }
@@ -625,4 +623,8 @@ function delete_queued_invite(u_id,c_id){
 	$.ajax({url:'/challenges/remove_queued_invite/' + u_id + '/' + c_id,success:function(){
 		render_update_challenge('people');
 	}});
+}
+
+function set_stat_session(v){
+	$.ajax({url:'/metrics/set_detail_session/' + v});
 }

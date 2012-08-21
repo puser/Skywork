@@ -163,7 +163,11 @@ class ChallengesController extends AppController{
 			$quality = $activity = array();
 			foreach($challenge['Question'] as $k=>$q){
 				foreach($q['Response'] as $i=>$r){
-					$ratings = $this->Response->find('all',array('fields'=>'Response.response_body','conditions'=>'Response.response_id = '.$r['id']));
+					$conditions = array('Response.response_id'=>$r['id']);
+					if(@$_REQUEST['filter_quality'] == 'I') $conditions['Response.user_id'] = $_SESSION['User']['id'];
+					elseif(@$_REQUEST['filter_quality'] == 'G') $conditions['Response.user_id !='] = $_SESSION['User']['id'];
+					
+					$ratings = $this->Response->find('all',array('fields'=>'Response.response_body','conditions'=>$conditions));
 					foreach($ratings as $rating){
 						@$quality[$bridge_users[$r['user_id']]]['response_total'] += $rating['Response']['response_body'];
 						@$quality[$bridge_users[$r['user_id']]]['response_count']++;
@@ -289,7 +293,18 @@ class ChallengesController extends AppController{
 		if($view=='update_people'||$view=='template_people'){
 			if($view=='update_people') $this->set('queued_users',$this->Status->find('all',array('conditions'=>array(	'Status.challenge_id'	=> $challenge_id,
 																														'Status.status'			=> 'P' ))));
-			$this->set('groups',$this->ClassSet->find('all',array('conditions'=>'ClassSet.owner_id = '.$_SESSION['User']['id'],'order'=>'ClassSet.group_name')));
+
+			$groups = $this->ClassSet->find('all',array('conditions'=>'ClassSet.owner_id = '.$_SESSION['User']['id'],'order'=>'ClassSet.group_name'));
+			$gids = array();
+			foreach($groups as $g) $gids[] = $g['ClassSet']['id'];
+			
+			$usr_data = $this->User->find('first',array('conditions'=>'User.id = '.$_SESSION['User']['id'],'recursive'=>2));
+			foreach($usr_data['ClassSet'] as $c){
+				if(!in_array($c['id'],$gids)){
+					$groups[] = array('ClassSet' => $c,'Owner' => $c['Owner']);
+				}
+			}
+			$this->set('groups',$groups);
 		}
 		if($view=='dashboard') $this->redirect('/dashboard/');
 		if($view=='account') $this->redirect('/challenges/update/0/template_basics/');
@@ -307,7 +322,7 @@ class ChallengesController extends AppController{
 		$students = array();
 		foreach($challenge['ClassSet'] as $c){
 			foreach($c['User'] as $u){
-				if($u['id'] != $c['owner_id']) array_push($students,$u);
+				if($u['id'] != $c['owner_id']) $students[$u['id']] = $u;
 			}
 		}
 		if($group_count) $students = array_chunk($students,$group_count);
@@ -408,7 +423,7 @@ class ChallengesController extends AppController{
 			$message .= "You will have until\n\n".date_format(date_create($challenge['Challenge']['answers_due']),'l, F jS')." to complete a series of questions.\n\n";
 			$message .= date_format(date_create($challenge['Challenge']['responses_due']),'l, F jS')." to respond (Agree/Disagree) to other participants' questions.\n\n";
 			$message .= "Click here to check it out\n\n";
-			$message .= "http://caseclubonline.com/users/accept_invitation/{$challenge_id}/{$user['Status'][0]['class_id']}/{$user_id}/{$user['User']['invite_token']}";
+			$message .= "http://caseclubonline.com/users/accept_invitation/{$challenge_id}/".(@$user['Status'][0]['class_id'] ? $user['Status'][0]['class_id'] : 0)."/{$user_id}/{$user['User']['invite_token']}";
 			$message .= "\n\nSincerely,\n\nCase Club Online Team";
 		}else{
 			$subject = "New Case from {$challenge['User']['firstname']}";

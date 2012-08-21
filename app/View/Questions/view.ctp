@@ -17,7 +17,7 @@
 						<?php echo stripslashes($question['Question']['question']); ?>
 					</span>
 				</p>
-				<textarea class="niceTextarea" name="response_body" rows="10"><?php echo str_replace("\\",'',stripslashes(@$question['Response'][0]['response_body'])); ?></textarea>
+				<textarea class="niceTextarea" name="response_body" rows="10" style="font-family:Helvetica, Arial, sans-serif;font-size: 12px;"><?php echo str_replace("\\",'',stripslashes(@$question['Response'][0]['response_body'])); ?></textarea>
 			</li>
 		</ul>
 	</form>

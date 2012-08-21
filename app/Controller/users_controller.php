@@ -28,7 +28,9 @@ class UsersController extends AppController{
 		
 			$current_groups = $requested_groups = $pending_groups = array();
 			$pending_invites = $this->Status->find('all',array('conditions'=>array('Status.challenge_id IS NULL','Status.status'=>'P','Status.user_id'=>$_SESSION['User']['id'])));
-			foreach($pending_invites as $i) $pending_groups[] = $i['Class']['id'];
+			foreach($pending_invites as $i){
+				if($i['Status']['class_id'])$pending_groups[] = $i['Status']['class_id'];
+			}
 			if($pending_groups){
 				$this->set('invites',$this->ClassSet->find('all',array('conditions'=>'ClassSet.id IN ('.implode(',',$pending_groups).')','recursive'=>2)));
 			}
@@ -71,6 +73,7 @@ class UsersController extends AppController{
 			$_SESSION['User']['firstname'] = $_REQUEST['firstname'];
 			$_SESSION['User']['lastname'] = $_REQUEST['lastname'];
 		}
+		if($_REQUEST['language']) $_SESSION['User']['language'] = $_REQUEST['language'];
 
 		$this->redirect('/users/view/');
 	}

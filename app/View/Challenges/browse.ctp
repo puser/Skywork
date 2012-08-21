@@ -8,8 +8,8 @@
 	</div>
 <?php } ?>
 
-<div id="bridgelist" class="rounded box-white" style="overflow:hidden;margin-left:25px;">
-	<div class="box-head">
+<div id="bridgelist" class="rounded box-white" style="overflow:hidden;margin-left:25px;position:relative;">
+	<div class="box-head" style="width:944px;">
 		<h2><?php echo __('My Portfolio') ?></h2>
 		<div class="filterbox">
 			<select class="cat" onchange="window.location = '/challenges/browse/'+$(this).val();" id="statusFilter">
@@ -42,7 +42,7 @@
 				foreach($challenges as $k=>$challenge){ ?>
 				<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?>>
 					<td>
-						<a href="/challenges/<?php echo ($challenge['Challenge']['status'] == 'D' ? 'update' : 'view') . '/' . $challenge['Challenge']['id'] . ($challenge['Challenge']['status'] == 'D' ? '#view=info' : ''); ?>"<?php if($_SESSION['User']['user_type']=='L' && date_create($challenge['Challenge']['answers_due']) > $now){ ?> onclick="$('#date1_exp_warning').html('<?php echo date_format(date_create($challenge['Challenge']['answers_due']),'m/d/Y'); ?>');$('#date2_exp_warning').html('<?php echo date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y'); ?>');$('#duedate_warning_link').click();return false;"<?php }elseif(@$challenge['Users']){ ?> onclick="show_user_list($(this).parent(),<?php echo $challenge['Challenge']['id']; ?>,<?php echo ($_SESSION['User']['user_type'] == 'L' ? '1' : '0'); ?>);return false;"<?php }elseif(date_create($challenge['Challenge']['answers_due']) < $now){ ?> onclick="alert('None of this challenge\'s other participants have met the response deadline.');return false;"<?php } ?>>
+						<a href="/challenges/<?php echo ($challenge['Challenge']['status'] == 'D' ? 'update' : 'view') . '/' . $challenge['Challenge']['id'] . ($challenge['Challenge']['status'] == 'D' ? '#view=info' : ''); ?>"<?php if($_SESSION['User']['user_type']=='L' && date_create($challenge['Challenge']['answers_due']) > $now && $challenge['Challenge']['status'] != 'D'){ ?> onclick="$('#date1_exp_warning').html('<?php echo date_format(date_create($challenge['Challenge']['answers_due']),'m/d/Y'); ?>');$('#date2_exp_warning').html('<?php echo date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y'); ?>');$('#duedate_warning_link').click();return false;"<?php }elseif(@$challenge['Users']){ ?> onclick="<?php if(date_create($challenge['Challenge']['responses_due']) > $now && $_SESSION['User']['user_type']=='L'){ ?>window.location = '/responses/view/<?php echo $challenge['Challenge']['id']; ?>';<?php }else{ ?>show_user_list($(this).parent(),<?php echo $challenge['Challenge']['id']; ?>,<?php echo ($_SESSION['User']['user_type'] == 'L' ? '1' : '0'); ?>,<?php echo (date_create($challenge['Challenge']['responses_due']) < $now ? '1' : '0'); ?>);<?php } ?>return false;"<?php }elseif(date_create($challenge['Challenge']['answers_due']) < $now){ ?> onclick="alert('None of this challenge\'s other participants have met the response deadline.');return false;"<?php } ?>>
 							<?php echo $challenge['Challenge']['name']; ?>
 						</a>
 					</td>
@@ -117,6 +117,8 @@
 			<div class="clear"></div>
 		</div>
 	</div>
+	
+	<div style="position:absolute;right:0px;top:0px;width:10px;background:#fff;height:95%;margin:12px 0;border-right:1px solid #eee;display:none;" id="thinListBorder"> </div>
 	
 	<div class="clear"></div>
 </div>

@@ -33,6 +33,7 @@
 					<a href="#" class="btn3" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 				</div>
 			<?php }else{ ?>
+				<div style="text-align:center;padding:10px 0 25px;">Drag and drop students into different groups.</div>
 				<div class="table-split" style="width: <?php echo ceil(count($students) * 145); ?>px; margin: 0 auto;">
 					<?php foreach($students as $k=>$group){ ?>
 						<ul class="connectedSortable" id="group_<?php echo $k; ?>" style="min-height:20px;width:130px;float:left;border:1px solid #333;margin-right:10px;">
@@ -41,11 +42,11 @@
 							<?php } ?>
 						</ul>
 					<?php } ?>
-				<br /><br />
+				<br /><br /><br />
 				<div class="clear"></div>
 				<div style="width: 175px; margin: 0 auto; ">
-					<a href="#" class="btn2" style="width:80px;float:left;" onclick="save_groups(<?php echo $challenge['Challenge']['id']; ?>); jQuery.fancybox.close(); return false; ">
-						<span><?php echo __('Add') ?></span>
+					<a href="#" class="btn2" style="width:80px;float:left;" onclick="save_groups(<?php echo $challenge['Challenge']['id']; ?>); return false; ">
+						<span><?php echo __('Save') ?></span>
 					</a>
 					<a href="#" class="btn3" style="width:80px;float:left;" onclick="jQuery.fancybox.close(); return false; ">
 						<span><?php echo __('Cancel') ?></span>
@@ -68,7 +69,12 @@
 <script type="text/javascript">
 $(function() {
 	$(".connectedSortable").sortable({
-		connectWith: ".connectedSortable"
+		connectWith: ".connectedSortable",
+		update: function(e,ui){
+			$('.connectedSortable').each(function(){
+				if(!$(this).find('li').length) $(this).remove();
+			});
+		}
 	}).disableSelection();
 
 	$(".custom-select .custom-select-value").click(function() {

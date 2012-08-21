@@ -30,7 +30,7 @@
 				<div class="col2">
 					<p class="label"><?php echo __('Due Date 2') ?> <a href="#" class="tooltip-mark-question" title="<?php echo __('Time for feedback and collaboration') ?>"></a></p>
 					<div class="date-input">
-						<input type="text" value="<?php echo (@$challenge['Challenge']['responses_due']?substr($challenge['Challenge']['responses_due'],0,10):date('Y-m-d')); ?>" name="challenge[Challenge][responses_due]" id="responses_due" />
+						<input type="text" value="<?php echo (@$challenge['Challenge']['responses_due']?substr($challenge['Challenge']['responses_due'],0,10):date_format(date_add(date_create(),new DateInterval('P1D')),'Y-m-d')); ?>" name="challenge[Challenge][responses_due]" id="responses_due" />
 						<a onclick="$('#responses_due').datepicker('show');return false;" class="datepicker"></a>
 					</div>
 					<p class="label" style="clear:both;margin-top:10px;"><?php echo __('Due Date 2 Time Deadline:') ?></p>
@@ -126,7 +126,11 @@
 <input type="hidden" name="next_step" value="people" />
 
 <script type="text/javascript">
-$('#answers_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date()});
+$('#answers_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date(),onSelect:function(){
+	d = $('#answers_due').datepicker('getDate');
+	d.setDate(d.getDate()+1);
+	$('#responses_due').datepicker('setDate',d);
+}});
 $('#responses_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date()});
 
 if($('#response_types').val() == 'E') $('#compose_questions').remove();

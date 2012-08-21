@@ -38,8 +38,9 @@
 					</li>
 					<li>
 						<label><?php echo __('Language') ?></label> 
-						<select style="width: 120px;">
-							<option value="English" selected="selected"><?php echo __('English') ?></option>
+						<select name="language" style="width: 120px;">
+							<option value="eng"<?php if($user['User']['language']=='eng'){ ?> selected="selected"<?php } ?>><?php echo __('English') ?></option>
+							<option value="spa"<?php if($user['User']['language']=='spa'){ ?> selected="selected"<?php } ?>><?php echo __('Spanish') ?></option>
 						</select>
 					</li>
 				</ul>
@@ -49,14 +50,15 @@
 					<li><label><?php echo __('Type Password') ?></label> <input type="password" size="60" name="new_pass1" /></li>
 					<li><label><?php echo __('Re-type Password') ?></label> <input type="password" size="60" name="new_pass2" /></li>
 				</ul>
-				<br /><br /><br />
+				
 				<!--
 					<p style="font-size: 12px; color: #777777; margin-bottom: 20px; "><?php echo __('Allow other Professors to search for my classes') ?> <input type="checkbox" id="show-animations-yes" name="search_visible" value="1" <?php if($user['User']['search_visible']) echo 'checked="checked"'; ?> /></p>
 				-->
-
+<!--
+				<br /><br /><br />
 				<p><?php echo __('Terminate my Account') ?></p>
 				<a href="#terminateAccount" onclick="$('.terminateInputField').val('');" class="btn3" style="width: 120px;"><span><?php echo __('Terminate') ?></span></a>
-
+-->
 				<input type="hidden" name="notify_groups" value="<?php echo $user['User']['notify_groups']; ?>" />
 				<input type="hidden" name="notify_challenges" value="<?php echo $user['User']['notify_challenges']; ?>" />
 				<input type="hidden" name="notify_expiration" value="<?php echo $user['User']['notify_expiration']; ?>" />

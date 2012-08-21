@@ -1,6 +1,6 @@
 <div id="home-studentwork" class="rounded box-white width50 alignright" style="overflow:hidden;">
 	
-	<div class="box-head ">
+	<div class="box-head" style="padding-bottom:4px;">
 		<span class="icon5 icon5-star"></span>
 		<h2 class="page-subtitle"><?php echo __('Student Work') ?></h2>
 		<span class="due-date"><?php echo __('Due Date 2:') ?> <?php echo date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y'); ?></span>
@@ -17,10 +17,11 @@
 				<thead>
 					<tr>
 						<th class="col1"><span class="blue"><?php echo __('Students with highest quality work') ?></span></th>
-						<th class="col2" width="30%"><select>
+						<th class="col2" width="30%">
+							<select onchange="selection = $(this).val();$('#home-leaderboard .box-content').fadeOut('normal',function(){ $('#home-leaderboard').load('/challenges/view/<?php echo $challenge['Challenge']['id']; ?>/stats?filter_quality='+selection,function(){ $('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});$('#home-studentwork').width(470); }); });">
 								<option value=""><?php echo __('According to You and Groups') ?></option>
-								<option value=""><?php echo __('According to You') ?></option>
-								<option value=""><?php echo __('According to Groups') ?></option>
+								<option value="I"<?php if(@$_REQUEST['filter_quality'] == 'I') echo ' selected="selected"'; ?>><?php echo __('According to You') ?></option>
+								<option value="G"<?php if(@$_REQUEST['filter_quality'] == 'G') echo ' selected="selected"'; ?>><?php echo __('According to Groups') ?></option>
 							</select>
 						</th>
 					</tr>
@@ -30,6 +31,7 @@
 					$idx = 0;
 					foreach($quality as $k=>$q){
 						$idx++;
+						if($idx > 6) break;
 						?>
 						<tr<?php if($idx % 2){ ?> class="alternate"<?php } ?>>
 							<td class="col1"><?php echo $idx; ?>. <?php echo $k; ?></td>
@@ -63,6 +65,7 @@
 				$idx = 0;
 				foreach($activity as $k=>$a){
 					$idx++;
+					if($idx > 6) break;
 					?>
 					<tr<?php if($idx % 2){ ?> class="alternate"<?php } ?>>
 						<td class="col1"><?php echo $idx; ?>. <?php echo $k; ?></td>

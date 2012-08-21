@@ -1,3 +1,6 @@
+<?php if(@$_SESSION['User']['id']){ ?>
+<script type="text/javascript"> window.location = '/dashboard/'; </script>
+<?php }else{ ?>
 <div id="body-wrap">
 	<div id="homeSlider" class="form-fields-wrap round round-white">
 		<div class="head"><span class="tl"></span><span class="tr"></span></div>
@@ -150,3 +153,4 @@ $('#overlayLoginForm input').keydown(function (e){
 	}
 });
 </script>
+<?php } ?>

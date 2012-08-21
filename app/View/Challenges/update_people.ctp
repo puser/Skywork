@@ -23,6 +23,13 @@
 						<?php
 						$group_set = $challenge['ClassSet'] ? $challenge['ClassSet'] : $template['ClassSet'];
 						foreach($group_set as $k=>$g){
+							if($g['id'] == @$_REQUEST['lastClassAdded']){
+								unset($group_set[$k]);
+								$group_set[] = $g;
+							}
+						}
+						$k = 0;
+						foreach($group_set as $g){
 							$ex_groups[] = $g['id'];
 							?>
 						<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> id="challengeGroup<?php echo $g['id']; ?>">
@@ -37,18 +44,19 @@
 								</div>
 							</td>
 						</tr>
-						<?php } ?>
+						<?php $k++; } ?>
 					</tbody>
 				</table><br />
 				<?php } ?>
 				
-				<select style="width:150px;" name="challenge[ClassSet][]" onchange="save_challenge('update_people');">
+				<input type="hidden" name="lastClassAdded" id="lastClassAdded" value="" />
+				<select style="width:150px;" name="challenge[ClassSet][]" onchange="$('#lastClassAdded').val($(this).val());save_challenge('update_people');">
 					<option value=""> -- </option>
 					<?php
 					foreach($groups as $group){
 						if(in_array($group['ClassSet']['id'],$ex_groups)) continue;
 						?>
-					<option value="<?php echo $group['ClassSet']['id']; ?>"><?php echo $group['ClassSet']['group_name']; ?></option>
+					<option value="<?php echo $group['ClassSet']['id']; ?>"><?php echo $group['ClassSet']['group_name'].($group['ClassSet']['owner_id'] != $_SESSION['User']['id'] ? ' ('.$group['Owner']['firstname'].' '.$group['Owner']['lastname'].')' : ''); ?></option>
 					<?php } ?>
 				</select>
 				
