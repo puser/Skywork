@@ -101,6 +101,8 @@ $("textarea.niceTextarea").keyup(function(){
 function expandtext(textArea){
 //	console.log("hehe");
 //	console.log(textArea.scrollHeight, textArea.offsetHeight);
+	curScroll = $(window).scrollTop();
+	
 	while (
 		textArea.rows > 1 &&
 		textArea.offsetHeight > $textAreaOrigHeight
@@ -114,4 +116,5 @@ function expandtext(textArea){
 		h = textArea.offsetHeight;
 		textArea.rows++;
 	}
+	$(window).scrollTop(curScroll);
 }

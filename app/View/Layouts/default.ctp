@@ -96,21 +96,20 @@
 	<div id="modals">
 		
 		<div style="display: none;">
-			<div id="logoutModal">
-				<div class="box-heading">
-					<span class="icon icon-key"></span>
-					<h2 class="page-subtitle label-text"><?php echo __('Logout') ?></h2>
-
+			<div id="logoutModal" style="width:440px;height:190px;">
+				<div class="modal-box-head" style="margin-bottom:30px;">
+					<h2 class="page-subtitle label-text" style="margin-bottom:0px;line-height:24px;color:#c95248;"><span class="icon5 icon5-key" style="margin:0;height:24px;width:50px;"></span><?php echo __('Logout') ?></h2>
 				</div>
-				<br />
-				<p class="caseclubFont18 blue textAlignCenter"><?php echo __('Are you sure you want to logout?') ?></p>
-				<br /><br /><br />
-				<div class="exitSaveOptions">
-					<a href="/users/logout/" class="btn1 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Logout') ?></span></a>
-					<a href="#" onclick="jQuery.fancybox.close(); return false; " class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Cancel') ?></span></a>
+
+				<div class="modal-box-content">
+					<div style="text-align:center;margin:20px;"><p class="caseclubFont18 blue textAlignCenter"><?php echo __('Are you sure you want to logout?') ?></p></div>
+					<br />
+					<div style="width: 335px; margin: 0 auto; ">
+						<a href="/users/logout/" style="float:left;width:130px;margin-right:57px;" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Logout') ?></span></a>
+						<a onclick="jQuery.fancybox.close();return false;" class="btn3 btn-savecontinue aligncenter" style="float:left;width:130px;"><span class="inner"><?php echo __('Cancel') ?></span></a>
+					</div>
 				</div>
 			</div><!-- #logoutModal -->
-
 		</div>
 
 	</div><!-- #modals -->

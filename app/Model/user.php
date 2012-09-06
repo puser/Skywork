@@ -29,12 +29,18 @@ class User extends AppModel{
 																						'joinTable'	=> 'users_classes',
 																						'foreignKey'=> 'user_id',
 																						'associationForeignKey' => 'class_id',
-																						'unique'	=> true ),
+																						'unique'		=> true ),
 																		'Group' =>
 																		array(	'className'	=> 'Group',
 																						'joinTable'	=> 'users_groups',
 																						'foreignKey'=> 'user_id',
 																						'associationForeignKey' => 'group_id',
-																						'unique'		=> false ));
+																						'unique'		=> false ),
+																		'Bridges' =>
+																		array(	'className'	=> 'Challenge',
+																						'joinTable'	=> 'challenges_collaborators',
+																						'foreignKey'=> 'user_id',
+																						'associationForeignKey' => 'challenge_id',
+																						'unique'		=> true ));
 }
 ?>

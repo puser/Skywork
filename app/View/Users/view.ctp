@@ -68,7 +68,7 @@
 	</div>
 	<div class="clear"></div>
 	
-	<a href="#" class="btn2 btn-savecontinue aligncenter" onclick="save_user();return false;"><span class="inner"><?php echo __('Save') ?></span></a>
+	<a href="#" class="btn2 btn-savecontinue aligncenter" onclick="save_user();return false;"><span style="width:64px;" class="inner"><?php echo __('Save') ?></span></a>
 	<span id="savedNotify" style="display:none;">
 		<p style="display:block;text-align:center;color:#ff0000;"><?php echo __('Saved!') ?></p>
 	</span>

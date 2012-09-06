@@ -26,7 +26,7 @@
 		<table id="bridgetable" style="width:954px;">
 			<thead>
 				<tr>
-					<th class="col1"><a href="/dashboard/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Case Name') ?></a></th>
+					<th class="col1"><a href="/dashboard/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Bridge Name') ?></a></th>
 					<th class="col2"><a href="/dashboard/?sort=answer_date&dir=<?php echo (@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort sort<?php echo (@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Due Date 1') ?> <span class="tooltip" title="<?php echo __('Students answer questions or write essay') ?>"></span></span></th>
 					<th class="col3"><a href="/dashboard/?sort=response_date&dir=<?php echo (@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort sort<?php echo (@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Due Date 2') ?> <span class="tooltip" title="<?php echo __('Time for feedback and collaboration') ?>"></span></a></span></th>
 					<th class="col4"><a href="/dashboard/?sort=edit_date&dir=<?php echo (@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort sort<?php echo (@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Last Edit') ?></a></th>
@@ -38,20 +38,40 @@
 			<tbody>
 				<?php
 				$now = date_create();
-				$now->setTime(0,0);
-				foreach($challenges as $k=>$challenge){ ?>
+				foreach($challenges as $k=>$challenge){
+					$a_date = date_create($challenge['Challenge']['answers_due']);
+					$r_date = date_create($challenge['Challenge']['responses_due']);
+					
+					if($_SESSION['User']['user_type'] == 'L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){
+						$challenge_click = "$('#challenge_accept_link').attr('href','/challenges/instructor_confirm/".$challenge['Challenge']['id']."');$('#challenge_accept_link').click();return false;";
+					}elseif(($_SESSION['User']['user_type']=='L' || @$challenge['collaborator']) && $a_date > $now && $challenge['Challenge']['status'] != 'D'){
+						$challenge_click = "$('#date1_exp_warning').html('" . date_format($a_date,'m/d/Y') . "');$('#date2_exp_warning').html('" . date_format($r_date,'m/d/Y') . "');";
+						$challenge_click .= "$('#duedate_warning_link').click();return false;";
+					}elseif(@$challenge['Users']){
+						if($r_date > $now && $_SESSION['User']['user_type']=='L'){
+							$challenge_click = "window.location = '/responses/view/{$challenge['Challenge']['id']}';";
+						}else{
+							$challenge_click = "show_user_list($(this).parent(),{$challenge['Challenge']['id']}," . ($_SESSION['User']['user_type'] == 'L' ? '1' : '0') . "," . ($r_date < $now ? '1' : '0') . ");";
+						}
+						$challenge_click .= "return false;";
+					}elseif($a_date < $now){
+						$challenge_click = "alert('None of this challenge\'s other participants have met the response deadline.');return false;";
+					}else $challenge_click = '';
+					?>
 				<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?>>
 					<td>
-						<a href="/challenges/<?php echo ($challenge['Challenge']['status'] == 'D' ? 'update' : 'view') . '/' . $challenge['Challenge']['id'] . ($challenge['Challenge']['status'] == 'D' ? '#view=info' : ''); ?>"<?php if($_SESSION['User']['user_type']=='L' && date_create($challenge['Challenge']['answers_due']) > $now && $challenge['Challenge']['status'] != 'D'){ ?> onclick="$('#date1_exp_warning').html('<?php echo date_format(date_create($challenge['Challenge']['answers_due']),'m/d/Y'); ?>');$('#date2_exp_warning').html('<?php echo date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y'); ?>');$('#duedate_warning_link').click();return false;"<?php }elseif(@$challenge['Users']){ ?> onclick="<?php if(date_create($challenge['Challenge']['responses_due']) > $now && $_SESSION['User']['user_type']=='L'){ ?>window.location = '/responses/view/<?php echo $challenge['Challenge']['id']; ?>';<?php }else{ ?>show_user_list($(this).parent(),<?php echo $challenge['Challenge']['id']; ?>,<?php echo ($_SESSION['User']['user_type'] == 'L' ? '1' : '0'); ?>,<?php echo (date_create($challenge['Challenge']['responses_due']) < $now ? '1' : '0'); ?>);<?php } ?>return false;"<?php }elseif(date_create($challenge['Challenge']['answers_due']) < $now){ ?> onclick="alert('None of this challenge\'s other participants have met the response deadline.');return false;"<?php } ?>>
+						<a href="/challenges/<?php echo ($challenge['Challenge']['status'] == 'D' ? 'update' : 'view') . '/' . $challenge['Challenge']['id'] . ($challenge['Challenge']['status'] == 'D' ? '#view=info' : ''); ?>" onclick="<?php echo $challenge_click; ?>">
 							<?php echo $challenge['Challenge']['name']; ?>
 						</a>
 					</td>
-					<td><?php echo date_format(date_create($challenge['Challenge']['answers_due']),'m/d/Y'); ?></td>
-					<td><?php echo date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y'); ?></td>
+					<td><?php echo date_format($a_date,'m/d/Y'); ?></td>
+					<td><?php echo date_format($r_date,'m/d/Y'); ?></td>
 					<td><?php echo date_format(date_create($challenge['Challenge']['date_modified']),'m/d/Y'); ?></td>
 					<td><?php echo @$challenge['User']['firstname'].' '.@$challenge['User']['lastname']; ?></td>
 					<td>
-						<?php if(date_create($challenge['Challenge']['answers_due']) >= $now){ ?>
+						<?php if($_SESSION['User']['user_type']=='L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){ ?>
+							<?php echo __($challenge['Status'][0]['status'] == 'P' ? 'Accept?' : ($challenge['Status'][0]['status'] == 'C' ? 'Accepted' : 'Rejected')) ?>
+						<?php }elseif(date_create($challenge['Challenge']['answers_due']) >= $now){ ?>
 							<?php if($challenge['Challenge']['status'] == 'D'){ ?><?php echo __('Building') ?>
 							<?php }elseif(@$challenge['Status'][0]['status']=='D'){ ?><?php echo __('In Use') ?>
 							<?php }elseif(!@$challenge['Status'] || @$challenge['Status'][0]['status']=='N'){ ?><?php echo __('New') ?><?php } ?>
@@ -60,8 +80,8 @@
 					<td>
 						<?php if($_SESSION['User']['id'] == $challenge['Challenge']['user_id']){ ?>
 							<div class="remove-class" style="height:10px;">
-								<a href="/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/" class="remove-class-icon"></a>
-								<a href="/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/" class="remove-class-link icon-close rounded2"><?php echo __('Delete') ?></a>
+								<a href="#modalDeleteChoices" class="show-overlay remove-class-icon" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');"></a>
+								<a href="#modalDeleteChoices" class="show-overlay remove-class-link icon-close rounded2" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');"><?php echo __('Delete') ?></a>
 							</div>
 						<?php } ?>
 					</td>
@@ -128,6 +148,7 @@
 
 <div style="display:none;">
 	<a href="#modal-duedate-warning" class="show-overlay" id="duedate_warning_link"> </a>
+	<a href="" class="show-overlay" id="challenge_accept_link"> </a>
 	<div id="modal-duedate-warning" class="modal-wrapper" style="width: 600px;" >
 		<div class="modal-box-head">
 			<h2><?php echo __('Due Date 1') ?></h2>
@@ -150,4 +171,20 @@
 			</div>
 		</div>
 	</div>
+	
+	<div id="modalDeleteChoices" style="width:460px;height:190px;">
+		<div class="modal-box-head">
+			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><span class="icon5 icon5-close" style="margin:0;height:24px;"></span><?php echo __('Delete') ?></h2>
+		</div>
+		
+		<div class="modal-box-content">
+			<div style="text-align:center;margin:20px;"><?php echo __('Are you sure you want to delete this Bridge?') ?></div>	
+			<br />
+			<div style="width: 200px; margin: 0 auto; ">
+				<a href="#" class="btn2" style="width: 95px; float: left;" id="deleteBridgeLink"><span><?php echo __('Yes, Delete') ?></span></a>
+				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div><!-- #modalExitChoices -->
 </div>

@@ -1,3 +1,14 @@
+<style type="text/css">
+#fancybox-close {
+	position:absolute;display:block;width:29px;height:29px;background:url(/images/exit_lg.png) top left no-repeat;top:-15px;right:-20px;
+}
+.signupError {
+  position: absolute;
+  padding-top: 5px;
+  color: #ff0000;
+}
+</style>
+
 <?php if(@$_SESSION['User']['id']){ ?>
 <script type="text/javascript"> window.location = '/dashboard/'; </script>
 <?php }else{ ?>
@@ -15,6 +26,10 @@
 		</div>
 		<div class="foot"><div class="fl"></div><div class="fr"></div></div>
 	</div><!-- #answerQuestionsFormThemes-->
+	
+	<a href="#joinModal" style="text-align:center;display: block;" class="show-overlay" onclick="$('#fancybox-close').show();" id="joinBtn">
+		<span style="margin-top:35px;width:235px;height:56px;background:url(/images/join-btn.png) no-repeat;display:inline-block;"></span>
+	</a>
 </div>
 
 <?php if(@$user){ ?>
@@ -23,7 +38,124 @@
 </style>
 <a href="#addNewUserModal" visible="false" id="inviteTrigger" class="add-link show-overlay"></a>
 <a href="#resetPasswordModal" visible="false" id="resetTrigger" class="add-link show-overlay"></a>
+<?php } ?>
 <div style="display:none;">
+	
+	<div id="joinModal" style="height:345px;overflow:hidden">
+		<div class="box-heading joinTabs">
+
+			<div class="caseclub-tabs">
+				<ul >
+					<li class="caseclub-tab tab-instructor<?php if(!@$_REQUEST['signup_error'] || @$_REQUEST['signup_type'] == 'L') echo ' active'; ?>">
+						<a href="#" onclick="join_show_instructor();return false;"><?php echo __('I\'m an Instructor') ?></a>
+					</li>
+					<li class="caseclub-tab tab-student<?php if(@$_REQUEST['signup_error'] == 'token') echo ' active'; ?>">
+						<a href="#" onclick="join_show_student();return false;"><?php echo __('I\'m a Student') ?></a>
+					</li>
+					<li class="caseclub-tab tab-collaborator<?php if(@$_REQUEST['signup_type'] == 'C') echo ' active'; ?>">
+						<a href="#" onclick="join_show_collaborator();return false;"><?php echo __('I\'m a Collaborator') ?></a>
+					</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			
+			<div class="clear"></div>
+		</div><br />
+		
+		<form id="instructorJoinData" action="/users/login/" method="POST">
+			<input type="hidden" name="user_type" value="L" />
+			<ul class="fieldset2 joinForms">
+				<li>
+					<label><?php echo __('Beta-Test Key') ?></label>
+					<input type="text" name="betakey" />
+				</li>
+				<li>
+					<label><?php echo __('Preferred Email') ?><span class="small">(Username)</span></label>
+					<input type="text" name="login" />
+				</li>
+				<li>
+					<label style="color:#8bc53f;"><?php echo __('Choose a Password') ?></label>
+					<input type="password" name="password" />
+				</li>
+				<li >
+					<label style="color:#8bc53f;"><?php echo __('Confirm Password') ?></label>
+					<input type="password" name="password_confirm" />
+				</li>
+			</ul>
+			<?php if(@$_REQUEST['signup_error'] == 'fields' && @$_REQUEST['signup_type'] == 'L'){ ?>
+				<div class="signupError">Please enter a valid email address and password.</div>
+			<?php }elseif(@$_REQUEST['signup_error'] == 'key' && @$_REQUEST['signup_type'] == 'L'){ ?>
+					<div class="signupError">The beta key you provided is invalid.</div>
+			<?php } ?>
+			<div class="modalActionButtons">
+				<a href="#" onclick="$('#instructorJoinData').submit();return false;" class="btn2 modalActionButton modalActionButtonSave"><span class="inner"><?php echo __('Log In') ?></span></a>
+			</div>
+		</form>
+		
+		<form id="studentJoinData" action="/users/login/" method="POST" style="display:none;">
+			<input type="hidden" name="user_type" value="P" />
+			<ul class="fieldset2 joinForms">
+				<li>
+					<label><?php echo __('Class Token') ?></label>
+					<input type="text" name="classtoken" />
+				</li>
+				<li>
+					<label><?php echo __('Instructor\'s Email') ?></label>
+					<input type="text" name="instructor_email" />
+				</li>
+				<li>
+					<label><?php echo __('Preferred Email') ?><span class="small">(Username)</span></label>
+					<input type="text" name="login" />
+				</li>
+				<li>
+					<label style="color:#8bc53f;"><?php echo __('Choose a Password') ?></label>
+					<input type="password" name="password" />
+				</li>
+				<li >
+					<label style="color:#8bc53f;"><?php echo __('Confirm Password') ?></label>
+					<input type="password" name="password_confirm" />
+				</li>
+			</ul>
+			<?php if(@$_REQUEST['signup_error'] == 'token'){ ?>
+				<div class="signupError">The class token you entered is invalid. Please enter a different token.</div>
+			<?php } ?>
+			<div class="modalActionButtons">
+				<a href="#" onclick="$('#studentJoinData').submit();return false;" class="btn2 modalActionButton modalActionButtonSave"><span class="inner"><?php echo __('Log In') ?></span></a>
+			</div>
+		</form>
+		
+		<form id="collaboratorJoinData" action="/users/login/" method="POST" style="display:none;">
+			<input type="hidden" name="user_type" value="C" />
+			<ul class="fieldset2 joinForms">
+				<li>
+					<label><?php echo __('Beta-Test Key') ?></label>
+					<input type="text" name="betakey" />
+				</li>
+				<li>
+					<label><?php echo __('Preferred Email') ?><span class="small">(Username)</span></label>
+					<input type="text" name="login" />
+				</li>
+				<li>
+					<label style="color:#8bc53f;"><?php echo __('Choose a Password') ?></label>
+					<input type="password" name="password" />
+				</li>
+				<li >
+					<label style="color:#8bc53f;"><?php echo __('Confirm Password') ?></label>
+					<input type="password" name="password_confirm" />
+				</li>
+			</ul>
+			<?php if(@$_REQUEST['signup_error'] == 'fields' && @$_REQUEST['signup_type'] == 'C'){ ?>
+				<div class="signupError">Please enter a valid email address and password.</div>
+			<?php }elseif(@$_REQUEST['signup_error'] == 'key' && @$_REQUEST['signup_type'] == 'C'){ ?>
+					<div class="signupError">The beta key you provided is invalid.</div>
+			<?php } ?>
+			<div class="modalActionButtons">
+				<a href="#" onclick="$('#collaboratorJoinData').submit();return false;" class="btn2 modalActionButton modalActionButtonSave"><span class="inner"><?php echo __('Log In') ?></span></a>
+			</div>
+		</form>
+	</div>
+
+	<?php if(@$user){ ?>	
 	<div id="addNewUserModal" style="height:245px;overflow:hidden">
 		<div class="box-heading">
 
@@ -108,7 +240,11 @@
 			</div>
 		</form>
 	</div>
+	<?php } ?>
 </div>
+<?php if(@$_REQUEST['signup_error']){ ?>
+<script type="text/javascript">$(function(){ setTimeout(function(){ $('#joinBtn').click(); },225); });</script>
+<?php }elseif(@$user){ ?>
 <script type="text/javascript">
 <?php if(!@$reset_password){ ?>
 $(function(){ $('#inviteTrigger').click(); });

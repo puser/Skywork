@@ -5,9 +5,9 @@
 	<li>
 		<label><?php echo __('Class(es)') ?></label>
 		<div class="classes-options">
-			<ul>
+			<ul id="joinAGroup">
 				<?php foreach($user['ClassSet'] as $c){ ?>
-					<li><input type="checkbox" /> <?php echo $c['group_name']; ?></li>
+					<li><input type="checkbox" name="groups[]" value="<?php echo $c['id']; ?>" /> <?php echo $c['group_name']; ?></li>
 				<?php } ?>
 			</ul>
 		</div>

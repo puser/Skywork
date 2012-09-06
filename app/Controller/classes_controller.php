@@ -30,7 +30,9 @@ class ClassesController extends AppController{
 	function view_members($class_id,$view='view_students'){
 		$this->checkAuth();
 		
-		$this->ClassSet->hasAndBelongsToMany['User']['conditions'] = 'User.search_visible = 1 && User.user_type = "' . ($view == 'view_students' ? 'P' : 'L') . '"';
+		// * TODO * : ensure that the search_visible logic is implemented correctly 
+		// $this->ClassSet->hasAndBelongsToMany['User']['conditions'] = 'User.search_visible = 1 && (User.user_type = "' . ($view == 'view_students' ? 'P" || "C' : 'L') . '")';
+		$this->ClassSet->hasAndBelongsToMany['User']['conditions'] = '(User.user_type = "' . ($view == 'view_students' ? 'P" || "C' : 'L') . '")';
 		$this->set('class',$this->ClassSet->findById($class_id));
 		$this->render($view,'ajax');
 	}
@@ -76,16 +78,16 @@ class ClassesController extends AppController{
 			
 			if($group['Owner']['notify_groups']){
 				// notify group leader
-				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your group, {$group['ClassSet']['group_name']}, on Case Club Online.";
-				$message .= "\n\n<a href='http://caseclubonline.com/users/view/groups/'>Click here to view!</a>";
-				$message .= "\n\nSincerely,\n\nCase Club Online Team";
+				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your class {$group['ClassSet']['group_name']}, on Puentes Online - the world’s first feedback learning system.";
+				$message .= "\n\n<a href='http://puentesonline.com/users/view/groups/'>Click here to Accept or Decline</a>";
+				$message .= "\n\nSincerely,\n\nThe Puentes Team";
 		
 				$headers  = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-				$headers .= 'From: noreply@caseclubonline.com' . "\r\n";
+				$headers .= 'From: noreply@puentesonline.com' . "\r\n";
 		
 				// send invite email
-				mail("{$group['Owner']['firstname']} {$group['Owner']['lastname']} <{$group['Owner']['email']}>","{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']} requested to join",nl2br($message),$headers);
+				mail("{$group['Owner']['firstname']} {$group['Owner']['lastname']} <{$group['Owner']['email']}>","{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']} requested to join your class",nl2br($message),$headers);
 			}
 		}
 		die();
@@ -94,8 +96,8 @@ class ClassesController extends AppController{
 	function view_request($group_id){
 		$this->checkAuth();
 		$this->layout = 'ajax';
-		
-		$this->set('status',$this->Status->find('all',array('conditions'=>array('Status.group_id'=>$group_id,'Status.status'=>'R'))));
+				
+		$this->set('status',$this->Status->find('all',array('conditions'=>array('Status.class_id'=>$group_id,'Status.status'=>'R'))));
 	}
 	
 	function process_requests($group_id,$action){

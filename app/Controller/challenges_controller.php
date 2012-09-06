@@ -14,6 +14,10 @@ class ChallengesController extends AppController{
 		
 		if($status == 'd') $this->Challenge->hasMany['Status']['conditions'][] = 'Status.status = "D"';
 		elseif($status == 'c') $conditions[] = 'Challenge.status = "C" && Challenge.responses_due < CURDATE()';
+		if($_SESSION['User']['user_type'] != 'L'){
+			$conditions[] = 'Challenge.answers_due > "'. $_SESSION['User']['date_created'] . '"';
+			$conditions[] = 'Challenge.status != "D"';
+		}
 		
 		if(@$_REQUEST['sort']=='name') $sort = 'Challenge.name';
 		elseif(@$_REQUEST['sort']=='answer_date') $sort = 'Challenge.answers_due';
@@ -25,7 +29,7 @@ class ChallengesController extends AppController{
 		if(@$_REQUEST['dir']=='a' || !@$_REQUEST['sort']) $sort .= ' DESC';
 		else $sort .= ' ASC';
 		
-		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('User','Question','Status','ClassSet'=>array('User'),'Group'=>array('User'))));
+		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('Collaborator','User','Question','Status','ClassSet'=>array('User'),'Group'=>array('User'))));
 
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
@@ -41,6 +45,14 @@ class ChallengesController extends AppController{
 					break;
 				}
 			}
+			foreach($c['Collaborator'] as $u){
+				if($u['id'] == $_SESSION['User']['id'] && $c['Challenge']['status'] != 'D'){
+					$vis = true;
+					$challenges[$k]['collaborator'] = true;
+					break;
+				}
+			}
+			
 			if(!$vis && $c['User']['id'] != $_SESSION['User']['id']){
 				$challenges[$k] = NULL;
 				continue;
@@ -139,10 +151,12 @@ class ChallengesController extends AppController{
 					foreach($challenge['Question'] as $q){
 						//$this->Response->hasMany['Responses']['conditions'][] = 'Responses.response_type = "A"';
 						//$this->Response->hasMany['Responses']['conditions'][] = "Responses.user_id = {$u['id']}";
-						$res = $this->Response->find('first',array('conditions'=>array('Question.id'=>$q['id'],'User.id'=>$u['id'])));
+						$res = $this->Response->find('first',array('conditions'=>array('Question.id'=>$q['id'],'User.id'=>$u['id']),'recursive'=>2));
 						
 						if(@$res['Comment']){
-							foreach($res['Comment'] as $c) @$user_buffer["{$u['firstname']} {$u['lastname']}"][$c['type']]++;
+							foreach($res['Comment'] as $c){
+								if(@$c['User']['user_type'] != 'L') @$user_buffer["{$u['firstname']} {$u['lastname']}"][$c['type']]++;
+							}
 						}
 					}
 				}
@@ -255,24 +269,28 @@ class ChallengesController extends AppController{
 			
 			// send invitation emails & perform redirect
 			if(@$_REQUEST['challenge']['Challenge']['status'] == 'C'){
-				// send pending invites & alter status records for individual users
-				$invited = $this->Status->find('all',array('conditions'=>array('Status.challenge_id'=>$challenge_id,'Status.status'=>'P')));
-				$sent_users = array($challenge_record['Challenge']['user_id'] => 1);
-				foreach($invited as $i){
-					if(@$sent_users[$i['User']['id']]) continue;
-					else $sent_users[$i['User']['id']] = 1;
+				// do we need approval from other instructors?
+				$instructors = array();
+				foreach($challenge_record['ClassSet'] as $c) $instructors[$c['owner_id']] = is_array(@$instructors[$c['owner_id']]) ? array_merge($instructors[$c['owner_id']],array($c['id'])) : array($c['id']);
+				if(count($instructors) > 1){
+					$this->Challenge->id = $challenge_record['Challenge']['id'];
+					$this->Challenge->saveField('status','D');
 					
-					if($i['User']['notify_challenges']) $this->send_invite($i['User']['id'],$challenge_id,NULL);
-					$this->Status->id = $i['Status']['id'];
-					$this->Status->saveField('status','N');
-				}
-				foreach($challenge_record['ClassSet'] as $g){
-					foreach($g['User'] as $u){
-						if(@$sent_users[$u['id']]) continue;
-						else $sent_users[$u['id']] = 1;
-						
-						if($u['notify_challenges']) $this->send_invite($u['id'],$challenge_id,$g['id'],true);
+					foreach($instructors as $i=>$c){
+						if($i != $_SESSION['User']['id']) $this->send_instructor_invite($i,$challenge_record['Challenge']['id'],$c);
 					}
+					
+					$this->Status->id = null;
+					// create 'accepted' status for owner
+					$status = array('Status' =>
+													array(	'user_id'			=> $_SESSION['User']['id'],
+																	'challenge_id'=> $challenge_record['Challenge']['id'],
+																	'status'			=> 'C' ));
+					$this->Status->save($status);
+					
+				}else{
+					// send pending invites & alter status records for individual users
+					$this->launch_bridge($challenge_record);
 				}
 				if(!$view) $this->redirect('/challenges/view/'.$this->Challenge->id);
 				elseif($view=='ajax') die($this->Challenge->id);
@@ -292,7 +310,8 @@ class ChallengesController extends AppController{
 		}
 		if($view=='update_people'||$view=='template_people'){
 			if($view=='update_people') $this->set('queued_users',$this->Status->find('all',array('conditions'=>array(	'Status.challenge_id'	=> $challenge_id,
-																														'Status.status'			=> 'P' ))));
+																																																								'Status.status'				=> 'P',
+																																																								'Status.class_id IS NULL' ))));
 
 			$groups = $this->ClassSet->find('all',array('conditions'=>'ClassSet.owner_id = '.$_SESSION['User']['id'],'order'=>'ClassSet.group_name'));
 			$gids = array();
@@ -315,6 +334,27 @@ class ChallengesController extends AppController{
 		}
 	}
 	
+	function launch_bridge($challenge_record){
+		$invited = $this->Status->find('all',array('conditions'=>array('Status.challenge_id'=>$challenge_record['Challenge']['id'],'Status.status'=>'P')));
+		$sent_users = array($challenge_record['Challenge']['user_id'] => 1);
+		foreach($invited as $i){
+			if(@$sent_users[$i['User']['id']] || $i['User']['user_type'] == 'L') continue;
+			else $sent_users[$i['User']['id']] = 1;
+		
+			if($i['User']['notify_challenges']) $this->send_invite($i['User']['id'],$challenge_record['Challenge']['id'],NULL);
+			$this->Status->id = $i['Status']['id'];
+			$this->Status->saveField('status','N');
+		}
+		foreach($challenge_record['ClassSet'] as $g){
+			foreach($g['User'] as $u){
+				if(@$sent_users[$u['id']]) continue;
+				else $sent_users[$u['id']] = 1;
+			
+				if($u['notify_challenges']) $this->send_invite($u['id'],$challenge_record['Challenge']['id'],$g['id'],true);
+			}
+		}
+	}
+	
 	function split_groups($challenge_id,$group_count = NULL){
 		$this->layout = 'ajax';
 		$challenge = $this->Challenge->find('first',array('conditions'=>"Challenge.id = ".$challenge_id,'recursive'=>2));
@@ -325,6 +365,7 @@ class ChallengesController extends AppController{
 				if($u['id'] != $c['owner_id']) $students[$u['id']] = $u;
 			}
 		}
+		shuffle($students);
 		if($group_count) $students = array_chunk($students,$group_count);
 		
 		$this->set('challenge',$challenge);
@@ -363,33 +404,39 @@ class ChallengesController extends AppController{
 				$this->User->save($new_user);
 				
 				$status = array(	'Status' =>
-													array(	'user_id'		=> $this->User->id,
-															'group_id'			=> $group_id,
-															'challenge_id'	=> $challenge_id,
-															'status'				=> 'P' ));
+													array(	'user_id'				=> $this->User->id,
+																	'challenge_id'	=> $challenge_id,
+																	'status'				=> 'P' ));
 				$this->Status->save($status);
 			}
 		}
-		if($user || $user_id){
-			if($user_id){
-				$user = $this->User->findById($user_id);
-				return false;
-			}
+		
+		$challenge = $this->Challenge->find('first',array('conditions'=>'Challenge.id = '.$challenge_id,'recursive'=>2));
+		if($user){
 			$inGroup = false;
-			foreach($user['Class'] as $g){
-				if($g['id'] == $group_id){
-					$inGroup = true;
-					break;
+			foreach($challenge['ClassSet'] as $c){
+				foreach($c['User'] as $u){
+					if($u['id'] == $user['User']['id']){
+						$inGroup = true;
+						break;
+					}
 				}
 			}
 			if(!$inGroup){
-				$status = array('user_id'		=> $user['User']['id'],
-								'challenge_id'	=> $challenge_id,
-								'group_id'		=> $group_id,
-								'status'		=> 'P' );
+				$status = array(	'user_id'				=> $user['User']['id'],
+													'challenge_id'	=> $challenge_id,
+													'status'				=> 'P' );
 				$this->Status->save($status);
 			}
 		}
+		if(($user && !$inGroup) || $this->User->id){
+			// add to challenge
+			$challenge_update = array('Challenge'=>array('id'=>$challenge_id));
+			$challenge_update['Collaborator'] = array(@$user ? @$user['User']['id'] : $this->User->id);
+			foreach($challenge['Collaborator'] as $u) if(array_search($u['id'],$challenge_update['Collaborator']) === false) $challenge_update['Collaborator'][] = $u['id'];
+			$this->Challenge->save($challenge_update);
+		}
+	
 		die();
 	}
 	
@@ -417,55 +464,160 @@ class ChallengesController extends AppController{
 		
 		// build invite url & message body
 		if($user['User']['invite_token']){
-			$subject = "Invitation from {$challenge['User']['firstname']} {$challenge['User']['lastname']}";
-			$message = "Hi {$user['User']['firstname']}!\n\n";
-			$message .= "Thanks for participating in a Challenge with Case Club. {$challenge['User']['firstname']} {$challenge['User']['lastname']} has sent you an invitation to join Case Club Online - a fun way to read and discuss business cases online. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into caseclubonline.com from then on.\n\n";
-			$message .= "You will have until\n\n".date_format(date_create($challenge['Challenge']['answers_due']),'l, F jS')." to complete a series of questions.\n\n";
-			$message .= date_format(date_create($challenge['Challenge']['responses_due']),'l, F jS')." to respond (Agree/Disagree) to other participants' questions.\n\n";
-			$message .= "Click here to check it out\n\n";
-			$message .= "http://caseclubonline.com/users/accept_invitation/{$challenge_id}/".(@$user['Status'][0]['class_id'] ? $user['Status'][0]['class_id'] : 0)."/{$user_id}/{$user['User']['invite_token']}";
-			$message .= "\n\nSincerely,\n\nCase Club Online Team";
+			$message = __("Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited you to collaborate with their classroom on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n\nYou will be able to provide feedback to {firstname_2}'s students between the dates of:\n\n{duedate_1} and {duedate_2}.\n\nLastly, Puentes is currently in invite-only beta, so you will need a Beta-Test Key. It is: BETATEST\n\nClick here to check it out\n{invite_link}\n\nSincerely,\nThe Puentes Team");
+			$message = str_replace('{firstname_1}',$user['User']['firstname'],$message);
+			$message = str_replace('{firstname_2}',$challenge['User']['firstname'],$message);
+			$message = str_replace('{lastname_2}',$challenge['User']['lastname'],$message);
+			$message = str_replace('{invite_link}',"http://puentesonline.com/users/accept_invitation/{$challenge_id}/".(@$user['Status'][0]['class_id'] ? $user['Status'][0]['class_id'] : 0)."/{$user_id}/{$user['User']['invite_token']}/",$message);
+			$message = str_replace('{duedate_1}',date_format(date_create($challenge['Challenge']['answers_due']),'l, F j'),$message);
+			$message = str_replace('{duedate_2}',date_format(date_create($challenge['Challenge']['responses_due']),'l, F j'),$message);
+			
+			$subject = __("Invitation from {first_name} {last_name}");
+			$subject = str_replace('{first_name}',$challenge['User']['firstname'],$subject);
+			$subject = str_replace('{last_name}',$challenge['User']['lastname'],$subject);
+			
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From: noreply@puentesonline.com' . "\r\n";
 		}else{
-			$subject = "New Case from {$challenge['User']['firstname']}";
-			$message = "Hi {$user['User']['firstname']}!\n\n";
-			$message .= "{$challenge['User']['firstname']} {$challenge['User']['lastname']} has sent you an invitation for a new challenge on Case Club Online starting ".date_format(date_create(),'m/d/Y')." and ending ".date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y').".";
-			if(!$existing) $message .= "\n\n<a href='http://caseclubonline.com/users/accept_invitation/{$challenge_id}/0/{$user_id}'>Click here</a> to check it out.";
-			else $message .= "\n\n<a href='http://caseclubonline.com/'>Click here</a> to check it out.";
-			$message .= "\n\n<a href='http://caseclubonline.com/attachments/view/case/{$challenge_id}/?fromEmail=1'>Click here</a> to View Case.\n\n";
-			$message .= "Sincerely,\n\nCase Club Online Team";
+			$message = __("Hi {firstname_1}!\n\nYour Instructor, {firstname_2} {lastname_2}, has sent you an invitation to join a Bridge on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n\nYou will have until:\n\n{duedate_1} to complete a series of questions.\n\n{duedate_2} to give feedback to other students.\n\nClick here to check it out:\n{bridge_link}\n\nSincerely,\nThe Puentes Team");
+			$message = str_replace('{firstname_1}',$user['User']['firstname'],$message);
+			$message = str_replace('{firstname_2}',$challenge['User']['firstname'],$message);
+			$message = str_replace('{lastname_2}',$challenge['User']['lastname'],$message);
+			$message = str_replace('{bridge_link}',"http://puentesonline.com/",$message);
+			$message = str_replace('{duedate_1}',date_format(date_create($challenge['Challenge']['answers_due']),'l, F j'),$message);
+			$message = str_replace('{duedate_2}',date_format(date_create($challenge['Challenge']['responses_due']),'l, F j'),$message);
+			
+			$subject = __("Invitation from {first_name} {last_name}");
+			$subject = str_replace('{first_name}',$challenge['User']['firstname'],$subject);
+			$subject = str_replace('{last_name}',$challenge['User']['lastname'],$subject);
+			
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From: noreply@puentesonline.com' . "\r\n";
 		}
-		
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		$headers .= 'From: noreply@caseclubonline.com' . "\r\n";
 		
 		// send invite email
 		mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",$subject,nl2br($message),$headers);
 	}
 	
+	function send_instructor_invite($user_id,$challenge_id,$class_id){
+		$classes = $this->ClassSet->find('first',array('conditions'=>'ClassSet.id IN('.implode(',',$class_id).')','fields'=>'group_concat(distinct group_name separator ", ") as group_names,Owner.*','group'=>'ClassSet.owner_id'));
+		$challenge = $this->Challenge->findById($challenge_id);
+		
+		$message = __("Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited your class(es) ".$classes[0]['group_names']." to a Bridge on Puentes Online!\n\nYour students will have until {duedate_1} to complete Due Date 1 and until {duedate_2} to complete Due Date 2.\n\nClick here to Accept or Reject this bridge:\n{link_1}\n\nSincerely,\nThe Puentes Team");
+		$message = str_replace('{firstname_1}',$classes['Owner']['firstname'],$message);
+		$message = str_replace('{firstname_2}',$_SESSION['User']['firstname'],$message);
+		$message = str_replace('{lastname_2}',$_SESSION['User']['lastname'],$message);
+		$message = str_replace('{link_1}',"http://puentesonline.com/",$message);
+		$message = str_replace('{duedate_1}',date_format(date_create($challenge['Challenge']['answers_due']),'l, F j'),$message);
+		$message = str_replace('{duedate_2}',date_format(date_create($challenge['Challenge']['responses_due']),'l, F j'),$message);
+		
+		$subject = __("Invitation from {first_name} {last_name}");
+		$subject = str_replace('{first_name}',$challenge['User']['firstname'],$subject);
+		$subject = str_replace('{last_name}',$challenge['User']['lastname'],$subject);
+		
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'From: noreply@puentesonline.com' . "\r\n";	
+		
+		mail("{$classes['Owner']['firstname']} {$classes['Owner']['lastname']} <{$classes['Owner']['email']}>",$subject,nl2br($message),$headers);
+		
+		// create 'pending' status
+		$status = array('Status' =>
+										array(	'user_id'			=> $user_id,
+														'class_id'		=> array_shift($class_id),
+														'challenge_id'=> $challenge_id,
+														'status'			=> 'P' ));
+		$this->Status->save($status);
+	}
+	
+	function instructor_confirm($challenge_id,$status=NULL){
+		$this->layout = 'ajax';
+		$challenge = $this->Challenge->find('first',array('conditions'=>'Challenge.id = '.$challenge_id,'recursive'=>2));
+		$status_record = $this->Status->find('first',array('conditions'=>array('Status.challenge_id'=>$challenge_id,'Status.user_id'=>$_SESSION['User']['id'])));
+		$current_status = $status_record['Status']['status'];
+		$this->set('challenge',$challenge);
+		$final = false;
+		
+		if($status){
+			$final = true;
+			foreach($challenge['Status'] as $s) if(($s['User']['user_type'] == 'L' && $s['status'] == 'P' && $s['User']['id'] != $_SESSION['User']['id']) || ($s['User']['id'] == $_SESSION['User']['id'] && $status == 'P')) $final = false;
+			
+			if($final && (($status == 'R' && @$_REQUEST['detail']) || $status  != 'R')){
+				// if this is the final approval, launch the bridge
+				$this->Challenge->id = $challenge['Challenge']['id'];
+				$this->Challenge->saveField('status','N');
+				$this->launch_bridge($challenge);
+			}
+			
+			$this->Status->id = $status_record['Status']['id'];
+			$this->Status->saveField('status',$status);
+		
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From: noreply@puentesonline.com' . "\r\n";
+		
+			if($status == 'C'){
+				// if user accepted, send notification
+				foreach($challenge['Status'] as $s){
+					if($s['status'] != 'C') continue;
+				
+					$message = __("Hi {firstname_1}!\n\n{firstname_2} has accepted your request to join {bridge_name} on Puentes.\n\nSincerely,\nThe Puentes Team");
+					$message = str_replace('{firstname_1}',$s['User']['firstname'],$message);
+					$message = str_replace('{firstname_2}',$status_record['User']['firstname'],$message);
+					$message = str_replace('{bridge_name}',$challenge['Challenge']['name'],$message);
+			
+					mail("{$s['User']['firstname']} {$s['User']['lastname']} <{$s['User']['email']}>",'Accepted Bridge',nl2br($message),$headers);
+				}				
+			}elseif($status == 'R' && @$_REQUEST['detail']){
+				// if user rejected and detail is set, send notifications and redirect
+				foreach($challenge['Status'] as $s){
+					if($s['status'] != 'C') continue;
+				
+					$message = __("Hi {firstname_1}!\n\nSorry, {firstname_2} has declined the request to join {bridge_name} on Puentes.\n\n\"{rejection_text}\"\n\nPerhaps some other time!\n\nSincerely,\nThe Puentes Team");
+					$message = str_replace('{firstname_1}',$s['User']['firstname'],$message);
+					$message = str_replace('{firstname_2}',$status_record['User']['firstname'],$message);
+					$message = str_replace('{bridge_name}',$challenge['Challenge']['name'],$message);
+					$message = str_replace('{rejection_text}',$_REQUEST['detail'],$message);
+			
+					mail("{$s['User']['firstname']} {$s['User']['lastname']} <{$s['User']['email']}>",'Declined Bridge',nl2br($message),$headers);
+				}
+				
+				// delete instructor approval statuses (reset to 'draft' mode) and redirect to dashboard
+				$this->Status->deleteAll(array('Status.challenge_id'=>$challenge['Challenge']['id'],'Status.class_id IS NOT NULL'));
+				$this->redirect('/dashboard/');
+			}
+			$current_status = $status_record['Status']['status'] = $status;
+		}
+		
+		$this->set('final',$final);
+		$this->set('status',$status_record);
+		$this->render($current_status == 'C' ? 'instructor_accepted' : ($current_status == 'R' ? 'instructor_rejected' : 'instructor_confirm'));
+	}
+	
 	function send_expiration_emails(){
-		$challenges = $this->Challenge->find('all',array('conditions'=>'Challenge.answers_due = CURDATE()','recursive'=>2));
+		$challenges = $this->Challenge->find('all',array('conditions'=>'timestampdiff(MINUTE,now(),Challenge.answers_due) between 270 and 330 and date_add(Challenge.date_modified, interval 1 day) < Challenge.answers_due','recursive'=>2));
 		$sent_users = array();
 		
 		foreach($challenges as $c){
-			foreach($c['Class'] as $g){
+			foreach($c['ClassSet'] as $g){
 				foreach($g['User'] as $u){
 					if(@$sent_users[$u['id']]) continue;
 					else $sent_users[$u['id']] = 1;
 				
 					if($u['notify_expiration']){
-						$message = "{$u['firstname']}\n\n";
-						$message .= "The Case, {$c['Challenge']['name']}, is set to expire tonight at midnight.\n\n";
-						$message .= "Click here to complete now!\n\n";
-						$message .= "http://caseclubonline.com/\n\n";
-						$message .= "To change email preferences, please visit My Account.\n\n";
-						$message .= "Sincerely,\nCase Club Online Team";
 						
+						$message = __("Hi {firstname}!\n\nThe Bridge {bridge_name} is set to expire today at {expiration_time}.\n\nClick here make any final edits!\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team");
+						$message = str_replace('{firstname}',$u['firstname'],$message);
+						$message = str_replace('{bridge_name}',$c['Challenge']['name'],$message);
+						$message = str_replace('{expiration_time}',date_format(date_create($c['Challenge']['answers_due']),'g:ia'),$message);
+
 						$headers  = 'MIME-Version: 1.0' . "\r\n";
 						$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-						$headers .= 'From: noreply@caseclubonline.com' . "\r\n";
+						$headers .= 'From: noreply@puentesonline.com' . "\r\n";
 						
-						mail("{$u['firstname']} {$u['lastname']} <{$u['email']}>",'Expiration Notice',nl2br($message),$headers);
+						mail("{$u['firstname']} {$u['lastname']} <{$u['email']}>",'Bridge Expiration Notice',nl2br($message),$headers);
 					}
 				}
 			}

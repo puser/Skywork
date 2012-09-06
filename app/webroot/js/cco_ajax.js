@@ -88,7 +88,7 @@ function save_user(){
 	$.ajax({url:'/users/update/',data:$('#userData').serialize(),type:'POST'});
 	$('.btn-savecontinue').hide();
 	$('#savedNotify').show();
-	setTimeout("$('.btn-savecontinue').show();$('#savedNotify').hide();",3000);
+	setTimeout("$('.btn-savecontinue').show();$('#savedNotify').hide();window.location='/users/view/';",2000);
 	$('.user-name a').html($('input[name="firstname"]').val() + ' ' + $('input[name="lastname"]').val());
 }
 
@@ -311,6 +311,27 @@ function response_reconsider(){
 	$('.agreeAction').children('input').attr('name','');
 }
 
+function join_show_instructor(){
+	$('#joinModal form').hide();
+	$('#instructorJoinData').show();
+	$('#joinModal .caseclub-tab').removeClass('active');	
+	$('.tab-instructor').addClass('active');
+}
+
+function join_show_collaborator(){
+	$('#joinModal form').hide();
+	$('#collaboratorJoinData').show();
+	$('#joinModal .caseclub-tab').removeClass('active');	
+	$('.tab-collaborator').addClass('active');
+}
+
+function join_show_student(){
+	$('#joinModal form').hide();
+	$('#studentJoinData').show();
+	$('#joinModal .caseclub-tab').removeClass('active');	
+	$('.tab-student').addClass('active');
+}
+
 function invited_show_new(){
 	$('#inviteData').show();
 	$('#existingInviteData').hide();
@@ -380,7 +401,13 @@ function class_invite_student(c_id){
 
 function load_search_results(){
 	if($('#sharedSearchResults input').length) jQuery.fancybox.close();
-	else $('#sharedSearchResults').load('/classes/search_shared/' + $('#queryEmail').val());
+	else{
+		$('#sharedSearchResults').load('/classes/search_shared/' + $('#queryEmail').val());
+		$('#searchClassesContinue').click(function(){
+			add_selected_groups();
+			$('#searchClassesContinue').unbind('click');
+		});
+	}
 }
 
 function group_invite_user(){
@@ -398,7 +425,7 @@ function select_listed_group(id,e){
 }
 
 function add_selected_groups(){
-	$.ajax({url:'/groups/request_join/',data:$('#joinAGroup input').serialize(),type:'POST',success:function(){
+	$.ajax({url:'/classes/request_join/',data:$('#joinAGroup input').serialize(),type:'POST',success:function(){
 		$('.addSelectedGroupInput').remove();
 	}});
 }
@@ -627,4 +654,22 @@ function delete_queued_invite(u_id,c_id){
 
 function set_stat_session(v){
 	$.ajax({url:'/metrics/set_detail_session/' + v});
+}
+
+function show_comment(rid,cid,e){
+	$('#responseBody' + rid + '_' + cid).show();
+	$('.comment_detail_' + cid).show();
+	$(e).parent().hide();
+}
+
+function hide_comment(rid,cid,e){
+	$(e).parent().hide();
+	$('#responseBody' + rid).show();
+	$('.comment_detail_' + cid).hide();
+}
+
+function hide_comments(rid,e){
+	$('#responseBody' + rid).show();
+	$(e).hide();
+	$('.question-comments').hide();
 }

@@ -12,7 +12,7 @@
 		<table id="students-active-questions" class="table-type-1">
 			<thead>
 				<tr>
-					<th class="col1" width="70%"><?php echo __('Group Members') ?> <span style="color: #666666; margin-left: 30px;"><?php echo date_format(date_create(),'m/d/Y'); ?></span></th>
+					<th class="col1" width="70%"><?php echo __('Group Members') ?> <span style="color: #666666; margin-left: 30px;"><?php echo date_format(date_create($challenge['Challenge']['responses_due']),'m/d/Y'); ?></span></th>
 					<th class="col2" width="10%"><img src="/images/icons/icon-like-19x21.png" /></th>
 					<th class="col3" width="10%">
 						<div class="tooltip-wrap">

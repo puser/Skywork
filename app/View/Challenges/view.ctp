@@ -3,9 +3,9 @@
 	<div id="sidemenu" >
 		<ul>
 			<?php foreach($challenge['Question'] as $k=>$q){ if(!$q['question']) continue; ?>
-			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a class="no-icon" href="#<?php echo $q['id']; ?>"><?php echo stripslashes($q['section']); ?></a></li>
+			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a class="no-icon" onclick="save_response();" href="#<?php echo $q['id']; ?>"><?php echo stripslashes($q['section']); ?></a></li>
 			<?php }if($challenge['Challenge']['allow_attachments']){ ?>
-			<li id="questionNavAttach"><a class="no-icon" href="#attachments"><?php echo __('Attach File(s)') ?></a></li>
+			<li id="questionNavAttach"><a class="no-icon" onclick="save_response();" href="#attachments"><?php echo __('Attach File(s)') ?></a></li>
 			<?php } ?>
 		</ul>
 	</div>
@@ -62,7 +62,7 @@
 </div>
 
 <div style="display: none;">
-	<div id="modalExitChoices" style="width:460px;height:215px;">
+	<div id="modalExitChoices" style="width:480px;height:230px;">
 		<div class="modal-box-head">
 			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><span class="icon5 icon5-close" style="margin:0;height:24px;"></span><?php echo __('Exit') ?></h2>
 		</div>

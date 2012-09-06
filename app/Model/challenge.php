@@ -31,6 +31,12 @@ class Challenge extends AppModel{
 																						'joinTable'	=> 'challenges_classes',
 																						'foreignKey'=> 'challenge_id',
 																						'associationForeignKey'=> 'class_id',
-																						'unique'	=> true ));
+																						'unique'		=> true ),
+																		'Collaborator'	=>
+																		array(	'className'	=> 'User',
+																						'joinTable'	=> 'challenges_collaborators',
+																						'foreignKey'=>	'challenge_id',
+																						'associationForeignKey'=> 'user_id',
+																						'unique'		=> true));
 }
 ?>

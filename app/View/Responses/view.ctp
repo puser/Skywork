@@ -132,7 +132,7 @@
 	</div>
 	<div class="clear"></div>
 	
-	<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded" style="min-height:0;">
+	<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded" style="min-height:30px;">
 		<?php 
 		$user_colors = array();
 		$all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
@@ -143,7 +143,7 @@
 			if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id && !$completed) continue;
 			if(@$q['Response'][0]){
 				$responseCount++; ?>
-			<div class="question-item" style="overflow:hidden;">
+			<div class="question-item"<?php if(!$completed){ ?> style="overflow:hidden;"<?php } ?>>
 				<div class="box-head">
 					<span class="icon2 icon2-listcountgreen"><?php echo ($k+1); ?></span><a name="<?php echo $q['id']; ?>" href="#"> </a>
 					<h2><?php echo $q['section']; ?></h2>
@@ -178,6 +178,7 @@
 							<div class="textvalue">
 								<p id="responseBody<?php echo $k; ?>">
 									<?php 
+									$q['Response'][0]['response_body'] = stripslashes($q['Response'][0]['response_body']);
 									$mod_response = $q['Response'][0]['response_body'];
 									foreach(@$q['Response'][0]['Comment'] as $i=>$c){
 										if(!@$user_colors[$c['user_id']]) $user_colors[$c['user_id']] = array_pop($all_colors);
@@ -185,7 +186,7 @@
 										
 										if($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) continue;
 										
-										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'#responseBody'.$k.'_'.$c['id'].'\').show();$(\'#comment_detail_'.$c['id'].'\').show();$(this).parent().hide();">&nbsp;</span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
+										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',this);">&nbsp;</span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
 										
 										if(!$completed){
 											$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) + $start_offset + $k),
@@ -196,7 +197,7 @@
 																																					array(	'name'	=> 'id',
 																																									'value'	=> $c['id'] )));
 																																								
-											for($j = 1;$j <= substr_count($q['Response'][0]['response_body'],' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] : strlen($q['Response'][0]['response_body']) - $c['segment_start']);$j++){
+											for($j = 1;$j <= substr_count($q['Response'][0]['response_body'],' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($q['Response'][0]['response_body']) - $c['segment_start']);$j++){
 												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) + $start_offset + $j + $k),
 																										'formValues'	=> array(	array(	'name'	=> 'comment',
 																										 																'value'	=> $c['comment'] ),
@@ -208,37 +209,41 @@
 											$commentCount++;
 										}
 									}
-									echo ($completed ? nl2br($mod_response) : $q['Response'][0]['response_body']);
+									echo ($completed ? nl2br($mod_response) : nl2br($q['Response'][0]['response_body']));
 									$start_offset += substr_count($q['Response'][0]['response_body'],' ');
 									?>
 								</p>
 								<?php 
 								if($completed){
+									$mod_response = array();
 									foreach(@$q['Response'][0]['Comment'] as $c){
 										if($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) continue; 
+										if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
 										
-										$mod_response = '';
-										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($q['Response'][0]['response_body'],$c['segment_start']+$c['segment_length']);
-										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:#CCC;">' . substr($mod_response,$c['segment_start']);
-										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseout="$(this).parent().hide();$(\'#responseBody'.$k.'\').show();$(\'#comment_detail_'.$c['id'].'\').hide();">&nbsp;</span>' . substr($mod_response,$c['segment_start']); ?>
-										<p onmouseout="$('#responseBody<?php echo $k; ?>').show();$(this).hide();$('.question-comments').hide();" id="responseBody<?php echo $k; ?>_<?php echo $c['id']; ?>" style="display:none;">
-											<?php echo nl2br($mod_response); ?>
+										$mod_response[$c['user_id']] = substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']);
+										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:#CCC;">' . substr($mod_response[$c['user_id']],$c['segment_start']);
+										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseout="hide_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',this);">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); ?>
+									<?php }foreach($mod_response as $kmr=>$mr){ ?>
+										<p onmouseout="hide_comments(<?php echo $k; ?>,this);" id="responseBody<?php echo $k; ?>_<?php echo $kmr.'_'.$k; ?>" style="display:none;">
+											<?php echo nl2br($mr); ?>
 										</p>
 									<?php }
-								} ?>
+								}
 								
-								<div style="display:none;" class="notice-for-edit">
-									<?php echo __('Highlight a section of the text to add a comment.') ?>
-								</div>
-								<div style="background-image:none;" class="notice-for-edit spacer"> </div>
+								if(!$completed){ ?>
+									<div style="display:none;" class="notice-for-edit">
+										<?php echo __('Highlight a section of the text to add a comment.') ?>
+									</div>
+									<div style="background-image:none;" class="notice-for-edit spacer"> </div>
+								<?php } ?>
 							</div>
 						</li>
 					</ul>
 					<?php foreach(@$q['Response'][0]['Comment'] as $c){ ?>
-					<div class="question-comments <?php echo ($c['type'] ? 'like' : 'dislike'); ?>" style="display:none;" id="comment_detail_<?php echo $c['id']; ?>">
+					<div class="question-comments <?php echo ($c['type'] ? 'like' : 'dislike'); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" style="display:none;margin-bottom:5px;">
 						<p>
 							<span class="highlight-blue" style="background-color:<?php echo $user_colors[$c['user_id']]; ?> !important;"><?php echo "{$c['User']['firstname']} {$c['User']['lastname']}"; ?></span>
-							<?php echo $c['comment']; ?>
+							<?php echo stripslashes($c['comment']); ?>
 						</p>
 					</div>
 					<?php } ?>
@@ -279,8 +284,8 @@
 		<p class="blue textAlignCenter" style="font-size:15px;width:390px;margin-left:45px;margin-right:45px;"><?php echo __('You have completed all sections. You have until the next Due Date to edit any information you wish. Would you like to go to Home?') ?></p>
 		<br /><br /><br />
 		<div class="exitSaveOptions" style="width:475px;margin-left:13px;">
-			<a style="float:left;cursor:pointer;width:180px;" href="/" class="btn1 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save and Go Home') ?></span></a>
-			<a style="float:right;cursor:pointer;width:240px;" onclick="jQuery.fancybox.close();firstStudent();return false;" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Save, but Continue to Edit Answers') ?></span></a>
+			<a style="float:left;cursor:pointer;width:180px;" href="/" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save and Go Home') ?></span></a>
+			<a style="float:right;cursor:pointer;width:240px;" onclick="jQuery.fancybox.close();firstStudent();return false;" class="btn3 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Save, but Continue to Edit Answers') ?></span></a>
 			<div class="clear"></div>
 		</div>
 	</div>
@@ -294,16 +299,15 @@ $(document).ready(function(){
 		window.location = $("#sidemenu2 li:first-child li:first-child a").attr('href');
 	<?php } ?>
 	
-	$('.question-item').each(function(){
-		$(this).height($(this).height());
-	});
-	$('#puentes-answer-questions').height($('#puentes-answer-questions').height());
 	if($(window).height() >= $(document).height()) $('#topOfPage').hide().parent().width(120);
-	
 	if(!$('.question-item').length) $('#puentes-answer-questions').html('<?php echo __('This user has not submitted responses') ?>');
 	
 	<?php if(!$completed){ ?>
 		annotaterInit(".textvalue p");
+		$('.question-item').each(function(){
+			$(this).height($(this).height());
+		});
+		$('#puentes-answer-questions').height($('#puentes-answer-questions').height());
 	<?php }else{ ?>
 		if(!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length) $('#nextStudentBtn').hide();
 	<?php } ?>
@@ -344,17 +348,17 @@ var responses = new Array();
 <?php if($responseCount){
 	foreach($challenge[0]['Question'] as $k=>$q){
 		if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id) continue; ?>
-		responses.push({text:'<?php echo str_replace("\n",' ',$q['Response'][0]['response_body']); ?>',id:<?php echo $q['Response'][0]['id']; ?>});
+		responses.push({text:'<?php echo str_replace("\n",'~~',$q['Response'][0]['response_body']); ?>'.replace('~~',"\n"),id:<?php echo $q['Response'][0]['id']; ?>});
 	<?php }
 } ?>
 
 function saveAnnotation(){
 	start = currentAnnotation.annotation[0].elementId.replace('textAnnotate_','');
-	end = currentAnnotation.annotation[currentAnnotation.annotation.length - 1].elementId.replace('textAnnotate_','');
+	end = parseInt(currentAnnotation.annotation[currentAnnotation.annotation.length - 1].elementId.replace('textAnnotate_',''));
 	r_id = 0;
 	
 	lastPos = responseIdx = 0;
-	for(i = 0;i < end;i++){		
+	for(i = 0;i < end + 10;i++){
 		if(responses[responseIdx].text.substr(lastPos).indexOf(' ') == -1){
 			responseIdx++;
 			lastPos = responses[responseIdx].text.substr(0).indexOf(' ') + 1;
@@ -370,9 +374,11 @@ function saveAnnotation(){
 		}
 	}
 	
+	if(end - start < 0) end = responses[responseIdx].text.length;
 	if(!r_id) r_id = responses[0].id;
 	
 	$('.jQueryTextAnnotaterDialog').hide();
+	$('.answer-comment-box .close').removeClass('removeAnnotationBtn').click();
 	$.ajax({url:'/comments/save/',data:{comment:{response_id:r_id,segment_start:start,segment_length:(end - start),comment:currentAnnotation.formValues[0].value,type:currentAnnotation.formValues[1].value,id:currentAnnotation.formValues[2].value}},success:function(){
 		currentAnnotation = null;
 	}});
@@ -419,7 +425,10 @@ function annotaterInit(cssSelector) {
 				$('.answer-comment-box .close').addClass('removeAnnotationBtn');
 			}
 			
-			if($('.jQueryTextAnnotaterDialogForm input.comment-type').val() == '0'){
+			if($('.jQueryTextAnnotaterDialogForm textarea').val() == ''){
+				$('.vote .votedown').removeClass('inactive');
+				$('.vote .voteup').removeClass('inactive');
+			}else if($('.jQueryTextAnnotaterDialogForm input.comment-type').val() == '0'){
 				$('.vote .votedown').removeClass('inactive');
 				$('.vote .voteup').addClass('inactive');
 			}else{

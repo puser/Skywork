@@ -94,7 +94,10 @@ class ResponsesController extends AppController{
 			}
 			
 			die($this->Response->id);
-		}else die('0');
+		}else{
+			echo '0';
+			die();
+		}
 	}
 }
 ?>

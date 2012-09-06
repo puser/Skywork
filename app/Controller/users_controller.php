@@ -35,10 +35,10 @@ class UsersController extends AppController{
 				$this->set('invites',$this->ClassSet->find('all',array('conditions'=>'ClassSet.id IN ('.implode(',',$pending_groups).')','recursive'=>2)));
 			}
 			
-			$this->Status->hasMany['ClassSet']['conditions'] = "ClassSet.owner_id = {$_SESSION['User']['id']}";
+			$this->Status->belongsTo['Class']['conditions'] = "Class.owner_id = {$_SESSION['User']['id']}";
 			$pending_requests = $this->Status->find('all',array('conditions'=>array('Status.challenge_id IS NULL','Status.status'=>"R")));
 			foreach($pending_requests as $r){
-				if($r['ClassSet']) $requested_groups[] = $r['ClassSet']['id'];
+				if($r['Class']['id']) $requested_groups[] = $r['Class']['id'];
 			}
 			
 			if($class_ids) $conditions = array('ClassSet.id NOT IN ('.$class_ids.')');
@@ -133,7 +133,7 @@ class UsersController extends AppController{
 		
 		if($send_invite){
 			// build invite url & message body
-			$invite_url = 'http://caseclubonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
+			$invite_url = 'http://puentesonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
 			
 			$message = __("{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world’s first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team");
 			$message = str_replace('{first_name_1}',$fname,$message);
@@ -148,7 +148,7 @@ class UsersController extends AppController{
 			
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: noreply@caseclubonline.com' . "\r\n";
+			$headers .= 'From: noreply@puentesonline.com' . "\r\n";
 		
 			// send invite email
 			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",$subject,nl2br($message),$headers);
@@ -177,14 +177,18 @@ class UsersController extends AppController{
 			
 			$message = __("{first_name},\n\nSomeone (probably you), forgot the password on Puentes Online. Click on the link below to create a new password.\n\n{link}\n\nSincerely,\nThe Puentes Team");
 			$message = str_replace('{first_name}',$user['User']['firstname'],$message);
-			$message = str_replace('{link}',"http://caseclubonline.com/users/password_reset/".$reminder_token,$message);
+			$message = str_replace('{link}',"http://puentesonline.com/users/password_reset/".$reminder_token,$message);
 			
-			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",__("New Password"),$message,'From: noreply@caseclubonline.com');
+			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",__("New Password"),$message,'From: noreply@puentesonline.com');
 			
 			$this->User->id = $user['User']['id'];
 			$this->User->saveField('invite_token',$reminder_token);
-			die('1');
-		}else die('0');
+			echo '1';
+			die();
+		}else{
+			echo '0';
+			die();
+		}
 	}
 	
 	// reset password
@@ -208,7 +212,45 @@ class UsersController extends AppController{
 	
 	// authenticate
 	function login($ajax=false){
-		if(@$_REQUEST['login']){
+		if(@$_REQUEST['betakey'] == 'BETATEST'){
+			if(!@$_REQUEST['password'] || !@$_REQUEST['login']) $this->redirect('/login/?signup_error=fields&signup_type='.$_REQUEST['user_type']);
+			
+			$new_user = array(	'User' =>
+													array(	'email'			=> $_REQUEST['login'],
+																	'login'			=> $_REQUEST['login'],
+																	'user_type'	=> $_REQUEST['user_type'],
+																	'firstname'	=> '',
+																	'lastname'	=> '',
+																	'password'	=> sha1($_REQUEST['password'].$this->salt) ));
+			
+			$user = $this->User->save($new_user);
+			if(@$user['User']['id']) $this->Session->write('User',$user['User']);
+			else die('There was an error processing your request.');
+			
+			$this->redirect('/users/view/');
+		}elseif(@$_REQUEST['betakey'] && @$_REQUEST['betakey'] != 'BETATEST'){
+			$this->redirect('/login/?signup_error=key&signup_type='.$_REQUEST['user_type']);
+		}elseif(@$_REQUEST['classtoken']){
+			$class = $this->ClassSet->findByAuthToken($_REQUEST['classtoken']);
+			if(!@$class['ClassSet']['id'] || !@$_REQUEST['password'] || !@$_REQUEST['login']) $this->redirect('/login/?signup_error=token');
+			
+			$new_user = array(	'User' =>
+													array(	'email'			=> $_REQUEST['login'],
+																	'login'			=> $_REQUEST['login'],
+																	'user_type'	=> $_REQUEST['user_type'],
+																	'firstname'	=> '',
+																	'lastname'	=> '',
+																	'password'	=> sha1($_REQUEST['password'].$this->salt) ));
+			
+			$user = $this->User->save($new_user);
+			if(@$user['User']['id']) $this->Session->write('User',$user['User']);
+			else die('There was an error processing your request.');
+			
+			$user_update['ClassSet'] = array($class['ClassSet']['id']);
+			$this->User->save($user_update);
+			
+			$this->redirect('/users/view/');
+		}elseif(@$_REQUEST['login']){
 			$user = $this->User->findByLogin($_REQUEST['login']);
 			if(!empty($user['User']['password']) && $user['User']['password'] == sha1($_REQUEST['password'].$this->salt)){
 				
@@ -229,10 +271,16 @@ class UsersController extends AppController{
 				$this->User->save($user_update);
 				
 				$this->Session->write('User',$user['User']);
-				if($ajax) die('1');
+				if($ajax){
+					echo '1';
+					die();
+				}
 				elseif(@$_REQUEST['group_id'] && !@$_REQUEST['challenge_id']) $this->redirect('/users/view/groups/');
 				else $this->redirect('/dashboard/');
-			}elseif($ajax) die('0');
+			}elseif($ajax){
+				echo '0';
+				die();
+			}
 			else{
 				$this->set('error',true);
 				$this->redirect('/');
@@ -254,12 +302,21 @@ class UsersController extends AppController{
 				
 				$this->User->save($user_update);
 				$this->Session->write('User',$user['User']);
-				if($ajax) die('1');
+				if($ajax){
+					echo '1';
+					die();
+				}
 				elseif(@$_REQUEST['group_id'] && !@$_REQUEST['challenge_id']) $this->redirect('/users/view/groups/');
 				else $this->redirect('/dashboard/');
-			}elseif($ajax) die('0');
+			}elseif($ajax){
+				echo '0';
+				die();
+			}
 			else $this->set('error',true);
-		}elseif($ajax) die('0');
+		}elseif($ajax){
+			echo '0';
+			die();
+		}
 		else $this->redirect('/');
 	}
 	

@@ -15,7 +15,7 @@
 			<div class="box-actions">
 				<ul>
 					<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
-						<li><a class="icon4 icon4-plus modal-link" href="#modal-addclass"><?php echo __('Create Class') ?></a></li>
+						<li><a class="icon4 icon4-plus modal-link" href="#<?php echo ($_SESSION['User']['user_type'] == 'C' ? 'modal-collab-access' : 'modal-addclass'); ?>"><?php echo __('Create Class') ?></a></li>
 						<li><a class="icon4 icon4-plus modal-link" href="#modal-joinsharedclass"><?php echo __('Join shared class') ?></a></li>
 					<?php }else{ ?>
 						<li><a class="icon4 icon4-plus modal-link" href="#modal-joinstudentclass"><?php echo __('Join class') ?></a></li>
@@ -173,7 +173,7 @@
 			</div>
 			<div class="modal-box-content">
 				<br />
-				<p><?php echo __('Please enter the Professors\' email:') ?></p>
+				<p><?php echo __('Please enter the Professor\'s email:') ?></p>
 				<ul class="fieldset2">
 					<li>
 						<label><?php echo __('Email') ?></label>
@@ -183,7 +183,7 @@
 				<div id="sharedSearchResults"> </div>
 				<div class="clear"></div>
 				<div style="width: 200px; margin: 0 auto; ">
-					<a href="#" class="btn2" style="width: 80px; float: left;" onclick="load_search_results();" ><span><?php echo __('Continue') ?></span></a>
+					<a href="#" class="btn2" style="width: 80px; float: left;" onclick="load_search_results();" id="searchClassesContinue" ><span><?php echo __('Continue') ?></span></a>
 					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 					<div class="clear"></div>
 				</div>
@@ -234,6 +234,30 @@
 				<div style="width: 250px; margin: 0 auto; margin-bottom: 20px; ">
 					<div style="width: 100px; float: left;">
 						<a href="#" class="btn2" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Yes, Delete') ?></span></a>
+					</div>
+					<div style="width: 100px; float: right;">
+						<a href="#" class="btn3" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+	<div id="modal-collab-access">
+		
+		<div class="modal-wrapper" style="width: 600px;" >
+			
+			<div class="modal-box-head">
+				<h2><span><?php echo __('Please Register') ?></span></h2>
+			</div>
+			<div class="modal-box-content">
+				<p class="modal-notice" style="margin: 50px 0; "><?php echo __('You must be a subscribed Instructor in order to create a class.') ?></p>
+				<div style="width: 250px; margin: 0 auto; margin-bottom: 20px; ">
+					<div style="width: 100px; float: left;">
+						<a href="#" class="btn2" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('More Info') ?></span></a>
 					</div>
 					<div style="width: 100px; float: right;">
 						<a href="#" class="btn3" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
@@ -337,51 +361,7 @@
 		</div>
 	</div><!-- #addNewUserModal -->
 	
-	
-	<div id="joinAGroup">
-
-		<div class="box-heading">
-			<span class="icon icon-people2"></span>
-			<h2 class="page-subtitle alignleft"><span class="green">Join a Group</span></h2> 
-			<!--<select class="alignleft">
-				<option value="a">A</option>
-				<option value="b">B</option>
-			</select>-->
-			<div class="clear"></div>
-
-		</div>
-		<div style="height:210px;overflow-x:hidden;overflow-y:scroll;">
-			<table class="simpletable">
-				<thead>
-					<tr>
-						<th width="140" ><a href="#">Group Name</a></th>
-						<th width="140" class="textAlignCenter"><a href="#">Leader First Name</a></th>
-						<th width="140" class="textAlignCenter"><a href="#">Last Name</a></th>
-						<th width="140" class="textAlignCenter"><a href="#"># of Members</a></th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php foreach($groups as $k=>$g){
-						if(@$ex_groups[$g['id']]) continue; ?>
-					<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> onclick="select_listed_group(<?php echo $g['ClassSet']['id']; ?>,$(this));">
-						<td><?php echo $g['ClassSet']['group_name']; ?></td>
-						<td class="textAlignCenter"><?php echo $g['Owner']['firstname']; ?></td>
-						<td class="textAlignCenter"><?php echo $g['Owner']['lastname']; ?></td>
-						<td class="textAlignCenter"><?php echo count($g['User']); ?></td>
-					</tr>
-					<?php } ?>
-				</tbody>
-			</table>
-		</div>
-			
-		<div class="modalActionButtons">
-			<a href="#" onclick="add_selected_groups();jQuery.fancybox.close();return false;" class="btn1 btn-savecontinue modalActionButton modalActionButtonSave aligncenter"><span class="inner">Request to Join</span></a>
-			<a href="#" onclick="$('.addSelectedGroupInput').remove();jQuery.fancybox.close();return false;" class="btn2 modalActionButton aligncenter"><span class="inner">Cancel</span></a>
-		</div>
-	</div><!-- #joinAGroup -->
-	
-	<div id="modalDeleteChoices" style="width:450px;height:180px;">
+	<div id="modalDeleteChoices" style="width:460px;height:190px;">
 		<div class="modal-box-head">
 			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><span class="icon5 icon5-close" style="margin:0;height:24px;"></span><?php echo __('Delete') ?></h2>
 		</div>
@@ -390,14 +370,14 @@
 			<div style="text-align:center;margin:20px;"><?php echo __('Are you sure you want to delete?') ?></div>	
 			<br />
 			<div style="width: 200px; margin: 0 auto; ">
-				<a href="#" class="btn2" style="width: 80px; float: left;" id="deleteGroupLink"><span><?php echo __('Yes, Delete') ?></span></a>
+				<a href="#" class="btn2" style="width: 95px; float: left;" id="deleteGroupLink"><span><?php echo __('Yes, Delete') ?></span></a>
 				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 				<div class="clear"></div>
 			</div>
 		</div>
 	</div><!-- #modalExitChoices -->
 	
-	<div id="modalDeleteMember" style="width:450px;height:180px;">
+	<div id="modalDeleteMember" style="width:460px;height:190px;">
 		<div class="modal-box-head">
 			<span class="icon icon-warning"></span>
 			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><span class="icon5 icon5-close" style="margin:0;height:24px;"></span><?php echo __('Delete') ?></h2>
@@ -408,7 +388,7 @@
 			<br />
 			
 			<div style="width: 200px; margin: 0 auto;" class="exitSaveOptions">
-				<a href="#" class="btn2 modal-link" id="deleteMemberLink" style="width: 80px; float: left;" id="deleteGroupLink"><span><?php echo __('Yes, Delete') ?></span></a>
+				<a href="#" class="btn2 modal-link" id="deleteMemberLink" style="width: 95px; float: left;" id="deleteGroupLink"><span><?php echo __('Yes, Delete') ?></span></a>
 				<a href="#" class="btn3 modal-link" style="width: 80px; float: right;" onclick="$('#deleteMemberLink').unbind();return false;"><span><?php echo __('Cancel') ?></span></a>
 				<div class="clear"></div>
 			</div>

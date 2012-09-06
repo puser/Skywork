@@ -19,11 +19,11 @@
 	<div class="box-content">
 <?php } ?>
 
-		<div id="preview-contract" <?php if($ajax){ ?>style="margin-left:-11px;"<?php } ?>>
+		<div id="preview-contract" <?php if($ajax){ ?>style="margin-left:-11px;"<?php }else{ ?>style="text-align:center;"<?php } ?>>
 			<?php
 			if($attachment['Challenge']['challenge_type'] == 'VID') echo stripslashes($attachment['Attachment']['file_location']);
 			else{ ?>
-			<iframe src="http://docs.google.com/viewer?url=http%3A%2F%2Fcaseclubonline.com%2Fuploads%2F<?php echo $attachment['Attachment']['file_location']; ?>&embedded=true" width="735" height="500" />
+			<iframe src="http://docs.google.com/viewer?url=http%3A%2F%2Fpuentesonline.com%2Fuploads%2F<?php echo $attachment['Attachment']['file_location']; ?>&embedded=true" width="735" height="500" />
 			<?php } ?>
 		</div>
 			

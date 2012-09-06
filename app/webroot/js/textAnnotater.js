@@ -50,7 +50,7 @@
 //		saveAnnotationFormWithFocus();
 //		hideUserDialog();
 		break;
-
+		
       case "saveForm":
         var annotationId = arguments[1];
         var targetElement = jQuery(arguments[2]);
@@ -135,8 +135,8 @@
       //remove annotation focus when leaving the dialog
       userDialog.mouseleave(function(){
         userDialog.removeData('element');
-        //if($('.jQueryTextAnnotaterDialogForm textarea').val() != '') removeAnnotationFocus();
-      })
+      //  if($('.jQueryTextAnnotaterDialogForm textarea').val() != '') removeAnnotationFocus();
+      });
 
       
 
@@ -667,6 +667,23 @@ removeAnnotationFocus();
         $(annotationsElementIds).each(function(index, value){
           element = $('#'+value);
           $(element).addClass(options.annotationFocusClassName);
+			
+			$(element).mouseleave(function(){
+				var mouseOnDialog = false;
+				handlerIn = function(){ mouseOnDialog = true; };
+				handlerOut = function(){ 
+					mouseOnDialog = false;
+					if($('.removeAnnotationBtn.deleteComment').is(':visible')) removeAnnotationFocus();
+					userDialog.unbind('mouseenter',handlerIn);
+					userDialog.unbind('mouseleave',handlerOut);
+				};
+				userDialog.hover(handlerIn,handlerOut);
+			
+				setTimeout(function(){
+					if(!mouseOnDialog && $('.removeAnnotationBtn.deleteComment').is(':visible')) removeAnnotationFocus();
+				},110);
+			});
+				
         });
       });
     }
