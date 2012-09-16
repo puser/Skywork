@@ -44,12 +44,15 @@ class ResponsesController extends AppController{
 			$this->set('question_id',$question_id ? $question_id : @$challenge[0]['Question'][0]['id']);
 		}elseif(!$user_id){
 			if(@$challenge[0]['Group'][0]['User'][0]['id']) $redirect_user = $challenge[0]['Group'][0]['User'][0]['id'];
-			else{
-				foreach($challenge[0]['ClassSet'][0]['User'] as $u){
-					if($u['user_type'] == 'P'){
-						$redirect_user = $u['id'];
-						break;
+			else{ 
+				foreach($challenge[0]['ClassSet'] as $cs){
+					foreach($cs['User'] as $u){
+						if($u['user_type'] == 'P'){
+							$redirect_user = $u['id'];
+							break;
+						}
 					}
+					if(@$redirect_user) break;
 				}
 			}
 			$this->redirect('/responses/view/'.$challenge_id.'/'.($redirect_user ? $redirect_user : 'error'));

@@ -108,8 +108,8 @@
 	<p class="textAlignCenter red">* <?php echo __('You must invite at least one group/individual') ?></p>
 </span>
 
-<a <?php if($challenge['ClassSet']){ ?>style="display:none;"<?php } ?> onclick="$('#fieldValidate').show();return false;" class="btn1 btn-savecontinue aligncenter" id="create-challenge-validate"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
-<a onclick="save_challenge_final();" <?php if(!$challenge['ClassSet']){ ?>style="display:none;"<?php } ?> class="btn1 btn-savecontinue aligncenter" id="create-challenge-now"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
+<a <?php if($challenge['ClassSet']){ ?>style="display:none;"<?php } ?> onclick="$('#fieldValidate').show();return false;" class="btn2 btn-savecontinue aligncenter" id="create-challenge-validate"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
+<a onclick="save_challenge_final();" <?php if(!$challenge['ClassSet']){ ?>style="display:none;"<?php } ?> class="btn2 btn-savecontinue aligncenter" id="create-challenge-now"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
 
 
 <script type="text/javascript">

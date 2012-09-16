@@ -1,5 +1,5 @@
 <style type="text/css"> .activity-level span{ display:none; } </style>
-<div id="assignmentDialog" style="display:none;"> </div>
+<div id="assignmentDialog" style="display:none;text-align:center;"> </div>
 
 <div id="sidebarleft">
 	<h1><?php echo __('Metrics Section') ?></h1>

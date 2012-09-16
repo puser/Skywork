@@ -212,23 +212,23 @@ class UsersController extends AppController{
 	
 	// authenticate
 	function login($ajax=false){
-		if(@$_REQUEST['betakey'] == 'BETATEST'){
+		if(@$_REQUEST['betakey'] == 'BETATEST' || @$_REQUEST['betakey'] == 'BETACOLLAB'){
 			if(!@$_REQUEST['password'] || !@$_REQUEST['login']) $this->redirect('/login/?signup_error=fields&signup_type='.$_REQUEST['user_type']);
 			
 			$new_user = array(	'User' =>
-													array(	'email'			=> $_REQUEST['login'],
-																	'login'			=> $_REQUEST['login'],
-																	'user_type'	=> $_REQUEST['user_type'],
-																	'firstname'	=> '',
-																	'lastname'	=> '',
-																	'password'	=> sha1($_REQUEST['password'].$this->salt) ));
+													array(	'email'				=> $_REQUEST['login'],
+																	'login'				=> $_REQUEST['login'],
+																	'user_type'		=> $_REQUEST['betakey'] == 'BETATEST' ? 'L' : 'C',
+																	'firstname'		=> '',
+																	'lastname'		=> '',
+																	'password'		=> sha1($_REQUEST['password'].$this->salt) ));
 			
 			$user = $this->User->save($new_user);
 			if(@$user['User']['id']) $this->Session->write('User',$user['User']);
 			else die('There was an error processing your request.');
 			
 			$this->redirect('/users/view/');
-		}elseif(@$_REQUEST['betakey'] && @$_REQUEST['betakey'] != 'BETATEST'){
+		}elseif(@$_REQUEST['betakey'] && @$_REQUEST['betakey'] != 'BETATEST' && @$_REQUEST['betakey'] != 'BETACOLLAB'){
 			$this->redirect('/login/?signup_error=key&signup_type='.$_REQUEST['user_type']);
 		}elseif(@$_REQUEST['classtoken']){
 			$class = $this->ClassSet->findByAuthToken($_REQUEST['classtoken']);

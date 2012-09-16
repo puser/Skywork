@@ -1,4 +1,4 @@
-<div id="assignmentDialog" style="display:none;"> </div>
+<div id="assignmentDialog" style="display:none;text-align:center;"> </div>
 
 <div id="sidebarleft">
 

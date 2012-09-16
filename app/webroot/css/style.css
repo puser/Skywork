@@ -465,8 +465,8 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon5-flash {background-image: url('/images/icons/icon-flash-25x38.png'); }
 .icon5-star {background-image: url('/images/icons/icon-star-24x24.png'); }
 .icon5-close {background-image: url('/images/icons/icon-close-23x22.png'); }
-
-
+.icon5-key {background-image: url('/images/icon-key-36.png'); }
+.icon5-question {background-image: url('/images/icons/icon-question-24x22.png'); }
 
 
 
@@ -941,4 +941,39 @@ a.studentwork-more:hover span {display: inline; }
 
 .jQueryTextAnnotaterDialogRemoveButton {
 	display:none;
+}
+
+
+#joinModal .modalActionButtonSave {
+	float:right;
+	width:90px;
+}
+.joinTabs {
+    border-bottom: 1px solid #ccc;
+}
+.joinTabs .caseclub-tabs {
+	padding-left:0px;
+}
+.caseclub-tab.active a,.joinTabs .caseclub-tab.active a {
+	color:#00467F;
+}
+
+.joinForms li {
+	clear:both;
+	padding-bottom:15px;
+}
+
+.joinForms li  input {
+	width:390px;
+	height:25px;
+}
+
+.joinForms li .small {
+	display:block;
+	font-size:12px;
+}
+
+.joinForms li  label {
+	font-size:16px;
+	color:#666;
 }

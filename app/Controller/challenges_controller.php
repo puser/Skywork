@@ -15,7 +15,7 @@ class ChallengesController extends AppController{
 		if($status == 'd') $this->Challenge->hasMany['Status']['conditions'][] = 'Status.status = "D"';
 		elseif($status == 'c') $conditions[] = 'Challenge.status = "C" && Challenge.responses_due < CURDATE()';
 		if($_SESSION['User']['user_type'] != 'L'){
-			$conditions[] = 'Challenge.answers_due > "'. $_SESSION['User']['date_created'] . '"';
+			if(@$_SESSION['User']['date_created']) $conditions[] = 'Challenge.answers_due > "'. $_SESSION['User']['date_created'] . '"';
 			$conditions[] = 'Challenge.status != "D"';
 		}
 		
