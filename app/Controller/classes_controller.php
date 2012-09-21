@@ -34,6 +34,7 @@ class ClassesController extends AppController{
 		// $this->ClassSet->hasAndBelongsToMany['User']['conditions'] = 'User.search_visible = 1 && (User.user_type = "' . ($view == 'view_students' ? 'P" || "C' : 'L') . '")';
 		$this->ClassSet->hasAndBelongsToMany['User']['conditions'] = '(User.user_type = "' . ($view == 'view_students' ? 'P" || "C' : 'L') . '")';
 		$this->set('class',$this->ClassSet->findById($class_id));
+		$this->set('invited',$this->Status->find('all',array('conditions'=>("Status.class_id = $class_id && Status.challenge_id IS NULL && Status.status = 'P'"))));
 		$this->render($view,'ajax');
 	}
 	

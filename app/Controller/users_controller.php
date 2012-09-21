@@ -212,8 +212,9 @@ class UsersController extends AppController{
 	
 	// authenticate
 	function login($ajax=false){
-		if(@$_REQUEST['betakey'] == 'BETATEST' || @$_REQUEST['betakey'] == 'BETACOLLAB'){
-			if(!@$_REQUEST['password'] || !@$_REQUEST['login']) $this->redirect('/login/?signup_error=fields&signup_type='.$_REQUEST['user_type']);
+		if((@$_REQUEST['betakey'] == 'BETATEST' && @$_REQUEST['user_type'] == 'L') || (@$_REQUEST['betakey'] == 'BETACOLLAB' && @$_REQUEST['user_type'] == 'C')){
+			if(!@$_REQUEST['password'] || @$_REQUEST['password'] != @$_REQUEST['password_confirm']) $this->redirect('/login/?signup_error=pass&signup_type='.$_REQUEST['user_type']);
+			elseif(!@$_REQUEST['login'] || $this->User->findByEmail($_REQUEST['login'])) $this->redirect('/login/?signup_error=email&signup_type='.$_REQUEST['user_type']);
 			
 			$new_user = array(	'User' =>
 													array(	'email'				=> $_REQUEST['login'],
@@ -228,11 +229,14 @@ class UsersController extends AppController{
 			else die('There was an error processing your request.');
 			
 			$this->redirect('/users/view/');
-		}elseif(@$_REQUEST['betakey'] && @$_REQUEST['betakey'] != 'BETATEST' && @$_REQUEST['betakey'] != 'BETACOLLAB'){
+		}elseif(@$_REQUEST['betakey'] && ((@$_REQUEST['betakey'] != 'BETATEST' && @$_REQUEST['user_type'] == 'L') || (@$_REQUEST['betakey'] != 'BETACOLLAB' && @$_REQUEST['user_type'] == 'C'))){
 			$this->redirect('/login/?signup_error=key&signup_type='.$_REQUEST['user_type']);
 		}elseif(@$_REQUEST['classtoken']){
 			$class = $this->ClassSet->findByAuthToken($_REQUEST['classtoken']);
-			if(!@$class['ClassSet']['id'] || !@$_REQUEST['password'] || !@$_REQUEST['login']) $this->redirect('/login/?signup_error=token');
+			$instructor = $this->User->findByEmail(@$_REQUEST['instructor_email']);
+			if(!@$class['ClassSet']['id'] || @$class['ClassSet']['owner_id'] != $instructor['User']['id']) $this->redirect('/login/?signup_error=token&signup_type='.$_REQUEST['user_type']);
+			elseif(!@$_REQUEST['password'] || @$_REQUEST['password'] != @$_REQUEST['password_confirm']) $this->redirect('/login/?signup_error=pass&signup_type='.$_REQUEST['user_type']);
+			elseif(!@$_REQUEST['login'] || $this->User->findByEmail($_REQUEST['login'])) $this->redirect('/login/?signup_error=email&signup_type='.$_REQUEST['user_type']);
 			
 			$new_user = array(	'User' =>
 													array(	'email'			=> $_REQUEST['login'],

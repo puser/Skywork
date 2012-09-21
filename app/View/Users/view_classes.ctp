@@ -156,7 +156,7 @@
 					<p class="small"><?php echo __('Instructors will be able to search and request to join your class. For security purposes, they must know your email address and you will always be able to Accept or Reject their request.') ?></p>
 					<div class="clear"></div>
 					<div style="width: 250px; margin: 0 auto; ">
-						<a href="#" onclick="create_class();" class="btn2" style="width: 120px; float: left;" ><span><?php echo __('Generate Token') ?></span></a>
+						<a href="#" onclick="create_class();$('#tokenForNewClass').val('1');" class="btn2" style="width: 120px; float: left;" ><span><?php echo __('Generate Token') ?></span></a>
 						<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 						<div class="clear"></div>
 					</div>
@@ -276,7 +276,7 @@
 			<div class="modal-box-head">
 				<div class="box-actions">
 					<ul>
-						<li><a class="icon4 icon4-plus modal-link" href="#modal-newtoken" ><?php echo __('Generate new') ?></a></li>
+						<li><a class="icon4 icon4-plus modal-link" href="#modal-newtoken" onclick="$('#tokenForNewClass').val('0');"><?php echo __('Generate new') ?></a></li>
 					</ul>
 				</div>
 				<span class="icon icon-token"></span>
@@ -298,6 +298,7 @@
 		<div id="modal-newtoken-box" class="modal-wrapper" style="width: 600px;" >
 			<a style="display:none;" href="#modal-viewtoken" class="btn2 modal-link" id="showNewToken"> </a>
 			<input type="hidden" id="newTokenClassID" />
+			<input type="hidden" id="tokenForNewClass" value="0">
 			<div class="modal-box-head">
 				<span class="icon icon-token"></span>
 				<h2><?php echo __('New Token') ?></h2>
@@ -309,7 +310,7 @@
 						<a class="btn2" href="#" onclick="update_token();"><span><?php echo __('Generate') ?></span></a>
 					</div>
 					<div style="width: 100px; float: right; ">
-						<a class="btn3" href="#" onclick="jQuery.fancybox.close(); return false;"><span><?php echo __('Cancel') ?></span></a>
+						<a class="btn3 modal-link" href="#modal-addclass" onclick="if($('#tokenForNewClass').val() != '1'){ jQuery.fancybox.close();return false; }else{ $.ajax({url:'/classes/delete/'+$('#newTokenClassID').val()}); }"><span><?php echo __('Cancel') ?></span></a>
 					</div>
 					<div class="clear"></div>
 				</div>

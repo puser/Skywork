@@ -10,6 +10,7 @@
 				<p class="label"><?php echo __('Select Class(es) you would like to invite:') ?></p>
 				
 				<?php
+				$class_user_count = 0;
 				$ex_groups = array();
 				if($challenge['ClassSet']){ ?>
 				<table class="table-type-1" style="width: 500px; margin-bottom: 10px; ">
@@ -31,6 +32,7 @@
 						$k = 0;
 						foreach($group_set as $g){
 							$ex_groups[] = $g['id'];
+							$class_user_count += count($g['User']);
 							?>
 						<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> id="challengeGroup<?php echo $g['id']; ?>">
 							<td<?php if($challenge['Group']){ ?> style="background:url('/images/icons/icon-flash-13x19.png') right no-repeat;"<?php } ?>>
@@ -108,11 +110,38 @@
 	<p class="textAlignCenter red">* <?php echo __('You must invite at least one group/individual') ?></p>
 </span>
 
-<a <?php if($challenge['ClassSet']){ ?>style="display:none;"<?php } ?> onclick="$('#fieldValidate').show();return false;" class="btn2 btn-savecontinue aligncenter" id="create-challenge-validate"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
-<a onclick="save_challenge_final();" <?php if(!$challenge['ClassSet']){ ?>style="display:none;"<?php } ?> class="btn2 btn-savecontinue aligncenter" id="create-challenge-now"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
+<?php if(!@$challenge['Group'] && @$challenge['ClassSet'] && @$challenge['Challenge']['collaboration_type'] != 'NONE'){ ?>
+	<a href="#modalGroupWarning" class="btn2 btn-savecontinue aligncenter show-overlay"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
+<?php }else{ ?>
+	<a <?php if($challenge['ClassSet']){ ?>style="display:none;"<?php } ?> onclick="$('#fieldValidate').show();return false;" class="btn2 btn-savecontinue aligncenter" id="create-challenge-validate"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
+	<a onclick="save_challenge_final();" <?php if(!$challenge['ClassSet']){ ?>style="display:none;"<?php } ?> class="btn2 btn-savecontinue aligncenter" id="create-challenge-now"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
+<?php } ?>
+
+<div style="display:none;">
+	<div id="modalGroupWarning" style="width:540px;height:255px;">
+		<div class="modal-box-head">
+			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><?php echo __('Warning!') ?></h2>
+		</div>
+
+		<div class="modal-box-content">
+			<?php
+			$warning_msg = __("You have not created any groups for this bridge, meaning <strong>each</strong> student will have to give feedback to <strong>every</strong> other student. There are a total of {student_count} students.\n\nWould you like to send this Bridge?");
+			$warning_msg = str_replace('{student_count}',$class_user_count,$warning_msg);
+			?>
+			<div style="text-align:center;margin:20px;"><?php echo nl2br($warning_msg); ?></div>	
+			<br />
+			<div style="width: 200px; margin: 0 auto; ">
+				<a href="#" class="btn2" style="width: 80px; float: left;" onclick="save_challenge_final();"><span><?php echo __('Send') ?></span></a>
+				<a href="#" class="btn3" style="width: 100px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Don\'t send yet') ?></span></a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div><!-- #modalExitChoices -->
+</div>
 
 
 <script type="text/javascript">
+if($('#collaboration_type').val()=='NONE') $('.btn4').hide();
 $(".show-overlay").fancybox({
 	'hideOnOverlayClick' : false,
 	'showCloseButton' : false,

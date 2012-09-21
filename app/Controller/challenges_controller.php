@@ -14,10 +14,8 @@ class ChallengesController extends AppController{
 		
 		if($status == 'd') $this->Challenge->hasMany['Status']['conditions'][] = 'Status.status = "D"';
 		elseif($status == 'c') $conditions[] = 'Challenge.status = "C" && Challenge.responses_due < CURDATE()';
-		if($_SESSION['User']['user_type'] != 'L'){
-			if(@$_SESSION['User']['date_created']) $conditions[] = 'Challenge.answers_due > "'. $_SESSION['User']['date_created'] . '"';
-			$conditions[] = 'Challenge.status != "D"';
-		}
+		if($_SESSION['User']['user_type'] != 'L') $conditions[] = 'Challenge.status != "D"';
+		if(@$_SESSION['User']['date_created']) $conditions[] = 'Challenge.answers_due > "'. $_SESSION['User']['date_created'] . '"';
 		
 		if(@$_REQUEST['sort']=='name') $sort = 'Challenge.name';
 		elseif(@$_REQUEST['sort']=='answer_date') $sort = 'Challenge.answers_due';
@@ -584,8 +582,13 @@ class ChallengesController extends AppController{
 					mail("{$s['User']['firstname']} {$s['User']['lastname']} <{$s['User']['email']}>",'Declined Bridge',nl2br($message),$headers);
 				}
 				
-				// delete instructor approval statuses (reset to 'draft' mode) and redirect to dashboard
+				// delete instructor approval statuses,reset to 'draft' mode and redirect to dashboard
 				$this->Status->deleteAll(array('Status.challenge_id'=>$challenge['Challenge']['id'],'Status.class_id IS NOT NULL'));
+				$this->Status->deleteAll(array('Status.challenge_id'=>$challenge['Challenge']['id'],'Status.user_id'=>$challenge['User']['id']));
+				$this->Group->deleteAll(array('Group.challenge_id'=>$challenge['Challenge']['id']));
+				$this->Challenge->query('delete from challenges_classes where challenge_id = '.$challenge['Challenge']['id']);
+				$this->Challenge->id = $challenge['Challenge']['id'];
+				$this->Challenge->saveField('status','D');
 				$this->redirect('/dashboard/');
 			}
 			$current_status = $status_record['Status']['status'] = $status;

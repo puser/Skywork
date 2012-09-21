@@ -19,7 +19,7 @@
 	<div class="box-content">
 <?php } ?>
 
-		<div id="preview-contract" <?php if($ajax){ ?>style="margin-left:-11px;display:inline-block;"<?php }else{ ?>style="text-align:center;"<?php } ?>>
+		<div id="preview-contract" <?php if($ajax){ ?>style="width:auto;display:inline-block;"<?php }else{ ?>style="text-align:center;"<?php } ?>>
 			<?php
 			if($attachment['Challenge']['challenge_type'] == 'VID') echo stripslashes($attachment['Attachment']['file_location']);
 			else{ ?>

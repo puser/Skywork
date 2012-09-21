@@ -7,6 +7,7 @@
 			<li><a class="icon icon4-student" href="/metrics/view_students/<?php echo $challenges[0]['Challenge']['id']; ?>/"><?php echo __('Students') ?></a></li>
 			<li><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenges[0]['Challenge']['id']; ?>/"><?php echo __('Question Activity') ?></a></li>
 			<li class="active"><a class="icon icon4-graph" href="#"><?php echo __('Charting') ?></a></li>
+			<li><a class="icon" href="/metrics/view_flags/<?php echo $challenges[0]['Challenge']['id']; ?>/"><?php echo __('Red Flags') ?></a></li>
 		</ul>
 	</div>
 </div>

@@ -17,7 +17,7 @@
 	</div>
 	<div class="modal-box-content">
 		
-		<?php if(!count($class['User'])){ ?>
+		<?php if(!count($class['User']) && !count($invited)){ ?>
 			<div style="text-align:center;margin:20px;"><?php echo __('There are no students in this class.') ?></div>
 		<?php }else{ ?>
 			<table class="table-type-1">
@@ -32,8 +32,24 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach($class['User'] as $k=>$u){ ?>
+					<?php 
+					$koffset = 0;
+					if(count($invited)){ 
+						foreach($invited as $k=>$s){ 
+							$koffset++;
+							$u = $s['User']; ?>
 					<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> id="groupMemberRow<?php echo $u['id']; ?>">
+						<td><?php echo $u['firstname']; ?></td>
+						<td><?php echo $u['lastname']; ?></td>
+						<td><?php echo $u['email']; ?></td>
+						<td><?php echo $u['city']; ?></td>
+						<td><?php echo $u['state']; ?></td>
+						<td>Request sent</td>
+					</tr>
+					<?php }} ?>
+					
+					<?php if(count($class['User'])){ foreach($class['User'] as $k=>$u){ ?>
+					<tr<?php if(!(($k+$koffset)%2)){ ?> class="alternate"<?php } ?> id="groupMemberRow<?php echo $u['id']; ?>">
 						<td><?php echo $u['firstname']; ?></td>
 						<td><?php echo $u['lastname']; ?></td>
 						<td><?php echo $u['email']; ?></td>
@@ -45,7 +61,7 @@
 							<?php } ?>
 						</td>
 					</tr>
-					<?php } ?>
+					<?php }} ?>
 				</tbody>
 			</table>
 		<?php } ?>

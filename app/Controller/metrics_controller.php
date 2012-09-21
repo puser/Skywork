@@ -158,6 +158,13 @@ class MetricsController extends AppController{
 		$this->set('max_comments',$max_comments);
 	}
 	
+	function view_flags($challenge_id){
+		$this->checkAuth();
+		
+		$challenge = $this->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id)));
+		$this->set('challenge',$challenge);
+	}
+	
 	function set_detail_session($v=0){
 		$this->checkAuth();
 		$this->Session->write('show_stats',$v);

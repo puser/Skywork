@@ -49,7 +49,7 @@
 					<li class="caseclub-tab tab-instructor<?php if(!@$_REQUEST['signup_error'] || @$_REQUEST['signup_type'] == 'L') echo ' active'; ?>">
 						<a href="#" onclick="join_show_instructor();return false;"><?php echo __('I\'m an Instructor') ?></a>
 					</li>
-					<li class="caseclub-tab tab-student<?php if(@$_REQUEST['signup_error'] == 'token') echo ' active'; ?>">
+					<li class="caseclub-tab tab-student<?php if(@$_REQUEST['signup_type'] == 'P') echo ' active'; ?>">
 						<a href="#" onclick="join_show_student();return false;"><?php echo __('I\'m a Student') ?></a>
 					</li>
 					<li class="caseclub-tab tab-collaborator<?php if(@$_REQUEST['signup_type'] == 'C') echo ' active'; ?>">
@@ -62,7 +62,7 @@
 			<div class="clear"></div>
 		</div><br />
 		
-		<form id="instructorJoinData" action="/users/login/" method="POST">
+		<form id="instructorJoinData" action="/users/login/" method="POST" <?php if(@$_REQUEST['signup_type'] && @$_REQUEST['signup_type'] != 'L') echo 'style="display:none;"'; ?>>
 			<input type="hidden" name="user_type" value="L" />
 			<ul class="fieldset2 joinForms">
 				<li>
@@ -82,8 +82,10 @@
 					<input type="password" name="password_confirm" />
 				</li>
 			</ul>
-			<?php if(@$_REQUEST['signup_error'] == 'fields' && @$_REQUEST['signup_type'] == 'L'){ ?>
-				<div class="signupError">Please enter a valid email address and password.</div>
+			<?php if(@$_REQUEST['signup_error'] == 'email' && @$_REQUEST['signup_type'] == 'L'){ ?>
+				<div class="signupError">Email already exists in system!</div>
+			<?php }elseif(@$_REQUEST['signup_error'] == 'pass' && @$_REQUEST['signup_type'] == 'L'){ ?>
+					<div class="signupError">Passwords do not match!</div>
 			<?php }elseif(@$_REQUEST['signup_error'] == 'key' && @$_REQUEST['signup_type'] == 'L'){ ?>
 					<div class="signupError">The beta key you provided is invalid.</div>
 			<?php } ?>
@@ -92,7 +94,7 @@
 			</div>
 		</form>
 		
-		<form id="studentJoinData" action="/users/login/" method="POST" style="display:none;">
+		<form id="studentJoinData" action="/users/login/" method="POST" <?php if(@$_REQUEST['signup_type'] != 'P') echo 'style="display:none;"'; ?>>
 			<input type="hidden" name="user_type" value="P" />
 			<ul class="fieldset2 joinForms">
 				<li>
@@ -117,14 +119,18 @@
 				</li>
 			</ul>
 			<?php if(@$_REQUEST['signup_error'] == 'token'){ ?>
-				<div class="signupError">The class token you entered is invalid. Please enter a different token.</div>
+				<div class="signupError">Class token/Instructor Email combination not recognized!</div>
+			<?php }elseif(@$_REQUEST['signup_error'] == 'email' && @$_REQUEST['signup_type'] == 'P'){ ?>
+				<div class="signupError">Email already exists in system!</div>
+			<?php }elseif(@$_REQUEST['signup_error'] == 'pass' && @$_REQUEST['signup_type'] == 'P'){ ?>
+					<div class="signupError">Passwords do not match!</div>
 			<?php } ?>
 			<div class="modalActionButtons">
 				<a href="#" onclick="$('#studentJoinData').submit();return false;" class="btn2 modalActionButton modalActionButtonSave"><span class="inner"><?php echo __('Log In') ?></span></a>
 			</div>
 		</form>
 		
-		<form id="collaboratorJoinData" action="/users/login/" method="POST" style="display:none;">
+		<form id="collaboratorJoinData" action="/users/login/" method="POST" <?php if(@$_REQUEST['signup_type'] != 'C') echo 'style="display:none;"'; ?>>
 			<input type="hidden" name="user_type" value="C" />
 			<ul class="fieldset2 joinForms">
 				<li>
@@ -144,8 +150,10 @@
 					<input type="password" name="password_confirm" />
 				</li>
 			</ul>
-			<?php if(@$_REQUEST['signup_error'] == 'fields' && @$_REQUEST['signup_type'] == 'C'){ ?>
-				<div class="signupError">Please enter a valid email address and password.</div>
+			<?php if(@$_REQUEST['signup_error'] == 'email' && @$_REQUEST['signup_type'] == 'C'){ ?>
+				<div class="signupError">Email already exists in system!</div>
+			<?php }elseif(@$_REQUEST['signup_error'] == 'pass' && @$_REQUEST['signup_type'] == 'C'){ ?>
+					<div class="signupError">Passwords do not match!</div>
 			<?php }elseif(@$_REQUEST['signup_error'] == 'key' && @$_REQUEST['signup_type'] == 'C'){ ?>
 					<div class="signupError">The beta key you provided is invalid.</div>
 			<?php } ?>
