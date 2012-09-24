@@ -8,7 +8,7 @@
 	</div>
 <?php } ?>
 
-<div id="bridgelist" class="rounded box-white" style="overflow:hidden;margin-left:25px;position:relative;">
+<div id="bridgelist" class="rounded box-white" style="overflow:hidden;margin-left:25px;position:relative;height:450px;">
 	<div class="box-head" style="width:944px;">
 		<h2><?php echo __('My Portfolio') ?></h2>
 		<div class="filterbox">

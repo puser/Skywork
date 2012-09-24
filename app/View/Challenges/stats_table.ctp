@@ -31,7 +31,7 @@
 					$idx = 0;
 					foreach($quality as $k=>$q){
 						$idx++;
-						if($idx > 6) break;
+						if($idx > 8) break;
 						?>
 						<tr<?php if($idx % 2){ ?> class="alternate"<?php } ?>>
 							<td class="col1"><?php echo $idx; ?>. <?php echo $k; ?></td>
@@ -40,12 +40,23 @@
 					<?php } ?>
 				</tbody>
 			</table>
+			
 			<?php if(date_create($challenge['Challenge']['responses_due']) < $now){ ?>
-				<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-highest-quality-more">
-					<img src="/images/arrow-right-red.png" /> <span><?php echo __('More Info') ?></span>
-				</a>
+				<?php if($_SESSION['User']['user_type'] == 'L'){ ?>
+					<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-highest-quality-more" style="display: block;text-align: center;padding-top: 10px;">
+						<img src="/images/graph-tiny.png" class="graphIcon" style="position: relative;top: 5px;" />
+						<span style="display: inline-block;padding: 2px 10px 0;"><?php echo __('Go To Metrics') ?></span><img src="/images/arrow-right-red.png" />
+					</a>
+				<?php }else{ ?>
+					<a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/0" class="studentwork-more" id="students-highest-quality-more" style="display: block;text-align: center;padding-top: 10px;">
+						<img src="/images/graph-tiny.png" class="graphIcon" style="position: relative;top: 5px;" />
+						<span style="display: inline-block;padding: 2px 10px 0;"><?php echo __('Go To Summary') ?></span><img src="/images/arrow-right-red.png" />
+					</a>
+				<?php } ?>
 			<?php } ?>
 		<?php } ?>
+		
+		<!-- DEPRECIATED PER v1.1.1b
 		
 		<table id="students-active-questions" class="table-type-1">
 			<thead>
@@ -81,6 +92,7 @@
 			<img src="/images/arrow-right-red.png" /> <span><?php echo __('More Info') ?></span>
 		</a>
 		<?php } ?>
+		-->
 		
 	</div>
 </div><!-- #home-leaderboard -->
