@@ -151,6 +151,10 @@
         }).keyup(function(){
           saveAnnotationFormWithFocus();
         });
+
+		formElement.find('li a').click(function(){
+			saveAnnotationFormWithFocus();
+		});
       }
       userDialog.append(formElement);
       _enableTextSelect(userDialog);

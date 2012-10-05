@@ -656,10 +656,14 @@ function set_stat_session(v){
 	$.ajax({url:'/metrics/set_detail_session/' + v});
 }
 
-function show_comment(rid,cid,e){
-	$('#responseBody' + rid + '_' + cid).show();
-	$('.comment_detail_' + cid).show();
-	$(e).parent().hide();
+function show_comment(rid,pid,cid,color,e){
+	$('#responseBody' + rid + '_' + pid).show();
+	$('.comment_detail_' + pid).show().removeClass('activeDetail');
+	$('#commentDetail_' + cid).addClass('activeDetail');
+	
+	$('.commentHighlight').css('background-color','#ccc');
+	$('#commentHighlight_' + cid).css('background-color',color);
+	if(e) $(e).parent().hide();
 }
 
 function hide_comment(rid,cid,e){

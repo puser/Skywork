@@ -64,8 +64,8 @@
 							<?php echo $challenge['Challenge']['name']; ?>
 						</a>
 					</td>
-					<td><?php echo date_format($a_date,'m/d/Y'); ?></td>
-					<td><?php echo date_format($r_date,'m/d/Y'); ?></td>
+					<td><?php echo date_format($a_date,'m/d/Y g:ia'); ?></td>
+					<td><?php echo date_format($r_date,'m/d/Y g:ia'); ?></td>
 					<td><?php echo date_format(date_create($challenge['Challenge']['date_modified']),'m/d/Y'); ?></td>
 					<td><?php echo @$challenge['User']['firstname'].' '.@$challenge['User']['lastname']; ?></td>
 					<td>

@@ -1,3 +1,12 @@
+<style type="text/css">
+.activeMarker {
+	width:15px;display:inline-block;position:absolute;opacity:.5;
+}
+.activeDetail {
+	background-color:#feffbd;
+}
+</style>
+
 <div id="assignmentDialog" style="display:none;text-align:center;"> </div>
 
 <div id="sidebarleft">
@@ -186,7 +195,7 @@
 										
 										if($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) continue;
 										
-										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',this);">&nbsp;</span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
+										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');" onmouseout="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',this);" class="commentMarker'.$k.'_'.$c['user_id'].'">&nbsp;</span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
 										
 										if(!$completed){
 											$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) + $start_offset + $k),
@@ -221,10 +230,10 @@
 										if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
 										
 										$mod_response[$c['user_id']] = substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']);
-										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:#CCC;">' . substr($mod_response[$c['user_id']],$c['segment_start']);
-										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseout="hide_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',this);">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); ?>
+										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start']);
+										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); ?>
 									<?php }foreach($mod_response as $kmr=>$mr){ ?>
-										<p onmouseout="hide_comments(<?php echo $k; ?>,this);" id="responseBody<?php echo $k; ?>_<?php echo $kmr.'_'.$k; ?>" style="display:none;">
+										<p id="responseBody<?php echo $k; ?>_<?php echo $kmr.'_'.$k; ?>" style="display:none;">
 											<?php echo nl2br($mr); ?>
 										</p>
 									<?php }
@@ -240,11 +249,15 @@
 						</li>
 					</ul>
 					<?php foreach(@$q['Response'][0]['Comment'] as $c){ ?>
-					<div class="question-comments <?php echo ($c['type'] ? 'like' : 'dislike'); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" style="display:none;margin-bottom:5px;">
+					<div class="question-comments <?php echo ($c['type'] ? 'like' : 'dislike'); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" id="commentDetail_<?php echo $c['id']; ?>" style="display:none;margin-bottom:5px;position:relative;" onmouseover="if(!$(this).hasClass('activeDetail')){ $(this).find('.studentwork-more').show(); }" onmouseout="$(this).find('.studentwork-more').hide();">
 						<p>
 							<span class="highlight-blue" style="background-color:<?php echo $user_colors[$c['user_id']]; ?> !important;"><?php echo "{$c['User']['firstname']} {$c['User']['lastname']}"; ?></span>
 							<?php echo stripslashes($c['comment']); ?>
 						</p>
+						
+						<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>');">
+							<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
+						</a>
 					</div>
 					<?php } ?>
 				</div>
@@ -417,11 +430,13 @@ function annotaterInit(cssSelector) {
 				$('.answer-comment-box').height(110);
 				$('.answer-comment-box').css('top','-145px');
 				$('.deleteComment').show();
+				$('.comment-submit .btn1 span').html('Save');
 				$('.answer-comment-box .close').removeClass('removeAnnotationBtn');
 			}else{
 				$('.answer-comment-box').height(90);
 				$('.answer-comment-box').css('top','-125px');
 				$('.deleteComment').hide();
+				$('.comment-submit .btn1 span').html('Comment');
 				$('.answer-comment-box .close').addClass('removeAnnotationBtn');
 			}
 			

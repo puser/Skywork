@@ -217,8 +217,8 @@ class ChallengesController extends AppController{
 			
 			// preprocess date/time inputs
 			if(@$_REQUEST['answers_due_hour']){
-				$_REQUEST['challenge']['Challenge']['answers_due'] = $_REQUEST['challenge']['Challenge']['answers_due'] . ' ' . ($_REQUEST['answers_due_meridian'] == 'AM' ? $_REQUEST['answers_due_hour'] : $_REQUEST['answers_due_hour'] + 12) . ':' . $_REQUEST['answers_due_minute'];
-				$_REQUEST['challenge']['Challenge']['responses_due'] = $_REQUEST['challenge']['Challenge']['responses_due'] . ' ' . ($_REQUEST['responses_due_meridian'] == 'AM' ? $_REQUEST['responses_due_hour'] : $_REQUEST['responses_due_hour'] + 12) . ':' . $_REQUEST['responses_due_minute'];
+				$_REQUEST['challenge']['Challenge']['answers_due'] = $_REQUEST['challenge']['Challenge']['answers_due'] . ' ' . ($_REQUEST['answers_due_meridian'] == 'AM' || $_REQUEST['answers_due_hour'] > 11 ? $_REQUEST['answers_due_hour'] : ($_REQUEST['answers_due_hour'] + 12)) . ':' . $_REQUEST['answers_due_minute'];
+				$_REQUEST['challenge']['Challenge']['responses_due'] = $_REQUEST['challenge']['Challenge']['responses_due'] . ' ' . ($_REQUEST['responses_due_meridian'] == 'AM' || $_REQUEST['responses_due_hour'] > 11 ? $_REQUEST['responses_due_hour'] : ($_REQUEST['responses_due_hour'] + 12)) . ':' . $_REQUEST['responses_due_minute'];
 			}
 			
 			$this->Challenge->save($_REQUEST['challenge']);

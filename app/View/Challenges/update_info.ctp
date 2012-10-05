@@ -25,6 +25,7 @@
 							<option value="AM" <?php echo (@$challenge && substr($challenge['Challenge']['answers_due'],11,2) <= 12 ? 'selected="selected"' : ''); ?>>AM</option>
 							<option value="PM" <?php echo (!@$challenge || substr($challenge['Challenge']['answers_due'],11,2) > 12 ? 'selected="selected"' : ''); ?>>PM</option>
 						<select>
+						<span style="position:relative;top: 2px;left: 6px;">EST</span>
 					</div>
 				</div>
 				<div class="col2">
@@ -41,6 +42,7 @@
 							<option value="AM" <?php echo (@$challenge && substr($challenge['Challenge']['responses_due'],11,2) <= 12 ? 'selected="selected"' : ''); ?>>AM</option>
 							<option value="PM" <?php echo (!@$challenge || substr($challenge['Challenge']['responses_due'],11,2) > 12 ? 'selected="selected"' : ''); ?>>PM</option>
 						<select>
+						<span style="position:relative;top: 2px;left: 6px;">EST</span>
 					</div>
 				</div>
 				<div class="clear"></div>

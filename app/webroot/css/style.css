@@ -297,9 +297,9 @@ a{ cursor:pointer; }
 #bridgelist .pagination-pages li.first-child a {border-right: none;}
 */
 #bridgetable .col1 {width: 400px; }
-#bridgetable .col2 {width: 130px; }
-#bridgetable .col3 {width: 130px; }
-#bridgetable .col4 {width: 130px; }
+#bridgetable .col2 {width: 135px; }
+#bridgetable .col3 {width: 135px; }
+#bridgetable .col4 {width: 120px; }
 #bridgetable .col5 {width: 130px; }
 #bridgetable .col6 {width: 60px; }
 
@@ -646,9 +646,9 @@ a.customize-link {display: block; padding-left: 25px; background: url('/images/i
 #bridgetable .cl-head li a {color: #00467f;}
 #bridgetable .cl-head li a img {position: relative; top: 4px; }
 #bridgetable .col1 {width: 390px;}
-#bridgetable .col2 {width: 120px;}
-#bridgetable .col3 {width: 120px;}
-#bridgetable .col4 {width: 120px;}
+#bridgetable .col2 {width: 125px;}
+#bridgetable .col3 {width: 125px;}
+#bridgetable .col4 {width: 110px;}
 #bridgetable .col5 {width: 130px;}
 #bridgetable .col6 {width: 40px;}
 #bridgetable .cl-body li {padding: 8px 6px;}

@@ -6,7 +6,7 @@
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
 	<link rel="stylesheet" media="all" href="/js/mcs/jquery.mCustomScrollbar.css" />
 	
-	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css?v=1" />
+	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css?v=4" />
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
@@ -21,7 +21,7 @@
 	<script type="text/javascript" src="/js/jquery.flip.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.ba-bbq.min.js"></script>
 	<script type="text/javascript" src="/js/mcs/jquery.mCustomScrollbar.js"></script>
-	<script type="text/javascript" src="/js/textAnnotater.js"></script>
+	<script type="text/javascript" src="/js/textAnnotater.js?v=2"></script>
 	<script type="text/javascript" src="/js/jquery.tablesorter.min.js"></script>
 
 	<script type="text/javascript" src="/js/custom.js" ></script>
