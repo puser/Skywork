@@ -11,7 +11,6 @@
 		
 		<?php
 		$now = date_create();
-		$now->setTime(0,0);
 		if($quality){ ?>
 			<table id="students-highest-quality" class="table-type-1">
 				<thead>

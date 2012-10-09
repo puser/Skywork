@@ -34,7 +34,7 @@ class ChallengesController extends AppController{
 		foreach(@$user['ClassSet'] as $g) $groups[$g['id']] = 1;
 		
 		$now = date_create();
-		$now->setTime(0,0);
+		//$now->setTime(0,0);
 		foreach($challenges as $k=>$c){
 			$vis = false;
 			foreach($c['ClassSet'] as $g){
@@ -202,7 +202,7 @@ class ChallengesController extends AppController{
 		else{
 			$answers_due = date_create($challenge['Challenge']['answers_due']);
 			$now = date_create();
-			$now->setTime(0,0);
+			//$now->setTime(0,0);
 			if($answers_due >= $now) $this->render('view');
 			else $this->render('view_responses');
 		}

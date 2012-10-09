@@ -188,3 +188,5 @@
 		</div>
 	</div><!-- #modalExitChoices -->
 </div>
+
+<!-- <?php echo date_format($now,'m/d/Y g:ia'); ?> -->
