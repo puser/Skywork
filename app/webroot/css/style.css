@@ -977,3 +977,7 @@ a.studentwork-more:hover span {display: inline; }
 	font-size:16px;
 	color:#666;
 }
+
+.errorEmail{
+	color:red;
+}
