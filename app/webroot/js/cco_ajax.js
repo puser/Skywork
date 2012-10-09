@@ -388,7 +388,10 @@ function show_group_members(g_id){
 
 function delete_class_member(g_id,u_id){
 	$('#groupMemberRow'+u_id).fadeOut();
-	$.ajax({url:'/classes/remove_member/'+g_id+'/'+u_id});
+	jQuery.fancybox.close();
+	$.ajax({url:'/classes/remove_member/'+g_id+'/'+u_id,success:function(r){
+		window.location = '/users/view/classes/';
+	}});
 }
 
 function class_invite_professor(c_id){

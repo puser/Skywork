@@ -58,7 +58,7 @@
 						$challenge_click = "alert('None of this challenge\'s other participants have met the response deadline.');return false;";
 					}else $challenge_click = '';
 					?>
-				<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?>>
+				<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.remove-class').show();" onmouseout="$(this).find('.remove-class').hide();">
 					<td>
 						<a href="/challenges/<?php echo ($challenge['Challenge']['status'] == 'D' ? 'update' : 'view') . '/' . $challenge['Challenge']['id'] . ($challenge['Challenge']['status'] == 'D' ? '#view=info' : ''); ?>" onclick="<?php echo $challenge_click; ?>">
 							<?php echo $challenge['Challenge']['name']; ?>
@@ -79,9 +79,11 @@
 					</td>
 					<td>
 						<?php if($_SESSION['User']['id'] == $challenge['Challenge']['user_id']){ ?>
-							<div class="remove-class" style="height:10px;">
-								<a href="#modalDeleteChoices" class="show-overlay remove-class-icon" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');"></a>
-								<a href="#modalDeleteChoices" class="show-overlay remove-class-link icon-close rounded2" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');"><?php echo __('Delete') ?></a>
+							<div style="width:32px;height:10px;">
+								<div class="remove-class" style="height:10px;display:none;">
+									<a href="#modalDeleteChoices" class="show-overlay remove-class-icon" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');"></a>
+									<a href="#modalDeleteChoices" class="show-overlay remove-class-link icon-close rounded2" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');"><?php echo __('Delete') ?></a>
+							</div>
 							</div>
 						<?php } ?>
 					</td>
