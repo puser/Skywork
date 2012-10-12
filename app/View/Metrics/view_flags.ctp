@@ -45,159 +45,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="alternate" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Student Lastname</td>
-							<td class="col2">15</td>
-							<td></td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;" onclick="$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Possible Plagarism</td>
-							<td class="col2">6</td>
-							<td class="col3">Flagged words used 6 times</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Explicit Language</td>
-							<td class="col2">3</td>
-							<td class="col3">"I think this is _____ stupid"</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Student Lastname</td>
-							<td class="col2">10</td>
-							<td></td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;" onclick="$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Possible Plagarism</td>
-							<td class="col2">6</td>
-							<td class="col3">Flagged words used 6 times</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Explicit Language</td>
-							<td class="col2">3</td>
-							<td class="col3">"I think this is _____ stupid"</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="alternate" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Student Lastname</td>
-							<td class="col2">3</td>
-							<td></td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;" onclick="$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Possible Plagarism</td>
-							<td class="col2">6</td>
-							<td class="col3">Flagged words used 6 times</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Explicit Language</td>
-							<td class="col2">3</td>
-							<td class="col3">"I think this is _____ stupid"</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Student Lastname</td>
-							<td class="col2">1</td>
-							<td></td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;" onclick="$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Possible Plagarism</td>
-							<td class="col2">6</td>
-							<td class="col3">Flagged words used 6 times</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Explicit Language</td>
-							<td class="col2">3</td>
-							<td class="col3">"I think this is _____ stupid"</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="alternate" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Student Lastname</td>
-							<td class="col2">1</td>
-							<td></td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;" onclick="$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Possible Plagarism</td>
-							<td class="col2">6</td>
-							<td class="col3">Flagged words used 6 times</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Explicit Language</td>
-							<td class="col2">3</td>
-							<td class="col3">"I think this is _____ stupid"</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Student Lastname</td>
-							<td class="col2">1</td>
+						<?php
+						$idx = 0;
+						$listed_users = array();
+						foreach($challenge['ClassSet'] as $c){
+							foreach($c['User'] as $u){
+								if(in_array($u['id'],$listed_users)) continue;
+								else $listed_users[] = $u['id'];
+								$idx++;
+								?>
+						<tr <?php if($idx % 2){ ?>class="alternate"<?php } ?> onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
+							<td class="col1"><?php echo $u['firstname'].' '.$u['lastname']; ?></td>
+							<td class="col2"><!-- 15 -->0</td>
 							<td></td>
 							<td class="col5">
 								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;" onclick="$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();">
@@ -226,7 +85,7 @@
 							</td>
 						</tr>
 					</tbody>
-					
+					<?php }} ?>
 				</table>
 			</div>
 		</div>
@@ -243,6 +102,73 @@
 
 <div class="clear"></div>
 
+
+<div style="display: none;">
+	<div id="modal-customize">
+		
+		<div id="modal-customize-box" class="modal-wrapper" style="width: 600px;" >
+			
+			<div class="modal-box-head">
+				<span class="icon icon-customize"></span>
+				<h2><span><?php echo __('Customize') ?></span></h2>
+			</div>
+			<div class="modal-box-content">
+				<table class="table-type-1">
+					<thead>
+						<tr>
+							<th width="200"><?php echo __('Flag Name') ?></th>
+							<th><?php echo __('Created') ?></th>
+							<th><?php echo __('Last Edit') ?></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="alternate">
+							<td>Explicit Language</td>
+							<td>05/10/2012</td>
+							<td></td>
+							<td>
+								<div class="item-actions">
+									<a href="#" class="item-actions-icon"></a>
+									<div class="item-actions-popup rounded2">
+										<ul><li><a href="#" class="icon3 icon3-pen modal-link" style="width:35px;">Edit</a></li></ul>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Word Overuse Warning</td>
+							<td>05/10/2012</td>
+							<td></td>
+							<td>
+								<div class="item-actions">
+									<a href="#" class="item-actions-icon"></a>
+									<div class="item-actions-popup rounded2">
+										<ul><li><a href="/word_flags/view/" class="icon3 icon3-pen modal-link" style="width:35px;">Edit</a></li></ul>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr class="alternate">
+							<td>Phrase Flag</td>
+							<td>05/10/2012</td>
+							<td></td>
+							<td>
+								<div class="item-actions">
+									<a href="#" class="item-actions-icon"></a>
+									<div class="item-actions-popup rounded2">
+										<ul><li><a href="#" class="icon3 icon3-pen modal-link" style="width:35px;">Edit</a></li></ul>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+</div>
 
 
 <script type="text/javascript">

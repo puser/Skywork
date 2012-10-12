@@ -161,7 +161,7 @@ class MetricsController extends AppController{
 	function view_flags($challenge_id){
 		$this->checkAuth();
 		
-		$challenge = $this->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id)));
+		$challenge = $this->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id),'recursive'=>2));
 		$this->set('challenge',$challenge);
 	}
 	

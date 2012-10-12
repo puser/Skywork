@@ -112,7 +112,28 @@
 			<input type="checkbox" name="challenge[Challenge][allow_attachments]" value="1"<?php if(@$challenge['Challenge']['allow_attachments']){ ?> checked="checked"<?php } ?> />
 			<?php echo __('Allow students to attach documents, photos, etc.') ?>
 		</p>
-		<p class="label"><?php echo __('Anonymous') ?></p>
+		
+		<br />
+		<p class="label" style="font-size:13px;"><?php echo __('Assignment Length (Min / Max)') ?></p>
+		<p class="input">
+			<input type="checkbox" id="min_length" onchange="setTimeout('check_min_length()',10);" <?php if(!@$challenge || @$challenge['Challenge']['min_response_length']) echo 'checked="checked"'; ?> />&nbsp;
+			<span id="min_length_input" style="display:none;">
+				<input type="text" name="challenge[Challenge][min_response_length]" style="width:40px;" value="<?php echo @$challenge['Challenge']['min_response_length']; ?>" />&nbsp;
+				<strong>Minimum</strong> words required for each question to be considered complete.
+			</span>
+			<span id="min_length_disabled">No minimum words required for each question</span><br />
+			
+			<input type="checkbox" id="max_length" onchange="setTimeout('check_max_length()',10);" <?php if(@$challenge['Challenge']['max_response_length']) echo 'checked="checked"'; ?> />&nbsp;
+			<span id="max_length_input" style="display:none;">
+				<input type="text" name="challenge[Challenge][max_response_length]" style="width:40px;" value="<?php echo @$challenge['Challenge']['max_response_length']; ?>" />&nbsp;
+				<strong>Maximum</strong> words allowed for each question.<br />
+				<input type="checkbox" name="challenge[Challenge][allow_exceeded_length]" style="margin-left:30px;" /> Allow students to pass maximum; create a red flag when they do.
+			</span>
+			<span id="max_length_disabled">No maximum word count for each question</span><br />
+		</p>
+				
+		<br />
+		<p class="label" style="font-size:13px;"><?php echo __('Anonymous') ?></p>
 		<p class="input">
 			<input type="checkbox" name="challenge[Challenge][anonymous]" value="1"<?php if(@$challenge['Challenge']['anonymous']) echo ' checked="checked"'; ?> />
 			<?php echo __('Apply as anonymous (Assignment won\'t display names)') ?>
@@ -140,4 +161,29 @@ else $('#compose_essay').remove();
 
 if($('#challenge_type').val() == 'VID') $('#add_document').remove();
 else $('#add_youtube').remove();
+
+function check_max_length(){
+	if($('#max_length').attr('checked')){
+		$('#max_length_input').show();
+		$('#max_length_disabled').hide();
+	}else{
+		$('#max_length_input').hide();
+		$('#max_length_disabled').show();
+		$('#max_length_input input').val('');
+	}
+}
+
+function check_min_length(){
+		if($('#min_length').attr('checked')){
+			$('#min_length_input').show();
+			$('#min_length_disabled').hide();
+		}else{
+			$('#min_length_input').hide();
+			$('#min_length_disabled').show();
+			$('#min_length_input input').val('');
+		}
+}
+
+check_max_length();
+check_min_length();
 </script>
