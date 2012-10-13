@@ -17,7 +17,7 @@
 	
 	<div class="actionmenu">
 		<ul>
-			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?><li class="action-preview"><a href="/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>"><?php echo __('Assignment') ?></a></li><?php } ?>
+			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?><li class="action-preview"><a onclick="save_response();" href="/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>"><?php echo __('Assignment') ?></a></li><?php } ?>
 			<li class="action-save"><a href="#" onclick="save_response();return false;"><?php echo __('Save') ?></a></li>
 			<li class="action-exit"><a href="#modalExitChoices" class="show-overlay"><?php echo __('Exit') ?></a></li>
 		</ul>

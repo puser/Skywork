@@ -23,7 +23,7 @@
 	</div>
 	
 	<div class="box-content">
-		<table id="bridgetable" style="width:954px;">
+		<table id="bridgetable" style="width:938.5px; margin-left:7px;">
 			<thead>
 				<tr>
 					<th class="col1"><a href="/dashboard/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Bridge Name') ?></a></th>

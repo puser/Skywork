@@ -6,7 +6,7 @@
 			<?php if(@$_REQUEST['fromEmail']){ ?>
 				<a style="cursor:pointer;" href="/challenges/view/<?php echo $attachment['Challenge']['id']; ?>" class="btn3"><span><?php echo __('Go to Questions') ?></span></a>
 			<?php }else{ ?>
-				<a style="cursor:pointer;" onclick="window.history.go(-1);" class="btn3"><span><?php echo __('Back') ?></span></a>
+				<a style="cursor:pointer;" onclick="javascript:history.back(-1);" class="btn3"><span><?php echo __('Back') ?></span></a>
 			<?php } ?>
 		</div>
 		<div class="assignment-name alignright">
