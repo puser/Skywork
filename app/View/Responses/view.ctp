@@ -288,7 +288,7 @@
 
 <div style="display:none;">
 	<div id="modalSaveChoices" style="height:220px;overflow:hidden;">
-		<div class="box-heading">
+		<div class="box-heading modal-box-head1">
 			<span class="icon icon-star"></span>
 			<h2 class="page-subtitle label-text"><?php echo __('Congratulations!') ?></h2>
 		</div>

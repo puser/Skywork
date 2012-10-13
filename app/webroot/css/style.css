@@ -769,6 +769,7 @@ a.studentwork-more:hover span {display: inline; }
  * Modal
  */
 .modal-box-head {display: block; padding: 0 10px 5px 10px; border-bottom: 1px solid #e6e6e6; margin-bottom: 10px; }
+.modal-box-head1 {border-bottom: 1px solid #e6e6e6;}
 .modal-box-head .icon, .modal-box-head .icon3,  .modal-box-head .icon5 {float: left; width: 35px; height: 35px; margin-right: 10px; background-position: top left; background-repeat: no-repeat; }
 .modal-box-head .icon, .modal-box-head .icon5 {background-position: left center; }
 .modal-box-head h2 {padding-top: 5px; }
