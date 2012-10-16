@@ -118,7 +118,7 @@
 <?php } ?>
 
 <div style="display:none;">
-	<div id="modalGroupWarning" style="width:540px;height:255px;">
+	<div id="modalGroupWarning" style="width:540px;height:260px;">
 		<div class="modal-box-head">
 			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><?php echo __('Warning!') ?></h2>
 		</div>
