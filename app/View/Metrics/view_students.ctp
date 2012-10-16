@@ -80,24 +80,24 @@
 										<td class="col1"><a class="modal-link" href="#modal-collaborators"><?php echo "{$u['firstname']} {$u['lastname']}"; ?></a></td>
 										<td class="col2">
 											<div class="activity-level activity-level-blue">
-												<span style="width: <?php echo (($activity[$u['id']]['completion'] / count($activity[$u['id']]['challenges'])) * 100); ?>%"></span>
+												<span style="width: <?php if(($activity[$u['id']]['completion'] / count($activity[$u['id']]['challenges'])) * 100 < 100){echo (($activity[$u['id']]['completion'] / count($activity[$u['id']]['challenges'])) * 100); }else{ echo 100;} ?>%"></span>
 											</div>
-											<div class="activity-level-percentage"><?php echo round(($activity[$u['id']]['completion'] / count($activity[$u['id']]['challenges'])) * 100); ?>%</div>
+											<div class="activity-level-percentage"><?php if(round(($activity[$u['id']]['completion'] / count($activity[$u['id']]['challenges'])) * 100) < 100){ echo round(($activity[$u['id']]['completion'] / count($activity[$u['id']]['challenges'])) * 100); }else{ echo 100; } ?>%</div>
 											<div class="clear"></div>
 										</td>
 										<td class="col3">
 											<div class="activity-level activity-level-red">
-												<span style="width: <?php echo ($quality[$u['id']][0] ? (100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0); ?>%"></span>
+												<span style="width: <?php if(($quality[$u['id']][0] ? (100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0) <100){echo ($quality[$u['id']][0] ? (100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0); }else{ echo 100; }?>%"></span>
 											</div>
-											<div class="activity-level-percentage"><?php echo ($quality[$u['id']][0] ? round(100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0); ?>%</div>
+											<div class="activity-level-percentage"><?php if(($quality[$u['id']][0] ? round(100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0)<100){ echo ($quality[$u['id']][0] ? round(100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0); }else{ echo 100; } ?>%</div>
 											<div class="clear"></div>
 										</td>
 										<td class="col4">
 											<div class="activity-level">
-												<span style="width: <?php echo (((((($activity[$u['id']]['keys'] / count($activity[$u['id']]['challenges'])) - $min_keystrokes) / ($max_keystrokes ? $max_keystrokes : 1)) + ((($activity[$u['id']]['comments'] / count($activity[$u['id']]['challenges'])) - $min_comments) / ($max_comments ? $max_comments : 1))) / 2) * 100); ?>%"></span>
+												<span style="width: <?php if((((((($activity[$u['id']]['keys'] / count($activity[$u['id']]['challenges'])) - $min_keystrokes) / ($max_keystrokes ? $max_keystrokes : 1)) + ((($activity[$u['id']]['comments'] / count($activity[$u['id']]['challenges'])) - $min_comments) / ($max_comments ? $max_comments : 1))) / 2) * 100)<100){echo (((((($activity[$u['id']]['keys'] / count($activity[$u['id']]['challenges'])) - $min_keystrokes) / ($max_keystrokes ? $max_keystrokes : 1)) + ((($activity[$u['id']]['comments'] / count($activity[$u['id']]['challenges'])) - $min_comments) / ($max_comments ? $max_comments : 1))) / 2) * 100); }else{ echo 100; } ?>%"></span>
 											</div>
 											<div class="activity-level-percentage">
-												<?php echo round(((((($activity[$u['id']]['keys'] / count($activity[$u['id']]['challenges'])) - $min_keystrokes) / ($max_keystrokes ? $max_keystrokes : 1)) + ((($activity[$u['id']]['comments'] / count($activity[$u['id']]['challenges'])) - $min_comments) / ($max_comments ? $max_comments : 1))) / 2) * 100); ?>%
+												<?php if(round(((((($activity[$u['id']]['keys'] / count($activity[$u['id']]['challenges'])) - $min_keystrokes) / ($max_keystrokes ? $max_keystrokes : 1)) + ((($activity[$u['id']]['comments'] / count($activity[$u['id']]['challenges'])) - $min_comments) / ($max_comments ? $max_comments : 1))) / 2) * 100) < 100){echo round(((((($activity[$u['id']]['keys'] / count($activity[$u['id']]['challenges'])) - $min_keystrokes) / ($max_keystrokes ? $max_keystrokes : 1)) + ((($activity[$u['id']]['comments'] / count($activity[$u['id']]['challenges'])) - $min_comments) / ($max_comments ? $max_comments : 1))) / 2) * 100);}else{echo 100;} ?>%
 											</div>
 											<div class="clear"></div>
 										</td>
