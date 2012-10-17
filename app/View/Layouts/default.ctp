@@ -54,7 +54,13 @@
 			<div id="logo"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>"></a></div>
 			<?php if(@$_SESSION['User']['id']){ ?>
 			<div id="topmenu">
-				<span class="user-name"><a><?php echo (strlen($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) > 17 ? substr($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname'],0,15).'...' : "{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']}"); ?></a></span>
+				<span class="user-name"><a>
+				<?php 
+					if($_SESSION['User']['firstname'] != ''){
+						echo (strlen($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) > 17 ? substr($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname'],0,15).'...' : "{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']}");
+					}else{
+						echo __('No Name');
+					}?></a></span>
 				<span class="user-home"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>"><?php echo __('Home') ?></a></span>
 				<span class="user-account"><a href="/users/view/"><?php echo __('My Account') ?></a></span>
 				<span class="user-logout"><a href="#logoutModal" class="show-overlay"><?php echo __('Logout') ?></a></span>
