@@ -43,7 +43,7 @@ msgid "Hi {firstname}!\n\nThe Bridge {bridge_name} is set to expire today at {ex
 msgstr ""
 
 #: Controller/users_controller.php:138
-msgid "{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world’s first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team"
+msgid "{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team"
 msgstr ""
 
 #: Controller/users_controller.php:145

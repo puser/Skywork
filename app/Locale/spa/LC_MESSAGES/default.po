@@ -16,7 +16,7 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 
 #: Controller/users_controller.php:135
-msgid "{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world’s first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team"
+msgid "{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team"
 msgstr "{first_name_1},\n\n{first_name_2} le invita a que participe en Puentes Online - el primer sistema de feedback del mundo. Quiere que se unan las clases, {classname}. \n\n{begin_link}¡Haga clic aquí para empezar!{end_link}\n\nSaludos,\n\nEl equipo de Puentes"
 
 #: Controller/users_controller.php:142

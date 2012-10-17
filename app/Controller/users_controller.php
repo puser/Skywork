@@ -3,6 +3,8 @@ class UsersController extends AppController{
 	var $name = 'Users';
 	var $uses = array('User','ClassSet','Status','State');
 	
+
+
 	// view account settings
 	function view($show=NULL,$saved=false){
 		$this->checkAuth();
@@ -135,7 +137,7 @@ class UsersController extends AppController{
 			// build invite url & message body
 			$invite_url = 'http://puentesonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
 			
-			$message = __("{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world’s first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team");
+			$message = __("{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team");
 			$message = str_replace('{first_name_1}',$fname,$message);
 			$message = str_replace('{first_name_2}',$class['Owner']['firstname'],$message);
 			$message = str_replace('{classname}',$class['ClassSet']['group_name'],$message);
