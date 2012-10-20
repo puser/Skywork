@@ -25,7 +25,7 @@
 	<script type="text/javascript" src="/js/jquery.tablesorter.min.js"></script>
 
 	<script type="text/javascript" src="/js/custom.js" ></script>
-	<script type="text/javascript" src="/js/cco_ajax.js?v=2" ></script>
+	<script type="text/javascript" src="/js/cco_ajax.js?v=3" ></script>
 	
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">

@@ -212,7 +212,7 @@
 										
 										if($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) continue;
 										
-										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent());" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
+										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
 										
 										if(!$completed){
 											$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) + $start_offset + $k),
@@ -246,7 +246,7 @@
 										if($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) continue; 
 										if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
 										
-										$mod_response[$c['user_id']] = substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']);
+										$mod_response[$c['user_id']] = $c['segment_start'] + $c['segment_length'] > strlen($mod_response[$c['user_id']]) || $c['segment_length'] < 0 ? ($mod_response[$c['user_id']] . '</span>') : (substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']));
 										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start']);
 										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); ?>
 									<?php }foreach($mod_response as $kmr=>$mr){ ?>
@@ -274,7 +274,7 @@
 							<?php echo stripslashes($c['comment']); ?>
 						</p>
 						
-						<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>');">
+						<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="setTimeout(function(){ show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>'); },15);">
 							<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
 						</a>
 					</div>
