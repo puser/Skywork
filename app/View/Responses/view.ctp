@@ -36,9 +36,10 @@
 					$this_group = array_pop($challenge[0]['Group']);
 					foreach($this_group['User'] as $u){ ?>
 						<li class="userNav<?php if($u['id'] == $user_id){ ?> active<?php } ?>" id="userNav<?php echo $u['id']; ?>">
-							<a href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-								<?php echo $u['firstname'].' '.$u['lastname']; ?>
-							</a>
+							<div id='show_text_trimed' style='display:none'><?php if(strlen($u['firstname'].' '.$u['lastname'])>20){ echo substr($u['firstname'].' '.$u['lastname'], 0, 20).'...'; }else{ echo $u['firstname'].' '.$u['lastname']; } ?></div>
+							<a class='trim_text' href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
+								<?php if(strlen($u['firstname'].' '.$u['lastname'])>20){echo substr($u['firstname'].' '.$u['lastname'], 0, 20).'...';}else{ echo $u['firstname'].' '.$u['lastname']; } ?>
+							</a><div id='show_text' style='display:none'><?php echo $u['firstname'].' '.$u['lastname']; ?></div>
 						</li>
 					<?php }
 				}else{
@@ -306,6 +307,14 @@
 
 <script type="text/javascript">
 $(document).ready(function(){	
+	
+	$("#sidemenu a").mouseenter(function () {
+		$(this).html($(this).next("#show_text").text());
+	});
+	$("#sidemenu a").mouseout(function() {
+		$(this).html($(this).prev("#show_text_trimed").text());
+	});
+
 	<?php if(!$user_id){ ?>
 		$("#sidemenu2 li:first-child a.sidemenu2-title").trigger("click");
 	<?php }if($user_id==='0'){ ?>
