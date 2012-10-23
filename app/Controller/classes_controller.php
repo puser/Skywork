@@ -79,7 +79,7 @@ class ClassesController extends AppController{
 			
 			if($group['Owner']['notify_groups']){
 				// notify group leader
-				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your class {$group['ClassSet']['group_name']}, on Puentes Online - the world’s first feedback learning system.";
+				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your class {$group['ClassSet']['group_name']}, on Puentes Online - the world's first feedback learning system.";
 				$message .= "\n\n<a href='http://puentesonline.com/users/view/groups/'>Click here to Accept or Decline</a>";
 				$message .= "\n\nSincerely,\n\nThe Puentes Team";
 		
