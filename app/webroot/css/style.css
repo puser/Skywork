@@ -246,7 +246,7 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
  * Logo 
  */
 #logo {position: absolute; top: 13px; left: 30px;}
-#logo a {display:block; width: 391px; height: 46px; background: url("/images/logo.png") no-repeat;}
+#logo a {display:block; margin-left: 13px; width: 391px; height: 46px; background: url("/images/logo.png") no-repeat;}
 
 
 /**
@@ -286,8 +286,8 @@ a{ cursor:pointer; }
 .page-index #body {padding-top: 40px; }
 
 #startbridge {width: 450px; margin: 0 0 10px 25px; }
-#startbridge h2 {padding: 5px 5px 5px 10px; display: block; width: 200px; margin: 0; }
-#startbridge .btn1 {float: right;  position: relative; top: -3px; }
+#startbridge h2 {padding: 5px 5px 5px 10px; display: block; width: 200px; margin: 0; margin-top: 3px;}
+#startbridge .btn1 {float: right;  position: relative; top: 0px; }
 #startbridge .btn1 span{padding: 0 20px 0 16px;}
 
 #bridgelist {width: 954px; margin: 0 auto; margin-bottom: 30px; display: block; }

@@ -59,7 +59,7 @@
 					if($_SESSION['User']['firstname'] != ''){
 						echo (strlen($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) > 17 ? substr($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname'],0,15).'...' : "{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']}");
 					}else{
-						echo __('No Name');
+						echo __($_SESSION['User']['email']);
 					}?></a></span>
 				<span class="user-home"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>"><?php echo __('Home') ?></a></span>
 				<span class="user-account"><a href="/users/view/"><?php echo __('My Account') ?></a></span>
