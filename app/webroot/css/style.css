@@ -337,7 +337,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 #sidemenu li:last-child a , #sidemenu li.last-child a, #sidemenu li:last-child span.no-link, #sidemenu li.last-child span.no-link {}
 #sidemenu li span.no-link {font-weight: normal; color: #808080; }
 #sidemenu li.active a {border-left: 4px solid #f5866c; }
-#sidemenu li.active a {background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 56px; }
+#sidemenu li.active a {background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 10px; width: 160px; }
 #sidemenu li.active a.no-icon {padding-left: 10px; width: 156px; }
 #sidemenu li ul {display: none; position: relative; top: 8px; }
 #sidemenu li li {}
