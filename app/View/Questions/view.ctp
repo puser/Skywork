@@ -1,6 +1,6 @@
 <div class="box-head">
 	<span class="icon2 icon2-listcountgreen"><?php echo $q_num; ?></span>
-	<h2 ><?php echo stripslashes($question['Question']['section']); ?></h2>
+	<h2 ><?php echo 'Question '.$q_num; //stripslashes($question['Question']['section']); ?></h2>
 	<div class="clear"></div>
 </div>
 <div class="box-content">

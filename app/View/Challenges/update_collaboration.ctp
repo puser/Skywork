@@ -19,8 +19,8 @@
 				</div>
 			</li>
 		</ul>
-		
-		<a onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'NONE'}});"><?php echo __('I want to skip the student collaboration') ?></a>
+		<p>Would you like to skip the student collaboration?</p><br/>
+		<a onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'NONE'}});"><u><?php echo __('Skip the student collaboration (you will still be able to grade)') ?></u></a>
 	</div>
 </div>
 

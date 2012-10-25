@@ -246,7 +246,7 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
  * Logo 
  */
 #logo {position: absolute; top: 13px; left: 30px;}
-#logo a {display:block; width: 391px; height: 46px; background: url("/images/logo.png") no-repeat;}
+#logo a {display:block; margin-left: 13px; width: 391px; height: 46px; background: url("/images/logo.png") no-repeat;}
 
 
 /**
@@ -286,8 +286,8 @@ a{ cursor:pointer; }
 .page-index #body {padding-top: 40px; }
 
 #startbridge {width: 450px; margin: 0 0 10px 25px; }
-#startbridge h2 {padding: 5px 5px 5px 10px; display: block; width: 200px; margin: 0; }
-#startbridge .btn1 {float: right;  position: relative; top: -3px; }
+#startbridge h2 {padding: 5px 5px 5px 10px; display: block; width: 200px; margin: 0; margin-top: 3px;}
+#startbridge .btn1 {float: right;  position: relative; top: 0px; }
 #startbridge .btn1 span{padding: 0 20px 0 16px;}
 
 #bridgelist {width: 954px; margin: 0 auto; margin-bottom: 30px; display: block; }
@@ -337,7 +337,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 #sidemenu li:last-child a , #sidemenu li.last-child a, #sidemenu li:last-child span.no-link, #sidemenu li.last-child span.no-link {}
 #sidemenu li span.no-link {font-weight: normal; color: #808080; }
 #sidemenu li.active a {border-left: 4px solid #f5866c; }
-#sidemenu li.active a {background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 56px; }
+#sidemenu li.active a {background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 10px; width: 160px; }
 #sidemenu li.active a.no-icon {padding-left: 10px; width: 156px; }
 #sidemenu li ul {display: none; position: relative; top: 8px; }
 #sidemenu li li {}
