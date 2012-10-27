@@ -52,10 +52,11 @@
 				<?php if($challenge[0]['Group']){
 					$this_group = array_pop($challenge[0]['Group']);
 					foreach($this_group['User'] as $u){ ?>
-						<li class="userNav<?php if($u['id'] == $user_id){ ?> active-name<?php }else{ ?> name<?php } ?>" id="userNav<?php echo $u['id']; ?>">
+						<li class="userNav<?php if($u['id'] == $user_id){ ?> active-name<?php }else{ ?> name<?php } ?>" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
 							<a href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-								<?php echo $u['firstname'].' '.$u['lastname'];  ?>
-							</a></div>
+								<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+								<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
+							</a>
 						</li>
 					<?php }
 				}else{
@@ -65,9 +66,10 @@
 							<ul>
 								<?php foreach($c['User'] as $u){
 									if($u['id'] == $challenge[0]['Challenge']['user_id']) continue; ?>
-									<li class="userNav" id="userNav<?php echo $u['id']; ?>">
+									<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
 										<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-											<?php echo $u['firstname'].' '.$u['lastname']; ?>
+												<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+												<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
 										</a>
 										<?php if($u['id'] == $user_id){ ?>
 											<script type="text/javascript">
@@ -97,9 +99,10 @@
 							<ul>
 								<?php foreach($g['User'] as $u){
 									if($u['id'] == $_SESSION['User']['id']) continue; ?>
-									<li class="userNav" id="userNav<?php echo $u['id']; ?>">
+									<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
 										<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-											<?php echo $u['firstname'].' '.$u['lastname']; ?>
+											<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+											<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
 										</a>
 										<?php if($u['id'] == $user_id){ ?>
 											<script type="text/javascript">
@@ -120,9 +123,10 @@
 							<ul>
 								<?php foreach($c['User'] as $u){
 									if($u['id'] == $_SESSION['User']['id']) continue; ?>
-									<li class="userNav" id="userNav<?php echo $u['id']; ?>">
+									<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
 										<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-											<?php echo $u['firstname'].' '.$u['lastname']; ?>
+											<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+											<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
 										</a>
 										<?php if($u['id'] == $user_id){ ?>
 											<script type="text/javascript">
