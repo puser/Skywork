@@ -107,7 +107,7 @@
 					<input type="text" name="instructor_email" id="email5"/>
 				</li>
 				<li>
-					<label><?php echo __('Preferred Email') ?><span class="small">(Username)</span></label>
+					<label><?php echo __('School Email') ?><span class="small">(Username)</span></label>
 					<input type="text" name="login" id="email2" />
 				</li>
 				<li>

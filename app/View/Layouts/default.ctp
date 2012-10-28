@@ -5,8 +5,8 @@
 	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
 	<link rel="stylesheet" media="all" href="/js/mcs/jquery.mCustomScrollbar.css" />
-	
-	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css?v=4" />
+	<?php echo $this->Html->meta('favicon.ico',    '/favicon.ico',    array('type' => 'icon'));?> 
+	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css?v=5" />
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
@@ -25,7 +25,7 @@
 	<script type="text/javascript" src="/js/jquery.tablesorter.min.js"></script>
 
 	<script type="text/javascript" src="/js/custom.js" ></script>
-	<script type="text/javascript" src="/js/cco_ajax.js?v=2" ></script>
+	<script type="text/javascript" src="/js/cco_ajax.js?v=3" ></script>
 	
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">
@@ -54,7 +54,13 @@
 			<div id="logo"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>"></a></div>
 			<?php if(@$_SESSION['User']['id']){ ?>
 			<div id="topmenu">
-				<span class="user-name"><a><?php echo (strlen($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) > 17 ? substr($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname'],0,15).'...' : "{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']}"); ?></a></span>
+				<span class="user-name"><a>
+				<?php 
+					if($_SESSION['User']['firstname'] != ''){
+						echo (strlen($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) > 17 ? substr($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname'],0,15).'...' : "{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']}");
+					}else{
+						echo __($_SESSION['User']['email']);
+					}?></a></span>
 				<span class="user-home"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>"><?php echo __('Home') ?></a></span>
 				<span class="user-account"><a href="/users/view/"><?php echo __('My Account') ?></a></span>
 				<span class="user-logout"><a href="#logoutModal" class="show-overlay"><?php echo __('Logout') ?></a></span>

@@ -21,7 +21,7 @@
 		<br /><br />
 		<div class="clear"></div>
 		<div style="width: 200px; margin: 0 auto; ">
-			<a href="#" class="btn2" style="width: 80px; float: left;" onclick="class_invite_student(<?php echo $class['ClassSet']['id']; ?>); jQuery.fancybox.close(); return false; "><span><?php echo __('Add') ?></span></a>
+			<a href="#" class="btn2" style="width: 80px; float: left;" onclick="class_invite_student(<?php echo $class['ClassSet']['id']; ?>); $('#edit_student_<?php echo $class['ClassSet']['id']; ?>').click(); return false; "><span><?php echo __('Add') ?></span></a>
 			<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 			<div class="clear"></div>
 		</div>

@@ -3,6 +3,8 @@ class UsersController extends AppController{
 	var $name = 'Users';
 	var $uses = array('User','ClassSet','Status','State');
 	
+
+
 	// view account settings
 	function view($show=NULL,$saved=false){
 		$this->checkAuth();
@@ -135,7 +137,7 @@ class UsersController extends AppController{
 			// build invite url & message body
 			$invite_url = 'http://puentesonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
 			
-			$message = __("{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world’s first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team");
+			$message = __("{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team");
 			$message = str_replace('{first_name_1}',$fname,$message);
 			$message = str_replace('{first_name_2}',$class['Owner']['firstname'],$message);
 			$message = str_replace('{classname}',$class['ClassSet']['group_name'],$message);
@@ -214,11 +216,11 @@ class UsersController extends AppController{
 	function login($ajax=false){
 		if((@$_REQUEST['betakey'] == 'BETATEST' && @$_REQUEST['user_type'] == 'L') || (@$_REQUEST['betakey'] == 'BETACOLLAB' && @$_REQUEST['user_type'] == 'C')){
 			if(!@$_REQUEST['password'] || @$_REQUEST['password'] != @$_REQUEST['password_confirm']) $this->redirect('/login/?signup_error=pass&signup_type='.$_REQUEST['user_type']);
-			elseif(!@$_REQUEST['login'] || $this->User->findByEmail($_REQUEST['login'])) $this->redirect('/login/?signup_error=email&signup_type='.$_REQUEST['user_type']);
+			elseif(!@$_REQUEST['login'] || $this->User->findByEmail(strtolower($_REQUEST['login']))) $this->redirect('/login/?signup_error=email&signup_type='.$_REQUEST['user_type']);
 			
 			$new_user = array(	'User' =>
-													array(	'email'				=> $_REQUEST['login'],
-																	'login'				=> $_REQUEST['login'],
+													array(	'email'				=> strtolower($_REQUEST['login']),
+																	'login'				=> strtolower($_REQUEST['login']),
 																	'user_type'		=> $_REQUEST['betakey'] == 'BETATEST' ? 'L' : 'C',
 																	'firstname'		=> '',
 																	'lastname'		=> '',
@@ -236,11 +238,11 @@ class UsersController extends AppController{
 			$instructor = $this->User->findByEmail(@$_REQUEST['instructor_email']);
 			if(!@$class['ClassSet']['id'] || @$class['ClassSet']['owner_id'] != $instructor['User']['id']) $this->redirect('/login/?signup_error=token&signup_type='.$_REQUEST['user_type']);
 			elseif(!@$_REQUEST['password'] || @$_REQUEST['password'] != @$_REQUEST['password_confirm']) $this->redirect('/login/?signup_error=pass&signup_type='.$_REQUEST['user_type']);
-			elseif(!@$_REQUEST['login'] || $this->User->findByEmail($_REQUEST['login'])) $this->redirect('/login/?signup_error=email&signup_type='.$_REQUEST['user_type']);
+			elseif(!@$_REQUEST['login'] || $this->User->findByEmail(strtolower($_REQUEST['login']))) $this->redirect('/login/?signup_error=email&signup_type='.$_REQUEST['user_type']);
 			
 			$new_user = array(	'User' =>
-													array(	'email'			=> $_REQUEST['login'],
-																	'login'			=> $_REQUEST['login'],
+													array(	'email'			=> strtolower($_REQUEST['login']),
+																	'login'			=> strtolower($_REQUEST['login']),
 																	'user_type'	=> $_REQUEST['user_type'],
 																	'firstname'	=> '',
 																	'lastname'	=> '',
@@ -255,7 +257,7 @@ class UsersController extends AppController{
 			
 			$this->redirect('/users/view/');
 		}elseif(@$_REQUEST['login']){
-			$user = $this->User->findByLogin($_REQUEST['login']);
+			$user = $this->User->findByLogin(strtolower($_REQUEST['login']));
 			if(!empty($user['User']['password']) && $user['User']['password'] == sha1($_REQUEST['password'].$this->salt)){
 				
 				// if user is responding to an invite but already exists with a different email,
@@ -297,8 +299,8 @@ class UsersController extends AppController{
 				$user_update = array(	'User' =>
 										array(	'id'			=> $user['User']['id'],
 												'invite_token'	=> NULL,
-												'email'			=> @$_REQUEST['email'],
-												'login'			=> @$_REQUEST['email'],
+												'email'			=> strtolower(@$_REQUEST['email']),
+												'login'			=> strtolower(@$_REQUEST['email']),
 												'password'		=> sha1($_REQUEST['password'].$this->salt) ));
 				
 				// if users is responding to an invitation, add the user to the relevant group

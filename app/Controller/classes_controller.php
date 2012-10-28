@@ -32,9 +32,9 @@ class ClassesController extends AppController{
 		
 		// * TODO * : ensure that the search_visible logic is implemented correctly 
 		// $this->ClassSet->hasAndBelongsToMany['User']['conditions'] = 'User.search_visible = 1 && (User.user_type = "' . ($view == 'view_students' ? 'P" || "C' : 'L') . '")';
-		$this->ClassSet->hasAndBelongsToMany['User']['conditions'] = '(User.user_type = "' . ($view == 'view_students' ? 'P" || "C' : 'L') . '")';
+		$this->ClassSet->hasAndBelongsToMany['User']['conditions'] = '(User.user_type = "' . ($view == 'view_students' ? 'P" || User.user_type = "C' : 'L') . '")';
 		$this->set('class',$this->ClassSet->findById($class_id));
-		$this->set('invited',$this->Status->find('all',array('conditions'=>("Status.class_id = $class_id && Status.challenge_id IS NULL && Status.status = 'P'"))));
+		$this->set('invited',$this->Status->find('all',array('conditions'=>("Status.class_id = $class_id && Status.challenge_id IS NULL && Status.status = 'P' && User.user_type = " . ($view == 'view_students' ? "'P'": "'L'")))));
 		$this->render($view,'ajax');
 	}
 	
@@ -79,7 +79,7 @@ class ClassesController extends AppController{
 			
 			if($group['Owner']['notify_groups']){
 				// notify group leader
-				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your class {$group['ClassSet']['group_name']}, on Puentes Online - the world’s first feedback learning system.";
+				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your class {$group['ClassSet']['group_name']}, on Puentes Online - the world's first feedback learning system.";
 				$message .= "\n\n<a href='http://puentesonline.com/users/view/groups/'>Click here to Accept or Decline</a>";
 				$message .= "\n\nSincerely,\n\nThe Puentes Team";
 		

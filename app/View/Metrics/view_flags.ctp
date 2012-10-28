@@ -56,7 +56,7 @@
 								?>
 						<tr <?php if($idx % 2){ ?>class="alternate"<?php } ?> onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
 							<td class="col1"><?php echo $u['firstname'].' '.$u['lastname']; ?></td>
-							<td class="col2"><!-- 15 -->0</td>
+							<td class="col2"><?php echo @$user_flags[$u['id']]; ?></td>
 							<td></td>
 							<td class="col5">
 								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;" onclick="$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();">
@@ -65,19 +65,9 @@
 							</td>
 						</tr>
 						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Possible Plagarism</td>
-							<td class="col2">6</td>
-							<td class="col3">Flagged words used 6 times</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Explicit Language</td>
-							<td class="col2">3</td>
-							<td class="col3">"I think this is _____ stupid"</td>
+							<td class="col1">Word Overuse</td>
+							<td class="col2"><?php echo @$user_flags[$u['id']]; ?></td>
+							<td class="col3"><?php echo @$user_flags[$u['id']]; ?> flagged words used over limit</td>
 							<td class="col5">
 								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
 									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>

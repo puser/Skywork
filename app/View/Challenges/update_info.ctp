@@ -1,13 +1,13 @@
 <div id="startbridge-information" class="box-startbridge box-white rounded">
 	<div class="box-head">
 		<span class="icon2 icon2-pen"></span>
-		<h2><?php echo __('Challenge Information') ?></h2>
+		<h2><?php echo __('Bridge Information') ?></h2>
 		<div class="clear"></div>
 	</div>
 	<div class="box-content information-fields-1">
 		<ul class="fieldset">
 			<li>
-				<p class="label"><?php echo __('Name of Challenge') ?></p>
+				<p class="label"><?php echo __('Name of Bridge') ?></p>
 				<input type="text" class="checkdefault" value="<?php echo (@$challenge ? @$challenge['Challenge']['name'] : ''); ?>" name="challenge[Challenge][name]" id="challengeName" default="<?php echo __('Type name here') ?>" size="60" />
 			</li>
 			<li class="cols2">
@@ -81,14 +81,14 @@
 				if(@$challenge['Question']){
 					foreach(@$challenge['Question'] as $k=>$question){ ?>
 				<li>
-					<p><input type="text" class="checkdefault assignment-section-title" value="<?php echo $question['section']; ?>" name="challenge[Question][<?php echo $k; ?>][section]" /> &nbsp;<a href="#" class="tooltip-mark-question" title="<?php echo __('One or two words summarizing this question') ?>"></a></p>
+					<p><!-- <input type="text" class="checkdefault assignment-section-title" value="<?php echo $question['section']; ?>" name="challenge[Question][<?php echo $k; ?>][section]" /> --> &nbsp;<a href="#" class="tooltip-mark-question" title="<?php echo __('One or two words summarizing this question') ?>"></a></p>
 					<input type="text" class="checkdefault" value="<?php echo $question['question']; ?>" name="challenge[Question][<?php echo $k; ?>][question]" size="60"/>
 				</li>
 					<?php }
 				}else{
 					for($i=0;$i<2;$i++){ ?>
 				<li>
-					<p><input type="text" class="checkdefault assignment-section-title" default="<?php echo __('Section Title') ?>" value="" name="challenge[Question][<?php echo $i; ?>][section]" /></p>
+					<p><!-- <input type="text" class="checkdefault assignment-section-title" default="<?php echo __('Section Title') ?>" value="" name="challenge[Question][<?php echo $i; ?>][section]" /> --></p>
 					<input type="text" class="checkdefault" default="<?php echo __('Type name here') ?>" value="" name="challenge[Question][<?php echo $i; ?>][question]" size="60"/>
 				</li>
 					<?php }

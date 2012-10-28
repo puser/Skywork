@@ -20,7 +20,7 @@
 				<input type="hidden" name="id" value="<?php echo $user['User']['id']; ?>" />
 				<p><?php echo __('Personal Info') ?></p>
 				<ul class="fieldset2">
-					<li><label><?php echo __('First Name') ?></label> <input type="text" size="60" name="firstname" value="<?php echo $user['User']['firstname']; ?>" /></li>
+					<li><label><?php echo __('First Name') ?></label> <input type="text" size="60" name="firstname" value="<?php echo ($user['User']['firstname'] == $user['User']['email'] ? '' : $user['User']['firstname']); ?>" /></li>
 					<li><label><?php echo __('Last Name') ?></label> <input type="text" size="60" name="lastname" value="<?php echo $user['User']['lastname']; ?>" /></li>
 					<li>
 						<label><?php echo __('E-mail') ?></label>

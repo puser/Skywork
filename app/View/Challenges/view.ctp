@@ -3,7 +3,7 @@
 	<div id="sidemenu" >
 		<ul>
 			<?php foreach($challenge['Question'] as $k=>$q){ if(!$q['question']) continue; ?>
-			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a class="no-icon" onclick="save_response();" href="#<?php echo $q['id']; ?>"><?php echo stripslashes($q['section']); ?></a></li>
+			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a class="no-icon" onclick="save_response();" href="#<?php echo $q['id']; ?>"><?php $ques = $k + 1 ; echo 'Question '.$ques; ?></a></li>
 			<?php }if($challenge['Challenge']['allow_attachments']){ ?>
 			<li id="questionNavAttach"><a class="no-icon" onclick="save_response();" href="#attachments"><?php echo __('Attach File(s)') ?></a></li>
 			<?php } ?>
@@ -17,7 +17,7 @@
 	
 	<div class="actionmenu">
 		<ul>
-			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?><li class="action-preview"><a href="/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>"><?php echo __('Assignment') ?></a></li><?php } ?>
+			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?><li class="action-preview"><a onclick="save_response();" href="/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>"><?php echo __('Assignment') ?></a></li><?php } ?>
 			<li class="action-save"><a href="#" onclick="save_response();return false;"><?php echo __('Save') ?></a></li>
 			<li class="action-exit"><a href="#modalExitChoices" class="show-overlay"><?php echo __('Exit') ?></a></li>
 		</ul>

@@ -7,7 +7,7 @@ class CommentsController extends AppController{
 		
 		$_REQUEST['comment']['user_id'] = $_SESSION['User']['id'];
 		$this->Comment->save($_REQUEST['comment']);
-		die();
+		die($this->Comment->id);
 	}
 	
 	function delete($id){
