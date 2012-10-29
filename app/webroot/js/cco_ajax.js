@@ -241,6 +241,7 @@ function show_user_list(e,cid,view,metrics){
 		$('#bridgetable .col1').animate({width:390},'fast');
 		$('#thinListBorder').hide();
 	}else{
+		$('.metrics-arrow-hide').hide();
 		$('.graphIcon').hide();
 		$('.pagination').hide();
 		
