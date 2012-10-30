@@ -7,7 +7,7 @@
 			<li><a class="icon icon4-student" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Students') ?></a></li>
 			<li><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Question Activity') ?></a></li>
 			<li><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
-			<li class="active"><a class="icon" href="/metrics/view_flags/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Red Flags') ?></a></li>
+			<li class="active"><a class="icon icon4-flag" href="/metrics/view_flags/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Red Flags') ?></a></li>
 		</ul>
 	</div>
 </div>
@@ -29,7 +29,7 @@
 	<div id="metrics-section-box" class="box-startbridge box-metrics-section box-white rounded">
 		<div class="question-item">
 			<div class="box-head">
-				<!-- <span class="icon2"></span> -->
+				<span class="icon2 icon2-flag"></span>
 				<h2><?php echo __('Red Flags') ?></h2>
 				<a href="#modal-customize" class="modal-link customize-link"><?php echo __('Customize') ?></a>
 				<div class="clear"></div>
@@ -50,32 +50,34 @@
 						$listed_users = array();
 						foreach($challenge['ClassSet'] as $c){
 							foreach($c['User'] as $u){
-								if(in_array($u['id'],$listed_users)) continue;
+								if(in_array($u['id'],$listed_users) || !@$user_flags[$u['id']]) continue;
 								else $listed_users[] = $u['id'];
 								$idx++;
 								?>
 						<tr <?php if($idx % 2){ ?>class="alternate"<?php } ?> onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1"><?php echo $u['firstname'].' '.$u['lastname']; ?></td>
-							<td class="col2"><?php echo @$user_flags[$u['id']]; ?></td>
+							<td class="col1"><a href="#" onclick="$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();"><?php echo $u['firstname'].' '.$u['lastname']; ?></a></td>
+							<td class="col2"><?php echo @$user_flag_total[$u['id']]; ?></td>
 							<td></td>
 							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;" onclick="$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();">
+								<a href="/word_flags/browse/<?php echo $u['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
 									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
 								</a>
 							</td>
 						</tr>
-						<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1">Word Overuse</td>
-							<td class="col2"><?php echo @$user_flags[$u['id']]; ?></td>
-							<td class="col3"><?php echo @$user_flags[$u['id']]; ?> flagged words used over limit</td>
-							<td class="col5">
-								<a href="#" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-								</a>
-							</td>
-						</tr>
+						<?php if(@$user_flags[$u['id']]){
+							foreach(@$user_flags[$u['id']] as $f=>$c){ ?>
+							<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
+								<td class="col1"><?php echo ($f == 'WORD' ? 'Word Overuse' : ($f == 'EXPL' ? 'Explicit Language' : 'Phrase Flag')); ?></td>
+								<td class="col2"><?php echo $c; ?></td>
+								<td class="col3">Flagged words used <?php echo $c; ?> times</td>
+								<td class="col5">
+									<a href="/word_flags/browse/<?php echo $u['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>/<?php echo $f; ?>" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
+										<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
+									</a>
+								</td>
+							</tr>
+						<?php }}}} ?>
 					</tbody>
-					<?php }} ?>
 				</table>
 			</div>
 		</div>
@@ -121,7 +123,7 @@
 								<div class="item-actions">
 									<a href="#" class="item-actions-icon"></a>
 									<div class="item-actions-popup rounded2">
-										<ul><li><a href="#" class="icon3 icon3-pen modal-link" style="width:35px;">Edit</a></li></ul>
+										<ul><li><a href="/word_flags/view/EXPL" class="icon3 icon3-pen modal-link" style="width:35px;">Edit</a></li></ul>
 									</div>
 								</div>
 							</td>
@@ -147,7 +149,7 @@
 								<div class="item-actions">
 									<a href="#" class="item-actions-icon"></a>
 									<div class="item-actions-popup rounded2">
-										<ul><li><a href="#" class="icon3 icon3-pen modal-link" style="width:35px;">Edit</a></li></ul>
+										<ul><li><a href="/word_flags/view/PHRASE" class="icon3 icon3-pen modal-link" style="width:35px;">Edit</a></li></ul>
 									</div>
 								</div>
 							</td>

@@ -439,6 +439,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon2-class {background-image: url('/images/icons/icon-class-60x31.png'); }
 .icon2-question {background-image: url('/images/icons/icon-question-39x34.png'); }
 .icon2-graph {background-image: url('/images/icons/icon-graph-32x31.png'); }
+.icon2-flag {background-image: url('/images/icons/icon-flag-32x28.png'); }
 .icon2-people-green {background-image: url('/images/icons/icon-people-green-32x44.png'); }
 .icon2-listcountgreen {background: url("/images/icon-listcountgreen.png") no-repeat center center; width: 35px;  font-family: Lucida Grande, Helvetica, Arial, sans-serif;  font-size: 22px; text-align: center; color: #ffffff; line-height: 35px; padding-top: 3px; }
 .box-startbridge .icon2.icon2-listcountgreen {padding-top: 0px; height: 35px;}
@@ -568,9 +569,11 @@ a.add-class {font-size: 12px; }
 #sidemenu li a.icon4-student {background-image: url('/images/icons/icon-people-bw-19x27.png'); }
 #sidemenu li a.icon4-question {background-image: url('/images/icons/icon-question-bw-24x22.png'); }
 #sidemenu li a.icon4-graph {background-image: url('/images/icons/icon-graph-bw-20x19.png'); }
+#sidemenu li a.icon4-flag {background-image: url('/images/icons/icon-flag-bw-24x25.png'); }
 #sidemenu li.active a.icon4-student {background-image: url('/images/icons/icon-people-green-19x27.png'); }
 #sidemenu li.active a.icon4-question {background-image: url('/images/icons/icon-question-24x22.png'); }
 #sidemenu li.active a.icon4-graph {background-image: url('/images/icons/icon-graph-20x19.png'); }
+#sidemenu li.active a.icon4-flag {background-image: url('/images/icons/icon-flag-24x21.png'); }
 
 /**
  * Page: Metrics Question Activity

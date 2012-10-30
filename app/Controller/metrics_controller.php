@@ -162,23 +162,29 @@ class MetricsController extends AppController{
 		$this->checkAuth();
 		
 		$challenge = $this->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id),'recursive'=>2));
-		$flags = $this->WordFlag->find('all',array('conditions'=>'WordFlag.user_id = '.$_SESSION['User']['id']))
+		$flags = $this->WordFlag->find('all',array('conditions'=>'WordFlag.user_id = '.$_SESSION['User']['id']));
 		// prepare stats
 		// - for each student, collect composite of responses & comments in the challenge
 		// - prepare an array with counts of string occurances
-		$user_flags = array();
+		$user_flag_total = array();
 		$user_text = array();
-		foreach($challenge['Response'] as $r){
-			@$user_text[$r['User']['id']] .= ' ' . $r['response_body'];
-			foreach($r['Comment'] as $c) @$user_text[$r['User']['id']] .= ' ' . $c['comment'];
+		foreach($challenge['Question'] as $q){
+			foreach($q['Response'] as $r){
+				@$user_text[$r['user_id']] .= ' ' . $r['response_body'];
+				//foreach($r['Comment'] as $c) @$user_text[$r['User']['id']] .= ' ' . $c['comment'];
+			}
 		}
 		
 		foreach($user_text as $k=>$t){
 			foreach($flags as $f){
-				if(substr_count($t,$f['WordFlag']['word']) >= $f['WordFlag']['count']) @$user_flags[$k]++;
+				if(substr_count($t,$f['WordFlag']['word']) >= $f['WordFlag']['count']){
+					@$user_flag_total[$k]++;
+					@$user_flags[$k][$f['WordFlag']['flag_type']] += substr_count($t,$f['WordFlag']['word']);
+				}
 			}
 		}
 		
+		$this->set('user_flag_total',$user_flag_total);
 		$this->set('user_flags',$user_flags);
 		$this->set('challenge',$challenge);
 	}
