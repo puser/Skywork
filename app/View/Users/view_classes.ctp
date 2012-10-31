@@ -31,10 +31,17 @@
 			<table class="table-type-1" id="table-classes">
 				<thead>
 					<tr>
-						<th><a href="/users/view/classes/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Class Name') ?></a></th>
+<!-- 						<th><a href="/users/view/classes/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Class Name') ?></a></th>
 						<th><a href="/users/view/classes/?sort=modified&dir=<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Last Edit') ?></a></th>
 						<th><a href="#" class="sortdown"><?php echo __('Students') ?></a></th>
 						<th><a href="/users/view/classes/?sort=owner&dir=<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Creator') ?></a></th>
+ -->
+						<th><a href="/users/view/classes/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" 
+						<?php if(@$_REQUEST['sort']!='name' || @$_REQUEST['dir']==''){echo '';}else{?>class="sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>" <?php } ?>><?php echo __('Class Name') ?></a></th>
+						<th><a href="/users/view/classes/?sort=modified&dir=<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" <?php if(@$_REQUEST['sort']!='modified' || @$_REQUEST['dir']==''){echo '';}else{?>class="sort<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"<?php } ?>><?php echo __('Last Edit') ?></a></th>
+						<th><a href="#"><?php echo __('Students') ?></a></th>
+						<th><a href="/users/view/classes/?sort=owner&dir=<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" 
+						<?php if(@$_REQUEST['sort']!='owner' || @$_REQUEST['dir']==''){echo '';}else{?>class="sort<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"<?php } ?>><?php echo __('Creator') ?></a></th>
 					</tr>
 				</thead>
 				<tbody>
