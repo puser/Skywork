@@ -180,7 +180,7 @@
 			<div class="question-item"<?php if(!$completed){ ?> style="overflow:hidden;"<?php } ?>>
 				<div class="box-head">
 					<span class="icon2 icon2-listcountgreen"><?php echo ($k+1); ?></span><a name="<?php echo $q['id']; ?>" href="#"> </a>
-					<h2><?php echo $q['section']; ?></h2>
+					<h2><?php echo 'Question '.($k+1);//$q['section']; ?></h2>
 					<?php if($completed && $_SESSION['User']['user_type'] != 'P'){ ?>
 						<div class="summary-quality">
 							<span class="<?php echo ($q['response_total'] == 1 ? 'great' : ($q['response_total'] == 2 ? 'good' : ($q['response_total'] == 3 ? 'average' : ($q['response_total'] == 4 ? 'poor' : 'poor')))); ?>">
