@@ -50,7 +50,7 @@
 						$listed_users = array();
 						foreach($challenge['ClassSet'] as $c){
 							foreach($c['User'] as $u){
-								if(in_array($u['id'],$listed_users) || !@$user_flags[$u['id']]) continue;
+								if(in_array($u['id'],$listed_users) || !@$user_flags[$u['id']] || $u['user_type'] != 'P') continue;
 								else $listed_users[] = $u['id'];
 								$idx++;
 								?>

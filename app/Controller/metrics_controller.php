@@ -1,7 +1,7 @@
 <?php
 class MetricsController extends AppController{
 	var $name = 'Metrics';
-	var $uses = array('Response','Question','Challenge','Group','User','WordFlag');
+	var $uses = array('Response','Question','Challenge','Group','User','WordFlag','Comment');
 	
 	function view_students($challenge_id=NULL,$group_id=NULL,$chart=false){
 		$this->checkAuth();
@@ -163,15 +163,15 @@ class MetricsController extends AppController{
 		
 		$challenge = $this->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id),'recursive'=>2));
 		$flags = $this->WordFlag->find('all',array('conditions'=>'WordFlag.user_id = '.$_SESSION['User']['id']));
-		// prepare stats
-		// - for each student, collect composite of responses & comments in the challenge
-		// - prepare an array with counts of string occurances
+
 		$user_flag_total = array();
 		$user_text = array();
 		foreach($challenge['Question'] as $q){
 			foreach($q['Response'] as $r){
 				@$user_text[$r['user_id']] .= ' ' . $r['response_body'];
-				//foreach($r['Comment'] as $c) @$user_text[$r['User']['id']] .= ' ' . $c['comment'];
+				
+				$comments = $this->Comment->find('all',array('conditions'=>array('Comment.response_id'=>$r['id'])));
+				foreach($comments as $c) @$user_text[$c['Comment']['user_id']] .= ' ' . $c['Comment']['comment'];
 			}
 		}
 		

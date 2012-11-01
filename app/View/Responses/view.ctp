@@ -220,7 +220,7 @@
 										
 										if($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) continue;
 										
-										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
+										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
 										
 										if(!$completed){
 											$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $k),
@@ -246,7 +246,7 @@
 									
 									if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
 										$wordpos = 0;
-										for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response,$_REQUEST['highlight']);
+										for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response,$_REQUEST['highlight'],$wordpos + 1);
 										$mod_response = substr_replace($mod_response,'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 									}
 									
@@ -267,7 +267,7 @@
 									
 										if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
 											$wordpos = 0;
-											for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response[$c['user_id']],$_REQUEST['highlight']);
+											for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response[$c['user_id']],$_REQUEST['highlight'],$wordpos + 1);
 											$mod_response[$c['user_id']] = substr_replace($mod_response[$c['user_id']],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 										}
 										
@@ -293,7 +293,13 @@
 					<div class="question-comments <?php echo ($c['type'] ? 'like' : 'dislike'); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" id="commentDetail_<?php echo $c['id']; ?>" style="display:none;margin-bottom:5px;position:relative;" onmouseover="if(!$(this).hasClass('activeDetail')){ $(this).find('.studentwork-more').show(); }" onmouseout="$(this).find('.studentwork-more').hide();">
 						<p>
 							<span class="highlight-blue" style="background-color:<?php echo $user_colors[$c['user_id']]; ?> !important;"><?php echo "{$c['User']['firstname']} {$c['User']['lastname']}"; ?></span>
-							<?php echo stripslashes($c['comment']); ?>
+							<?php
+							if(@$_REQUEST['highlight'] && @$_REQUEST['comment_id'] == $c['id']){
+								$wordpos = 0;
+								for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($c['comment'],$_REQUEST['highlight'],$wordpos + 1);
+								$c['comment'] = substr_replace($c['comment'],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
+							}
+							echo stripslashes($c['comment']); ?>
 						</p>
 						
 						<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="setTimeout(function(){ show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>'); },15);">
@@ -349,6 +355,10 @@
 
 <script type="text/javascript">
 $(document).ready(function(){	
+	
+	<?php if(@$_REQUEST['highlight'] && @$_REQUEST['comment_id']){ ?>
+		$('#commentMarker_<?php echo @$_REQUEST['comment_id']; ?>').click();
+	<?php } ?>
 	
 	<?php if(!$user_id){ ?>
 		$("#sidemenu2 li:first-child a.sidemenu2-title").trigger("click");

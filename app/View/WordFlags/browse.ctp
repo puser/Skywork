@@ -97,11 +97,13 @@ function show_flag(url){
 		$('#wrapper').css('margin-top',0);
 		$('#summaryContent').html('');
 		$('#summaryContent').load(url,function(){
-			new_height = $(window).height()-(-$('#activeFlag').offset().top + 150);
-			$('#wrapper').css('margin-top',-$('#activeFlag').offset().top + 150);
-			$('#wrapper').height(new_height);
-			$('#inlineFlagIcon').show();
-			$('#inlineFlagIcon').css('top',$('#activeFlag').offset().top);
+			setTimeout(function(){
+				new_height = $(window).height()-(-$('#activeFlag').offset().top + 150);
+				$('#wrapper').css('margin-top',-$('#activeFlag').offset().top + 150);
+				$('#wrapper').height(new_height);
+				$('#inlineFlagIcon').show();
+				$('#inlineFlagIcon').css('top',$('#activeFlag').offset().top);
+			},25);
 		});
 		$('#wrapper').css({'overflow':'hidden','position':'relative'});
 		

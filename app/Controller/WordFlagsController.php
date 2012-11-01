@@ -1,7 +1,7 @@
 <?php
 class WordFlagsController extends AppController {
 	var $name = 'WordFlags';
-	var $uses = array('WordFlag','User','Challenge');
+	var $uses = array('WordFlag','User','Challenge','Response');
 	
 	function view($type='WORD'){
 		$this->layout = 'ajax';
@@ -43,23 +43,45 @@ class WordFlagsController extends AppController {
 			$flag_redirects = array();
 			$flag_types = array();
 			foreach($challenge['Question'] as $q){
+				if(!@$q['Response'][0]) continue;
+				
 				$r = $q['Response'][0];
 				foreach($flags as $f){
 					if(strstr($r['response_body'],$f['WordFlag']['word']) !== false){
 						@$flagged_words[$f['WordFlag']['word']][] = array($r['id'],$r['question_id'],$r['user_id'],substr_count($r['response_body'],$f['WordFlag']['word']));
-						$word_counts[$f['WordFlag']['word']] += substr_count($r['response_body'],$f['WordFlag']['word']);
+						@$word_counts[$f['WordFlag']['word']] += substr_count($r['response_body'],$f['WordFlag']['word']);
 					}
 				}	
-				//foreach($r['Comment'] as $c) @$user_text[$r['User']['id']] .= ' ' . $c['comment'];
+				
+				$this->Response->hasMany['Comment']['conditions'] = 'Comment.user_id = ' . $user_id;
+				$responses = $this->Response->find('all',array('conditions'=>array('Response.question_id'=>$r['question_id'],'Response.user_id != '.$user_id)));
+				foreach($responses as $response){
+					foreach($response['Comment'] as $c){
+						foreach($flags as $f){
+							if(strstr($c['comment'],$f['WordFlag']['word']) !== false){
+								@$flagged_comments[$f['WordFlag']['word']][] = array($c['id'],$response['Response']['id'],$response['Response']['user_id'],substr_count($c['comment'],$f['WordFlag']['word']));
+								@$word_counts[$f['WordFlag']['word']] += substr_count($c['comment'],$f['WordFlag']['word']);
+							}
+						}
+					}
+				}
 			}
 			
 			foreach($flags as $f){
-				if(@$flagged_words[$f['WordFlag']['word']]){
-					if($word_counts[$f['WordFlag']['word']] < $f['WordFlag']['count']) unset($flagged_words[$f['WordFlag']['word']]);
-					else{
+				if(@$word_counts[$f['WordFlag']['word']] >= $f['WordFlag']['count']){
+					if(@$flagged_words[$f['WordFlag']['word']]){
 						foreach($flagged_words[$f['WordFlag']['word']] as $k=>$r){ 
 							for($i = 0;$i < $r[3];$i++){
 								$flag_redirects[] = '/responses/view/'.$challenge['Challenge']['id'].'/'.$r[2].'?ajax=1&highlight='.$f['WordFlag']['word'].'&pos='.($i + 1).'&response_id='.$r[0];
+								$flag_types[] = ($f['WordFlag']['flag_type'] == 'WORD' ? 'Word Overuse' : ($f['WordFlag']['flag_type'] == 'EXPL' ? 'Explicit Language' : 'Phrase Flag'));
+							}
+						}
+					}
+					
+					if(@$flagged_comments[$f['WordFlag']['word']]){
+						foreach(@$flagged_comments[$f['WordFlag']['word']] as $k=>$r){
+							for($i = 0;$i < $r[3];$i++){
+								$flag_redirects[] = '/responses/view/'.$challenge['Challenge']['id'].'/'.$r[2].'?ajax=1&highlight='.$f['WordFlag']['word'].'&pos='.($i + 1).'&comment_id='.$r[0];
 								$flag_types[] = ($f['WordFlag']['flag_type'] == 'WORD' ? 'Word Overuse' : ($f['WordFlag']['flag_type'] == 'EXPL' ? 'Explicit Language' : 'Phrase Flag'));
 							}
 						}
