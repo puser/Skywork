@@ -25,7 +25,7 @@ class UsersController extends AppController{
 
 		if($show=='classes'){
 			$this->ClassSet->Behaviors->attach('Containable');
-			$user['ClassSet'] = $class_ids ? $this->ClassSet->find('all',array('conditions'=>"ClassSet.id IN($class_ids)",'contain'=>array('User'=>array('conditions'=>'User.user_type = "P"'),'Owner'))) : array();
+			$user['ClassSet'] = $class_ids ? $this->ClassSet->find('all',array('conditions'=>"ClassSet.id IN($class_ids)","order"=>$sort,'contain'=>array('User'=>array('conditions'=>'User.user_type = "P"'),'Owner'))) : array();
 			$this->set('user',$user);
 		
 			$current_groups = $requested_groups = $pending_groups = array();
