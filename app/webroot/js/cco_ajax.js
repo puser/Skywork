@@ -389,7 +389,10 @@ function show_group_members(g_id){
 
 function delete_class_member(g_id,u_id){
 	$('#groupMemberRow'+u_id).fadeOut();
-	$.ajax({url:'/classes/remove_member/'+g_id+'/'+u_id});
+	jQuery.fancybox.close();
+	$.ajax({url:'/classes/remove_member/'+g_id+'/'+u_id,success:function(r){
+		window.location = '/users/view/classes/';
+	}});
 }
 
 function class_invite_professor(c_id){
@@ -658,6 +661,7 @@ function set_stat_session(v){
 }
 
 function show_comment(rid,pid,cid,color,e){
+	$('#responseBody' + rid + '_' + pid).parent().find('p').first().hide();
 	$('#responseBody' + rid + '_' + pid).show();
 	$('.comment_detail_' + pid).show().removeClass('activeDetail');
 	$('#commentDetail_' + cid).addClass('activeDetail');
@@ -665,6 +669,14 @@ function show_comment(rid,pid,cid,color,e){
 	$('.commentHighlight').css('background-color','#ccc');
 	$('#commentHighlight_' + cid).css('background-color',color);
 	if(e) $(e).parent().hide();
+	
+	setTimeout(function(){ $(document).click(function(){ hide_all_comments();$(document).unbind('click'); }); },15);
+}
+
+function hide_all_comments(){
+	$('.textvalue p').hide();
+	$('.textvalue p:first-child').show();
+	$('.question-comments').hide();
 }
 
 function hide_comment(rid,cid,e){

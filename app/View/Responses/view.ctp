@@ -1,6 +1,23 @@
 <style type="text/css">
 .activeMarker {
-	width:15px;display:inline-block;position:absolute;opacity:.5;
+	width:8px;
+	display:inline-block;
+	position:absolute;
+	opacity:.6;
+	cursor:pointer;
+}
+.inactiveMarker {
+	width:3px;
+	display:inline-block;
+	position:absolute;
+	opacity:.7;
+	cursor:pointer;
+}
+.markerContainer {
+	width:3px;
+	display:inline-block;
+	position:relative;
+	top:-13px;
 }
 .activeDetail {
 	background-color:#feffbd;
@@ -35,10 +52,11 @@
 				<?php if($challenge[0]['Group']){
 					$this_group = array_pop($challenge[0]['Group']);
 					foreach($this_group['User'] as $u){ ?>
-						<li class="userNav<?php if($u['id'] == $user_id){ ?> active-name<?php }else{ ?> name<?php } ?>" id="userNav<?php echo $u['id']; ?>">
+						<li class="userNav<?php if($u['id'] == $user_id){ ?> active-name<?php }else{ ?> name<?php } ?>" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
 							<a href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-								<?php echo $u['firstname'].' '.$u['lastname'];  ?>
-							</a></div>
+								<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+								<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
+							</a>
 						</li>
 					<?php }
 				}else{
@@ -48,9 +66,10 @@
 							<ul>
 								<?php foreach($c['User'] as $u){
 									if($u['id'] == $challenge[0]['Challenge']['user_id']) continue; ?>
-									<li class="userNav" id="userNav<?php echo $u['id']; ?>">
+									<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
 										<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-											<?php echo $u['firstname'].' '.$u['lastname']; ?>
+												<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+												<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
 										</a>
 										<?php if($u['id'] == $user_id){ ?>
 											<script type="text/javascript">
@@ -80,9 +99,10 @@
 							<ul>
 								<?php foreach($g['User'] as $u){
 									if($u['id'] == $_SESSION['User']['id']) continue; ?>
-									<li class="userNav" id="userNav<?php echo $u['id']; ?>">
+									<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
 										<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-											<?php echo $u['firstname'].' '.$u['lastname']; ?>
+											<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+											<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
 										</a>
 										<?php if($u['id'] == $user_id){ ?>
 											<script type="text/javascript">
@@ -103,9 +123,10 @@
 							<ul>
 								<?php foreach($c['User'] as $u){
 									if($u['id'] == $_SESSION['User']['id']) continue; ?>
-									<li class="userNav" id="userNav<?php echo $u['id']; ?>">
+									<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
 										<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-											<?php echo $u['firstname'].' '.$u['lastname']; ?>
+											<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+											<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
 										</a>
 										<?php if($u['id'] == $user_id){ ?>
 											<script type="text/javascript">
@@ -195,10 +216,10 @@
 										
 										if($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) continue;
 										
-										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');" onmouseout="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',this);" class="commentMarker'.$k.'_'.$c['user_id'].'">&nbsp;</span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
+										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
 										
 										if(!$completed){
-											$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) + $start_offset + $k),
+											$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $k),
 																									'formValues'	=> array(	array(	'name'	=> 'comment',
 																									 																'value'	=> $c['comment'] ),
 																																					array(	'name'	=> 'type',
@@ -207,7 +228,7 @@
 																																									'value'	=> $c['id'] )));
 																																								
 											for($j = 1;$j <= substr_count($q['Response'][0]['response_body'],' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($q['Response'][0]['response_body']) - $c['segment_start']);$j++){
-												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) + $start_offset + $j + $k),
+												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $j + $k),
 																										'formValues'	=> array(	array(	'name'	=> 'comment',
 																										 																'value'	=> $c['comment'] ),
 																																						array(	'name'	=> 'type',
@@ -229,7 +250,7 @@
 										if($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) continue; 
 										if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
 										
-										$mod_response[$c['user_id']] = substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']);
+										$mod_response[$c['user_id']] = $c['segment_start'] + $c['segment_length'] > strlen($mod_response[$c['user_id']]) || $c['segment_length'] < 0 ? ($mod_response[$c['user_id']] . '</span>') : (substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']));
 										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start']);
 										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); ?>
 									<?php }foreach($mod_response as $kmr=>$mr){ ?>
@@ -248,14 +269,16 @@
 							</div>
 						</li>
 					</ul>
-					<?php foreach(@$q['Response'][0]['Comment'] as $c){ ?>
+					<?php
+					$q['Response'][0]['Comment'] = @array_reverse($q['Response'][0]['Comment'],true);
+					foreach(@$q['Response'][0]['Comment'] as $c){ ?>
 					<div class="question-comments <?php echo ($c['type'] ? 'like' : 'dislike'); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" id="commentDetail_<?php echo $c['id']; ?>" style="display:none;margin-bottom:5px;position:relative;" onmouseover="if(!$(this).hasClass('activeDetail')){ $(this).find('.studentwork-more').show(); }" onmouseout="$(this).find('.studentwork-more').hide();">
 						<p>
 							<span class="highlight-blue" style="background-color:<?php echo $user_colors[$c['user_id']]; ?> !important;"><?php echo "{$c['User']['firstname']} {$c['User']['lastname']}"; ?></span>
 							<?php echo stripslashes($c['comment']); ?>
 						</p>
 						
-						<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>');">
+						<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="setTimeout(function(){ show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>'); },15);">
 							<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
 						</a>
 					</div>
@@ -307,7 +330,6 @@
 <script type="text/javascript">
 $(document).ready(function(){	
 	
-
 	<?php if(!$user_id){ ?>
 		$("#sidemenu2 li:first-child a.sidemenu2-title").trigger("click");
 	<?php }if($user_id==='0'){ ?>
@@ -392,17 +414,29 @@ function saveAnnotation(){
 	if(end - start < 0) end = responses[responseIdx].text.length;
 	if(!r_id) r_id = responses[0].id;
 	
-	$('.jQueryTextAnnotaterDialog').hide();
-	$('.answer-comment-box .close').removeClass('removeAnnotationBtn').click();
-	$.ajax({url:'/comments/save/',data:{comment:{response_id:r_id,segment_start:start,segment_length:(end - start),comment:currentAnnotation.formValues[0].value,type:currentAnnotation.formValues[1].value,id:currentAnnotation.formValues[2].value}},success:function(){
-		currentAnnotation = null;
+	$('.comment-submit img').show();
+	$('.comment-submit a').hide();
+	$.ajax({url:'/comments/save/',data:{comment:{response_id:r_id,segment_start:start,segment_length:(end - start),comment:currentAnnotation.formValues[0].value,type:currentAnnotation.formValues[1].value,id:currentAnnotation.formValues[2].value}},success:function(r){
+		if(r){
+			$('.comment-id').val(r);
+			$('.answer-comment-box textarea').click();
+		}
+		
+		setTimeout(function(){
+			$('.comment-submit img').hide();
+			$('.comment-submit a').show();
+			
+			$('.jQueryTextAnnotaterDialog').hide();
+			$('.answer-comment-box .close').removeClass('removeAnnotationBtn').click();
+			currentAnnotation = null;
+		},5);
 	}});
 }
 
 function annotaterInit(cssSelector) {
 
 	var options = {};
-	options.form = '<div class="answer-comment-box"><textarea name="comment" class="comment-textarea"></textarea><div class="vote"><ul><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().next().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;"></a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().prev().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;"></a></li></ul></div><div class="comment-submit"><a href="#" onclick="if($(\'.jQueryTextAnnotaterDialogForm input.comment-type\').val() == \'N\'){ alert(\'You must select Like or Dislike to save a comment.\'); }else{ saveAnnotation(); }return false;" class="btn1"><span>Comment</span></a></div><a href="#" class="removeAnnotationBtn deleteComment" style="float: right;color: #000;text-decoration: underline;padding-top: 2px;">Remove this comment</a><div class="clear"></div><div class="callout-corner"></div><a href="#" class="close" onclick="$(\'.jQueryTextAnnotaterDialog\').hide();return false;"></a><input type="hidden" name="type" class="comment-type" value="N" /><input type="hidden" name="id" class="comment-id" value="" /></div>';
+	options.form = '<div class="answer-comment-box"><textarea name="comment" class="comment-textarea"></textarea><div class="vote"><ul><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().next().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;"></a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().prev().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;"></a></li></ul></div><div class="comment-submit"><img src="/images/loadingWheel.gif" style="display:none;" /><a href="#" onclick="if($(\'.jQueryTextAnnotaterDialogForm input.comment-type\').val() == \'N\'){ alert(\'You must select Like or Dislike to save a comment.\'); }else{ saveAnnotation(); }return false;" class="btn1"><span>Comment</span></a></div><a href="#" class="removeAnnotationBtn deleteComment" style="float: right;color: #000;text-decoration: underline;padding-top: 2px;">Remove this comment</a><div class="clear"></div><div class="callout-corner"></div><a href="#" class="close" onclick="$(\'.jQueryTextAnnotaterDialog\').hide();return false;"></a><input type="hidden" name="type" class="comment-type" value="N" /><input type="hidden" name="id" class="comment-id" value="" /></div>';
 	options.annotateCharacters = false; 
 	options.formDeleteAnnotationButton = '.removeAnnotationBtn';
 

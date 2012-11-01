@@ -4,7 +4,7 @@
 		<div class="clear"></div>
 	</div>
 	
-	<?php if($class['User']){ ?>
+	<?php if($class['Owner']){ ?>
 		<table class="simpletable groupmemberlist">
 			<thead>
 				<tr>
@@ -15,13 +15,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach($class['User'] as $k=>$u){ ?>
-				<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?>>
-					<td><?php echo $u['firstname']; ?></td>
-					<td><?php echo $u['lastname']; ?></td>
-					<td><?php echo $u['email']; ?></td>
+				<tr class="alternate">
+					<td><?php echo $class['Owner']['firstname']; ?></td>
+					<td><?php echo $class['Owner']['lastname']; ?></td>
+					<td><?php echo $class['Owner']['email']; ?></td>
 				</tr>
-				<?php } ?>
 			</tbody>
 		</table>
 	<?php }else{ ?><br /><br /><?php } ?>

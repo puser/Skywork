@@ -292,7 +292,7 @@ a{ cursor:pointer; }
 
 #bridgelist {width: 954px; margin: 0 auto; margin-bottom: 30px; display: block; }
 #bridgelist h2 {float: left; margin: 0; }
-#bridgelist .box-head .filterbox{ float: right; }
+#bridgelist .box-head .filterbox{ float: right; margin-right:6px;}
 /*
 #bridgelist .pagination-pages li.first-child a {border-right: none;}
 */
@@ -301,7 +301,7 @@ a{ cursor:pointer; }
 #bridgetable .col3 {width: 135px; }
 #bridgetable .col4 {width: 120px; }
 #bridgetable .col5 {width: 130px; }
-#bridgetable .col6 {width: 60px; }
+#bridgetable .col6 {width: 60px;  }
 
 #bridgetable thead {text-align: left; font-size: 12px; }
 #bridgetable th {padding: 6px; }
@@ -771,6 +771,7 @@ a.studentwork-more:hover span {display: inline; }
  * Modal
  */
 .modal-box-head {display: block; padding: 0 10px 5px 10px; border-bottom: 1px solid #e6e6e6; margin-bottom: 10px; }
+.modal-box-head1 {border-bottom: 1px solid #e6e6e6;}
 .modal-box-head .icon, .modal-box-head .icon3,  .modal-box-head .icon5 {float: left; width: 35px; height: 35px; margin-right: 10px; background-position: top left; background-repeat: no-repeat; }
 .modal-box-head .icon, .modal-box-head .icon5 {background-position: left center; }
 .modal-box-head h2 {padding-top: 5px; }
@@ -980,4 +981,8 @@ a.studentwork-more:hover span {display: inline; }
 	color:#666;
 }
 
+
+.errorEmail{
+	color:red;
+}
 .grey-line { border-bottom: 1px solid #E6E6E6; }

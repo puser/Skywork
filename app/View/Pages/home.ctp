@@ -41,7 +41,7 @@
 <?php } ?>
 <div style="display:none;">
 	
-	<div id="joinModal" style="height:345px;overflow:hidden">
+	<div id="joinModal" style="height:370px;overflow:hidden">
 		<div class="box-heading joinTabs">
 
 			<div class="caseclub-tabs">
@@ -71,7 +71,7 @@
 				</li>
 				<li>
 					<label><?php echo __('Preferred Email') ?><span class="small">(Username)</span></label>
-					<input type="text" name="login" />
+					<input type="text" name="login" id = 'email1'/>
 				</li>
 				<li>
 					<label style="color:#8bc53f;"><?php echo __('Choose a Password') ?></label>
@@ -82,6 +82,7 @@
 					<input type="password" name="password_confirm" />
 				</li>
 			</ul>
+			<span  class = "errorEmail" id="emailError1"></span>
 			<?php if(@$_REQUEST['signup_error'] == 'email' && @$_REQUEST['signup_type'] == 'L'){ ?>
 				<div class="signupError">Email already exists in system!</div>
 			<?php }elseif(@$_REQUEST['signup_error'] == 'pass' && @$_REQUEST['signup_type'] == 'L'){ ?>
@@ -90,7 +91,7 @@
 					<div class="signupError">The beta key you provided is invalid.</div>
 			<?php } ?>
 			<div class="modalActionButtons">
-				<a href="#" onclick="$('#instructorJoinData').submit();return false;" class="btn2 modalActionButton modalActionButtonSave"><span class="inner"><?php echo __('Log In') ?></span></a>
+				<a href="#" id="Instructor_Form" class="btn2 modalActionButton modalActionButtonSave"><span class="inner"><?php echo __('Log In') ?></span></a>
 			</div>
 		</form>
 		
@@ -103,11 +104,11 @@
 				</li>
 				<li>
 					<label><?php echo __('Instructor\'s Email') ?></label>
-					<input type="text" name="instructor_email" />
+					<input type="text" name="instructor_email" id="email5"/>
 				</li>
 				<li>
 					<label><?php echo __('School Email') ?><span class="small">(Username)</span></label>
-					<input type="text" name="login" />
+					<input type="text" name="login" id="email2" />
 				</li>
 				<li>
 					<label style="color:#8bc53f;"><?php echo __('Choose a Password') ?></label>
@@ -118,6 +119,7 @@
 					<input type="password" name="password_confirm" />
 				</li>
 			</ul>
+			<span class = "errorEmail" id="emailError2"></span>
 			<?php if(@$_REQUEST['signup_error'] == 'token'){ ?>
 				<div class="signupError">Class token/Instructor Email combination not recognized!</div>
 			<?php }elseif(@$_REQUEST['signup_error'] == 'email' && @$_REQUEST['signup_type'] == 'P'){ ?>
@@ -126,7 +128,7 @@
 					<div class="signupError">Passwords do not match!</div>
 			<?php } ?>
 			<div class="modalActionButtons">
-				<a href="#" onclick="$('#studentJoinData').submit();return false;" class="btn2 modalActionButton modalActionButtonSave"><span class="inner"><?php echo __('Log In') ?></span></a>
+				<a href="#" id="Student_Form" class="btn2 modalActionButton modalActionButtonSave"><span class="inner"><?php echo __('Log In') ?></span></a>
 			</div>
 		</form>
 		
@@ -135,11 +137,11 @@
 			<ul class="fieldset2 joinForms">
 				<li>
 					<label><?php echo __('Beta-Test Key') ?></label>
-					<input type="text" name="betakey" />
+					<input type="text" name="betakey"/>
 				</li>
 				<li>
 					<label><?php echo __('Preferred Email') ?><span class="small">(Username)</span></label>
-					<input type="text" name="login" />
+					<input type="text" name="login" id = "email3" />
 				</li>
 				<li>
 					<label style="color:#8bc53f;"><?php echo __('Choose a Password') ?></label>
@@ -150,6 +152,7 @@
 					<input type="password" name="password_confirm" />
 				</li>
 			</ul>
+			<span  class = "errorEmail" id="emailError3"></span>
 			<?php if(@$_REQUEST['signup_error'] == 'email' && @$_REQUEST['signup_type'] == 'C'){ ?>
 				<div class="signupError">Email already exists in system!</div>
 			<?php }elseif(@$_REQUEST['signup_error'] == 'pass' && @$_REQUEST['signup_type'] == 'C'){ ?>
@@ -158,7 +161,7 @@
 					<div class="signupError">The beta key you provided is invalid.</div>
 			<?php } ?>
 			<div class="modalActionButtons">
-				<a href="#" onclick="$('#collaboratorJoinData').submit();return false;" class="btn2 modalActionButton modalActionButtonSave"><span class="inner"><?php echo __('Log In') ?></span></a>
+				<a href="#" id="Collaborator_Form" class="btn2 modalActionButton modalActionButtonSave"><span class="inner"><?php echo __('Log In') ?></span></a>
 			</div>
 		</form>
 	</div>
@@ -190,7 +193,7 @@
 			<ul class="fieldset2">
 				<li>
 					<label><?php echo __('Preferred Email') ?></label>
-					<input type="text" name="email" />
+					<input type="text" name="email" id = "email4"/>
 				</li>
 				<li>
 					<label><?php echo __('Choose a Password') ?></label>
@@ -201,6 +204,7 @@
 					<input type="password" name="password_confirm" />
 				</li>
 			</ul>
+			<span  class = "errorEmail" id="emailError4"></span>
 			<div class="modalActionButtons">
 				<a href="#" onclick="$('#inviteData').submit();return false;" class="btn1 modalActionButton modalActionButtonSave aligncenter" style="width:250px;"><span class="inner"><?php echo __('Save and Continue') ?></span></a>
 			</div>
@@ -298,3 +302,50 @@ $('#overlayLoginForm input').keydown(function (e){
 });
 </script>
 <?php } ?>
+<script type='text/javascript'>
+$(document).ready(function(e) {
+    $('#Student_Form').click(function() {
+        var sEmail = $('#email2').val();
+		var sEmail1 = $('#email5').val();
+		var sub = 1;
+
+		if(!validateEmail(sEmail)){
+			$('#emailError2').html('You must enter a valid email address: example@yourschool.edu');
+			sub = 0;
+		}else if(!validateEmail(sEmail1)){
+			$('#emailError2').html('You must enter a valid email address: example@yourschool.edu');
+			sub = 0;
+		}
+		if(sub == 1){
+			$('#studentJoinData').submit();return false;
+		}
+    });
+    $('#Instructor_Form').click(function() {
+        var sEmail = $('#email1').val();
+        if(!validateEmail(sEmail)) {
+    		$('#emailError1').html('You must enter a valid email address: example@yourschool.edu');
+			$('#joinModal').height(375);
+		}else{
+			$('#instructorJoinData').submit();return false;
+		}
+    });
+    $('#Collaborator_Form').click(function() {
+        var sEmail = $('#email3').val();
+        if(!validateEmail(sEmail)) {
+    		$('#emailError3').html('You must enter a valid email address: example@yourschool.edu');
+		}else{
+			$('#collaboratorJoinData').submit();return false;
+		}
+    });
+});
+
+function validateEmail(sEmail) {
+    var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (filter.test(sEmail)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+</script>

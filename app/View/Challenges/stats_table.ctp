@@ -11,7 +11,6 @@
 		
 		<?php
 		$now = date_create();
-		$now->setTime(0,0);
 		if($quality){ ?>
 			<table id="students-highest-quality" class="table-type-1">
 				<thead>
@@ -54,6 +53,11 @@
 					</a>
 				<?php } ?>
 			<?php } ?>
+		<?php }elseif(date_create($challenge['Challenge']['responses_due']) < $now){ ?>
+			<a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/0" class="studentwork-more" id="students-highest-quality-more" style="display: block;text-align: center;padding-top: 10px;">
+				<img src="/images/graph-tiny.png" class="graphIcon" style="position: relative;top: 5px;" />
+				<span style="display: inline-block;padding: 2px 10px 0;"><?php echo __('Go To Summary') ?></span><img src="/images/arrow-right-red.png" />
+			</a>
 		<?php } ?>
 		
 		<!-- DEPRECIATED PER v1.1.1b

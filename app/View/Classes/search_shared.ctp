@@ -1,4 +1,4 @@
-<?php if(@$user['ClassSet']){ ?>
+<?php if(@$user['ClassSet']){ if($user['User']['user_type'] == 'L'){?>
 <br />
 <p><?php echo __('Select the Classes you would like to join:') ?></p>
 <ul class="fieldset2">
@@ -16,5 +16,6 @@
 </ul>
 <br /><br />
 <div class="clear"></div>
-<?php }elseif(!@$user){ ?><div style="text-align:center;margin:20px;"><?php echo __('Instructor not found') ?></div>
+<?php }else{ ?><div style="text-align:center;margin:20px;"><?php echo __('Instructor not found') ?></div>
+<?php } }elseif(!@$user){ ?><div style="text-align:center;margin:20px;"><?php echo __('Instructor not found') ?></div>
 <?php }else{ ?><div style="text-align:center;margin:20px;"><?php echo __('This instructor has restricted access to their classes') ?></div><?php } ?>

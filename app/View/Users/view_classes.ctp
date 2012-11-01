@@ -396,7 +396,7 @@
 			<br />
 			
 			<div style="width: 200px; margin: 0 auto;" class="exitSaveOptions">
-				<a href="#" class="btn2 modal-link" id="deleteMemberLink" style="width: 95px; float: left;" id="deleteGroupLink"><span><?php echo __('Yes, Delete') ?></span></a>
+				<a class="btn2" id="deleteMemberLink" style="width: 95px; float: left;cursor:pointer;" id="deleteGroupLink"><span><?php echo __('Yes, Delete') ?></span></a>
 				<a href="#" class="btn3 modal-link" style="width: 80px; float: right;" onclick="$('#deleteMemberLink').unbind();return false;"><span><?php echo __('Cancel') ?></span></a>
 				<div class="clear"></div>
 			</div>

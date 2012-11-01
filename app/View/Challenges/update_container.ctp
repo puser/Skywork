@@ -2,9 +2,9 @@
 	<h1><?php echo __('Start a Bridge') ?></h1>
 	<div id="sidemenu">
 		<ul>
-			<li id="menu_challenge" class="active"><a class="icon icon-docinspect" onclick="$.bbq.pushState({view:'challenge'});"><?php echo __('Challenges') ?></a></li>
-			<li id="menu_assignment"><a class="icon icon-docopen" onclick="$.bbq.pushState({view:'assignment'});"><?php echo __('Assignment') ?></a></li>
-			<li id="menu_collaboration"><a class="icon icon-cycle" onclick="$.bbq.pushState({view:'collaboration'});"><?php echo __('Collaborate') ?></a></li>
+			<li id="menu_challenge" class="active"><a class="icon icon-docinspect" onclick="$.bbq.pushState({view:'challenge'});"><?php echo __('Step 1') ?></a></li>
+			<li id="menu_assignment"><a class="icon icon-docopen" onclick="$.bbq.pushState({view:'assignment'});"><?php echo __('Step 2') ?></a></li>
+			<li id="menu_collaboration"><a class="icon icon-cycle" onclick="$.bbq.pushState({view:'collaboration'});"><?php echo __('Step 3') ?></a></li>
 			<li id="menu_info"><a class="icon icon-pen" onclick="$.bbq.pushState({view:'info'});"><?php echo __('Information') ?></a></li>
 			<li id="menu_people"><a class="icon icon-envelope" onclick="$.bbq.pushState({view:'people'});"><?php echo __('Send to Class') ?></a></li>
 		</ul>
