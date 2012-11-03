@@ -58,12 +58,12 @@
 					
 					if($_SESSION['User']['user_type'] == 'L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){
 						$challenge_click = "$('#challenge_accept_link').attr('href','/challenges/instructor_confirm/".$challenge['Challenge']['id']."');$('#challenge_accept_link').click();return false;";
-					}elseif(($_SESSION['User']['user_type']=='L' || @$challenge['collaborator']) && $a_date > $now && $challenge['Challenge']['status'] != 'D'){
+					}elseif(($_SESSION['User']['user_type'] == 'L' || @$challenge['collaborator']) && $a_date > $now && $challenge['Challenge']['status'] != 'D'){
 						$challenge_click = "$('#date1_exp_warning').html('" . date_format($a_date,'m/d/Y') . "');$('#date2_exp_warning').html('" . date_format($r_date,'m/d/Y') . "');";
 						$challenge_click .= "$('#duedate_warning_link').click();return false;";
 					}elseif(@$challenge['Users']){
-						if($r_date > $now && $_SESSION['User']['user_type']=='L'){
-							$challenge_click = "window.location = '/responses/view/{$challenge['Challenge']['id']}';";
+						if(($r_date > $now && $_SESSION['User']['user_type'] == 'L') || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now)){
+							$challenge_click = "window.location = '/responses/view/{$challenge['Challenge']['id']}" . ($_SESSION['User']['user_type'] == 'P' ? "/{$_SESSION['User']['id']}" : '') . "';";
 						}else{
 							$challenge_click = "show_user_list($(this).parent(),{$challenge['Challenge']['id']}," . ($_SESSION['User']['user_type'] == 'L' ? '1' : '0') . "," . ($r_date < $now ? '1' : '0') . ");";
 						}

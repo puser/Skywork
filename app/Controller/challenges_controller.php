@@ -29,16 +29,20 @@ class ChallengesController extends AppController{
 		
 		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('Collaborator','User','Question','Status','ClassSet'=>array('User'),'Group'=>array('User'))));
 
+		$this->User->hasMany['Status']['conditions'] = 'Status.challenge_id IS NULL';
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
 		foreach(@$user['ClassSet'] as $g) $groups[$g['id']] = 1;
+		
+		$join_dates = array();
+		foreach(@$user['Status'] as $s) $join_dates[$s['class_id']] = date_create($s['date_created']);
 		
 		$now = date_create();
 		//$now->setTime(0,0);
 		foreach($challenges as $k=>$c){
 			$vis = false;
 			foreach($c['ClassSet'] as $g){
-				if(@$groups[$g['id']]){
+				if(@$groups[$g['id']] && date_create($c['Challenge']['date_modified']) > @$join_dates[$g['id']]){
 					$vis = true;
 					break;
 				}

@@ -11,11 +11,12 @@ class ResponsesController extends AppController{
 		$completed = $this->Challenge->field('if(responses_due < NOW(),1,0)');
 			
 		$this->Challenge->Behaviors->attach('Containable');
-		$contains = array(	'ClassSet'	=> array('User'),
+		$contains = array(	'Collaborator',
+												'ClassSet'	=> array('User'),
 												'Group'			=> array('User'),
 												'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . ($user_id ? $user_id : $_SESSION['User']['id']),
 																																	'Responses'		=> array(	'conditions'	=> ($completed ? '' : "Responses.user_id = " . $_SESSION['User']['id'])),
-																																	'Comment' 	 	=> array(	'conditions'	=> ($completed ? '' : "Comment.user_id = " . $_SESSION['User']['id']), 
+																																	'Comment' 	 	=> array(	'conditions'	=> ($completed ? '' : "Comment.user_id = ". $_SESSION['User']['id']), 
 																																													'order' => 'Comment.segment_start DESC',
 																																													'User' ))));
 												

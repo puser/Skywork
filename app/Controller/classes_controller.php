@@ -111,13 +111,17 @@ class ClassesController extends AppController{
 		}else $remove_status = 'R';
 		
 		foreach($_REQUEST['users'] as $u){
-			$this->Status->deleteAll(array('Status.status'=>$remove_status,'Status.user_id'=>$u,'Status.class_id'=>$group_id,'Status.challenge_id IS NULL'));
 			if($action == 'a'){
+				// set the status to 'C'; we'll use this record to determine which bridges are visible to the user based on the timestamp
+				$s = $this->Status->find('first',array('conditions'=>array('Status.user_id'=>$u,'Status.class_id'=>$group_id,'Status.challenge_id IS NULL')));
+				$this->Status->id = $s['Status']['id'];
+				$this->Status->saveField('status','C');
+				
 				$group_update = array('ClassSet'=>array('id'=>$group_id));
 				$group_update['User'] = array($u);
 				foreach($group['User'] as $u) if(array_search($u['id'],$group_update['User']) === false) $group_update['User'][] = $u['id'];
 				$this->ClassSet->save($group_update);
-			}
+			}else $this->Status->deleteAll(array('Status.status'=>$remove_status,'Status.user_id'=>$u,'Status.class_id'=>$group_id,'Status.challenge_id IS NULL'));
 		}
 		die();
 	}

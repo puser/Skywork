@@ -132,6 +132,7 @@ $('#answers_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date(),onSel
 	d = $('#answers_due').datepicker('getDate');
 	d.setDate(d.getDate()+1);
 	$('#responses_due').datepicker('setDate',d);
+	$('#responses_due').datepicker("option","minDate",$('#answers_due').datepicker('getDate'));
 }});
 $('#responses_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date()});
 
