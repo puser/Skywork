@@ -32,7 +32,9 @@ class ChallengesController extends AppController{
 		$this->User->hasMany['Status']['conditions'] = 'Status.challenge_id IS NULL';
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
-		foreach(@$user['ClassSet'] as $g) $groups[$g['id']] = 1;
+		foreach(@$user['ClassSet'] as $g){
+			if($user['User']['user_type'] != 'L' || $g['owner_id'] == $user['User']['id']) $groups[$g['id']] = 1;
+		}
 		
 		$join_dates = array();
 		foreach(@$user['Status'] as $s) $join_dates[$s['class_id']] = date_create($s['date_created']);
@@ -42,7 +44,7 @@ class ChallengesController extends AppController{
 		foreach($challenges as $k=>$c){
 			$vis = false;
 			foreach($c['ClassSet'] as $g){
-				if(@$groups[$g['id']] && date_create($c['Challenge']['date_modified']) > @$join_dates[$g['id']]){
+				if((@$groups[$g['id']] && date_create($c['Challenge']['date_modified']) > @$join_dates[$g['id']]) || $g['owner_id'] == $user['User']['id']){
 					$vis = true;
 					break;
 				}
