@@ -152,7 +152,7 @@ function save_response(redirect){
 		return false;
 	}
 	
-	if(!$('.niceTextarea:first').val()){
+	if(!redirect.search('attachments') && !$('.niceTextarea:first').val()){
 		$('#fieldValidate').show();
 		return false;
 	}

@@ -4,7 +4,7 @@
 		<div class="box-actions">
 			<ul>
 				<?php if($_SESSION['User']['id'] == $class['Owner']['id']){ ?>
-					<li><a class="icon4 icon4-plus" href="/classes/invite_member/<?php echo $class['ClassSet']['id']; ?>/student/" id="inviteNewUserLink" ><?php echo __('Add a new Student') ?></a></li>
+					<li><a class="icon4 icon4-plus" href="/classes/invite_member/<?php echo $class['ClassSet']['id']; ?>/student/" id="inviteNewUserLink"><?php echo __('Add a new Student') ?></a></li>
 					<li><a class="icon4 icon4-remove" href="#" ><?php echo __('Clean class') ?></a></li>
 				<?php } ?>
 			</ul>
@@ -30,7 +30,7 @@
 						<th></th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody><!--
 					<?php 
 					$koffset = 0;
 					if(count($invited)){ 
@@ -57,7 +57,7 @@
 						</td>
 					</tr>
 					<?php }} ?>
-					
+					-->
 					<?php if(count($class['User'])){ foreach($class['User'] as $k=>$u){ ?>
 					<tr<?php if(!(($k+$koffset)%2)){ ?> class="alternate"<?php } ?> id="groupMemberRow<?php echo $u['id']; ?>">
 						<td><?php echo $u['firstname']; ?></td>
@@ -71,6 +71,9 @@
 									<div class="item-actions-popup rounded2">
 										<ul>
 											<li><a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" class="deleteStudentMemberLink icon3 icon3-close modal-link"><?php echo __('Remove') ?></a></li>
+											<?php if(strstr($u['last_login'],'0000-00-00')){ ?>
+												<li><a href="#modalResendMember" onclick="$('#resendMemberLink').click(function(){ resend_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#resendMemberLink').unbind(); });return false;" class="deleteStudentMemberLink icon3 icon3-resend modal-link"><?php echo __('Resend') ?></a></li>
+											<?php } ?>
 										</ul>
 									</div>
 								</div>

@@ -414,7 +414,7 @@
 			
 			<div style="width: 200px; margin: 0 auto;" class="exitSaveOptions">
 				<a class="btn2" id="resendMemberLink" style="width: 95px; float: left;cursor:pointer;"><span><?php echo __('Resend') ?></span></a>
-				<a href="#" class="btn3 modal-link" style="width: 80px; float: right;" onclick="$('#resendMemberLink').unbind();return false;"><span><?php echo __('Cancel') ?></span></a>
+				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="$('#resendMemberLink').unbind();jQuery.fancybox.close();return false;"><span><?php echo __('Cancel') ?></span></a>
 				<div class="clear"></div>
 			</div>
 		</div>

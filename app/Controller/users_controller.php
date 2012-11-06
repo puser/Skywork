@@ -117,6 +117,7 @@ class UsersController extends AppController{
 			}
 		}else{
 			$user = $this->User->findById($user_id);
+			$this->User->id = $user['User']['id'];
 			if(!$user['User']['notify_groups']) $send_invite = false;
 		}
 		
@@ -126,16 +127,23 @@ class UsersController extends AppController{
 		// check for existing invite status
 		$status = array();
 		if($user_id) $status = $this->Status->find('first',array('conditions'=>array('Status.user_id'=>$user_id,'Status.class_id'=>$class_id,'Status.challenge_id IS NULL')));
-		
 		if(!$status){
-			// create 'pending' status
+			// create status
 			$status = array('Status' =>
 											array(	'user_id'			=> $this->User->id,
 															'class_id'		=> $class_id,
 															'permissions'	=> $permissions,
-															'status'			=> 'P' ));
+															'status'			=> 'C' ));
 			$this->Status->save($status);
 		}
+		
+		// add user to the class
+		$user_update = array('User'=>array('id'=>$this->User->id));
+		$user_update['ClassSet'] = array($class_id);
+		if(@$user['ClassSet']){
+			foreach($user['ClassSet'] as $g) if(array_search($g['id'],$user_update['ClassSet']) === false) $user_update['ClassSet'][] = $g['id'];
+		}
+		$this->User->save($user_update);
 		
 		if($send_invite){
 			// build invite url & message body
