@@ -26,8 +26,7 @@
 						<th><?php echo __('First Name') ?></th>
 						<th><?php echo __('Last Name') ?></th>
 						<th><?php echo __('Email') ?></th>
-						<th><?php echo __('City') ?></th>
-						<th><?php echo __('State') ?></th>
+						<th><?php echo __('Last Logged In') ?></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -42,9 +41,8 @@
 						<td><?php echo $u['firstname']; ?></td>
 						<td><?php echo $u['lastname']; ?></td>
 						<td><?php echo $u['email']; ?></td>
-						<td><?php echo $u['city']; ?></td>
-						<td><?php echo $u['state']; ?></td>
 						<td>Request sent</td>
+						<td> </td>
 					</tr>
 					<?php }} ?>
 					
@@ -53,8 +51,7 @@
 						<td><?php echo $u['firstname']; ?></td>
 						<td><?php echo $u['lastname']; ?></td>
 						<td><?php echo $u['email']; ?></td>
-						<td><?php echo $u['city']; ?></td>
-						<td><?php echo $u['state']; ?></td>
+						<td><?php echo $u['last_login']; ?></td>
 						<td>
 							<?php if($class['Owner']['id'] == $_SESSION['User']['id'] && $_SESSION['User']['id'] != $u['id']){ ?>
 								<a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" id="deleteStudentMemberLink"><img src="/images/icon-x.png" /></a>

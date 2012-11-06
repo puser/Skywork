@@ -222,7 +222,8 @@ class UsersController extends AppController{
 																	'user_type'		=> $_REQUEST['betakey'] == 'BETATEST' ? 'L' : 'C',
 																	'firstname'		=> '',
 																	'lastname'		=> '',
-																	'password'		=> sha1($_REQUEST['password'].$this->salt) ));
+																	'password'		=> sha1($_REQUEST['password'].$this->salt),
+																	'last_login'	=> 'NOW()' ));
 			
 			$user = $this->User->save($new_user);
 			if(@$user['User']['id']) $this->Session->write('User',$user['User']);
@@ -244,7 +245,8 @@ class UsersController extends AppController{
 																	'user_type'	=> $_REQUEST['user_type'],
 																	'firstname'	=> '',
 																	'lastname'	=> '',
-																	'password'	=> sha1($_REQUEST['password'].$this->salt) ));
+																	'password'	=> sha1($_REQUEST['password'].$this->salt),
+																	'last_login'=> 'NOW()' ));
 			
 			$user = $this->User->save($new_user);
 			if(@$user['User']['id']) $this->Session->write('User',$user['User']);
@@ -266,7 +268,7 @@ class UsersController extends AppController{
 				}
 
 				// if users is responding to an invitation for a challenge, automatically add the user to the relevant group
-				$user_update = array('User'=>array('id'=>$user['User']['id']));
+				$user_update = array('User'=>array('id'=>$user['User']['id'],'last_login'=>'NOW()'));
 				
 				if(@$_REQUEST['group_id'] && $_REQUEST['challenge_id']){
 					$user_update['ClassSet'] = array($_REQUEST['group_id']);
@@ -284,8 +286,7 @@ class UsersController extends AppController{
 			}elseif($ajax){
 				echo '0';
 				die();
-			}
-			else{
+			}else{
 				$this->set('error',true);
 				$this->redirect('/');
 			}
@@ -295,11 +296,12 @@ class UsersController extends AppController{
 			if(@$user['User']['invite_token'] == $_REQUEST['token']){
 				
 				$user_update = array(	'User' =>
-										array(	'id'			=> $user['User']['id'],
-												'invite_token'	=> NULL,
-												'email'			=> strtolower(@$_REQUEST['email']),
-												'login'			=> strtolower(@$_REQUEST['email']),
-												'password'		=> sha1($_REQUEST['password'].$this->salt) ));
+															array(	'id'					=> $user['User']['id'],
+																			'invite_token'=> NULL,
+																			'email'				=> strtolower(@$_REQUEST['email']),
+																			'login'				=> strtolower(@$_REQUEST['email']),
+																			'password'		=> sha1($_REQUEST['password'].$this->salt),
+																			'last_login'	=> 'NOW()' ));
 				
 				// if users is responding to an invitation, add the user to the relevant group
 				if(@$_REQUEST['group_id'] && $_REQUEST['challenge_id']) $user_update['ClassSet'] = array($_REQUEST['group_id']);
@@ -320,8 +322,7 @@ class UsersController extends AppController{
 		}elseif($ajax){
 			echo '0';
 			die();
-		}
-		else $this->redirect('/');
+		}else $this->redirect('/');
 	}
 	
 	function check_login(){
