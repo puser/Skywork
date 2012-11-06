@@ -26,7 +26,7 @@
 						<th><?php echo __('First Name') ?></th>
 						<th><?php echo __('Last Name') ?></th>
 						<th><?php echo __('Email') ?></th>
-						<th><?php echo __('Last Logged In') ?></th>
+						<th width="110"><?php echo __('Last Logged In') ?></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -41,8 +41,20 @@
 						<td><?php echo $u['firstname']; ?></td>
 						<td><?php echo $u['lastname']; ?></td>
 						<td><?php echo $u['email']; ?></td>
-						<td>Request sent</td>
-						<td> </td>
+						<td><?php echo __('Waiting for login...'); ?></td>
+						<td>
+							<?php if($class['Owner']['id'] == $_SESSION['User']['id']){ ?>
+								<div class="item-actions">
+									<a href="#" class="item-actions-icon"></a>
+									<div class="item-actions-popup rounded2">
+										<ul>
+											<li><a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" class="deleteStudentMemberLink icon3 icon3-close modal-link"><?php echo __('Remove') ?></a></li>
+											<li><a href="#modalResendMember" onclick="$('#resendMemberLink').click(function(){ resend_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#resendMemberLink').unbind(); });return false;" class="deleteStudentMemberLink icon3 icon3-resend modal-link"><?php echo __('Resend') ?></a></li>
+										</ul>
+									</div>
+								</div>
+							<?php } ?>
+						</td>
 					</tr>
 					<?php }} ?>
 					
@@ -51,10 +63,17 @@
 						<td><?php echo $u['firstname']; ?></td>
 						<td><?php echo $u['lastname']; ?></td>
 						<td><?php echo $u['email']; ?></td>
-						<td><?php echo $u['last_login']; ?></td>
+						<td><?php echo (strstr($u['last_login'],'0000-00-00') ? __('Waiting for login...') : substr($u['last_login'],0,16)); ?></td>
 						<td>
 							<?php if($class['Owner']['id'] == $_SESSION['User']['id'] && $_SESSION['User']['id'] != $u['id']){ ?>
-								<a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" id="deleteStudentMemberLink"><img src="/images/icon-x.png" /></a>
+								<div class="item-actions">
+									<a href="#" class="item-actions-icon"></a>
+									<div class="item-actions-popup rounded2">
+										<ul>
+											<li><a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" class="deleteStudentMemberLink icon3 icon3-close modal-link"><?php echo __('Remove') ?></a></li>
+										</ul>
+									</div>
+								</div>
 							<?php } ?>
 						</td>
 					</tr>
@@ -73,7 +92,7 @@
 </div>
 
 <script type="text/javascript"> 
-$('#inviteNewUserLink,#deleteStudentMemberLink').fancybox({
+$('#inviteNewUserLink,.deleteStudentMemberLink').fancybox({
 	'hideOnOverlayClick' : false,
 	'showCloseButton' : false,
 	'centerOnScroll' : true

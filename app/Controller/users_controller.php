@@ -109,7 +109,7 @@ class UsersController extends AppController{
 																'lastname'		=> $lname,
 																'login'				=> $email,
 																'email'				=> $email,
-										'user_type'		=> $type ));
+																'user_type'		=> $type ));
 				$this->User->save($user);
 			}elseif($user){
 				$this->User->id = $user['User']['id'];
@@ -123,20 +123,26 @@ class UsersController extends AppController{
 		// if user is re-invited with a new type, apply the new type to their record
 		if(@$user['User']['id'] && $type && $type != $user['User']['user_type']) $this->User->updateAll(array('User.user_type' => "'".$type."'"),array('User.id' => $user['User']['id']));
 		
-		// create 'pending' status
-		$status = array('Status' =>
-										array(	'user_id'			=> $this->User->id,
-														'class_id'		=> $class_id,
-														'permissions'	=> $permissions,
-														'status'			=> 'P' ));
-		$this->Status->save($status);
+		// check for existing invite status
+		$status = array();
+		if($user_id) $status = $this->Status->find('first',array('conditions'=>array('Status.user_id'=>$user_id,'Status.class_id'=>$class_id,'Status.challenge_id IS NULL')));
+		
+		if(!$status){
+			// create 'pending' status
+			$status = array('Status' =>
+											array(	'user_id'			=> $this->User->id,
+															'class_id'		=> $class_id,
+															'permissions'	=> $permissions,
+															'status'			=> 'P' ));
+			$this->Status->save($status);
+		}
 		
 		if($send_invite){
 			// build invite url & message body
 			$invite_url = 'http://puentesonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
 			
 			$message = __("{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team");
-			$message = str_replace('{first_name_1}',$fname,$message);
+			$message = str_replace('{first_name_1}',$user['User']['firstname'],$message);
 			$message = str_replace('{first_name_2}',$class['Owner']['firstname'],$message);
 			$message = str_replace('{classname}',$class['ClassSet']['group_name'],$message);
 			$message = str_replace('{begin_link}',"<a href='$invite_url'>",$message);
@@ -223,7 +229,7 @@ class UsersController extends AppController{
 																	'firstname'		=> '',
 																	'lastname'		=> '',
 																	'password'		=> sha1($_REQUEST['password'].$this->salt),
-																	'last_login'	=> 'NOW()' ));
+																	'last_login'	=> DboSource::expression('NOW()') ));
 			
 			$user = $this->User->save($new_user);
 			if(@$user['User']['id']) $this->Session->write('User',$user['User']);
@@ -246,7 +252,7 @@ class UsersController extends AppController{
 																	'firstname'	=> '',
 																	'lastname'	=> '',
 																	'password'	=> sha1($_REQUEST['password'].$this->salt),
-																	'last_login'=> 'NOW()' ));
+																	'last_login'=> DboSource::expression('NOW()') ));
 			
 			$user = $this->User->save($new_user);
 			if(@$user['User']['id']) $this->Session->write('User',$user['User']);
@@ -268,14 +274,14 @@ class UsersController extends AppController{
 				}
 
 				// if users is responding to an invitation for a challenge, automatically add the user to the relevant group
-				$user_update = array('User'=>array('id'=>$user['User']['id'],'last_login'=>'NOW()'));
+				$user_update = array('User'=>array('id'=>$user['User']['id'],'last_login'=>DboSource::expression('NOW()')));
 				
 				if(@$_REQUEST['group_id'] && $_REQUEST['challenge_id']){
 					$user_update['ClassSet'] = array($_REQUEST['group_id']);
 					foreach($user['ClassSet'] as $g) if(array_search($g['id'],$user_update['ClassSet']) === false) $user_update['ClassSet'][] = $g['id'];
 				}
 				$this->User->save($user_update);
-				
+								
 				$this->Session->write('User',$user['User']);
 				if($ajax){
 					echo '1';
@@ -301,7 +307,7 @@ class UsersController extends AppController{
 																			'email'				=> strtolower(@$_REQUEST['email']),
 																			'login'				=> strtolower(@$_REQUEST['email']),
 																			'password'		=> sha1($_REQUEST['password'].$this->salt),
-																			'last_login'	=> 'NOW()' ));
+																			'last_login'	=> DboSource::expression('NOW()') ));
 				
 				// if users is responding to an invitation, add the user to the relevant group
 				if(@$_REQUEST['group_id'] && $_REQUEST['challenge_id']) $user_update['ClassSet'] = array($_REQUEST['group_id']);

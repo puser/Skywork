@@ -395,6 +395,11 @@ function delete_class_member(g_id,u_id){
 	}});
 }
 
+function resend_class_member(c_id,u_id){
+	$.ajax({url:'/users/invite/'+c_id+'/'+u_id+'/'});
+	jQuery.fancybox.close();
+}
+
 function class_invite_professor(c_id){
 	$.ajax({url:'/users/invite/'+c_id+'/0/'+$('#firstName').val()+'/'+$('#lastName').val()+'/'+$('#emailAddr').val()+'/L/'+$('#permissions').val()});
 }

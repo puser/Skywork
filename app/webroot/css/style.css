@@ -451,6 +451,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon3-sm_green {background-image: url('/images/icons/icon-people-green-13x13.png'); }
 .icon3-pen {background-image: url('/images/icons/icon-pen-12x12.png'); }
 .icon3-close {background-image: url('/images/icons/icon-close-13x13.png'); }
+.icon3-resend {background-position:8px center !important;background-image: url('/images/resend.png'); }
 
 /** 20x20 */
 .icon4-plus {background-image: url('/images/icons/icon-plus-21x20.png'); }
@@ -467,6 +468,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon5-flash {background-image: url('/images/icons/icon-flash-25x38.png'); }
 .icon5-star {background-image: url('/images/icons/icon-star-24x24.png'); }
 .icon5-close {background-image: url('/images/icons/icon-close-23x22.png'); }
+.icon5-resend {background-image: url('/images/resend_lg.png'); }
 .icon5-key {background-image: url('/images/icon-key-36.png'); }
 .icon5-question {background-image: url('/images/icons/icon-question-24x22.png'); }
 

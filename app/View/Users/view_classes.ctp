@@ -383,7 +383,7 @@
 				<div class="clear"></div>
 			</div>
 		</div>
-	</div><!-- #modalExitChoices -->
+	</div>
 	
 	<div id="modalDeleteMember" style="width:460px;height:190px;">
 		<div class="modal-box-head">
@@ -401,7 +401,24 @@
 				<div class="clear"></div>
 			</div>
 		</div>
-	</div><!-- #modalExitChoices -->
+	</div>
+	
+	<div id="modalResendMember" style="width:460px;height:190px;">
+		<div class="modal-box-head">
+			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><span class="icon5 icon5-resend" style="margin:0;height:24px;"></span><?php echo __('Resend') ?></h2>
+		</div>
+
+		<div class="modal-box-content">
+			<div style="text-align:center;margin:20px 90px;line-height:25px;"><?php echo __('Are you sure you would like to resend the class invitation to this student?') ?></div>
+			<br />
+			
+			<div style="width: 200px; margin: 0 auto;" class="exitSaveOptions">
+				<a class="btn2" id="resendMemberLink" style="width: 95px; float: left;cursor:pointer;"><span><?php echo __('Resend') ?></span></a>
+				<a href="#" class="btn3 modal-link" style="width: 80px; float: right;" onclick="$('#resendMemberLink').unbind();return false;"><span><?php echo __('Cancel') ?></span></a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
 
 </div>
 
