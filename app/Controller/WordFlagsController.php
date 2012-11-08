@@ -4,12 +4,14 @@ class WordFlagsController extends AppController {
 	var $uses = array('WordFlag','User','Challenge','Response');
 	
 	function view($type='WORD'){
+		$this->checkAuth();
 		$this->layout = 'ajax';
 		$this->set('words',$this->WordFlag->find('all',array('conditions'=>'WordFlag.flag_type = "'.$type.'" && WordFlag.user_id = '.$_SESSION['User']['id'])));
 		$this->set('type',$type);
 	}
 	
 	function update($word=NULL,$count=NULL,$type='WORD'){
+		$this->checkAuth();
 		$this->layout = 'ajax';
 		if(@$_REQUEST['type']) $type = $_REQUEST['type'];
 		
@@ -17,13 +19,22 @@ class WordFlagsController extends AppController {
 		$this->set('type',$type);
 		
 		if($word && $count){
+			if(@$_REQUEST['id']) $this->WordFlag->id = $_REQUEST['id'];
 			$this->WordFlag->save(array('flag_type'=>$type,'word'=>$word,'count'=>$count,'user_id'=>$_SESSION['User']['id']));
 			if(@$_REQUEST['addnew']) $this->redirect('/word_flags/update/?type=' . $type);
+			elseif(@$_REQUEST['viewnext']) $this->redirect('/word_flags/update/' . $_REQUEST['viewnext'] . '?type=' . $type);
 			else $this->redirect('/word_flags/view/' . $type);
 		}elseif($word){
 			$this->set('count',$this->WordFlag->field('count',array('flag_type'=>$type,'word'=>$word,'user_id'=>$_SESSION['User']['id'])));
 			$this->set('word',$word);
+			$this->set('word_id',$this->WordFlag->field('id',array('flag_type'=>$type,'word'=>$word,'user_id'=>$_SESSION['User']['id'])));
 		}
+	}
+	
+	function delete($id,$type){
+		$this->checkAuth();
+		$this->WordFlag->delete($id);
+		$this->redirect('/word_flags/view/' . $type);
 	}
 	
 	function browse($user_id,$challenge_id,$type='all'){
