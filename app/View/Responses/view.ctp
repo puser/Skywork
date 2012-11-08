@@ -22,6 +22,10 @@
 .activeDetail {
 	background-color:#feffbd !important;
 }
+.annotated[annotatelevel="0"],.annotated[annotatelevel="1"],.annotated[annotatelevel="2"] {
+	padding-right:3px;
+	margin-right:-3px;
+}
 </style>
 
 <div id="assignmentDialog" style="display:none;text-align:center;"> </div>
