@@ -9,7 +9,7 @@
 		
 		<div style="border:1px solid #999;padding:5px;min-height:75px;margin:10px 0;">
 			<?php foreach($words as $w){ ?>
-				<a class="editWordBtn" href="/word_flags/update/<?php echo $w['WordFlag']['word']; ?>?type=<?php echo $type; ?>"><?php echo $w['WordFlag']['word']; ?></a>,&nbsp;
+				<a class="editWordBtn" href="/word_flags/update/<?php echo $w['WordFlag']['word']; ?>?type=<?php echo $type; ?>"><?php echo ($type == 'EXPL' ? substr($w['WordFlag']['word'],0,1) . str_repeat('*',strlen($w['WordFlag']['word']) - 1) : $w['WordFlag']['word']); ?></a>,&nbsp;
 			<?php } ?>
 		</div>
 		

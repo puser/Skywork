@@ -14,7 +14,7 @@
 					elseif(@$last_word == $word) $next_word = $w['WordFlag']['word'];
 					$last_word = $w['WordFlag']['word'];
 				} ?>
-				<a class="editWordBtn" href="/word_flags/update/<?php echo $w['WordFlag']['word']; ?>"><?php echo $w['WordFlag']['word']; ?></a>,&nbsp;
+				<a class="editWordBtn" href="/word_flags/update/<?php echo $w['WordFlag']['word']; ?>"><?php echo ($type == 'EXPL' ? substr($w['WordFlag']['word'],0,1) . str_repeat('*',strlen($w['WordFlag']['word']) - 1) : $w['WordFlag']['word']); ?></a>,&nbsp;
 			<?php } ?>
 		</div>
 		

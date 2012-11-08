@@ -1,3 +1,7 @@
+<style type='text/css'>
+.opened { background-color:#D9E8F1 !important; }
+</style>
+
 <div id="assignmentDialog" style="display:none;text-align:center;"> </div>
 
 <div id="sidebarleft">
@@ -55,7 +59,7 @@
 								$idx++;
 								?>
 						<tr <?php if($idx % 2){ ?>class="alternate"<?php } ?> onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1"><a href="#" onclick="$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();"><?php echo $u['firstname'].' '.$u['lastname']; ?></a></td>
+							<td class="col1"><a href="#" onclick="$(this).parents('tr').toggleClass('opened');$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();"><?php echo $u['firstname'].' '.$u['lastname']; ?></a></td>
 							<td class="col2"><?php echo @$user_flag_total[$u['id']]; ?></td>
 							<td></td>
 							<td class="col5">
