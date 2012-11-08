@@ -190,8 +190,8 @@ class ChallengesController extends AppController{
 						@$quality[$bridge_users[$r['user_id']]]['response_total'] += $rating['Response']['response_body'];
 						@$quality[$bridge_users[$r['user_id']]]['response_count']++;
 					}
-					$activity[$bridge_users[$r['user_id']].', '.$q['section']][0] = $this->Comment->find('count',array('conditions'=>'Comment.response_id = '.$r['id'].' && Comment.type = 0'));
-					$activity[$bridge_users[$r['user_id']].', '.$q['section']][1] = $this->Comment->find('count',array('conditions'=>'Comment.response_id = '.$r['id'].' && Comment.type = 1'));
+					@$activity[$bridge_users[$r['user_id']].', '.$q['section']][0] = $this->Comment->find('count',array('conditions'=>'Comment.response_id = '.$r['id'].' && Comment.type = 0'));
+					@$activity[$bridge_users[$r['user_id']].', '.$q['section']][1] = $this->Comment->find('count',array('conditions'=>'Comment.response_id = '.$r['id'].' && Comment.type = 1'));
 				}
 			}
 			

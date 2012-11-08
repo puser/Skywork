@@ -42,7 +42,8 @@ class MetricsController extends AppController{
 		$contains = array(	'Group',
 												'Question',
 												'ClassSet'	=> array('User' => array(	'Response'		=> array(	'Parent' 			=> array( 'fields' => 'Parent.user_id' ),
-																																											'conditions'	=> 'Response.question_id IN('.$q_ids['ids'].')' . ($r_ids['ids'] ? ' || Response.response_id IN('.$r_ids['ids'].')' : '')),
+																																											'conditions'	=> 'Response.question_id IN('.$q_ids['ids'].')' . ($r_ids['ids'] ? ' || Response.response_id IN('.$r_ids['ids'].')' : ''),
+																																											'order'				=> 'Response.id DESC'),
 																															'Comment' 		=> array(	'fields'			=> 'Comment.id',
 																															 												'conditions'	=> 'Comment.response_id IN('.($r_ids['ids'] ? $r_ids['ids'] : '0').')' ))));
 																															
@@ -69,9 +70,13 @@ class MetricsController extends AppController{
 			foreach($challenge['ClassSet'] as $k=>$c){
 				foreach($c['User'] as $i=>$u){
 					$keystrokes = 0;
+					$checked_responses = array();
 					foreach($u['Response'] as $r){
-						if($r['question_id']) $keystrokes += strlen($r['response_body']);
-						else{
+						if($r['question_id'] && !in_array($r['question_id'],$checked_responses)){
+							$checked_responses[] = $r['question_id'];
+							$keystrokes += strlen($r['response_body']);
+							@$activity[$u['id']]['responses']++;
+						}elseif(!in_array($r['question_id'],$checked_responses)){
 							if(@$_REQUEST['quality'] == 'I' && $u['user_type'] != 'L') continue;
 							elseif(@$_REQUEST['quality'] == 'S' && $u['user_type'] != 'P') continue;
 						
@@ -93,6 +98,7 @@ class MetricsController extends AppController{
 					@$activity[$u['id']]['keys'] += $keystrokes;
 					@$activity[$u['id']]['comments'] += count($u['Comment']);
 					@$activity[$u['id']]['challenges']++;
+					@$activity[$u['id']]['questions'] += count($challenge['Question']);
 				
 					$users_in_group = $users_groups ? count(array_keys($users_groups,@$users_groups[$u['id']])) : $ucount;
 					$possible_responses = count(explode(',',$q_ids['ids'])) + (($users_in_group - 1) * count(explode(',',$q_ids['ids'])));

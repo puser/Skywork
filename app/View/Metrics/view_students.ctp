@@ -80,9 +80,9 @@
 										<td class="col1"><a class="modal-link" href="#modal-collaborators"><?php echo "{$u['firstname']} {$u['lastname']}"; ?></a></td>
 										<td class="col2">
 											<div class="activity-level activity-level-blue">
-												<span style="width: <?php if(($activity[$u['id']]['completion'] / count($activity[$u['id']]['challenges'])) * 100 < 100){echo (($activity[$u['id']]['completion'] / count($activity[$u['id']]['challenges'])) * 100); }else{ echo 100;} ?>%"></span>
+												<span style="width: <?php echo ((@$activity[$u['id']]['responses'] / @$activity[$u['id']]['questions']) * 100); ?>%"></span>
 											</div>
-											<div class="activity-level-percentage"><?php if(round(($activity[$u['id']]['completion'] / count($activity[$u['id']]['challenges'])) * 100) < 100){ echo round(($activity[$u['id']]['completion'] / count($activity[$u['id']]['challenges'])) * 100); }else{ echo 100; } ?>%</div>
+											<div class="activity-level-percentage"><?php echo round((@$activity[$u['id']]['responses'] / @$activity[$u['id']]['questions']) * 100); ?>%</div>
 											<div class="clear"></div>
 										</td>
 										<td class="col3">

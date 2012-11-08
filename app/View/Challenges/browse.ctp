@@ -206,3 +206,10 @@
 </div>
 
 <!-- <?php echo date_format($now,'m/d/Y g:ia'); ?> -->
+
+<script type="text/javascript">
+// autorefresh after 1min
+setTimeout(function(){
+	window.location = '<?php echo $_SERVER['REQUEST_URI']; ?>';
+},60000);
+</script>
