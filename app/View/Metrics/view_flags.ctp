@@ -1,5 +1,8 @@
 <style type='text/css'>
 .opened { background-color:#D9E8F1 !important; }
+.remove-class:hover a.remove-class-icon { background: url('/images/arrow-down-purple.png') no-repeat center center !important; }
+.remove-class:hover,.remove-class.open,.remove-class { border:0 !important;height:16px; }
+.remove-class.open:hover a.remove-class-icon,.remove-class.open a.remove-class-icon{ background:transparent url('/images/arrow-up-purple.png') no-repeat center center !important; }
 </style>
 
 <div id="assignmentDialog" style="display:none;text-align:center;"> </div>
@@ -58,8 +61,15 @@
 								else $listed_users[] = $u['id'];
 								$idx++;
 								?>
-						<tr <?php if($idx % 2){ ?>class="alternate"<?php } ?> onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-							<td class="col1"><a href="#" onclick="$(this).parents('tr').toggleClass('opened');$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();"><?php echo $u['firstname'].' '.$u['lastname']; ?></a></td>
+						<tr <?php if($idx % 2){ ?>class="alternate"<?php } ?> onmouseover="$(this).find('.studentwork-more,.remove-class').show();" onmouseout="$(this).find('.studentwork-more').hide();if(!$(this).find('.remove-class').hasClass('open')){ $(this).find('.remove-class').hide(); }">
+							<td class="col1">
+								<a href="#" onclick="$(this).parents('tr').toggleClass('opened');$(this).parents('tr').nextUntil(':not(.flag_details)').toggle();$(this).next().toggleClass('open');" style="float:left;">
+									<?php echo $u['firstname'].' '.$u['lastname']; ?>
+								</a>
+								<div class="remove-class" style="margin-left:10px;display:none;float:left;">
+									<a class="remove-class-icon" href="#" onclick="return false;"></a>
+								</div>
+							</td>
 							<td class="col2"><?php echo @$user_flag_total[$u['id']]; ?></td>
 							<td></td>
 							<td class="col5">
