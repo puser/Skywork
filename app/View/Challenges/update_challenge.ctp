@@ -10,7 +10,7 @@
 			<li class="alternate">
 				<div class="accordion-trigger">
 					<a class="btn1" onclick="$.bbq.pushState({view:'assignment',state:{type:'challenge',val:'DOC'}});" id="doc_inactive"><span><?php echo __('Select') ?></span></a>
-					<div style="width: 118px;height: 22px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="doc_active"></div>
+					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="doc_active"></div>
 					<p><?php echo __('Read a Document') ?></p>
 					<div class="clear"></div>
 				</div>
@@ -21,7 +21,7 @@
 			<li>
 				<div class="accordion-trigger">
 					<a class="btn1" onclick="$.bbq.pushState({view:'assignment',state:{type:'challenge',val:'VID'}});" id="vid_inactive"><span><?php echo __('Select') ?></span></a>
-					<div style="width: 118px;height: 22px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="vid_active"></div>
+					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="vid_active"></div>
 					<p><?php echo __('Watch a YouTube video') ?></p>
 					<div class="clear"></div>
 				</div>

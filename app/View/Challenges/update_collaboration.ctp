@@ -10,7 +10,7 @@
 			<li>
 				<div class="accordion-trigger">
 					<a class="btn1" onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'RATE'}});" id="rate_inactive"><span><?php echo __('Select') ?></span></a>
-					<div style="width: 118px;height: 22px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="rate_active"></div>
+					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="rate_active"></div>
 					<p><?php echo __('Rate each other\'s work') ?></p>
 					<div class="clear"></div>
 				</div>

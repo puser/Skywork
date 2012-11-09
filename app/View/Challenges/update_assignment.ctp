@@ -10,7 +10,7 @@
 			<li class="alternate">
 				<div class="accordion-trigger">
 					<a class="btn1" onclick="$.bbq.pushState({view:'collaboration',state:{type:'assignment',val:'Q'}});" id="question_inactive"><span><?php echo __('Select') ?></span></a>
-					<div style="width: 118px;height: 22px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="question_active"></div>
+					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="question_active"></div>
 					<p><?php echo __('Answer Questions') ?></p>
 					<div class="clear"></div>
 				</div>
@@ -21,7 +21,7 @@
 			<li>
 				<div class="accordion-trigger">
 					<a class="btn1" onclick="$.bbq.pushState({view:'collaboration',state:{type:'assignment',val:'E'}});" id="essay_inactive"><span><?php echo __('Select') ?></span></a>
-					<div style="width: 118px;height: 22px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="essay_active"></div>
+					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="essay_active"></div>
 					<p><?php echo __('Write an Essay') ?></p>
 					<div class="clear"></div>
 				</div>
