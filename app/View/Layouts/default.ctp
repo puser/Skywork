@@ -47,6 +47,8 @@
 	
 </head>
 <body class="page page-home">
+<div id="TermsDialog" style="display:none;text-align:center;"> </div>
+<div id="PrivacyDialog" style="display:none;text-align:center;"> </div>
 <div id="wrapper">
 
 	<div id="header" class="round round-main <?php if(!@$_SESSION['User']['id']){ ?>corp-website<?php } ?>">
@@ -124,9 +126,8 @@
 		<!-- <div class="alignleft" id="logofooter"><a href="/"><img src="/images/logo-footer.png" /></a></div> -->
 		<div class="alignright" id="footermenu">
 			<ul>
-				<li><a href="#"><?php echo __('Privacy Policy') ?></a></li>
-
-				<li><a href="#"><?php echo __('Terms and Conditions') ?></a></li>
+				<li><a href="#" onclick="$('#PrivacyDialog').dialog('open');return false;"><?php echo __('Privacy Policy') ?></a></li>
+				<li><a href="#" onclick="$('#TermsDialog').dialog('open');return false;"><?php echo __('Terms of Use') ?></a></li>
 			</ul>
 		</div>
 		<div class="clear"></div>
@@ -144,6 +145,14 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+
+$('#PrivacyDialog').load('/challenges/viewpdf/Privacy-Policy.pdf',function(){
+	$("#PrivacyDialog").dialog({ autoOpen: false,minWidth: 740,minHeight: 500 });
+});
+
+$('#TermsDialog').load('/challenges/viewpdf/Terms-of-Use.pdf',function(){
+	$("#TermsDialog").dialog({ autoOpen: false,minWidth: 740,minHeight: 500 });
+});
 
 </script>
 </body>
