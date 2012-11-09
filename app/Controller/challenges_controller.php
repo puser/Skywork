@@ -656,7 +656,6 @@ class ChallengesController extends AppController{
 	}
 
 	function viewpdf($type){
-		$this->checkAuth();
 		$this->layout = 'ajax';
 		$this->set('pdfType',$type);
 	}
