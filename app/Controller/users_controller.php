@@ -94,7 +94,7 @@ class UsersController extends AppController{
 	// send an email invitation
 	function invite($class_id,$user_id=NULL,$fname=NULL,$lname=NULL,$email=NULL,$type=NULL,$permissions=NULL){
 		$this->checkAuth();
-		$invite_token = NULL;
+		$invite_token = $tmp_password = NULL;
 		$send_invite = true;
 		$class = $this->ClassSet->findById($class_id);
 		
@@ -102,13 +102,15 @@ class UsersController extends AppController{
 		if(!$user_id){
 			$user = $this->User->findByEmail($email);
 			if(!$user || !$email){
-				$invite_token = sha1(time().$this->salt);
+				// $invite_token = sha1(time().$this->salt);
+				$tmp_password = substr(sha1(time().rand(1000,10000)),0,5);
 				$user = array(	'User' =>
 												array(	'invite_token'=> $invite_token,
-																'firstname'		=> $fname,
-																'lastname'		=> $lname,
+																'firstname'		=> ($fname == '0' ? NULL : $fname),
+																'lastname'		=> ($lname == '0' ? NULL : $lname),
 																'login'				=> $email,
 																'email'				=> $email,
+																'password'		=> sha1($tmp_password.$this->salt),
 																'user_type'		=> $type ));
 				$this->User->save($user);
 			}elseif($user){
@@ -145,25 +147,30 @@ class UsersController extends AppController{
 		}
 		$this->User->save($user_update);
 		
+		// build invite url & message body
+		$invite_url = 'http://puentesonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
+		
 		if($send_invite){
-			// build invite url & message body
-			$invite_url = 'http://puentesonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
-			
-			$message = __("{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team");
+			if(!$tmp_password) $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team");
+			else $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n\nYour username is your email: <b>{user_email}</b>\nYour temporary password is: <b>{password}</b>\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team");
 			$message = str_replace('{first_name_1}',$user['User']['firstname'],$message);
 			$message = str_replace('{first_name_2}',$class['Owner']['firstname'],$message);
+			$message = str_replace('{last_name_2}',$class['Owner']['lastname'],$message);
 			$message = str_replace('{classname}',$class['ClassSet']['group_name'],$message);
-			$message = str_replace('{begin_link}',"<a href='$invite_url'>",$message);
+			$message = str_replace('{user_email}',$user['User']['login'],$message);
+			$message = str_replace('{password}',$tmp_password,$message);
+			// $message = str_replace('{begin_link}',"<a href='$invite_url'>",$message);
+			$message = str_replace('{begin_link}',"<a href='http://{$_SERVER['HTTP_HOST']}/'>",$message);
 			$message = str_replace('{end_link}',"</a>",$message);
-			
+		
 			$subject = __("{first_name} {last_name} wants you to join their Class");
 			$subject = str_replace('{first_name}',$class['Owner']['firstname'],$subject);
 			$subject = str_replace('{last_name}',$class['Owner']['lastname'],$subject);
-			
+		
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			$headers .= 'From: noreply@puentesonline.com' . "\r\n";
-		
+	
 			// send invite email
 			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",$subject,nl2br($message),$headers);
 		}
