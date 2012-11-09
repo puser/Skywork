@@ -654,5 +654,12 @@ class ChallengesController extends AppController{
 		if($a[0] + $a[1] == $b[0] + $b[1]) return 0;
 		return ($a[0] + $a[1] > $b[0] + $b[1]) ? -1 : 1;
 	}
+
+	function viewpdf($type){
+		$this->checkAuth();
+		$this->layout = 'ajax';
+		$this->set('pdfType',$type);
+	}
+
 }
 ?>
