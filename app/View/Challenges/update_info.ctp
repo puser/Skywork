@@ -1,3 +1,4 @@
+<div id="HelpDialog" style="display:none;text-align:center;"> </div>
 <div id="startbridge-information" class="box-startbridge box-white rounded">
 	<div class="box-head">
 		<span class="icon2 icon2-pen"></span>
@@ -47,7 +48,8 @@
 				</div>
 				<div class="clear"></div>
 			</li>
-			<li id="add_document">
+			<li style='border-bottom: 1px solid #E6E6E6; margin-top: -13px; width: 758px; margin-left: -9px;'>&nbsp;</li><br/>
+			<li id="add_document" style='padding-top:10px'>
 				<p class="label"><?php echo __('Document') ?></p>
 				<!-- <a href="#" class="icon-add"> Add document</a> -->
 				
@@ -67,7 +69,7 @@
 				
 			</li>
 			<li id="add_youtube">
-				<p class="label"><?php echo __('Video Embed Code') ?></p>
+				<p class="label"><?php echo __('Video Embed Code') ?> <span class="action-preview" style="margin-left: 180px; font-size: 13px;"><a href="#" onclick="$('#HelpDialog').dialog('open');return false;"><?php echo __('Help?') ?></a></span></p>
 				<textarea name="video_embed" style="width: 350px;height: 90px;"><?php echo (@$challenge['Attachment'][0]['type'] == 'C' ? $challenge['Attachment'][0]['file_location'] : '' ); ?></textarea>
 			</li>
 		</ul>
@@ -153,6 +155,7 @@ $('#answers_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date(),onSel
 	d = $('#answers_due').datepicker('getDate');
 	d.setDate(d.getDate()+1);
 	$('#responses_due').datepicker('setDate',d);
+	$('#responses_due').datepicker("option","minDate",$('#answers_due').datepicker('getDate'));
 }});
 $('#responses_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date()});
 
@@ -186,4 +189,8 @@ function check_min_length(){
 
 check_max_length();
 check_min_length();
+
+$('#HelpDialog').load('/challenges/viewpdf/Help.pdf',function(){
+	$("#HelpDialog").dialog({ autoOpen: false,minWidth: 740,minHeight: 500 });
+});
 </script>

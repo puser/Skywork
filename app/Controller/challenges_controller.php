@@ -29,16 +29,22 @@ class ChallengesController extends AppController{
 		
 		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('Collaborator','User','Question','Status','ClassSet'=>array('User'),'Group'=>array('User'))));
 
+		$this->User->hasMany['Status']['conditions'] = 'Status.challenge_id IS NULL';
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
-		foreach(@$user['ClassSet'] as $g) $groups[$g['id']] = 1;
+		foreach(@$user['ClassSet'] as $g){
+			if($user['User']['user_type'] != 'L' || $g['owner_id'] == $user['User']['id']) $groups[$g['id']] = 1;
+		}
+		
+		$join_dates = array();
+		foreach(@$user['Status'] as $s) $join_dates[$s['class_id']] = date_create($s['date_created']);
 		
 		$now = date_create();
 		//$now->setTime(0,0);
 		foreach($challenges as $k=>$c){
 			$vis = false;
 			foreach($c['ClassSet'] as $g){
-				if(@$groups[$g['id']]){
+				if((@$groups[$g['id']] && date_create($c['Challenge']['date_modified']) > @$join_dates[$g['id']]) || $g['owner_id'] == $user['User']['id']){
 					$vis = true;
 					break;
 				}
@@ -184,8 +190,8 @@ class ChallengesController extends AppController{
 						@$quality[$bridge_users[$r['user_id']]]['response_total'] += $rating['Response']['response_body'];
 						@$quality[$bridge_users[$r['user_id']]]['response_count']++;
 					}
-					$activity[$bridge_users[$r['user_id']].', '.$q['section']][0] = $this->Comment->find('count',array('conditions'=>'Comment.response_id = '.$r['id'].' && Comment.type = 0'));
-					$activity[$bridge_users[$r['user_id']].', '.$q['section']][1] = $this->Comment->find('count',array('conditions'=>'Comment.response_id = '.$r['id'].' && Comment.type = 1'));
+					@$activity[$bridge_users[$r['user_id']].', '.$q['section']][0] = $this->Comment->find('count',array('conditions'=>'Comment.response_id = '.$r['id'].' && Comment.type = 0'));
+					@$activity[$bridge_users[$r['user_id']].', '.$q['section']][1] = $this->Comment->find('count',array('conditions'=>'Comment.response_id = '.$r['id'].' && Comment.type = 1'));
 				}
 			}
 			
@@ -648,5 +654,11 @@ class ChallengesController extends AppController{
 		if($a[0] + $a[1] == $b[0] + $b[1]) return 0;
 		return ($a[0] + $a[1] > $b[0] + $b[1]) ? -1 : 1;
 	}
+
+	function viewpdf($type){
+		$this->layout = 'ajax';
+		$this->set('pdfType',$type);
+	}
+
 }
 ?>

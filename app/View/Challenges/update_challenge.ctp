@@ -9,8 +9,8 @@
 		<ul id="challenges-accordion" class="accordion">
 			<li class="alternate">
 				<div class="accordion-trigger">
-					<a class="btn1" onclick="$.bbq.pushState({view:'assignment',state:{type:'challenge',val:'DOC'}});"><span><?php echo __('Select') ?></span></a>
-					<div style="width: 21px;height: 24px;float:right;background: transparent url(/images/icon_greencheck.png);margin: 6px 12px 0;display:none;" id="doc_active"></div>
+					<a class="btn1" onclick="$.bbq.pushState({view:'assignment',state:{type:'challenge',val:'DOC'}});" id="doc_inactive"><span><?php echo __('Select') ?></span></a>
+					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="doc_active"></div>
 					<p><?php echo __('Read a Document') ?></p>
 					<div class="clear"></div>
 				</div>
@@ -20,8 +20,8 @@
 			</li>
 			<li>
 				<div class="accordion-trigger">
-					<a class="btn1" onclick="$.bbq.pushState({view:'assignment',state:{type:'challenge',val:'VID'}});"><span><?php echo __('Select') ?></span></a>
-					<div style="width: 21px;height: 24px;float:right;background: transparent url(/images/icon_greencheck.png);margin: 6px 12px 0;display:none;" id="vid_active"></div>
+					<a class="btn1" onclick="$.bbq.pushState({view:'assignment',state:{type:'challenge',val:'VID'}});" id="vid_inactive"><span><?php echo __('Select') ?></span></a>
+					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="vid_active"></div>
 					<p><?php echo __('Watch a YouTube video') ?></p>
 					<div class="clear"></div>
 				</div>
@@ -34,8 +34,20 @@
 </div>
 
 <script type="text/javascript">
-if($('#challenge_type').val()=='DOC') $('#doc_active').show();
-else if($('#challenge_type').val()=='VID') $('#vid_active').show();
+if($('#challenge_type').val()=='DOC'){
+	$('#doc_active').show();
+	$('#doc_inactive').hide();
+	
+	$('#vid_active').hide();
+	$('#vid_inactive').show();
+}else if($('#challenge_type').val()=='VID'){
+	$('#vid_active').show();
+	$('#vid_inactive').hide();
+	
+	$('#doc_inactive').show();
+	$('#doc_active').hide();
+}
+
 setTimeout(function(){
 	if($('#challenge_type').val() == 'VID') $("ul.accordion li:last-child .accordion-trigger p").trigger("click"); 
 	else $("ul.accordion li:first-child .accordion-trigger p").trigger("click"); 

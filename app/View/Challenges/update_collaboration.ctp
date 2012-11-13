@@ -9,8 +9,8 @@
 		<ul id="challenges-accordion" class="accordion">
 			<li>
 				<div class="accordion-trigger">
-					<a class="btn1" onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'RATE'}});"><span><?php echo __('Select') ?></span></a>
-					<div style="width: 21px;height: 24px;float:right;background: transparent url(/images/icon_greencheck.png);margin: 6px 12px 0;display:none;" id="rate_active"></div>
+					<a class="btn1" onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'RATE'}});" id="rate_inactive"><span><?php echo __('Select') ?></span></a>
+					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="rate_active"></div>
 					<p><?php echo __('Rate each other\'s work') ?></p>
 					<div class="clear"></div>
 				</div>
@@ -25,7 +25,13 @@
 </div>
 
 <script type="text/javascript">
-if($('#collaboration_type').val()=='RATE') $('#rate_active').show();
+if($('#collaboration_type').val()=='RATE'){
+	$('#rate_active').show();
+	$('#rate_inactive').hide();
+}else{
+	$('#rate_inactive').show();
+	$('#rate_active').hide();
+}
 setTimeout(function(){
 	$("ul.accordion li:first-child .accordion-trigger p").trigger("click"); 
 },50);

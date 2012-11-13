@@ -6,7 +6,7 @@
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
 	<link rel="stylesheet" media="all" href="/js/mcs/jquery.mCustomScrollbar.css" />
 	<?php echo $this->Html->meta('favicon.ico',    '/favicon.ico',    array('type' => 'icon'));?> 
-	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css?v=5" />
+	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css?v=6" />
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
@@ -25,7 +25,7 @@
 	<script type="text/javascript" src="/js/jquery.tablesorter.min.js"></script>
 
 	<script type="text/javascript" src="/js/custom.js" ></script>
-	<script type="text/javascript" src="/js/cco_ajax.js?v=3" ></script>
+	<script type="text/javascript" src="/js/cco_ajax.js?v=7" ></script>
 	
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">
@@ -124,9 +124,8 @@
 		<!-- <div class="alignleft" id="logofooter"><a href="/"><img src="/images/logo-footer.png" /></a></div> -->
 		<div class="alignright" id="footermenu">
 			<ul>
-				<li><a href="#"><?php echo __('Privacy Policy') ?></a></li>
-
-				<li><a href="#"><?php echo __('Terms and Conditions') ?></a></li>
+				<li><a href="/challenges/viewpdf/Privacy-Policy.pdf" class="show-overlay"><?php echo __('Privacy Policy') ?></a></li>
+				<li><a href="/challenges/viewpdf/Terms-of-Use.pdf" class="show-overlay"><?php echo __('Terms of Use') ?></a></li>
 			</ul>
 		</div>
 		<div class="clear"></div>

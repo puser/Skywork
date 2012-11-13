@@ -33,6 +33,7 @@ class ClassesController extends AppController{
 		// * TODO * : ensure that the search_visible logic is implemented correctly 
 		// $this->ClassSet->hasAndBelongsToMany['User']['conditions'] = 'User.search_visible = 1 && (User.user_type = "' . ($view == 'view_students' ? 'P" || "C' : 'L') . '")';
 		$this->ClassSet->hasAndBelongsToMany['User']['conditions'] = '(User.user_type = "' . ($view == 'view_students' ? 'P" || User.user_type = "C' : 'L') . '")';
+		$this->ClassSet->hasAndBelongsToMany['User']['order'] = 'User.last_login ASC';
 		$this->set('class',$this->ClassSet->findById($class_id));
 		$this->set('invited',$this->Status->find('all',array('conditions'=>("Status.class_id = $class_id && Status.challenge_id IS NULL && Status.status = 'P' && User.user_type = " . ($view == 'view_students' ? "'P'": "'L'")))));
 		$this->render($view,'ajax');
@@ -111,13 +112,17 @@ class ClassesController extends AppController{
 		}else $remove_status = 'R';
 		
 		foreach($_REQUEST['users'] as $u){
-			$this->Status->deleteAll(array('Status.status'=>$remove_status,'Status.user_id'=>$u,'Status.class_id'=>$group_id,'Status.challenge_id IS NULL'));
 			if($action == 'a'){
+				// set the status to 'C'; we'll use this record to determine which bridges are visible to the user based on the timestamp
+				$s = $this->Status->find('first',array('conditions'=>array('Status.user_id'=>$u,'Status.class_id'=>$group_id,'Status.challenge_id IS NULL')));
+				$this->Status->id = $s['Status']['id'];
+				$this->Status->saveField('status','C');
+				
 				$group_update = array('ClassSet'=>array('id'=>$group_id));
 				$group_update['User'] = array($u);
 				foreach($group['User'] as $u) if(array_search($u['id'],$group_update['User']) === false) $group_update['User'][] = $u['id'];
 				$this->ClassSet->save($group_update);
-			}
+			}else $this->Status->deleteAll(array('Status.status'=>$remove_status,'Status.user_id'=>$u,'Status.class_id'=>$group_id,'Status.challenge_id IS NULL'));
 		}
 		die();
 	}

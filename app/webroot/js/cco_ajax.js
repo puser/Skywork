@@ -152,7 +152,7 @@ function save_response(redirect){
 		return false;
 	}
 	
-	if(!$('.niceTextarea:first').val()){
+	if(!redirect.search('attachments') && !$('.niceTextarea:first').val()){
 		$('#fieldValidate').show();
 		return false;
 	}
@@ -395,12 +395,17 @@ function delete_class_member(g_id,u_id){
 	}});
 }
 
+function resend_class_member(c_id,u_id){
+	$.ajax({url:'/users/invite/'+c_id+'/'+u_id+'/'});
+	jQuery.fancybox.close();
+}
+
 function class_invite_professor(c_id){
 	$.ajax({url:'/users/invite/'+c_id+'/0/'+$('#firstName').val()+'/'+$('#lastName').val()+'/'+$('#emailAddr').val()+'/L/'+$('#permissions').val()});
 }
 
 function class_invite_student(c_id){
-	$.ajax({url:'/users/invite/'+c_id+'/0/'+$('#firstName').val()+'/'+$('#lastName').val()+'/'+$('#emailAddr').val()+'/P/'});
+	$.ajax({url:'/users/invite/'+c_id+'/0/'+($('#firstName').val() ? $('#firstName').val() : '0')+'/'+($('#lastName').val() ? $('#firstName').val() : '0')+'/'+$('#emailAddr').val()+'/P/'});
 }
 
 function load_search_results(){
