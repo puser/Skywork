@@ -27,14 +27,28 @@
 						<input type="text" size="60" name="email" value="<?php echo $user['User']['email']; ?>" />
 						<a href="#modal-preferences" class="show-overlay modal-link" style="color: #666666; font-size: 12px; "><?php echo __('Preferences') ?></a>
 					</li>
-					<li><label><?php echo __('City') ?></label> <input type="text" size="20" class="width15" name="city" value="<?php echo $user['User']['city']; ?>" /></li>
 					<li>
+						<label><?php echo __('City') ?></label> <input type="text" size="20" class="width15" name="city" value="<?php echo $user['User']['city']; ?>" />
+					</li>
+					<li>
+						<label><?php echo __('Country') ?></label> 
+						<select id='country' name="country" style="width: 167px;" onchange="switch_state();">
+							<option value="">Select</option>
+							<?php foreach($countries as $country){ ?>
+								<option value="<?php echo $country['Country']['abbreviation']; ?>" <?php if($user['User']['country'] == $country['Country']['abbreviation']){ echo 'selected="selected"'; } ?>><?php echo $country['Country']['country']; ?></option>
+							<?php } ?>
+						</select>
+					</li>
+					<li id='state_select' style='display:none'>
 						<label><?php echo __('State') ?></label> 
-						<select name="state" style="width: 120px;">
+						<select name="US_state" style="width: 120px;" id='US_state'>
 							<?php foreach($states as $state){ ?>
 								<option value="<?php echo $state['State']['abbreviation']; ?>" <?php if($user['User']['state'] == $state['State']['abbreviation']) echo 'selected="selected"'; ?>><?php echo $state['State']['state']; ?></option>
 							<?php } ?>
 						</select>
+					</li>
+					<li id='state_input' style='display:none'>
+						<label><?php echo __('State/Province') ?></label><input type="text" id='other_state' size="20" class="width15" name="other_state" value="<?php if($user['User']['country'] == 'US'){ echo '';}else{ echo $user['User']['state']; }?>" />
 					</li>
 					<li>
 						<label><?php echo __('Language') ?></label> 
@@ -45,10 +59,11 @@
 					</li>
 				</ul>
 				<br /><br />
-				<p><?php echo __('Change Password') ?></p>
-				<ul class="fieldset2">	
-					<li><label><?php echo __('Type Password') ?></label> <input type="password" size="60" name="new_pass1" /></li>
-					<li><label><?php echo __('Re-type Password') ?></label> <input type="password" size="60" name="new_pass2" /></li>
+				<p><?php echo __('Password') ?></p>
+				<span id="show_change_password" style='float: left; width: 250px; margin-right: 10px; color: #567AA9; font-size: 13px;'><?php echo __('To change your password click ') ?><a onclick="$('#change_password').show('fast'); $('#cancel_changes').show('fast'); $('#show_change_password').hide();"><u>here</u></a></span>
+				<ul class="fieldset2" id="change_password" style='display:none'>	
+					<li><label><?php echo __('Type Password') ?></label> <input type="password" size="60" id="new_pass1" name="new_pass1" /></li>
+					<li><label><?php echo __('Re-type Password') ?></label> <input type="password" size="60" id="new_pass2" name="new_pass2" /></li>
 				</ul>
 				
 				<!--
@@ -67,12 +82,20 @@
 		</div>
 	</div>
 	<div class="clear"></div>
-	
-	<a href="#" class="btn2 btn-savecontinue aligncenter" onclick="save_user();return false;"><span style="width:64px;" class="inner"><?php echo __('Save') ?></span></a>
-	<span id="savedNotify" style="display:none;">
-		<p style="display:block;text-align:center;color:#ff0000;"><?php echo __('Saved!') ?></p>
-	</span>
-	
+	<div style="width: 200px; margin: 0 auto; ">
+	    <span id="passwordError" style="display:none;">
+			<p style="display:block;text-align:center;color:#ff0000;"><?php echo __('Passwords do not match!') ?></p>
+		</span>
+		<a href="#" class="btn2 btn-savecontinue aligncenter" style="width: 80px; float: left;" onclick="save_user();return false;"><span style="width:64px;" class="inner"><?php echo __('Save') ?></span></a>
+		<a href="#" class="btn3" id='cancel_changes' style="width: 80px; float: right; display:none" onclick="cancel_changes(); return false;"><span style="width:100px;"><?php echo __('Cancel Changes') ?></span></a>
+		<span id="savedNotify" style="display:none;">
+			<p style="display:block;text-align:center;color:#ff0000;"><?php echo __('Saved!') ?></p>
+		</span>
+		<span id="passwordError" style="display:none;">
+			<p style="display:block;text-align:center;color:#ff0000;"><?php echo __('Passwords do not match!') ?></p>
+		</span>
+
+	</div>
 </div>
 <div class="clear"></div>
 

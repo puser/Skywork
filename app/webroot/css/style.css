@@ -451,7 +451,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon3-sm_green {background-image: url('/images/icons/icon-people-green-13x13.png'); }
 .icon3-pen {background-image: url('/images/icons/icon-pen-12x12.png'); }
 .icon3-close {background-image: url('/images/icons/icon-close-13x13.png'); }
-.icon3-resend {background-position:8px center !important;background-image: url('/images/resend.png'); }
+.icon3-resend {background-position:10px center !important;background-image: url('/images/resend.png'); }
 
 /** 20x20 */
 .icon4-plus {background-image: url('/images/icons/icon-plus-21x20.png'); }
