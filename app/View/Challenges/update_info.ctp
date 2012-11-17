@@ -1,3 +1,9 @@
+<style type='text/css'>
+.remove-class:hover a.remove-class-icon { background: url('/images/arrow-down-purple.png') no-repeat center center !important; }
+.remove-class:hover,.remove-class.open,.remove-class { border:0 !important;height:16px; }
+.remove-class.open:hover a.remove-class-icon,.remove-class.open a.remove-class-icon{ background:transparent url('/images/arrow-up-purple.png') no-repeat center center !important; }
+</style>
+
 <div id="HelpDialog" style="display:none;text-align:center;"> </div>
 <div id="startbridge-information" class="box-startbridge box-white rounded">
 	<div class="box-head">
@@ -118,13 +124,13 @@
 		<br />
 		<p class="label" style="font-size:13px;"><?php echo __('Assignment Length (Min / Max)') ?></p>
 		<p class="input">
-			<input type="checkbox" id="min_length" onchange="setTimeout('check_min_length()',10);" <?php if(!@$challenge || @$challenge['Challenge']['min_response_length']) echo 'checked="checked"'; ?> />&nbsp;
+			<input type="checkbox" id="min_length" onchange="setTimeout('check_min_length()',10);" checked="checked" disabled />&nbsp;
 			<span id="min_length_input" style="display:none;">
-				<input type="text" name="challenge[Challenge][min_response_length]" style="width:40px;" value="<?php echo @$challenge['Challenge']['min_response_length']; ?>" />&nbsp;
+				<input type="text" name="challenge[Challenge][min_response_length]" style="width:40px;" value="<?php echo (@$challenge['Challenge']['min_response_length'] > 0 ? $challenge['Challenge']['min_response_length'] : 1); ?>" />&nbsp;
 				<strong>Minimum</strong> words required for each question to be considered complete.
 			</span>
 			<span id="min_length_disabled">No minimum words required for each question</span><br />
-			
+		
 			<input type="checkbox" id="max_length" onchange="setTimeout('check_max_length()',10);" <?php if(@$challenge['Challenge']['max_response_length']) echo 'checked="checked"'; ?> />&nbsp;
 			<span id="max_length_input" style="display:none;">
 				<input type="text" name="challenge[Challenge][max_response_length]" style="width:40px;" value="<?php echo @$challenge['Challenge']['max_response_length']; ?>" />&nbsp;
@@ -133,13 +139,38 @@
 			</span>
 			<span id="max_length_disabled">No maximum word count for each question</span><br />
 		</p>
-				
+		
 		<br />
-		<p class="label" style="font-size:13px;"><?php echo __('Anonymous') ?></p>
-		<p class="input">
-			<input type="checkbox" name="challenge[Challenge][anonymous]" value="1"<?php if(@$challenge['Challenge']['anonymous']) echo ' checked="checked"'; ?> />
-			<?php echo __('Apply as anonymous (Assignment won\'t display names)') ?>
-		</p>
+		<div class="label" style="font-size:15px;border-top:1px solid #ccc;cursor:pointer;padding-top:20px;padding-bottom:18px;" onclick="$(this).next().slideToggle();$(this).find('.remove-class').toggleClass('open');">
+			<?php echo __('Advanced Options') ?>
+			<div class="remove-class" style="display:inline-block;">
+				<a class="remove-class-icon" href="#" style="padding-top:5px;" onclick="return false;"></a>
+			</div>
+		</div>
+		<div id="advanced_options" style="display:none;">
+			<p class="label" style="font-size:13px;"><?php echo __('Anonymous') ?></p>
+			<p class="input">
+				<input type="checkbox" name="challenge[Challenge][anonymous]" value="1"<?php if(@$challenge['Challenge']['anonymous']) echo ' checked="checked"'; ?> />
+				<?php echo __('Apply as anonymous (Assignment won\'t display names)') ?>
+			</p>
+			
+			<br />
+			<p class="label" style="font-size:13px;"><?php echo __('Quality Scales') ?></p>
+			<p class="input">
+				<input type="checkbox" onchange="if(!$(this).attr('checked')){ $('.scaleCustom').attr('checked',''); }else{ $('.scaleCustom').attr('checked','checked'); }" />
+				<?php echo __('Use Quality Scales (Rate the quality of your students\' work on a scale from High Quality to Poor Quality during Due Date 2.)') ?>
+				<div class="clear"></div>
+				
+				<div style="padding:0 0 0 22px;">
+					<input class="scaleCustom" type="checkbox" name="challenge[Challenge][instructor_ratings]" value="1"<?php if(@$challenge['Challenge']['instructor_ratings']) echo ' checked="checked"'; ?> />
+					<?php echo __('Allow instructor ratings: only the instructor may rate the quality of their students.') ?>
+					<div class="clear"></div>
+					
+					<input class="scaleCustom" type="checkbox" name="challenge[Challenge][student_ratings]" value="1"<?php if(@$challenge['Challenge']['student_ratings']) echo ' checked="checked"'; ?> />
+					<?php echo __('Allow student ratings: students may rate the quality of work for the other students in their group.') ?>
+				</div>
+			</p>
+		</div>
 	</div>
 	
 </div>

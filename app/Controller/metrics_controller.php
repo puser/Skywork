@@ -75,7 +75,7 @@ class MetricsController extends AppController{
 						if($r['question_id'] && !in_array($r['question_id'],$checked_responses)){
 							$checked_responses[] = $r['question_id'];
 							$keystrokes += strlen($r['response_body']);
-							@$activity[$u['id']]['responses']++;
+							if(strlen($r['response_body']) >= $challenge['Challenge']['min_response_length']) @$activity[$u['id']]['responses']++;
 						}elseif(!in_array($r['question_id'],$checked_responses)){
 							if(@$_REQUEST['quality'] == 'I' && $u['user_type'] != 'L') continue;
 							elseif(@$_REQUEST['quality'] == 'S' && $u['user_type'] != 'P') continue;
@@ -172,9 +172,17 @@ class MetricsController extends AppController{
 
 		$user_flag_total = array();
 		$user_text = array();
+		$user_flags = array();
+		$maxwords_flag = array();
 		foreach($challenge['Question'] as $q){
 			foreach($q['Response'] as $r){
 				@$user_text[$r['user_id']] .= ' ' . $r['response_body'];
+				if(strlen($r['response_body']) > $challenge['Challenge']['max_response_length'] && $challenge['Challenge']['max_response_length']){
+					@$user_flag_total[$r['user_id']]++;
+					if(@$maxwords_flag[$r['user_id']]){
+						$maxwords_flag[$r['user_id']]['flags']++;
+						$maxwords_flag[$r['user_id']]['words'] += strlen($r['response_body']) - $challenge['Challenge']['max_response_length'];
+					}else $maxwords_flag[$r['user_id']] = array('words' => strlen($r['response_body']) - $challenge['Challenge']['max_response_length'],'flags' => 1);
 				
 				$comments = $this->Comment->find('all',array('conditions'=>array('Comment.response_id'=>$r['id'])));
 				foreach($comments as $c) @$user_text[$c['Comment']['user_id']] .= ' ' . $c['Comment']['comment'];
@@ -192,6 +200,7 @@ class MetricsController extends AppController{
 		
 		$this->set('user_flag_total',$user_flag_total);
 		$this->set('user_flags',$user_flags);
+		$this->set('maxwords_flag',$maxwords_flag);
 		$this->set('challenge',$challenge);
 	}
 	

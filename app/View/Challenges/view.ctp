@@ -27,6 +27,16 @@
 	
 	<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded">
 		<div id="questionContent"> </div>
+		<?php if($challenge['Challenge']['min_response_length'] || $challenge['Challenge']['max_response_length']){ ?>
+			<div style="text-align:right;">
+				<?php if($challenge['Challenge']['min_response_length'] > 1){ ?>
+					<span style="color:#ccc;padding-right:10px;">Miniumum: <?php echo $challenge['Challenge']['min_response_length']; ?></span>
+				<?php }if($challenge['Challenge']['max_response_length']){ ?>
+					<span style="color:#ccc;padding-right:10px;">Maximum: <?php echo $challenge['Challenge']['max_response_length']; ?></span>
+				<?php } ?>
+				Counter: <span id="currentWordCount">0</span>
+			</div>
+		<?php } ?>
 	</div>
 	
 	<div class="clear"></div>
@@ -42,24 +52,6 @@
 </div>
 
 <div class="clear"></div>
-
-<div style="display: none;">
-
-	<div id="laststep-html">
-		<div class="box-heading">
-			<h2 class="label-text">Last Step: </h2>
-		</div>
-		<ul class="fieldset2">
-			<li><span class="label alignleft">Preferred Email</span> <input type="text" value="" class="width15"/></li>
-			<li><span class="label alignleft">Password</span> <input type="text" value="" class="width15"/></li>
-
-			<li><span class="label alignleft">Confirm Password</span> <input type="text" value="" class="width15"/></li>
-		</ul>
-		<br /><br />
-		<a href="answerquestions-response.html" class="btn1 btn-savecontinue aligncenter"><span class="inner">Save and Continue</span></a>
-	</div>
-	
-</div>
 
 <div style="display: none;">
 	<div id="modalExitChoices" style="width:480px;height:230px;">
@@ -84,14 +76,31 @@
 	</div><!-- #modalExitChoices -->
 </div>
 
-
 <script type="text/javascript">
+<?php if($challenge['Challenge']['max_response_length'] && !$challenge['Challenge']['allow_exceeded_length']){ ?>
+	function limitText(limitField){
+		limitNum = <?php echo $challenge['Challenge']['max_response_length']; ?>;
+		if(limitField.val().length > limitNum) limitField.val(limitField.val().substring(0,limitNum));
+		else $('#currentWordCount').html(limitField.val().length);
+	}
+<?php } ?>
+
 $(document).ready(function(){
 	setup_response_hashchange(<?php echo $challenge['Question'][0]['id']; ?>,<?php echo $challenge['Challenge']['id']; ?>);
 	
 	$textAreaOrigHeight = 264;
 	$("textarea.niceTextarea").keyup(function(){ 
 		expandtext(this); 
+		
+		<?php if($challenge['Challenge']['max_response_length'] && !$challenge['Challenge']['allow_exceeded_length']){ ?>
+			limitText($('textarea.niceTextarea'));
+		<?php } ?>
 	});
+	
+	<?php if($challenge['Challenge']['max_response_length'] && !$challenge['Challenge']['allow_exceeded_length']){ ?>
+		$("textarea.niceTextarea").keydown(function(){
+			limitText($('textarea.niceTextarea'));
+		});
+		limitText($('textarea.niceTextarea'));
 });
 </script>

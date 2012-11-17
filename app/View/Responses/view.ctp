@@ -220,14 +220,14 @@
 				<div class="box-head">
 					<span class="icon2 icon2-listcountgreen"><?php echo ($k+1); ?></span><a name="<?php echo $q['id']; ?>" href="#"> </a>
 					<h2><?php echo 'Question '.($k+1);//$q['section']; ?></h2>
-					<?php if($completed && $_SESSION['User']['user_type'] != 'P'){ ?>
+					<?php if($completed && $_SESSION['User']['user_type'] != 'P' && ($challenge[0]['Challenge']['instructor_ratings'] || $challenge[0]['Challenge']['student_ratings'])){ ?>
 						<div class="summary-quality">
 							<span class="<?php echo ($q['response_total'] == 1 ? 'great' : ($q['response_total'] == 2 ? 'good' : ($q['response_total'] == 3 ? 'average' : ($q['response_total'] == 4 ? 'poor' : 'poor')))); ?>">
 								<?php echo ($q['response_total'] == 1 ? __('Very High') : ($q['response_total'] == 2 ? __('Good') : ($q['response_total'] == 3 ? __('Average') : ($q['response_total'] == 4 ? __('Below Average') : __('Poor'))))); ?> <?php echo __('Quality') ?>
 							</span>
 							<?php if(!$k && !@$_REQUEST['notips']){ ?><a class="tooltip-mark tooltip-mark-question" title="<?php echo __('Average quality for this Question') ?>"></a><?php } ?>
 						</div>
-					<?php }elseif(!$completed){ ?>
+					<?php }elseif(!$completed && (($challenge[0]['Challenge']['instructor_ratings'] && $_SESSION['User']['user_type'] == 'I') || ($challenge[0]['Challenge']['student_ratings'] && $_SESSION['User']['user_type'] == 'P'))){ ?>
 						<div class="like-scale">
 							<ul id="response_scale_<?php echo $q['Response'][0]['id']; ?>">
 								<li class="scale1<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 1) echo ' selected'; ?>"><span><?php echo __('Very High') ?> <?php echo __('Quality') ?></span></li>

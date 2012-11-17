@@ -57,7 +57,7 @@
 						$listed_users = array();
 						foreach($challenge['ClassSet'] as $c){
 							foreach($c['User'] as $u){
-								if(in_array($u['id'],$listed_users) || !@$user_flags[$u['id']] || $u['user_type'] != 'P') continue;
+								if(in_array($u['id'],$listed_users) || (!@$user_flags[$u['id']] && !@$maxwords_flag[$u['id']]) || $u['user_type'] != 'P') continue;
 								else $listed_users[] = $u['id'];
 								$idx++;
 								?>
@@ -90,7 +90,18 @@
 									</a>
 								</td>
 							</tr>
-						<?php }}}} ?>
+						<?php }}if(@$maxwords_flag[$u['id']]){ ?>
+							<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
+								<td class="col1">Assignment Maximum</td>
+								<td class="col2"><?php echo $maxwords_flag[$u['id']]['flags']; ?></td>
+								<td class="col3"><?php echo $maxwords_flag[$u['id']]['words']; ?> over maximum allowed</td>
+								<td class="col5">
+									<a href="/word_flags/browse/<?php echo $u['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>/MAX" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
+										<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
+									</a>
+								</td>
+							</tr>
+						<?php }}} ?>
 					</tbody>
 				</table>
 			</div>
