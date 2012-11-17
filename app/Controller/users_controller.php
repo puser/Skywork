@@ -1,7 +1,7 @@
 <?php
 class UsersController extends AppController{
 	var $name = 'Users';
-	var $uses = array('User','ClassSet','Status','State');
+	var $uses = array('User','ClassSet','Status','State', 'Country');
 
 	// view account settings
 	function view($show=NULL,$saved=false){
@@ -52,6 +52,7 @@ class UsersController extends AppController{
 		}else{
 			$this->set('user',$user);
 			$this->set('states',$this->State->find('all'));
+			$this->set('countries',$this->Country->find('all'));
 		}
 	}
 	
@@ -67,6 +68,13 @@ class UsersController extends AppController{
 		}
 		
 		if(!@$_REQUEST['search_visible']) $_REQUEST['search_visible'] = 0;
+
+		if($_REQUEST['country'] == 'US'){
+			$_REQUEST['state'] = $_REQUEST['US_state'];
+		}elseif($_REQUEST['country'] != 'US'){
+			$_REQUEST['state'] = $_REQUEST['other_state'];
+		}
+
 		$this->User->save($_REQUEST);
 
 		if($_REQUEST['firstname']){

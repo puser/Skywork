@@ -46,7 +46,7 @@
 							<?php if($class['Owner']['id'] == $_SESSION['User']['id']){ ?>
 								<div class="item-actions">
 									<a href="#" class="item-actions-icon"></a>
-									<div class="item-actions-popup rounded2">
+									<div class="item-actions-popup rounded2" style='width: 85px'>
 										<ul>
 											<li><a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" class="deleteStudentMemberLink icon3 icon3-close modal-link"><?php echo __('Remove') ?></a></li>
 											<li><a href="#modalResendMember" onclick="$('#resendMemberLink').click(function(){ resend_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#resendMemberLink').unbind(); });return false;" class="deleteStudentMemberLink icon3 icon3-resend modal-link"><?php echo __('Resend') ?></a></li>
@@ -56,8 +56,8 @@
 							<?php } ?>
 						</td>
 					</tr>
-					<?php }} ?>
-					-->
+					<?php }} ?> -->
+					
 					<?php if(count($class['User'])){ foreach($class['User'] as $k=>$u){ ?>
 					<tr<?php if(!(($k+$koffset)%2)){ ?> class="alternate"<?php } ?> id="groupMemberRow<?php echo $u['id']; ?>">
 						<td><?php echo $u['firstname']; ?></td>
@@ -68,7 +68,7 @@
 							<?php if($class['Owner']['id'] == $_SESSION['User']['id'] && $_SESSION['User']['id'] != $u['id']){ ?>
 								<div class="item-actions">
 									<a href="#" class="item-actions-icon"></a>
-									<div class="item-actions-popup rounded2">
+									<div class="item-actions-popup rounded2" style='width: 85px'>
 										<ul>
 											<li><a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $class['ClassSet']['id'].",".$u['id']; ?>);$('#deleteMemberLink').unbind(); });return false;" class="deleteStudentMemberLink icon3 icon3-close modal-link"><?php echo __('Remove') ?></a></li>
 											<?php if(strstr($u['last_login'],'0000-00-00')){ ?>
@@ -86,9 +86,9 @@
 		<?php } ?>
 		<br /><br /><br /><br />
 		<div class="clear"></div>
-		<div style="width: 200px; margin: 0 auto; ">
-			<a href="#" class="btn2" style="width: 80px; float: left;" onclick="$('#updateClassName').submit(); "><span><?php echo __('Save') ?></span></a>
-			<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
+		<div style="width: 200px; margin: 0 auto; text-align:center">
+<!--			<a href="#" class="btn2" style="width: 80px; float: left;" onclick="$('#updateClassName').submit(); "><span><?php echo __('Save') ?></span></a> -->
+			<a href="#" class="btn3" style="width: 80px; margin-left: 60px;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Close') ?></span></a>
 			<div class="clear"></div>
 		</div>
 	</div>

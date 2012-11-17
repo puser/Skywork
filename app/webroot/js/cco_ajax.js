@@ -87,9 +87,43 @@ function remove_attachment(e,id){
 function save_user(){
 	$.ajax({url:'/users/update/',data:$('#userData').serialize(),type:'POST'});
 	$('.btn-savecontinue').hide();
-	$('#savedNotify').show();
-	setTimeout("$('.btn-savecontinue').show();$('#savedNotify').hide();window.location='/users/view/';",2000);
-	$('.user-name a').html($('input[name="firstname"]').val() + ' ' + $('input[name="lastname"]').val());
+	$('#cancel_changes').hide();
+	
+	var newpass = $('#new_pass1').val();
+	var repass = $('#new_pass2').val();
+    if(!(newpass=='' && repass== '') && (newpass=='' || repass== '' || newpass != repass )){
+		$('#passwordError').show();
+        $('.btn-savecontinue').show();
+        $('#cancel_changes').show();
+		return false;
+	} else {
+        setTimeout("$('#passwordError').hide()",10);
+        $('#savedNotify').show();
+	    setTimeout("$('.btn-savecontinue').show();$('#savedNotify').hide();window.location='/users/view/';",2000);
+	    $('.user-name a').html($('input[name="firstname"]').val() + ' ' + $('input[name="lastname"]').val());
+	 }
+}
+
+function switch_state(){
+	var country = $('#country').val();
+	if(country == 'US'){
+		$('#state_select').show();
+		$('#other_state').val('');
+		$('#state_input').hide();
+	}else{
+		$('#state_input').show();
+		$('#us_state').val('');
+		$('#state_select').hide();
+	}
+}
+
+function cancel_changes(){
+	$('#passwordError').hide()
+	$('#cancel_changes').hide();
+	$('#change_password').hide();
+	$('#show_change_password').show();
+	$('#new_pass1').val('');
+	$('#new_pass2').val('');
 }
 
 function show_question(q_id){
