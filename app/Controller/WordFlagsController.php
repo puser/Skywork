@@ -37,22 +37,24 @@ class WordFlagsController extends AppController {
 		$this->redirect('/word_flags/view/' . $type);
 	}
 	
-	function browse($user_id,$challenge_id,$type='all'){
+	function browse($user_id,$challenge_id,$type='all',$word_search=NULL){
 		$this->checkAuth();
 		$this->Challenge->Question->hasMany['Response']['conditions'] = 'Response.user_id = ' . $user_id;
 		$challenge = $this->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id),'recursive'=>2));
+		
+		$flag_redirects = array();
+		$flag_types = array();
 		
 		// find all matches for flags of specified type(s); prepare redirect schedule
 		if($type == 'WORD' || $type == 'PHRASE' || $type == 'EXPL' || $type == 'all'){
 			$conditions = 'WordFlag.user_id = '.$_SESSION['User']['id'];
 			if($type != 'all') $conditions .= ' && WordFlag.flag_type = "' . $type . '"';
+			if($word_search) $conditions .= ' && WordFlag.word = "' . $word_search . '"';
 			$flags = $this->WordFlag->find('all',array('conditions'=>$conditions));
 			
 			$word_counts = array();
 			$flagged_words = array();
 			$flagged_comments = array();
-			$flag_redirects = array();
-			$flag_types = array();
 			foreach($challenge['Question'] as $q){
 				if(!@$q['Response'][0]) continue;
 				
@@ -101,14 +103,25 @@ class WordFlagsController extends AppController {
 			}
 		}
 		
-		if($type == 'count' || $type == 'all'){
-			/* -- */
+		if($type == 'MAX' || $type == 'all'){
+			foreach($challenge['Question'] as $q){
+				if(!@$q['Response'][0]) continue;
+				
+				$r = $q['Response'][0];
+				if(str_word_count($r['response_body']) > $challenge['Challenge']['max_response_length'] && $challenge['Challenge']['max_response_length']){
+					$flag_redirects[] = '/responses/view/'.$challenge['Challenge']['id'].'/'.$user_id.'?ajax=1';
+					$flag_types[] = 'Assignment Maximum';
+				}
+			}
 		}
 		
 		$this->set('challenge_id',$challenge_id);
 		$this->set('flag_types',$flag_types);
 		$this->set('flag_redirects',$flag_redirects);
 		$this->set('username',$this->User->field('concat_ws(" ",User.firstname,User.lastname)',array('User.id'=>$user_id)));
+		
+		$this->set('next_user',@$_REQUEST['next_user'] ? '/word_flags/browse/' . $_REQUEST['next_user'] . '/' . $challenge_id : '');
+		$this->set('prev_user',@$_REQUEST['prev_user'] ? '/word_flags/browse/' . $_REQUEST['prev_user'] . '/' . $challenge_id : '');
 	}
 }
 ?>

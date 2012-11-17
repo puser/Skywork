@@ -14,7 +14,7 @@
 			<li><a class="icon icon4-student" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Students') ?></a></li>
 			<li><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Question Activity') ?></a></li>
 			<li><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
-			<li class="active"><a class="icon icon4-flag" href="/metrics/view_flags/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Red Flags') ?></a></li>
+			<li class="active"><a class="icon icon4-flag" href="/metrics/view_flags/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Flagging') ?></a></li>
 		</ul>
 	</div>
 </div>
@@ -37,7 +37,7 @@
 		<div class="question-item">
 			<div class="box-head">
 				<span class="icon2 icon2-flag"></span>
-				<h2><?php echo __('Red Flags') ?></h2>
+				<h2><?php echo __('Flagging') ?></h2>
 				<a href="#modal-customize" class="modal-link customize-link"><?php echo __('Customize') ?></a>
 				<div class="clear"></div>
 			</div>
@@ -55,8 +55,8 @@
 						<?php
 						$idx = 0;
 						$listed_users = array();
-						foreach($challenge['ClassSet'] as $c){
-							foreach($c['User'] as $u){
+						foreach($challenge['ClassSet'] as $ci=>$c){
+							foreach($c['User'] as $ui=>$u){
 								if(in_array($u['id'],$listed_users) || (!@$user_flags[$u['id']] && !@$maxwords_flag[$u['id']]) || $u['user_type'] != 'P') continue;
 								else $listed_users[] = $u['id'];
 								$idx++;
@@ -73,24 +73,25 @@
 							<td class="col2"><?php echo @$user_flag_total[$u['id']]; ?></td>
 							<td></td>
 							<td class="col5">
-								<a href="/word_flags/browse/<?php echo $u['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
+								<a href="<?php echo $u['id']; ?>" onclick="userflag('/word_flags/browse/<?php echo $u['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>',$(this).index('.userLevelLink'));return false;" class="studentwork-more userLevelLink" id="students-highest-quality-more" style="display:none;margin-left:0;">
 									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
 								</a>
 							</td>
 						</tr>
 						<?php if(@$user_flags[$u['id']]){
-							foreach(@$user_flags[$u['id']] as $f=>$c){ ?>
-							<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
-								<td class="col1"><?php echo ($f == 'WORD' ? 'Word Overuse' : ($f == 'EXPL' ? 'Explicit Language' : 'Phrase Flag')); ?></td>
-								<td class="col2"><?php echo $c; ?></td>
-								<td class="col3">Flagged words used <?php echo $c; ?> times</td>
-								<td class="col5">
-									<a href="/word_flags/browse/<?php echo $u['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>/<?php echo $f; ?>" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-										<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-									</a>
-								</td>
-							</tr>
-						<?php }}if(@$maxwords_flag[$u['id']]){ ?>
+							foreach(@$user_flags[$u['id']] as $f=>$c){
+								foreach($c as $word=>$count){ ?>
+									<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
+										<td class="col1"><?php echo ($f == 'WORD' ? 'Word Overuse' : ($f == 'EXPL' ? 'Explicit Language' : 'Phrase Flag')); ?></td>
+										<td class="col2"><?php echo $count; ?></td>
+										<td class="col3"><?php echo ($f == 'EXPL' ? substr($word,0,1) . str_repeat('*',strlen($word) - 1) : $word); ?></td>
+										<td class="col5">
+											<a href="/word_flags/browse/<?php echo $u['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>/<?php echo $f; ?>/<?php echo $word; ?>" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
+												<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
+											</a>
+										</td>
+									</tr>
+						<?php }}}if(@$maxwords_flag[$u['id']]){ ?>
 							<tr class="flag_details" style="display:none;background-color:#fffef6;" onmouseover="$(this).find('.studentwork-more').show();" onmouseout="$(this).find('.studentwork-more').hide();">
 								<td class="col1">Assignment Maximum</td>
 								<td class="col2"><?php echo $maxwords_flag[$u['id']]['flags']; ?></td>
@@ -181,6 +182,13 @@
 						</tr>
 					</tbody>
 				</table>
+			
+				<div style="width:80px;margin: 0 auto 20px auto; ">
+					<div style="width: 80px; float: right;">
+						<a href="#" class="btn3" style="width: 100%" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Close') ?></span></a>
+					</div>
+					<div class="clear"></div>
+				</div>
 			</div>
 		</div>
 		
@@ -189,20 +197,26 @@
 
 
 <script type="text/javascript">
+function userflag(url,e){
+	if($('.userLevelLink').length > 1){
+		prev_user = e ? $($('.userLevelLink')[e - 1]).attr('href') : $('.userLevelLink').last().attr('href');
+		next_user = e < $('.userLevelLink').last().index('.userLevelLink') ? $($('.userLevelLink')[e + 1]).attr('href') : $('.userLevelLink').first().attr('href');
+		window.location = url + '?prev_user=' + prev_user + '&next_user=' + next_user;
+	}else window.location = url;
+}
 
-	jQuery(document).ready(function($){
-	
-		$('#assignmentDialog').load('/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>/1',function(){
-			$("#assignmentDialog").dialog({ autoOpen: false,minWidth: 740,minHeight: 500 });
-		});
-	
-		$(".modal-link").fancybox({
-			'hideOnOverlayClick' : false,
-			'showCloseButton' : false,
-			'centerOnScroll' : true,
-			'width' : 500
-		}); 
-		
+jQuery(document).ready(function($){
+
+	$('#assignmentDialog').load('/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>/1',function(){
+		$("#assignmentDialog").dialog({ autoOpen: false,minWidth: 740,minHeight: 500 });
+	});
+
+	$(".modal-link").fancybox({
+		'hideOnOverlayClick' : false,
+		'showCloseButton' : false,
+		'centerOnScroll' : true,
+		'width' : 500
 	}); 
 	
+}); 
 </script>

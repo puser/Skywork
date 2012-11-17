@@ -56,6 +56,27 @@
 	background:url(/images/flag_close.png) top left no-repeat;
 	width:15px;
 	height:14px;
+	right:55px;
+}
+
+#flagRewindBtn {
+	width:14px;
+	height:14px;
+	display:block;
+	position:absolute;
+	left:40px;
+	top:5px;
+	background:url(/images/flag_ff_back.png) top left no-repeat;
+}
+
+#flagFastFwdBtn {
+	width:14px;
+	height:14px;
+	display:block;
+	position:absolute;
+	right:22px;
+	top:5px;
+	background:url(/images/flag_ff_fwd.png) top left no-repeat;
 }
 </style>
 
@@ -65,12 +86,14 @@
 		Red Flag Wizard
 	</div>
 	<div class="right">
+		<a id="flagRewindBtn" href="<?php echo $prev_user; ?>" style="display:none;"> </a>
 		<a id="flagBackBtn" href="#" onclick="current_flag--;show_flag(flag_redirects[current_flag]);"> </a>
 		(<span id="currentFlag">1</span> of <?php echo count($flag_redirects); ?>)
 		<?php echo $username; ?>,
 		<span id="currentFlagType"></span>
 		<a id="flagMetricsBtn" href="/metrics/view/flags/"> </a>
 		<a id="flagFwdBtn" href="#" onclick="current_flag++;show_flag(flag_redirects[current_flag]);"> </a>
+		<a id="flagFastFwdBtn" href="<?php echo $next_user; ?>" style="display:none;"> </a>
 		<a id="flagCloseBtn" onclick="close_nav();" href="#"><strong>x</strong></a>
 	</div>
 </div>
@@ -110,11 +133,25 @@ function show_flag(url){
 		$('#currentFlag').html(current_flag+1);
 		$('#currentFlagType').html(flag_types[current_flag]);
 	
-		if(current_flag == <?php echo (count($flag_redirects) - 1); ?>) $('#flagFwdBtn').addClass('returnMetrics');
-		else $('#flagFwdBtn').removeClass('returnMetrics');
+		if(current_flag == <?php echo (count($flag_redirects) - 1); ?>){
+			$('#flagFwdBtn').addClass('returnMetrics');
+			<?php if($next_user){ ?>
+				$('#flagFastFwdBtn').show();
+			<?php } ?>
+		}else{
+			$('#flagFwdBtn').removeClass('returnMetrics');
+			$('#flagFastFwdBtn').hide();
+		}
 	
-		if(!current_flag) $('#flagBackBtn').hide();
-		else $('#flagBackBtn').show();
+		if(!current_flag){
+			$('#flagBackBtn').hide();
+			<?php if($prev_user){ ?>
+				$('#flagRewindBtn').show();
+			<?php } ?>
+		}else{
+			$('#flagBackBtn').show();
+			$('#flagRewindBtn').hide();
+		}
 	}
 }
 

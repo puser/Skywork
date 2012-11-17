@@ -174,15 +174,20 @@ class MetricsController extends AppController{
 		$user_text = array();
 		$user_flags = array();
 		$maxwords_flag = array();
+		$checked_responses = array();
 		foreach($challenge['Question'] as $q){
 			foreach($q['Response'] as $r){
+				if(@$checked_responses[$r['user_id'].'_'.$q['id']]) continue;
+				else $checked_responses[$r['user_id'].'_'.$q['id']] = 1;
+				
 				@$user_text[$r['user_id']] .= ' ' . $r['response_body'];
-				if(strlen($r['response_body']) > $challenge['Challenge']['max_response_length'] && $challenge['Challenge']['max_response_length']){
+				if(str_word_count($r['response_body']) > $challenge['Challenge']['max_response_length'] && $challenge['Challenge']['max_response_length']){
 					@$user_flag_total[$r['user_id']]++;
 					if(@$maxwords_flag[$r['user_id']]){
 						$maxwords_flag[$r['user_id']]['flags']++;
-						$maxwords_flag[$r['user_id']]['words'] += strlen($r['response_body']) - $challenge['Challenge']['max_response_length'];
-					}else $maxwords_flag[$r['user_id']] = array('words' => strlen($r['response_body']) - $challenge['Challenge']['max_response_length'],'flags' => 1);
+						$maxwords_flag[$r['user_id']]['words'] += str_word_count($r['response_body']) - $challenge['Challenge']['max_response_length'];
+					}else $maxwords_flag[$r['user_id']] = array('words' => str_word_count($r['response_body']) - $challenge['Challenge']['max_response_length'],'flags' => 1);
+				}
 				
 				$comments = $this->Comment->find('all',array('conditions'=>array('Comment.response_id'=>$r['id'])));
 				foreach($comments as $c) @$user_text[$c['Comment']['user_id']] .= ' ' . $c['Comment']['comment'];
@@ -193,7 +198,7 @@ class MetricsController extends AppController{
 			foreach($flags as $f){
 				if(substr_count($t,$f['WordFlag']['word']) >= $f['WordFlag']['count']){
 					@$user_flag_total[$k] += substr_count($t,$f['WordFlag']['word']);
-					@$user_flags[$k][$f['WordFlag']['flag_type']] += substr_count($t,$f['WordFlag']['word']);
+					@$user_flags[$k][$f['WordFlag']['flag_type']][$f['WordFlag']['word']] += substr_count($t,$f['WordFlag']['word']);
 				}
 			}
 		}

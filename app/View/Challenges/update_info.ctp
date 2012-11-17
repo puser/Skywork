@@ -2,6 +2,7 @@
 .remove-class:hover a.remove-class-icon { background: url('/images/arrow-down-purple.png') no-repeat center center !important; }
 .remove-class:hover,.remove-class.open,.remove-class { border:0 !important;height:16px; }
 .remove-class.open:hover a.remove-class-icon,.remove-class.open a.remove-class-icon{ background:transparent url('/images/arrow-up-purple.png') no-repeat center center !important; }
+#min_length_input{ display:inline-block; }
 </style>
 
 <div id="HelpDialog" style="display:none;text-align:center;"> </div>
@@ -125,7 +126,7 @@
 		<p class="label" style="font-size:13px;"><?php echo __('Assignment Length (Min / Max)') ?></p>
 		<p class="input">
 			<input type="checkbox" id="min_length" onchange="setTimeout('check_min_length()',10);" checked="checked" disabled />&nbsp;
-			<span id="min_length_input" style="display:none;">
+			<span id="min_length_input" style="display:none;padding-bottom:5px;">
 				<input type="text" name="challenge[Challenge][min_response_length]" style="width:40px;" value="<?php echo (@$challenge['Challenge']['min_response_length'] > 0 ? $challenge['Challenge']['min_response_length'] : 1); ?>" />&nbsp;
 				<strong>Minimum</strong> words required for each question to be considered complete.
 			</span>
@@ -135,7 +136,9 @@
 			<span id="max_length_input" style="display:none;">
 				<input type="text" name="challenge[Challenge][max_response_length]" style="width:40px;" value="<?php echo @$challenge['Challenge']['max_response_length']; ?>" />&nbsp;
 				<strong>Maximum</strong> words allowed for each question.<br />
-				<input type="checkbox" name="challenge[Challenge][allow_exceeded_length]" style="margin-left:30px;" /> Allow students to pass maximum; create a red flag when they do.
+				<input type="checkbox" name="challenge[Challenge][allow_exceeded_length]" style="margin-left:30px;" />
+				<span style="display:inline-block;width:15px;height:13px;background:url(/images/icons/icon-flag-15x30.png) top left no-repeat;padding-right:3px;vertical-align:middle;"> </span>
+				Allow students to pass maximum; create a flag when they do.
 			</span>
 			<span id="max_length_disabled">No maximum word count for each question</span><br />
 		</p>
