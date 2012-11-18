@@ -111,6 +111,7 @@ function switch_state(){
 		$('#other_state').val('');
 		$('#state_input').hide();
 	}else{
+		$('#other_state').val('');
 		$('#state_input').show();
 		$('#us_state').val('');
 		$('#state_select').hide();
