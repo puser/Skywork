@@ -39,7 +39,7 @@
 							<?php } ?>
 						</select>
 					</li>
-					<li id='state_select' style='display:none'>
+					<li id='state_select' <?php if($user['User']['country'] != 'US' || $user['User']['country'] == ''){?>style='display:none'<?php } ?>>
 						<label><?php echo __('State') ?></label> 
 						<select name="US_state" style="width: 120px;" id='US_state'>
 							<?php foreach($states as $state){ ?>
@@ -47,7 +47,7 @@
 							<?php } ?>
 						</select>
 					</li>
-					<li id='state_input' style='display:none'>
+					<li id='state_input' <?php if($user['User']['country'] == 'US' || $user['User']['country'] == ''){?>style='display:none'<?php } ?>>
 						<label><?php echo __('State/Province') ?></label><input type="text" id='other_state' size="20" class="width15" name="other_state" value="<?php if($user['User']['country'] == 'US'){ echo '';}else{ echo $user['User']['state']; }?>" />
 					</li>
 					<li>
