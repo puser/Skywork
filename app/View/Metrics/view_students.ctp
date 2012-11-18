@@ -23,7 +23,9 @@
 				<?php } ?>
 			</li>
 			<li><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenges[0]['Challenge']['id']; ?>/"><?php echo __('Question Activity') ?></a></li>
-			<li><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenges[0]['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
+			<?php if($challenges[0]['Challenge']['instructor_ratings']){ ?>
+				<li><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenges[0]['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
+			<?php } ?>
 			<li><a class="icon icon4-flag" href="/metrics/view_flags/<?php echo $challenges[0]['Challenge']['id']; ?>/"><?php echo __('Flagging') ?></a></li>
 		</ul>
 	</div>
@@ -61,7 +63,7 @@
 							<?php if(!$challenges[0]['Challenge']['instructor_ratings']){ ?><th class="col2" width="23%"></th><?php } ?>
 							<th class="<?php echo ($challenges[0]['Challenge']['instructor_ratings'] ? 'col2' : 'col3'); ?>" width="23%"><a href="#" class="sort"><?php echo __('Completion Level') ?></a></th>
 							<?php if($challenges[0]['Challenge']['instructor_ratings']){ ?><th class="col3" width="23%"><a href="#" class="sort"><?php echo __('Average Quality Level') ?></a></th><?php } ?>
-							<th class="col4" width="23%"><a href="#" class="sort"><?php echo __('Students Activity Level') ?></a></th>
+							<th class="col4" width="23%" <?php if(!$challenges[0]['Challenge']['instructor_ratings']){ ?>style="padding-left:40px;"<?php } ?>><a href="#" class="sort"><?php echo __('Students Activity Level') ?></a></th>
 							<th class="col5" width="7%"></th>
 						</tr>
 					</thead>
@@ -96,7 +98,7 @@
 												<div class="clear"></div>
 											</td>
 										<?php } ?>
-										<td class="col4">
+										<td class="col4" <?php if(!$challenges[0]['Challenge']['instructor_ratings']){ ?>style="padding-left:50px;"<?php } ?>>
 											<div class="activity-level">
 												<span style="width: <?php if((((((($activity[$u['id']]['keys'] / count($activity[$u['id']]['challenges'])) - $min_keystrokes) / ($max_keystrokes ? $max_keystrokes : 1)) + ((($activity[$u['id']]['comments'] / count($activity[$u['id']]['challenges'])) - $min_comments) / ($max_comments ? $max_comments : 1))) / 2) * 100)<100){echo (((((($activity[$u['id']]['keys'] / count($activity[$u['id']]['challenges'])) - $min_keystrokes) / ($max_keystrokes ? $max_keystrokes : 1)) + ((($activity[$u['id']]['comments'] / count($activity[$u['id']]['challenges'])) - $min_comments) / ($max_comments ? $max_comments : 1))) / 2) * 100); }else{ echo 100; } ?>%"></span>
 											</div>

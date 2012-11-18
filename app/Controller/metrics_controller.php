@@ -113,11 +113,11 @@ class MetricsController extends AppController{
 		}
 		
 		foreach($activity as $a){
-			$max_keystrokes = $a['keys'] / count($a['challenges']) > $max_keystrokes ? $a['keys'] / count($a['challenges']) : $max_keystrokes;
-			$min_keystrokes = $a['keys'] / count($a['challenges']) < $min_keystrokes ? $a['keys'] / count($a['challenges']) : $min_keystrokes;
+			$max_keystrokes = @$a['keys'] / (@$a['challenges'] ? count($a['challenges']) : 1) > $max_keystrokes ? @$a['keys'] / (@$a['challenges'] ? count($a['challenges']) : 1) : $max_keystrokes;
+			$min_keystrokes = @$a['keys'] / (@$a['challenges'] ? count($a['challenges']) : 1) < $min_keystrokes ? @$a['keys'] / (@$a['challenges'] ? count($a['challenges']) : 1) : $min_keystrokes;
 		
-			$max_comments = $a['comments'] / count($a['challenges']) > $max_comments ? $a['comments'] / count($a['challenges']) : $max_comments;
-			$min_comments = $a['comments'] / count($a['challenges']) < $min_comments ? $a['comments'] / count($a['challenges']) : $min_comments;
+			$max_comments = @$a['comments'] / (@$a['challenges'] ? count($a['challenges']) : 1) > $max_comments ? @$a['comments'] / (@$a['challenges'] ? count($a['challenges']) : 1) : $max_comments;
+			$min_comments = @$a['comments'] / (@$a['challenges'] ? count($a['challenges']) : 1) < $min_comments ? @$a['comments'] / (@$a['challenges'] ? count($a['challenges']) : 1) : $min_comments;
 		}
 	
 		$this->set('activity',$activity);

@@ -115,8 +115,10 @@
 			<p>
 				<textarea class="checkdefault" default="Write description here" name="challenge[Question][0][question]" style="width:550px;height:75px;padding:5px 7px;"><?php echo @$challenge['Question'][0]['question']; ?></textarea>
 			</p>
-		</div>
-		
+		</span>
+	</div>
+	
+	<div style="padding:10px;">
 		<p class="input">
 			<input type="checkbox" name="challenge[Challenge][allow_attachments]" value="1"<?php if(@$challenge['Challenge']['allow_attachments']){ ?> checked="checked"<?php } ?> />
 			<?php echo __('Allow students to attach documents, photos, etc.') ?>
@@ -162,6 +164,7 @@
 			<p class="input">
 				<input type="checkbox" onchange="if(!$(this).attr('checked')){ $('.scaleCustom').attr('checked',''); }else{ $('.scaleCustom').attr('checked','checked'); }" />
 				<?php echo __('Use Quality Scales (Rate the quality of your students\' work on a scale from High Quality to Poor Quality during Due Date 2.)') ?>
+				<span style="font-size:9px;">&nbsp;Note: this is recommended if used over multiple bridges</span>
 				<div class="clear"></div>
 				
 				<div style="padding:0 0 0 22px;">
@@ -174,8 +177,7 @@
 				</div>
 			</p>
 		</div>
-	</div>
-	
+	</div>	
 </div>
 
 <div style="width: 120px; margin: 0 auto; ">
