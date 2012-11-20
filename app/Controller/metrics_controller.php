@@ -1,7 +1,7 @@
 <?php
 class MetricsController extends AppController{
 	var $name = 'Metrics';
-	var $uses = array('Response','Question','Challenge','Group','User');
+	var $uses = array('Response','Question','Challenge','Group','User','WordFlag','Comment');
 	
 	function view_students($challenge_id=NULL,$group_id=NULL,$chart=false){
 		$this->checkAuth();
@@ -75,7 +75,7 @@ class MetricsController extends AppController{
 						if($r['question_id'] && !in_array($r['question_id'],$checked_responses)){
 							$checked_responses[] = $r['question_id'];
 							$keystrokes += strlen($r['response_body']);
-							@$activity[$u['id']]['responses']++;
+							if(strlen($r['response_body']) >= $challenge['Challenge']['min_response_length']) @$activity[$u['id']]['responses']++;
 						}elseif(!in_array($r['question_id'],$checked_responses)){
 							if(@$_REQUEST['quality'] == 'I' && $u['user_type'] != 'L') continue;
 							elseif(@$_REQUEST['quality'] == 'S' && $u['user_type'] != 'P') continue;
@@ -113,11 +113,11 @@ class MetricsController extends AppController{
 		}
 		
 		foreach($activity as $a){
-			$max_keystrokes = $a['keys'] / count($a['challenges']) > $max_keystrokes ? $a['keys'] / count($a['challenges']) : $max_keystrokes;
-			$min_keystrokes = $a['keys'] / count($a['challenges']) < $min_keystrokes ? $a['keys'] / count($a['challenges']) : $min_keystrokes;
+			$max_keystrokes = @$a['keys'] / (@$a['challenges'] ? count($a['challenges']) : 1) > $max_keystrokes ? @$a['keys'] / (@$a['challenges'] ? count($a['challenges']) : 1) : $max_keystrokes;
+			$min_keystrokes = @$a['keys'] / (@$a['challenges'] ? count($a['challenges']) : 1) < $min_keystrokes ? @$a['keys'] / (@$a['challenges'] ? count($a['challenges']) : 1) : $min_keystrokes;
 		
-			$max_comments = $a['comments'] / count($a['challenges']) > $max_comments ? $a['comments'] / count($a['challenges']) : $max_comments;
-			$min_comments = $a['comments'] / count($a['challenges']) < $min_comments ? $a['comments'] / count($a['challenges']) : $min_comments;
+			$max_comments = @$a['comments'] / (@$a['challenges'] ? count($a['challenges']) : 1) > $max_comments ? @$a['comments'] / (@$a['challenges'] ? count($a['challenges']) : 1) : $max_comments;
+			$min_comments = @$a['comments'] / (@$a['challenges'] ? count($a['challenges']) : 1) < $min_comments ? @$a['comments'] / (@$a['challenges'] ? count($a['challenges']) : 1) : $min_comments;
 		}
 	
 		$this->set('activity',$activity);
@@ -167,7 +167,45 @@ class MetricsController extends AppController{
 	function view_flags($challenge_id){
 		$this->checkAuth();
 		
-		$challenge = $this->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id)));
+		$challenge = $this->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id),'recursive'=>2));
+		$flags = $this->WordFlag->find('all',array('conditions'=>'WordFlag.user_id = '.$_SESSION['User']['id']));
+
+		$user_flag_total = array();
+		$user_text = array();
+		$user_flags = array();
+		$maxwords_flag = array();
+		$checked_responses = array();
+		foreach($challenge['Question'] as $q){
+			foreach($q['Response'] as $r){
+				if(@$checked_responses[$r['user_id'].'_'.$q['id']]) continue;
+				else $checked_responses[$r['user_id'].'_'.$q['id']] = 1;
+				
+				@$user_text[$r['user_id']] .= ' ' . $r['response_body'];
+				if(str_word_count($r['response_body']) > $challenge['Challenge']['max_response_length'] && $challenge['Challenge']['max_response_length']){
+					@$user_flag_total[$r['user_id']]++;
+					if(@$maxwords_flag[$r['user_id']]){
+						$maxwords_flag[$r['user_id']]['flags']++;
+						$maxwords_flag[$r['user_id']]['words'] += str_word_count($r['response_body']) - $challenge['Challenge']['max_response_length'];
+					}else $maxwords_flag[$r['user_id']] = array('words' => str_word_count($r['response_body']) - $challenge['Challenge']['max_response_length'],'flags' => 1);
+				}
+				
+				$comments = $this->Comment->find('all',array('conditions'=>array('Comment.response_id'=>$r['id'])));
+				foreach($comments as $c) @$user_text[$c['Comment']['user_id']] .= ' ' . $c['Comment']['comment'];
+			}
+		}
+		
+		foreach($user_text as $k=>$t){
+			foreach($flags as $f){
+				if(substr_count($t,$f['WordFlag']['word']) >= $f['WordFlag']['count']){
+					@$user_flag_total[$k] += substr_count($t,$f['WordFlag']['word']);
+					@$user_flags[$k][$f['WordFlag']['flag_type']][$f['WordFlag']['word']] += substr_count($t,$f['WordFlag']['word']);
+				}
+			}
+		}
+		
+		$this->set('user_flag_total',$user_flag_total);
+		$this->set('user_flags',$user_flags);
+		$this->set('maxwords_flag',$maxwords_flag);
 		$this->set('challenge',$challenge);
 	}
 	

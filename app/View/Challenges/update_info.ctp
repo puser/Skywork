@@ -1,3 +1,10 @@
+<style type='text/css'>
+.remove-class:hover a.remove-class-icon { background: url('/images/arrow-down-purple.png') no-repeat center center !important; }
+.remove-class:hover,.remove-class.open,.remove-class { border:0 !important;height:16px; }
+.remove-class.open:hover a.remove-class-icon,.remove-class.open a.remove-class-icon{ background:transparent url('/images/arrow-up-purple.png') no-repeat center center !important; }
+#min_length_input{ display:inline-block; }
+</style>
+
 <div id="HelpDialog" style="display:none;text-align:center;"> </div>
 <div id="startbridge-information" class="box-startbridge box-white rounded">
 	<div class="box-head">
@@ -108,19 +115,70 @@
 			<p>
 				<textarea class="checkdefault" default="Write description here" name="challenge[Question][0][question]" style="width:550px;height:75px;padding:5px 7px;"><?php echo @$challenge['Question'][0]['question']; ?></textarea>
 			</p>
-		</div>
-		
+		</span>
+	</div>
+	
+	<div style="padding:10px;">
 		<p class="input">
 			<input type="checkbox" name="challenge[Challenge][allow_attachments]" value="1"<?php if(@$challenge['Challenge']['allow_attachments']){ ?> checked="checked"<?php } ?> />
 			<?php echo __('Allow students to attach documents, photos, etc.') ?>
 		</p>
-		<p class="label"><?php echo __('Anonymous') ?></p>
+		
+		<br />
+		<p class="label" style="font-size:13px;"><?php echo __('Assignment Length (Min / Max)') ?></p>
 		<p class="input">
-			<input type="checkbox" name="challenge[Challenge][anonymous]" value="1"<?php if(@$challenge['Challenge']['anonymous']) echo ' checked="checked"'; ?> />
-			<?php echo __('Apply as anonymous (Assignment won\'t display names)') ?>
+			<input type="checkbox" id="min_length" onchange="setTimeout('check_min_length()',10);" checked="checked" disabled />&nbsp;
+			<span id="min_length_input" style="display:none;padding-bottom:5px;">
+				<input type="text" name="challenge[Challenge][min_response_length]" style="width:40px;" value="<?php echo (@$challenge['Challenge']['min_response_length'] > 0 ? $challenge['Challenge']['min_response_length'] : 1); ?>" />&nbsp;
+				<strong>Minimum</strong> words required for each question to be considered complete.
+			</span>
+			<span id="min_length_disabled">No minimum words required for each question</span><br />
+		
+			<input type="checkbox" id="max_length" onchange="setTimeout('check_max_length()',10);" <?php if(@$challenge['Challenge']['max_response_length']) echo 'checked="checked"'; ?> />&nbsp;
+			<span id="max_length_input" style="display:none;">
+				<input type="text" name="challenge[Challenge][max_response_length]" style="width:40px;" value="<?php echo @$challenge['Challenge']['max_response_length']; ?>" />&nbsp;
+				<strong>Maximum</strong> words allowed for each question.<br />
+				<input type="checkbox" style="margin-left:30px;" <?php if(@$challenge['Challenge']['allow_exceeded_length']) echo ' checked="checked"'; ?> onchange="$('#maxLengthHidden').val($(this).attr('checked') ? '1' : '0');" />
+				<span style="display:inline-block;width:15px;height:13px;background:url(/images/icons/icon-flag-15x30.png) top left no-repeat;padding-right:3px;vertical-align:middle;"> </span>
+				Allow students to pass maximum; create a flag when they do.
+			</span>
+			<span id="max_length_disabled">No maximum word count for each question</span><br />
 		</p>
-	</div>
-	
+		<input type="hidden" name="challenge[Challenge][allow_exceeded_length]" id="maxLengthHidden" value="<?php echo @$challenge['Challenge']['allow_exceeded_length']; ?>" />
+		
+		<br />
+		<div class="label" style="font-size:15px;border-top:1px solid #ccc;cursor:pointer;padding-top:20px;padding-bottom:18px;" onclick="$(this).next().slideToggle();$(this).find('.remove-class').toggleClass('open');">
+			<?php echo __('Advanced Options') ?>
+			<div class="remove-class" style="display:inline-block;">
+				<a class="remove-class-icon" href="#" style="padding-top:5px;" onclick="return false;"></a>
+			</div>
+		</div>
+		<div id="advanced_options" style="display:none;">
+			<p class="label" style="font-size:13px;"><?php echo __('Anonymous') ?></p>
+			<p class="input">
+				<input type="checkbox" name="challenge[Challenge][anonymous]" value="1"<?php if(@$challenge['Challenge']['anonymous']) echo ' checked="checked"'; ?> />
+				<?php echo __('Apply as anonymous (Assignment won\'t display names)') ?>
+			</p>
+			
+			<br />
+			<p class="label" style="font-size:13px;"><?php echo __('Quality Scales') ?></p>
+			<p class="input">
+				<input type="checkbox" onchange="if(!$(this).attr('checked')){ $('.scaleCustom').attr('checked',''); }else{ $('.scaleCustom').attr('checked','checked'); }" />
+				<?php echo __('Use Quality Scales (Rate the quality of your students\' work on a scale from High Quality to Poor Quality during Due Date 2.)') ?>
+				<span style="font-size:9px;">&nbsp;Note: this is recommended if used over multiple bridges</span>
+				<div class="clear"></div>
+				
+				<div style="padding:0 0 0 22px;">
+					<input class="scaleCustom" type="checkbox" name="challenge[Challenge][instructor_ratings]" value="1"<?php if(@$challenge['Challenge']['instructor_ratings']) echo ' checked="checked"'; ?> />
+					<?php echo __('Allow instructor ratings: only the instructor may rate the quality of their students.') ?>
+					<div class="clear"></div>
+					
+					<input class="scaleCustom" type="checkbox" name="challenge[Challenge][student_ratings]" value="1"<?php if(@$challenge['Challenge']['student_ratings']) echo ' checked="checked"'; ?> />
+					<?php echo __('Allow student ratings: students may rate the quality of work for the other students in their group.') ?>
+				</div>
+			</p>
+		</div>
+	</div>	
 </div>
 
 <div style="width: 120px; margin: 0 auto; ">
@@ -144,9 +202,32 @@ else $('#compose_essay').remove();
 if($('#challenge_type').val() == 'VID') $('#add_document').remove();
 else $('#add_youtube').remove();
 
+function check_max_length(){
+	if($('#max_length').attr('checked')){
+		$('#max_length_input').show();
+		$('#max_length_disabled').hide();
+	}else{
+		$('#max_length_input').hide();
+		$('#max_length_disabled').show();
+		$('#max_length_input input').val('');
+	}
+}
+
+function check_min_length(){
+		if($('#min_length').attr('checked')){
+			$('#min_length_input').show();
+			$('#min_length_disabled').hide();
+		}else{
+			$('#min_length_input').hide();
+			$('#min_length_disabled').show();
+			$('#min_length_input input').val('');
+		}
+}
+
+check_max_length();
+check_min_length();
 
 $('#HelpDialog').load('/challenges/viewpdf/Help.pdf',function(){
 	$("#HelpDialog").dialog({ autoOpen: false,minWidth: 740,minHeight: 500 });
 });
-
 </script>

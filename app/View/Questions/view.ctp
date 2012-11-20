@@ -22,3 +22,36 @@
 		</ul>
 	</form>
 </div>
+
+<script type="text/javascript">
+function limitText(limitField){
+	limitNum = <?php echo $question['Challenge']['max_response_length']; ?>;
+	if(limitField.val() && limitField.val().match(/ /g).length + 1 > limitNum){
+		<?php if($question['Challenge']['max_response_length'] && $question['Challenge']['allow_exceeded_length'] != 1){ ?>
+			do{
+				limitField.val(limitField.val().substr(0,limitField.val().lastIndexOf(' ')));
+			}while(limitField.val().match(/ /g).length + 1 > limitNum);
+		<?php } ?>
+	}
+	
+	if(!limitField.val()) $('#currentWordCount').html('0');
+	else $('#currentWordCount').html(limitField.val().match(/ /g).length + 1);
+}
+	
+$textAreaOrigHeight = 264;
+$("textarea.niceTextarea").keyup(function(){ 
+	expandtext(this); 
+
+	<?php if($question['Challenge']['max_response_length']){ ?>
+		limitText($(this));
+	<?php } ?>
+});
+
+<?php if($question['Challenge']['max_response_length']){ ?>
+	$("textarea.niceTextarea").keydown(function(){
+		limitText($(this));
+	});
+<?php } ?>
+
+limitText($('textarea.niceTextarea'));
+</script>

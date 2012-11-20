@@ -7,8 +7,10 @@
 		<ul>
 			<li><a class="icon icon4-student" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Students') ?></a></li>
 			<li class="active"><a class="icon icon4-question" href="#"><?php echo __('Question Activity') ?></a></li>
-			<li ><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
-			<!-- <li><a class="icon" href="/metrics/view_flags/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Red Flags') ?></a></li> -->
+			<?php if($challenge['Challenge']['instructor_ratings']){ ?>
+				<li><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
+			<?php } ?>
+			<li><a class="icon icon4-flag" href="/metrics/view_flags/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Flagging') ?></a></li>
 		</ul>
 	</div>
 </div>

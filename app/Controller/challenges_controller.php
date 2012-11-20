@@ -227,6 +227,9 @@ class ChallengesController extends AppController{
 				$_REQUEST['challenge']['Challenge']['responses_due'] = $_REQUEST['challenge']['Challenge']['responses_due'] . ' ' . ($_REQUEST['responses_due_meridian'] == 'AM' || $_REQUEST['responses_due_hour'] > 11 ? $_REQUEST['responses_due_hour'] : ($_REQUEST['responses_due_hour'] + 12)) . ':' . $_REQUEST['responses_due_minute'];
 			}
 			
+			if(isset($_REQUEST['challenge']['Challenge']['name']) && !@$_REQUEST['challenge']['Challenge']['allow_exceeded_length']){
+				$_REQUEST['challenge']['Challenge']['allow_exceeded_length'] = 0;
+			}
 			if(isset($_REQUEST['challenge']['Challenge']['name']) && !@$_REQUEST['challenge']['Challenge']['name']){
 				$_REQUEST['challenge']['Challenge']['name'] = 'Untitled Bridge';
 			}

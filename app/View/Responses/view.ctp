@@ -26,162 +26,166 @@
 	padding-right:3px;
 	margin-right:-3px;
 }
+#activeFlag {
+	background-color:#ff8d8d;
+}
 </style>
 
 <div id="assignmentDialog" style="display:none;text-align:center;"> </div>
 
-<div id="sidebarleft">
+<?php if(!@$ajax){ ?>
+	<div id="sidebarleft">
 
-	<?php if($_SESSION['User']['user_type'] == 'P' && !$completed){ ?>
-
-		<h1><?php echo __('Feedback') ?></h1>
-		<p><?php echo "{$user['User']['firstname']} {$user['User']['lastname']}"; ?></p>
-		<div id="sidemenu">
-			<ul>
-				<?php foreach($challenge[0]['Question'] as $q){ ?>
-					<li class="userNav<?php if($q['id'] == $question_id){ ?> active<?php } ?>">
-						<a class="no-icon" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $user['User']['id']; ?>/<?php echo $q['id']; ?>">
-							<?php echo $q['section']?>
-						</a>
-					</li>
-				<?php } ?>
-			</ul>
-		</div>
-	
-	<?php }elseif($_SESSION['User']['user_type'] == 'P'){ ?>
-		
-		<h1><?php echo __('Summary') ?></h1>
-		<div id="sidemenu">
-			<ul>
-				<?php if($challenge[0]['Group']){
-					$this_group = array_pop($challenge[0]['Group']);
-					
-					// shift current user to front
-					foreach($this_group['User'] as $uk=>$u){
-						if($u['id'] == $_SESSION['User']['id']){
-							unset($this_group['User'][$uk]);
-							array_unshift($this_group['User'],$u);
-							break;
-						}
-					}
-					
-					foreach($this_group['User'] as $u){ ?>
-						<li class="userNav<?php if($u['id'] == $user_id && !@$_REQUEST['instructor_comments'] && !@$_REQUEST['collaborator_comments']){ ?> active-name<?php }else{ ?> name<?php } ?>" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
-							<a style="padding-left:30px;width:136px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-								<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
-								<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
+		<?php if($_SESSION['User']['user_type'] == 'P' && !$completed){ ?>
+			
+			<h1><?php echo __('Feedback') ?></h1>
+			<p><?php echo "{$user['User']['firstname']} {$user['User']['lastname']}"; ?></p>
+			<div id="sidemenu">
+				<ul>
+					<?php foreach($challenge[0]['Question'] as $q){ ?>
+						<li class="userNav<?php if($q['id'] == $question_id){ ?> active<?php } ?>">
+							<a class="no-icon" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $user['User']['id']; ?>/<?php echo $q['id']; ?>">
+								<?php echo $q['section']?>
 							</a>
 						</li>
-					<?php }
-				}else{
-					foreach($challenge[0]['ClassSet'] as $c){ ?>
-						<li id="groupNav<?php echo $c['id']; ?>">
-							<a style="padding-left:30px;width:136px;" href="#" class="sidemenu2-title"><?php echo $c['group_name']; ?></a>
-							<ul>
-								<?php
-								// shift current user to front
-								foreach($c['User'] as $uk=>$u){
-									if($u['id'] == $_SESSION['User']['id']){
-										unset($c['User'][$uk]);
-										array_unshift($c['User'],$u);
-										break;
+					<?php } ?>
+				</ul>
+			</div>
+	
+		<?php }elseif($_SESSION['User']['user_type'] == 'P'){ ?>
+		
+			<h1><?php echo __('Summary') ?></h1>
+			<div id="sidemenu">
+				<ul>
+					<?php if($challenge[0]['Group']){
+						$this_group = array_pop($challenge[0]['Group']);
+					
+						// shift current user to front
+						foreach($this_group['User'] as $uk=>$u){
+							if($u['id'] == $_SESSION['User']['id']){
+								unset($this_group['User'][$uk]);
+								array_unshift($this_group['User'],$u);
+								break;
+							}
+						}
+					
+						foreach($this_group['User'] as $u){ ?>
+							<li class="userNav<?php if($u['id'] == $user_id && !@$_REQUEST['instructor_comments'] && !@$_REQUEST['collaborator_comments']){ ?> active-name<?php }else{ ?> name<?php } ?>" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
+								<a style="padding-left:30px;width:136px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
+									<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+									<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
+								</a>
+							</li>
+						<?php }
+					}else{
+						foreach($challenge[0]['ClassSet'] as $c){ ?>
+							<li id="groupNav<?php echo $c['id']; ?>">
+								<a style="padding-left:30px;width:136px;" href="#" class="sidemenu2-title"><?php echo $c['group_name']; ?></a>
+								<ul>
+									<?php
+									// shift current user to front
+									foreach($c['User'] as $uk=>$u){
+										if($u['id'] == $_SESSION['User']['id']){
+											unset($c['User'][$uk]);
+											array_unshift($c['User'],$u);
+											break;
+										}
 									}
-								}
 								
-								foreach($c['User'] as $u){
-									if($u['id'] == $challenge[0]['Challenge']['user_id']) continue; ?>
-									<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
-										<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
+									foreach($c['User'] as $u){
+										if($u['id'] == $challenge[0]['Challenge']['user_id']) continue; ?>
+										<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
+											<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
+													<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+													<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
+											</a>
+											<?php if($u['id'] == $user_id && !@$_REQUEST['instructor_comments'] && !@$_REQUEST['collaborator_comments']){ ?>
+												<script type="text/javascript">
+												$(document).ready(function(){	
+													$("#groupNav<?php echo $c['id']; ?> a.sidemenu2-title").trigger("click");
+												});
+												</script>
+											<?php } ?>
+										</li>
+										<?php } ?>
+								</ul>
+							</li>
+						<?php }
+					} ?>
+				</ul>
+				<ul>
+					<li id="instructor_comment_nav" <?php if(@$_REQUEST['instructor_comments']){ ?>class="active"<?php } ?>>
+						<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/paper.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $_SESSION['User']['id']; ?>?notips=1&instructor_comments=1">Instructor Comments</a>
+					</li>
+					<?php if($challenge[0]['Collaborator']){ ?>
+						<li id="collab_comment_nav" <?php if(@$_REQUEST['collaborator_comments']){ ?>class="active"<?php } ?>>
+							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/person.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $_SESSION['User']['id']; ?>?notips=1&collaborator_comments=1">Collaborator Comments</a>
+						</li>
+					<?php } ?>
+				</ul>
+			</div>
+
+		<?php }else{ ?>
+	
+			<h1><?php echo ($completed ? __('Summary Page') : __('Instructor Feedback')); ?></h1>
+			<div id="sidemenu2">
+				<ul>
+					<?php if($challenge[0]['Group']){
+						foreach($challenge[0]['Group'] as $k=>$g){ ?>
+							<li id="groupNav<?php echo $g['id']; ?>">
+								<a href="#" class="sidemenu2-title"><?php echo __('Group') ?> <?php echo ($k + 1); ?></a>
+								<ul>
+									<?php foreach($g['User'] as $u){
+										if($u['id'] == $_SESSION['User']['id']) continue; ?>
+										<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
+											<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
 												<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
 												<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
-										</a>
-										<?php if($u['id'] == $user_id && !@$_REQUEST['instructor_comments'] && !@$_REQUEST['collaborator_comments']){ ?>
-											<script type="text/javascript">
-											$(document).ready(function(){	
-												$("#groupNav<?php echo $c['id']; ?> a.sidemenu2-title").trigger("click");
-											});
-											</script>
+											</a>
+											<?php if($u['id'] == $user_id){ ?>
+												<script type="text/javascript">
+												$(document).ready(function(){	
+													$("#groupNav<?php echo $g['id']; ?> a.sidemenu2-title").trigger("click");
+												});
+												</script>
+												<?php } ?>
+										</li>
 										<?php } ?>
-									</li>
-									<?php } ?>
-							</ul>
-						</li>
-					<?php }
-				} ?>
-			</ul>
-			<ul>
-				<li id="instructor_comment_nav" <?php if(@$_REQUEST['instructor_comments']){ ?>class="active"<?php } ?>>
-					<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/paper.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $_SESSION['User']['id']; ?>?notips=1&instructor_comments=1">Instructor Comments</a>
-				</li>
-				<?php if($challenge[0]['Collaborator']){ ?>
-					<li id="collab_comment_nav" <?php if(@$_REQUEST['collaborator_comments']){ ?>class="active"<?php } ?>>
-						<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/person.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $_SESSION['User']['id']; ?>?notips=1&collaborator_comments=1">Collaborator Comments</a>
-					</li>
-				<?php } ?>
-			</ul>
-		</div>
-
-	<?php }else{ ?>
-	
-		<h1><?php echo ($completed ? __('Summary Page') : __('Instructor Feedback')); ?></h1>
-		<div id="sidemenu2">
-			<ul>
-				<?php if($challenge[0]['Group']){
-					foreach($challenge[0]['Group'] as $k=>$g){ ?>
-						<li id="groupNav<?php echo $g['id']; ?>">
-							<a href="#" class="sidemenu2-title"><?php echo __('Group') ?> <?php echo ($k + 1); ?></a>
-							<ul>
-								<?php foreach($g['User'] as $u){
-									if($u['id'] == $_SESSION['User']['id']) continue; ?>
-									<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
-										<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-											<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
-											<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
-										</a>
-										<?php if($u['id'] == $user_id){ ?>
-											<script type="text/javascript">
-											$(document).ready(function(){	
-												$("#groupNav<?php echo $g['id']; ?> a.sidemenu2-title").trigger("click");
-											});
-											</script>
+								</ul>
+							</li>
+						<?php }
+					}else{
+						foreach($challenge[0]['ClassSet'] as $c){ ?>
+							<li id="groupNav<?php echo $c['id']; ?>">
+								<a href="#" class="sidemenu2-title"><?php echo $c['group_name']; ?></a>
+								<ul>
+									<?php foreach($c['User'] as $u){
+										if($u['id'] == $_SESSION['User']['id']) continue; ?>
+										<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
+											<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
+												<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+												<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
+											</a>
+											<?php if($u['id'] == $user_id){ ?>
+												<script type="text/javascript">
+												$(document).ready(function(){	
+													$("#groupNav<?php echo $c['id']; ?> a.sidemenu2-title").trigger("click");
+												});
+												</script>
 											<?php } ?>
-									</li>
-									<?php } ?>
-							</ul>
-						</li>
-					<?php }
-				}else{
-					foreach($challenge[0]['ClassSet'] as $c){ ?>
-						<li id="groupNav<?php echo $c['id']; ?>">
-							<a href="#" class="sidemenu2-title"><?php echo $c['group_name']; ?></a>
-							<ul>
-								<?php foreach($c['User'] as $u){
-									if($u['id'] == $_SESSION['User']['id']) continue; ?>
-									<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
-										<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-											<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
-											<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
-										</a>
-										<?php if($u['id'] == $user_id){ ?>
-											<script type="text/javascript">
-											$(document).ready(function(){	
-												$("#groupNav<?php echo $c['id']; ?> a.sidemenu2-title").trigger("click");
-											});
-											</script>
+										</li>
 										<?php } ?>
-									</li>
-									<?php } ?>
-							</ul>
-						</li>
-					<?php }
-				} ?>
-			</ul>
-		</div>
-	<?php } ?>
-</div>
+								</ul>
+							</li>
+						<?php }
+					} ?>
+				</ul>
+			</div>
+		<?php } ?>
+	</div>
+<?php } ?>
 
 <div id="maincolumn">
-	
 	<div class="alignleft page-toptitle"><?php echo $challenge[0]['Challenge']['name']; ?></div>
 	
 	<div class="actionmenu">
@@ -216,14 +220,14 @@
 				<div class="box-head">
 					<span class="icon2 icon2-listcountgreen"><?php echo ($k+1); ?></span><a name="<?php echo $q['id']; ?>" href="#"> </a>
 					<h2><?php echo 'Question '.($k+1);//$q['section']; ?></h2>
-					<?php if($completed && $_SESSION['User']['user_type'] != 'P'){ ?>
+					<?php if($completed && $_SESSION['User']['user_type'] != 'P' && ($challenge[0]['Challenge']['instructor_ratings'] || $challenge[0]['Challenge']['student_ratings'])){ ?>
 						<div class="summary-quality">
 							<span class="<?php echo ($q['response_total'] == 1 ? 'great' : ($q['response_total'] == 2 ? 'good' : ($q['response_total'] == 3 ? 'average' : ($q['response_total'] == 4 ? 'poor' : 'poor')))); ?>">
 								<?php echo ($q['response_total'] == 1 ? __('Very High') : ($q['response_total'] == 2 ? __('Good') : ($q['response_total'] == 3 ? __('Average') : ($q['response_total'] == 4 ? __('Below Average') : __('Poor'))))); ?> <?php echo __('Quality') ?>
 							</span>
 							<?php if(!$k && !@$_REQUEST['notips']){ ?><a class="tooltip-mark tooltip-mark-question" title="<?php echo __('Average quality for this Question') ?>"></a><?php } ?>
 						</div>
-					<?php }elseif(!$completed){ ?>
+					<?php }elseif(!$completed && (($challenge[0]['Challenge']['instructor_ratings'] && $_SESSION['User']['user_type'] == 'I') || ($challenge[0]['Challenge']['student_ratings'] && $_SESSION['User']['user_type'] == 'P'))){ ?>
 						<div class="like-scale">
 							<ul id="response_scale_<?php echo $q['Response'][0]['id']; ?>">
 								<li class="scale1<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 1) echo ' selected'; ?>"><span><?php echo __('Very High') ?> <?php echo __('Quality') ?></span></li>
@@ -255,7 +259,7 @@
 										
 										if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
 										
-										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
+										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
 										
 										if(!$completed){
 											$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $k),
@@ -278,6 +282,13 @@
 											$commentCount++;
 										}
 									}
+									
+									if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
+										$wordpos = 0;
+										for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response,$_REQUEST['highlight'],$wordpos + 1);
+										$mod_response = substr_replace($mod_response,'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
+									}
+									
 									echo ($completed ? nl2br($mod_response) : nl2br($q['Response'][0]['response_body']));
 									$start_offset += substr_count($q['Response'][0]['response_body'],' ');
 									?>
@@ -291,8 +302,15 @@
 										
 										$mod_response[$c['user_id']] = $c['segment_start'] + $c['segment_length'] > strlen($mod_response[$c['user_id']]) || $c['segment_length'] < 0 ? ($mod_response[$c['user_id']] . '</span>') : (substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']));
 										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start']);
-										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); ?>
-									<?php }foreach($mod_response as $kmr=>$mr){ ?>
+										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); 
+									
+										if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
+											$wordpos = 0;
+											for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response[$c['user_id']],$_REQUEST['highlight'],$wordpos + 1);
+											$mod_response[$c['user_id']] = substr_replace($mod_response[$c['user_id']],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
+										}
+										
+									}foreach($mod_response as $kmr=>$mr){ ?>
 										<p id="responseBody<?php echo $k; ?>_<?php echo $kmr.'_'.$k; ?>" style="display:none;">
 											<?php echo nl2br($mr); ?>
 										</p>
@@ -314,7 +332,13 @@
 					<div class="question-comments <?php echo ($c['type'] ? 'like' : 'dislike'); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" id="commentDetail_<?php echo $c['id']; ?>" style="display:none;margin-bottom:5px;position:relative;" onmouseover="if(!$(this).hasClass('activeDetail')){ $(this).find('.studentwork-more').show(); }" onmouseout="$(this).find('.studentwork-more').hide();">
 						<p>
 							<span class="highlight-blue" style="background-color:<?php echo $user_colors[$c['user_id']]; ?> !important;"><?php echo "{$c['User']['firstname']} {$c['User']['lastname']}"; ?></span>
-							<?php echo stripslashes($c['comment']); ?>
+							<?php
+							if(@$_REQUEST['highlight'] && @$_REQUEST['comment_id'] == $c['id']){
+								$wordpos = 0;
+								for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($c['comment'],$_REQUEST['highlight'],$wordpos + 1);
+								$c['comment'] = substr_replace($c['comment'],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
+							}
+							echo stripslashes($c['comment']); ?>
 						</p>
 						
 						<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="setTimeout(function(){ show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>'); },15);">
@@ -330,6 +354,7 @@
 	
 	<div class="clear"></div>
 	
+	<?php if(!@$ajax){ ?>
 	<div style="width: 275px; margin: 0 auto; ">
 		<div style="width: 120px; float: left;" id="nextStudentBtn">
 			<a href="#" onclick="next<?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Question' : 'Student'); ?>();return false;" class="btn2">
@@ -341,6 +366,7 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+	<?php } ?>
 	
 	<a class="show-overlay" href="#modalSaveChoices" id="finalDialog" style="display:none;"> </a>
 
@@ -368,6 +394,10 @@
 
 <script type="text/javascript">
 $(document).ready(function(){	
+	
+	<?php if(@$_REQUEST['highlight'] && @$_REQUEST['comment_id']){ ?>
+		$('#commentMarker_<?php echo @$_REQUEST['comment_id']; ?>').click();
+	<?php } ?>
 	
 	<?php if(!$user_id){ ?>
 		$("#sidemenu2 li:first-child a.sidemenu2-title").trigger("click");
