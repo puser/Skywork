@@ -138,12 +138,13 @@
 			<span id="max_length_input" style="display:none;">
 				<input type="text" name="challenge[Challenge][max_response_length]" style="width:40px;" value="<?php echo @$challenge['Challenge']['max_response_length']; ?>" />&nbsp;
 				<strong>Maximum</strong> words allowed for each question.<br />
-				<input type="checkbox" name="challenge[Challenge][allow_exceeded_length]" style="margin-left:30px;" />
+				<input type="checkbox" style="margin-left:30px;" <?php if(@$challenge['Challenge']['allow_exceeded_length']) echo ' checked="checked"'; ?> onchange="$('#maxLengthHidden').val($(this).attr('checked') ? '1' : '0');" />
 				<span style="display:inline-block;width:15px;height:13px;background:url(/images/icons/icon-flag-15x30.png) top left no-repeat;padding-right:3px;vertical-align:middle;"> </span>
 				Allow students to pass maximum; create a flag when they do.
 			</span>
 			<span id="max_length_disabled">No maximum word count for each question</span><br />
 		</p>
+		<input type="hidden" name="challenge[Challenge][allow_exceeded_length]" id="maxLengthHidden" value="<?php echo @$challenge['Challenge']['allow_exceeded_length']; ?>" />
 		
 		<br />
 		<div class="label" style="font-size:15px;border-top:1px solid #ccc;cursor:pointer;padding-top:20px;padding-bottom:18px;" onclick="$(this).next().slideToggle();$(this).find('.remove-class').toggleClass('open');">

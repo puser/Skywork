@@ -77,30 +77,7 @@
 </div>
 
 <script type="text/javascript">
-<?php if($challenge['Challenge']['max_response_length'] && !$challenge['Challenge']['allow_exceeded_length']){ ?>
-	function limitText(limitField){
-		limitNum = <?php echo $challenge['Challenge']['max_response_length']; ?>;
-		if(limitField.val().length > limitNum) limitField.val(limitField.val().substring(0,limitNum));
-		else $('#currentWordCount').html(limitField.val().length);
-	}
-<?php } ?>
-
 $(document).ready(function(){
 	setup_response_hashchange(<?php echo $challenge['Question'][0]['id']; ?>,<?php echo $challenge['Challenge']['id']; ?>);
-	
-	$textAreaOrigHeight = 264;
-	$("textarea.niceTextarea").keyup(function(){ 
-		expandtext(this); 
-		
-		<?php if($challenge['Challenge']['max_response_length'] && !$challenge['Challenge']['allow_exceeded_length']){ ?>
-			limitText($('textarea.niceTextarea'));
-		<?php } ?>
-	});
-	
-	<?php if($challenge['Challenge']['max_response_length'] && !$challenge['Challenge']['allow_exceeded_length']){ ?>
-		$("textarea.niceTextarea").keydown(function(){
-			limitText($('textarea.niceTextarea'));
-		});
-		limitText($('textarea.niceTextarea'));
 });
 </script>
