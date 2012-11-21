@@ -423,10 +423,11 @@ function show_group_members(g_id){
 }
 
 function delete_class_member(g_id,u_id){
+
 	$('#groupMemberRow'+u_id).fadeOut();
-	jQuery.fancybox.close();
+	//jQuery.fancybox.close();
 	$.ajax({url:'/classes/remove_member/'+g_id+'/'+u_id,success:function(r){
-		window.location = '/users/view/classes/';
+		$("#edit_student_"+g_id).trigger('click');
 	}});
 }
 
