@@ -51,7 +51,7 @@
 
 	<div id="header" class="round round-main <?php if(!@$_SESSION['User']['id']){ ?>corp-website<?php } ?>">
 		<div class="content rounded-top">
-			<div id="logo"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>"></a></div>
+			<div id="logo"><a <?php if($this->request->params['controller'] == 'challenges' && $this->request->params['action'] == 'view'){ ?>href="#modalExitChoices" class="show-overlay" <?php }else{ ?>href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?> <?php } ?>"></a></div>
 			<?php if(@$_SESSION['User']['id']){ ?>
 			<div id="topmenu">
 				<span class="user-name"><a>
@@ -61,8 +61,8 @@
 					}else{
 						echo __($_SESSION['User']['email']);
 					}?></a></span>
-				<span class="user-home"><a href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>"><?php echo __('Home') ?></a></span>
-				<span class="user-account"><a href="/users/view/"><?php echo __('My Account') ?></a></span>
+				<span class="user-home"><a <?php if($this->request->params['controller'] == 'challenges' && $this->request->params['action'] == 'view'){ ?>href="#modalExitChoices" class="show-overlay" <?php }else{ ?>href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>" <?php } ?>><?php echo __('Home') ?></a></span>
+				<span class="user-account"><a <?php if($this->request->params['controller'] == 'challenges' && $this->request->params['action'] == 'view'){ ?>href="#modalExitChoices" class="show-overlay" <?php }else{ ?>href="/users/view/" <?php } ?>><?php echo __('My Account') ?></a></span>
 				<span class="user-logout"><a href="#logoutModal" class="show-overlay"><?php echo __('Logout') ?></a></span>
 			</div><!-- #topmenu -->
 			<?php }else{ ?>
