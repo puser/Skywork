@@ -30,6 +30,15 @@
 				</div>
 			</li>
 		</ul>
+	</div><br />
+	
+	<div class="box-content">
+		<p><?php echo __('Is your challenge offline?') ?></p>
+		<a id="offlineChallengeLink" onclick="return false;" href="#"><u><?php echo __("I'm assigning my challenge offline (e.g. the reading is in a textbook)") ?></u></a>
+		<div id="offlineChallengeInput" style="display:none;">
+			<input type="text" value="Describe the Challenge (e.g. Read pages 145 - 173 in your textbook)...">
+			<a href="#" onclick="$.bbq.pushState({view:'info',state:{type:'challenge',val:'OFFLINE'}});">
+		</div>
 	</div>
 </div>
 

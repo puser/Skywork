@@ -79,6 +79,9 @@
 				<p class="label"><?php echo __('Video Embed Code') ?> <span class="action-preview" style="margin-left: 180px; font-size: 13px;"><a href="#" onclick="$('#HelpDialog').dialog('open');return false;"><?php echo __('Help?') ?></a></span></p>
 				<textarea name="video_embed" style="width: 350px;height: 90px;"><?php echo (@$challenge['Attachment'][0]['type'] == 'C' ? $challenge['Attachment'][0]['file_location'] : '' ); ?></textarea>
 			</li>
+			<li id="add_offline">
+				<p class="lable"><?php echo __('Offline Challenge') ?>
+			</li>
 		</ul>
 	</div>
 	
