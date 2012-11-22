@@ -107,7 +107,7 @@
 </div>
 
 <span id="fieldValidate" style="display:none;">
-	<p class="textAlignCenter red" style="margin-left:265px;">* <?php echo __('You must invite at least one group/individual') ?></p>
+	<p class="textAlignCenter red" style="margin-left:265px; color:red">* <?php echo __('You must invite at least one group/individual') ?></p>
 </span>
 
 <?php if(!@$challenge['Group'] && @$challenge['ClassSet'] && @$challenge['Challenge']['collaboration_type'] != 'NONE'){ ?>
