@@ -57,7 +57,7 @@
 			</li>
 			<li style='border-bottom: 1px solid #E6E6E6; margin-top: -13px; width: 758px; margin-left: -9px;'>&nbsp;</li><br/>
 			<li id="add_document" style='padding-top:10px'>
-				<p class="label"><?php echo __('Document') ?></p>
+				<p class="label"><?php echo __('Upload the Assignment: Document') ?></p>
 				<!-- <a href="#" class="icon-add"> Add document</a> -->
 				
 				<div id="curCaseFile" style="font-size:12px;">
