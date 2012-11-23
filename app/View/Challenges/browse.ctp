@@ -61,7 +61,7 @@
 					}elseif(($_SESSION['User']['user_type'] == 'L' || @$challenge['collaborator']) && $a_date > $now && $challenge['Challenge']['status'] != 'D'){
 						$challenge_click = "$('#date1_exp_warning').html('" . date_format($a_date,'m/d/Y') . "');$('#date2_exp_warning').html('" . date_format($r_date,'m/d/Y') . "');";
 						$challenge_click .= "$('#duedate_warning_link').click();return false;";
-					}elseif($_SESSION['User']['user_type'] == 'P' && $r_date > $now && $challenge['Challenge']['collaboration_type'] == 'NONE'){
+					}elseif($_SESSION['User']['user_type'] == 'P' && $r_date > $now && $a_date < $now && $challenge['Challenge']['collaboration_type'] == 'NONE'){
 						$challenge_click .= "$('#skipcollab_warning_link').click();return false;";
 					}elseif(@$challenge['Users']){
 						if(($r_date > $now && $_SESSION['User']['user_type'] == 'L') || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now)){

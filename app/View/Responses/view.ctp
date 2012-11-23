@@ -56,63 +56,74 @@
 		
 			<h1><?php echo __('Summary') ?></h1>
 			<div id="sidemenu">
-				<ul>
-					<?php if($challenge[0]['Group']){
-						$this_group = array_pop($challenge[0]['Group']);
+				<?php if($challenges[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
+					<ul>
+						<?php if($challenge[0]['Group']){
+							$this_group = array_pop($challenge[0]['Group']);
 					
-						// shift current user to front
-						foreach($this_group['User'] as $uk=>$u){
-							if($u['id'] == $_SESSION['User']['id']){
-								unset($this_group['User'][$uk]);
-								array_unshift($this_group['User'],$u);
-								break;
+							// shift current user to front
+							foreach($this_group['User'] as $uk=>$u){
+								if($u['id'] == $_SESSION['User']['id']){
+									unset($this_group['User'][$uk]);
+									array_unshift($this_group['User'],$u);
+									break;
+								}
 							}
-						}
 					
-						foreach($this_group['User'] as $u){ ?>
-							<li class="userNav<?php if($u['id'] == $user_id && !@$_REQUEST['instructor_comments'] && !@$_REQUEST['collaborator_comments']){ ?> active-name<?php }else{ ?> name<?php } ?>" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
-								<a style="padding-left:30px;width:136px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-									<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
-									<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
-								</a>
-							</li>
-						<?php }
-					}else{
-						foreach($challenge[0]['ClassSet'] as $c){ ?>
-							<li id="groupNav<?php echo $c['id']; ?>">
-								<a style="padding-left:30px;width:136px;" href="#" class="sidemenu2-title"><?php echo $c['group_name']; ?></a>
-								<ul>
-									<?php
-									// shift current user to front
-									foreach($c['User'] as $uk=>$u){
-										if($u['id'] == $_SESSION['User']['id']){
-											unset($c['User'][$uk]);
-											array_unshift($c['User'],$u);
-											break;
+							foreach($this_group['User'] as $u){ ?>
+								<li class="userNav<?php if($u['id'] == $user_id && !@$_REQUEST['instructor_comments'] && !@$_REQUEST['collaborator_comments']){ ?> active-name<?php }else{ ?> name<?php } ?>" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
+									<a style="padding-left:30px;width:136px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
+										<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+										<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
+									</a>
+								</li>
+							<?php }
+						}else{
+							foreach($challenge[0]['ClassSet'] as $c){ ?>
+								<li id="groupNav<?php echo $c['id']; ?>">
+									<a style="padding-left:30px;width:136px;" href="#" class="sidemenu2-title"><?php echo $c['group_name']; ?></a>
+									<ul>
+										<?php
+										// shift current user to front
+										foreach($c['User'] as $uk=>$u){
+											if($u['id'] == $_SESSION['User']['id']){
+												unset($c['User'][$uk]);
+												array_unshift($c['User'],$u);
+												break;
+											}
 										}
-									}
 								
-									foreach($c['User'] as $u){
-										if($u['id'] == $challenge[0]['Challenge']['user_id']) continue; ?>
-										<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
-											<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
-													<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
-													<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
-											</a>
-											<?php if($u['id'] == $user_id && !@$_REQUEST['instructor_comments'] && !@$_REQUEST['collaborator_comments']){ ?>
-												<script type="text/javascript">
-												$(document).ready(function(){	
-													$("#groupNav<?php echo $c['id']; ?> a.sidemenu2-title").trigger("click");
-												});
-												</script>
+										foreach($c['User'] as $u){
+											if($u['id'] == $challenge[0]['Challenge']['user_id']) continue; ?>
+											<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
+												<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1">
+														<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
+														<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
+												</a>
+												<?php if($u['id'] == $user_id && !@$_REQUEST['instructor_comments'] && !@$_REQUEST['collaborator_comments']){ ?>
+													<script type="text/javascript">
+													$(document).ready(function(){	
+														$("#groupNav<?php echo $c['id']; ?> a.sidemenu2-title").trigger("click");
+													});
+													</script>
+												<?php } ?>
+											</li>
 											<?php } ?>
-										</li>
-										<?php } ?>
-								</ul>
-							</li>
-						<?php }
-					} ?>
-				</ul>
+									</ul>
+								</li>
+							<?php }
+						} ?>
+					</ul>
+				<?php }else{ ?>
+					<ul>
+						<li class="userNav active-name" id="userNav<?php echo $_SESSION['User']['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
+							<a style="padding-left:30px;width:136px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $_SESSION['User']['id']; ?>?notips=1">
+								<span class="shortname"><?php echo substr($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname'],0,20) . (strlen($_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']) > 20 ? '...' : ''); ?></span>
+								<span class="fullname" style="display:none;"><?php echo $_SESSION['User']['firstname'].' '.$_SESSION['User']['lastname']; ?></span>
+							</a>
+						</li>
+					</ul>
+				<?php } ?>
 				<ul>
 					<li id="instructor_comment_nav" <?php if(@$_REQUEST['instructor_comments']){ ?>class="active"<?php } ?>>
 						<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/paper.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $_SESSION['User']['id']; ?>?notips=1&instructor_comments=1">Instructor Comments</a>
