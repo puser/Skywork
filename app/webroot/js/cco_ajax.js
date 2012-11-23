@@ -441,7 +441,7 @@ function class_invite_professor(c_id){
 }
 
 function class_invite_student(c_id){
-	$.ajax({url:'/users/invite/'+c_id+'/0/'+($('#firstName').val() ? $('#firstName').val() : '0')+'/'+($('#lastName').val() ? $('#firstName').val() : '0')+'/'+$('#emailAddr').val()+'/P/'});
+	$.ajax({url:'/users/invite/'+c_id+'/0/'+($('#firstName').val() ? $('#firstName').val() : '0')+'/'+($('#lastName').val() ? $('#lastName').val() : '0')+'/'+$('#emailAddr').val()+'/P/'});
 }
 
 function load_search_results(){
