@@ -15,7 +15,7 @@
 					<div class="clear"></div>
 				</div>
 				<div class="accordion-content">
-					<p><img src="/images/icons/icon-poll-29x17.png" /> <?php echo __('There is no collaboration in a standard assignment. You will be giving your students an assignment, they will complete it by the Due Date you set, and they will return it back to you.') ?></p>
+					<p><?php echo __('There is no collaboration in a standard assignment. You will be giving your students an assignment, they will complete it by the Due Date you set, and they will return it back to you.') ?></p>
 				</div>
 			</li>
 			<li>
@@ -40,7 +40,7 @@ if($('#collaboration_type').val()=='RATE'){
 	
 	$('#skip_active').hide();
 	$('#skip_inactive').show();
-}else{
+}else if($('#collaboration_type').val() == 'NONE'){
 	$('#rate_inactive').show();
 	$('#rate_active').hide();
 	
@@ -48,7 +48,7 @@ if($('#collaboration_type').val()=='RATE'){
 	$('#skip_inactive').hide();
 }
 setTimeout(function(){
-	if($('#collaboration_type').val() == 'NONE') $("ul.accordion li:first-child .accordion-trigger p").trigger("click");
-	else $("ul.accordion li:last-child .accordion-trigger p").trigger("click");
+	if($('#collaboration_type').val() == 'RATE') $("ul.accordion li:last-child .accordion-trigger p").trigger("click");
+	else $("ul.accordion li:first-child .accordion-trigger p").trigger("click");
 },50);
 </script>
