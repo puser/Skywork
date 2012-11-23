@@ -80,7 +80,8 @@
 				<textarea name="video_embed" style="width: 350px;height: 90px;"><?php echo (@$challenge['Attachment'][0]['type'] == 'C' ? $challenge['Attachment'][0]['file_location'] : '' ); ?></textarea>
 			</li>
 			<li id="add_offline">
-				<p class="lable"><?php echo __('Offline Challenge') ?>
+				<p class="lable"><?php echo __('Offline Challenge') ?></p>
+				<p class="input"> </p>
 			</li>
 		</ul>
 	</div>
@@ -202,8 +203,17 @@ $('#responses_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date()});
 if($('#response_types').val() == 'E') $('#compose_questions').remove();
 else $('#compose_essay').remove();
 
-if($('#challenge_type').val() == 'VID') $('#add_document').remove();
-else $('#add_youtube').remove();
+if($('#challenge_type').val() == 'VID'){
+	$('#add_document').remove();
+	$('#add_offline').remove();
+}else if($('#challenge_type').val() == 'OFFLINE'){
+	$('#add_document').remove();
+	$('#add_youtube').remove();
+	$('#add_offline .input').html($('#offline_challenge_val').val());
+}else{
+	$('#add_youtube').remove();
+	$('#add_offline').remove();
+}
 
 function check_max_length(){
 	if($('#max_length').attr('checked')){

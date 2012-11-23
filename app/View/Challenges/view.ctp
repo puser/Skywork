@@ -17,7 +17,13 @@
 	
 	<div class="actionmenu">
 		<ul>
-			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?><li class="action-preview"><a onclick="save_response('/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>');return false;" href="#"><?php echo __('Assignment') ?></a></li><?php } ?>
+			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?>
+				<?php if($challenge['Challenge']['challenge_type'] == 'OFFLINE'){ ?>
+					<li class="action-preview"><a class="show-overlay" href="#modalOfflineAssignment"><?php echo __('Assignment') ?></a></li>
+				<?php }else{ ?>
+					<li class="action-preview"><a onclick="save_response('/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>');return false;" href="#"><?php echo __('Assignment') ?></a></li>
+				<?php }
+			} ?>	
 			<li class="action-save"><a href="#" onclick="save_response();return false;"><?php echo __('Save') ?></a></li>
 			<li class="action-exit"><a href="#modalExitChoices" class="show-overlay"><?php echo __('Exit') ?></a></li>
 		</ul>
@@ -74,6 +80,23 @@
 			</div>
 		</div>
 	</div><!-- #modalExitChoices -->
+	
+	<?php if($challenge['Challenge']['challenge_type'] == 'OFFLINE'){ ?>
+	<div id="modalOfflineAssignment" style="width:480px;height:210px;">
+		<div class="modal-box-head">
+			<h2 class="page-subtitle label-text" style="line-height:24px;"><span class="icon-preview"><?php echo __('Assignment') ?></span></h2>
+		</div>
+		<div class="modal-box-content">
+			<div style="text-align:center;margin:20px;"><p class="caseclubFont18 blue textAlignCenter">
+				<?php echo __('The Assignment for this Bridge is:') ?><br /><br /><strong><?php echo $challenge['Attachment'][0]['file_location']; ?></strong>
+			</p></div>
+			<br />
+			<div style="width: 100px; margin: 0 auto; ">
+				<a onclick="jQuery.fancybox.close();return false;" class="btn3 btn-savecontinue aligncenter" style="float:left;width:100px;"><span class="inner"><?php echo __('Close') ?></span></a>
+			</div>
+		</div>
+	</div>
+	<?php } ?>
 </div>
 
 <script type="text/javascript">
