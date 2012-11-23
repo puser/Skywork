@@ -22,10 +22,12 @@
 					</ul>
 				<?php } ?>
 			</li>
+			<?php if($challenges[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
 			<li><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenges[0]['Challenge']['id']; ?>/"><?php echo __('Question Activity') ?></a></li>
-			<?php if($challenges[0]['Challenge']['instructor_ratings']){ ?>
-				<li><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenges[0]['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
-			<?php } ?>
+				<?php if($challenges[0]['Challenge']['instructor_ratings']){ ?>
+					<li><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenges[0]['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
+				<?php }
+			} ?>
 			<li><a class="icon icon4-flag" href="/metrics/view_flags/<?php echo $challenges[0]['Challenge']['id']; ?>/"><?php echo __('Flagging') ?></a></li>
 		</ul>
 	</div>
@@ -52,7 +54,10 @@
 			<div class="box-head">
 				<span class="icon2 icon2-people-green"></span>
 				<h2><?php echo __('Student Analysis:') ?> <?php echo __('All Students') ?></h2>
-				<a href="#modal-customize" class="modal-link customize-link"><?php echo __('Customize') ?></a>
+				
+				<?php if($challenges[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
+					<a href="#modal-customize" class="modal-link customize-link"><?php echo __('Customize') ?></a>
+				<?php } ?>
 				<div class="clear"></div>
 			</div>
 			<div class="box-content">
@@ -60,10 +65,15 @@
 					<thead>
 						<tr>
 							<th class="col1" width="20%"><a href="#" class="sort"><?php echo __('Student Name') ?></a></th>
-							<?php if(!$challenges[0]['Challenge']['instructor_ratings']){ ?><th class="col2" width="23%"></th><?php } ?>
-							<th class="<?php echo ($challenges[0]['Challenge']['instructor_ratings'] ? 'col2' : 'col3'); ?>" width="23%"><a href="#" class="sort"><?php echo __('Completion Level') ?></a></th>
-							<?php if($challenges[0]['Challenge']['instructor_ratings']){ ?><th class="col3" width="23%"><a href="#" class="sort"><?php echo __('Average Quality Level') ?></a></th><?php } ?>
-							<th class="col4" width="23%" <?php if(!$challenges[0]['Challenge']['instructor_ratings']){ ?>style="padding-left:40px;"<?php } ?>><a href="#" class="sort"><?php echo __('Students Activity Level') ?></a></th>
+							<?php if($challenges[0]['Challenge']['collaboration_type'] == 'NONE'){ ?>
+								<th class="col2" width="23%"></th><th class="col3" width="23%"></th>
+							<?php }elseif(!$challenges[0]['Challenge']['instructor_ratings']){ ?><th class="col2" width="23%"></th><?php } ?>
+							<th class="<?php echo ($challenges[0]['Challenge']['collaboration_type'] == 'NONE' ? 'col4' : ($challenges[0]['Challenge']['instructor_ratings'] ? 'col2' : 'col3')); ?>" width="23%"><a href="#" class="sort"><?php echo __('Completion Level') ?></a></th>
+							<?php if($challenges[0]['Challenge']['instructor_ratings'] && $challenges[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
+								<th class="col3" width="23%"><a href="#" class="sort"><?php echo __('Average Quality Level') ?></a></th>
+							<?php }if($challenges[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
+								<th class="col4" width="23%" <?php if(!$challenges[0]['Challenge']['instructor_ratings']){ ?>style="padding-left:40px;"<?php } ?>><a href="#" class="sort"><?php echo __('Students Activity Level') ?></a></th>
+							<?php } ?>
 							<th class="col5" width="7%"></th>
 						</tr>
 					</thead>
@@ -81,15 +91,17 @@
 									?>
 									<tr<?php if($idx % 2){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.table-toggle-button').show();" onmouseout="$(this).find('.table-toggle-button').hide();">
 										<td class="col1"><a class="modal-link" href="#modal-collaborators"><?php echo "{$u['firstname']} {$u['lastname']}"; ?></a></td>
-										<?php if(!$challenges[0]['Challenge']['instructor_ratings']){ ?><td class="col2"></td><?php } ?>
-										<td class="<?php echo ($challenges[0]['Challenge']['instructor_ratings'] ? 'col2' : 'col3'); ?>">
+										<?php if($challenges[0]['Challenge']['collaboration_type'] == 'NONE'){ ?>
+											<th class="col2"></th><th class="col3"></th>
+										<?php }elseif(!$challenges[0]['Challenge']['instructor_ratings']){ ?><td class="col2"></td><?php } ?>
+										<td class="<?php echo ($challenges[0]['Challenge']['collaboration_type'] == 'NONE' ? 'col4' : ($challenges[0]['Challenge']['instructor_ratings'] ? 'col2' : 'col3')); ?>">
 											<div class="activity-level activity-level-blue">
 												<span style="width: <?php echo ((@$activity[$u['id']]['responses'] / @$activity[$u['id']]['questions']) * 100); ?>%"></span>
 											</div>
 											<div class="activity-level-percentage"><?php echo round((@$activity[$u['id']]['responses'] / @$activity[$u['id']]['questions']) * 100); ?>%</div>
 											<div class="clear"></div>
 										</td>
-										<?php if($challenges[0]['Challenge']['instructor_ratings']){ ?>
+										<?php if($challenges[0]['Challenge']['instructor_ratings'] && $challenges[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
 											<td class="col3">
 												<div class="activity-level activity-level-red">
 													<span style="width: <?php if(($quality[$u['id']][0] ? (100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0) <100){echo ($quality[$u['id']][0] ? (100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0); }else{ echo 100; }?>%"></span>
@@ -97,7 +109,7 @@
 												<div class="activity-level-percentage"><?php if(($quality[$u['id']][0] ? round(100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0)<100){ echo ($quality[$u['id']][0] ? round(100 - ((($quality[$u['id']][1] / ($quality[$u['id']][0] ? $quality[$u['id']][0] : 1)) / 5) * 100)) : 0); }else{ echo 100; } ?>%</div>
 												<div class="clear"></div>
 											</td>
-										<?php } ?>
+										<?php }if($challenges[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
 										<td class="col4" <?php if(!$challenges[0]['Challenge']['instructor_ratings']){ ?>style="padding-left:50px;"<?php } ?>>
 											<div class="activity-level">
 												<span style="width: <?php if((((((($activity[$u['id']]['keys'] / count($activity[$u['id']]['challenges'])) - $min_keystrokes) / ($max_keystrokes ? $max_keystrokes : 1)) + ((($activity[$u['id']]['comments'] / count($activity[$u['id']]['challenges'])) - $min_comments) / ($max_comments ? $max_comments : 1))) / 2) * 100)<100){echo (((((($activity[$u['id']]['keys'] / count($activity[$u['id']]['challenges'])) - $min_keystrokes) / ($max_keystrokes ? $max_keystrokes : 1)) + ((($activity[$u['id']]['comments'] / count($activity[$u['id']]['challenges'])) - $min_comments) / ($max_comments ? $max_comments : 1))) / 2) * 100); }else{ echo 100; } ?>%"></span>
@@ -107,6 +119,7 @@
 											</div>
 											<div class="clear"></div>
 										</td>
+										<?php } ?>
 										<td class="col5">
 											<ul class="table-toggle-button" style="display:none;">
 												<li class="value-false active"></li>

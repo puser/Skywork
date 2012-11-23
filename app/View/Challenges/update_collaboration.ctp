@@ -9,18 +9,27 @@
 		<ul id="challenges-accordion" class="accordion">
 			<li>
 				<div class="accordion-trigger">
-					<a class="btn1" onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'RATE'}});" id="rate_inactive"><span><?php echo __('Select') ?></span></a>
-					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="rate_active"></div>
-					<p><?php echo __('Rate each other\'s work') ?></p>
+					<a class="btn1" onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'NONE'}});" id="skip_inactive"><span><?php echo __('Select') ?></span></a>
+					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="skip_active"></div>
+					<p><?php echo __('This is a standard assignment') ?></p>
 					<div class="clear"></div>
 				</div>
 				<div class="accordion-content">
-					<p><img src="/images/icons/icon-poll-29x17.png" /> <?php echo __('Once students complete their Assignments, students then use a Likert scale to rate and rank each other\'s work.') ?></p>
+					<p><img src="/images/icons/icon-poll-29x17.png" /> <?php echo __('There is no collaboration in a standard assignment. You will be giving your students an assignment, they will complete it by the Due Date you set, and they will return it back to you.') ?></p>
+				</div>
+			</li>
+			<li>
+				<div class="accordion-trigger">
+					<a class="btn1" onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'RATE'}});" id="rate_inactive"><span><?php echo __('Select') ?></span></a>
+					<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;" id="rate_active"></div>
+					<p><?php echo __('I would like my students to collaborate') ?></p>
+					<div class="clear"></div>
+				</div>
+				<div class="accordion-content">
+					<p><img src="/images/icons/icon-poll-29x17.png" /> <?php echo __('By allowing student collaboration, after students complete their assignments (Due Date 1), they will be able to write comments and give feedback to each other (Due Date 2).') ?></p>
 				</div>
 			</li>
 		</ul>
-		<p>Would you like to skip the student collaboration?</p><br/>
-		<a onclick="$.bbq.pushState({view:'info',state:{type:'collaboration',val:'NONE'}});"><u><?php echo __('Skip the student collaboration (you will still be able to grade)') ?></u></a>
 	</div>
 </div>
 
@@ -28,11 +37,18 @@
 if($('#collaboration_type').val()=='RATE'){
 	$('#rate_active').show();
 	$('#rate_inactive').hide();
+	
+	$('#skip_active').hide();
+	$('#skip_inactive').show();
 }else{
 	$('#rate_inactive').show();
 	$('#rate_active').hide();
+	
+	$('#skip_active').show();
+	$('#skip_inactive').hide();
 }
 setTimeout(function(){
-	$("ul.accordion li:first-child .accordion-trigger p").trigger("click"); 
+	if($('#collaboration_type').val() == 'NONE') $("ul.accordion li:first-child .accordion-trigger p").trigger("click");
+	else $("ul.accordion li:last-child .accordion-trigger p").trigger("click");
 },50);
 </script>
