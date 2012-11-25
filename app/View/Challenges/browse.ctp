@@ -61,6 +61,8 @@
 					}elseif(($_SESSION['User']['user_type'] == 'L' || @$challenge['collaborator']) && $a_date > $now && $challenge['Challenge']['status'] != 'D'){
 						$challenge_click = "$('#date1_exp_warning').html('" . date_format($a_date,'m/d/Y') . "');$('#date2_exp_warning').html('" . date_format($r_date,'m/d/Y') . "');";
 						$challenge_click .= "$('#duedate_warning_link').click();return false;";
+					}elseif($_SESSION['User']['user_type'] == 'P' && $r_date > $now && $a_date < $now && $challenge['Challenge']['collaboration_type'] == 'NONE'){
+						$challenge_click .= "$('#skipcollab_warning_link').click();return false;";
 					}elseif(@$challenge['Users']){
 						if(($r_date > $now && $_SESSION['User']['user_type'] == 'L') || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now)){
 							$challenge_click = "window.location = '/responses/view/{$challenge['Challenge']['id']}" . ($_SESSION['User']['user_type'] == 'P' ? "/{$_SESSION['User']['id']}" : '') . "';";
@@ -164,6 +166,7 @@
 
 <div style="display:none;">
 	<a href="#modal-duedate-warning" class="show-overlay" id="duedate_warning_link"> </a>
+	<a href="#modal-skipcollab-warning" class="show-overlay" id="skipcollab_warning_link"> </a>
 	<a href="" class="show-overlay" id="challenge_accept_link"> </a>
 	<div id="modal-duedate-warning" class="modal-wrapper" style="width: 600px;" >
 		<div class="modal-box-head">
@@ -177,6 +180,24 @@
 				$warning_msg = str_replace('{date2}','<span id="date2_exp_warning"> </span>',$warning_msg);
 				echo $warning_msg;
 				?>
+			</div>
+			
+			<br />
+			<div class="clear"></div>
+			<div style="width: 100px; margin: 0 auto; ">
+				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Close') ?></span></a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modal-skipcollab-warning" class="modal-wrapper" style="width: 600px;" >
+		<div class="modal-box-head">
+			<h2><?php echo __('Due Date 2') ?></h2>
+		</div>
+		<div class="modal-box-content">
+			<div style="text-align:center;margin:20px;line-height:25px;">
+				<?php echo __('Your Instructor is currently evaluating your assignment. When they are done, you will receive an email. Then you will be able to view your Instructor’s comments and corrections.'); ?>
 			</div>
 			
 			<br />

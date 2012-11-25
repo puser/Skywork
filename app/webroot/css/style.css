@@ -709,6 +709,7 @@ a.studentwork-more:hover span {display: inline; }
 #preview-full-width.preview-initilialize #preview-contract {padding-bottom: 40px; position: relative; }
 
 .assignment-name {text-align: right; margin-right: 30px; font-size: 12px; }
+.icon-preview {padding-left: 24px; background: url('/images/icon-magnifier-16.png') no-repeat center left; margin-right: 10px; }
 .assignment-name .icon-preview {font-family: Helvetica, Arial, sans-serif; font-weight: bold; font-size: 16px; color: #003d79; padding-left: 24px; background: url('/images/icon-magnifier-16.png') no-repeat center left; margin-right: 10px; }
 
 #modal-sendcopy .icon {position: relative; top: -5px; }

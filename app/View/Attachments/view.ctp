@@ -22,6 +22,7 @@
 		<div id="preview-contract" <?php if($ajax){ ?>style="width:auto;display:inline-block;"<?php }else{ ?>style="text-align:center;"<?php } ?>>
 			<?php
 			if($attachment['Challenge']['challenge_type'] == 'VID') echo stripslashes($attachment['Attachment']['file_location']);
+			elseif($attachment['Challenge']['challenge_type'] == 'OFFLINE') echo __('The Assignment for this Bridge is:') . "<br /><br /><strong>" . $attachment['Attachment']['file_location'] . "</strong>";
 			else{ ?>
 			<iframe src="http://docs.google.com/viewer?url=http%3A%2F%2Fpuentesonline.com%2Fuploads%2F<?php echo $attachment['Attachment']['file_location']; ?>&embedded=true" width="735" height="500" />
 			<?php } ?>

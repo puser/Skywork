@@ -62,7 +62,7 @@
 					<?php } ?>
 				</select>
 				
-				<?php if($challenge['ClassSet']){ ?>
+				<?php if($challenge['ClassSet'] && @$challenge['Challenge']['collaboration_type'] != 'NONE'){ ?>
 					<br /><br /><a href="/challenges/split_groups/<?php echo $challenge['Challenge']['id']; ?>" class="btn4 show-overlay" style="width: 130px;">
 						<span><img src="/images/icons/icon-flash-13x19.png" /> <?php echo __('Class Groups') ?></span>
 					</a><br />

@@ -263,6 +263,9 @@ class ChallengesController extends AppController{
 				}
 				if(@$attachments) $this->Challenge->Attachment->saveAll($attachments);
 			}elseif(@$_REQUEST['video_embed']) $this->Challenge->Attachment->saveAll(array(array('challenge_id'=>$challenge_id,'file_location'=>$_REQUEST['video_embed'],'type'=>'C')));
+			elseif(@$_REQUEST['offline_challenge']) $this->Challenge->Attachment->saveAll(array(array('challenge_id'=>$challenge_id,'file_location'=>$_REQUEST['offline_challenge'],'type'=>'C')));
+			
+			/*	TEMPLATES DEPRECIATED FOR PUENTES v1
 			// save attachments from template
 			if(@$_REQUEST['tmpl_attachment']){
 				$tmpl_attachment = $_REQUEST['tmpl_attachment'];
@@ -272,6 +275,7 @@ class ChallengesController extends AppController{
 				}
 				$this->Challenge->Attachment->saveAll($tmpl_attachment);
 			}
+			*/
 			
 			// delete files
 			if(@$_REQUEST['remove_attachment']){

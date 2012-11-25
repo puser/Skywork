@@ -36,7 +36,7 @@
 						<span style="position:relative;top: 2px;left: 6px;">EST</span>
 					</div>
 				</div>
-				<div class="col2">
+				<div class="col2" id="duedate2_input">
 					<p class="label"><?php echo __('Due Date 2') ?> <a href="#" class="tooltip-mark-question" title="<?php echo __('Time for feedback and collaboration') ?>"></a></p>
 					<div class="date-input">
 						<input type="text" value="<?php echo (@$challenge['Challenge']['responses_due']?substr($challenge['Challenge']['responses_due'],0,10):date_format(date_add(date_create(),new DateInterval('P1D')),'Y-m-d')); ?>" name="challenge[Challenge][responses_due]" id="responses_due" />
@@ -78,6 +78,10 @@
 			<li id="add_youtube">
 				<p class="label"><?php echo __('Video Embed Code') ?> <span class="action-preview" style="margin-left: 180px; font-size: 13px;"><a href="#" onclick="$('#HelpDialog').dialog('open');return false;"><?php echo __('Help?') ?></a></span></p>
 				<textarea name="video_embed" style="width: 350px;height: 90px;"><?php echo (@$challenge['Attachment'][0]['type'] == 'C' ? $challenge['Attachment'][0]['file_location'] : '' ); ?></textarea>
+			</li>
+			<li id="add_offline">
+				<p class="lable"><?php echo __('Offline Challenge') ?></p>
+				<p class="input"> </p>
 			</li>
 		</ul>
 	</div>
@@ -156,8 +160,8 @@
 			</div>
 		</div>
 		<div id="advanced_options" style="display:none;">
-			<p class="label" style="font-size:13px;"><?php echo __('Anonymous') ?></p>
-			<p class="input">
+			<p class="label anonymous_input" style="font-size:13px;"><?php echo __('Anonymous') ?></p>
+			<p class="input anonymous_input">
 				<input type="checkbox" name="challenge[Challenge][anonymous]" value="1"<?php if(@$challenge['Challenge']['anonymous']) echo ' checked="checked"'; ?> />
 				<?php echo __('Apply as anonymous (Assignment won\'t display names)') ?>
 			</p>
@@ -201,8 +205,22 @@ $('#responses_due').datepicker({'dateFormat':'yy-mm-dd','minDate':new Date()});
 if($('#response_types').val() == 'E') $('#compose_questions').remove();
 else $('#compose_essay').remove();
 
-if($('#challenge_type').val() == 'VID') $('#add_document').remove();
-else $('#add_youtube').remove();
+if($('#challenge_type').val() == 'VID'){
+	$('#add_document').remove();
+	$('#add_offline').remove();
+}else if($('#challenge_type').val() == 'OFFLINE'){
+	$('#add_document').remove();
+	$('#add_youtube').remove();
+	$('#add_offline .input').html($('#offline_challenge_val').val());
+}else{
+	$('#add_youtube').remove();
+	$('#add_offline').remove();
+}
+
+if($('#collaboration_type').val() == 'NONE'){
+	//$('#duedate2_input').remove();
+	$('.anonymous_input').remove();
+}
 
 function check_max_length(){
 	if($('#max_length').attr('checked')){
