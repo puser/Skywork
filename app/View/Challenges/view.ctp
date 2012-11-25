@@ -1,9 +1,9 @@
 <div id="sidebarleft">
-	<h1><?php echo __('Answer Questions') ?></h1>
+	<h1><?php echo __('Answer ' . ($challenge['Challenge']['response_types'] == 'E' ? 'Essay' : 'Questions')) ?></h1>
 	<div id="sidemenu" >
 		<ul>
 			<?php foreach($challenge['Question'] as $k=>$q){ if(!$q['question']) continue; ?>
-			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a class="no-icon" onclick="save_response();" href="#<?php echo $q['id']; ?>"><?php $ques = $k + 1 ; echo 'Question '.$ques; ?></a></li>
+			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a class="no-icon" onclick="save_response();" href="#<?php echo $q['id']; ?>"><?php $ques = $k + 1 ; echo ($challenge['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . $ques); ?></a></li>
 			<?php }if($challenge['Challenge']['allow_attachments']){ ?>
 			<li id="questionNavAttach"><a class="no-icon" onclick="save_response();" href="#attachments"><?php echo __('Attach File(s)') ?></a></li>
 			<?php } ?>
@@ -27,14 +27,14 @@
 	
 	<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded">
 		<div id="questionContent"> </div>
-		<?php if($challenge['Challenge']['min_response_length'] || $challenge['Challenge']['max_response_length']){ ?>
+		<?php if($challenge['Challenge']['min_response_length'] > 1 || $challenge['Challenge']['max_response_length']){ ?>
 			<div style="text-align:right;">
 				<?php if($challenge['Challenge']['min_response_length'] > 1){ ?>
-					<span style="color:#ccc;padding-right:10px;">Miniumum: <?php echo $challenge['Challenge']['min_response_length']; ?></span>
+					<span style="color:#ccc;padding-right:10px;"><?php echo __('Miniumum') ?>: <?php echo $challenge['Challenge']['min_response_length']; ?></span>
 				<?php }if($challenge['Challenge']['max_response_length']){ ?>
-					<span style="color:#ccc;padding-right:10px;">Maximum: <?php echo $challenge['Challenge']['max_response_length']; ?></span>
+					<span style="color:#ccc;padding-right:10px;"><?php echo __('Maximum') ?>: <?php echo $challenge['Challenge']['max_response_length']; ?></span>
 				<?php } ?>
-				Counter: <span id="currentWordCount">0</span>
+				<?php echo __('Counter') ?>: <span id="currentWordCount">0</span>
 			</div>
 		<?php } ?>
 	</div>

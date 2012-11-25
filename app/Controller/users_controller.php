@@ -177,7 +177,7 @@ class UsersController extends AppController{
 		
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: noreply@puentesonline.com' . "\r\n";
+			$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
 	
 			// send invite email
 			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",$subject,nl2br($message),$headers);
@@ -208,7 +208,7 @@ class UsersController extends AppController{
 			$message = str_replace('{first_name}',$user['User']['firstname'],$message);
 			$message = str_replace('{link}',"http://puentesonline.com/users/password_reset/".$reminder_token,$message);
 			
-			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",__("New Password"),$message,'From: noreply@puentesonline.com');
+			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",__("New Password"),$message,'From: Puentes <noreply@puentesonline.com>');
 			
 			$this->User->id = $user['User']['id'];
 			$this->User->saveField('invite_token',$reminder_token);

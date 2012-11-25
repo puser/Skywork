@@ -107,10 +107,12 @@
 		</span>
 		
 		<span id="compose_essay">
+			<!-- 
 			<p><?php echo __('Write the essay topic in one or two words:') ?></p>
 			<p>
 				<input type="text" class="checkdefault" default="Essay Topic" value="<?php echo @$challenge['Question'][0]['section']; ?>" name="challenge[Question][0][section]" style="width:155px;padding:5px 7px;" />
 			</p>
+			-->
 			<p><?php echo __('Write a description of this essay topic:') ?></p>
 			<p>
 				<textarea class="checkdefault" default="Write description here" name="challenge[Question][0][question]" style="width:550px;height:75px;padding:5px 7px;"><?php echo @$challenge['Question'][0]['question']; ?></textarea>

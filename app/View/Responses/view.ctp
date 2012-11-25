@@ -42,10 +42,10 @@
 			<p><?php echo "{$user['User']['firstname']} {$user['User']['lastname']}"; ?></p>
 			<div id="sidemenu">
 				<ul>
-					<?php foreach($challenge[0]['Question'] as $q){ ?>
+					<?php foreach($challenge[0]['Question'] as $k=>$q){ ?>
 						<li class="userNav<?php if($q['id'] == $question_id){ ?> active<?php } ?>">
 							<a class="no-icon" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $user['User']['id']; ?>/<?php echo $q['id']; ?>">
-								<?php echo $q['section']?>
+								<?php echo ($challenge[0]['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . ($k+1));//$q['section']?>
 							</a>
 						</li>
 					<?php } ?>
@@ -219,8 +219,8 @@
 			<div class="question-item"<?php if(!$completed){ ?> style="overflow:hidden;"<?php } ?>>
 				<div class="box-head">
 					<span class="icon2 icon2-listcountgreen"><?php echo ($k+1); ?></span><a name="<?php echo $q['id']; ?>" href="#"> </a>
-					<h2><?php echo 'Question '.($k+1);//$q['section']; ?></h2>
-					<?php if($completed && $_SESSION['User']['user_type'] != 'P' && ($challenge[0]['Challenge']['instructor_ratings'] || $challenge[0]['Challenge']['student_ratings'])){ ?>
+					<h2><?php echo ($challenge[0]['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . ($k+1));//$q['section']; ?></h2>
+					<?php if($completed && $_SESSION['User']['user_type'] != 'P' && ($challenge[0]['Challenge']['instructor_ratings'] || $challenge[0]['Challenge']['student_ratings']) && $q['response_total']){ ?>
 						<div class="summary-quality">
 							<span class="<?php echo ($q['response_total'] == 1 ? 'great' : ($q['response_total'] == 2 ? 'good' : ($q['response_total'] == 3 ? 'average' : ($q['response_total'] == 4 ? 'poor' : 'poor')))); ?>">
 								<?php echo ($q['response_total'] == 1 ? __('Very High') : ($q['response_total'] == 2 ? __('Good') : ($q['response_total'] == 3 ? __('Average') : ($q['response_total'] == 4 ? __('Below Average') : __('Poor'))))); ?> <?php echo __('Quality') ?>

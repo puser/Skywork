@@ -489,7 +489,7 @@ class ChallengesController extends AppController{
 			
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: noreply@puentesonline.com' . "\r\n";
+			$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
 		}else{
 			$message = __("Hi {firstname_1}!\n\nYour Instructor, {firstname_2} {lastname_2}, has sent you an invitation to join a Bridge on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n\nYou will have until:\n\n{duedate_1} to complete a series of questions.\n\n{duedate_2} to give feedback to other students.\n\nClick here to check it out:\n{bridge_link}\n\nSincerely,\nThe Puentes Team");
 			$message = str_replace('{firstname_1}',$user['User']['firstname'],$message);
@@ -505,7 +505,7 @@ class ChallengesController extends AppController{
 			
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: noreply@puentesonline.com' . "\r\n";
+			$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
 		}
 		
 		// send invite email
@@ -530,7 +530,7 @@ class ChallengesController extends AppController{
 		
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		$headers .= 'From: noreply@puentesonline.com' . "\r\n";	
+		$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";	
 		
 		mail("{$classes['Owner']['firstname']} {$classes['Owner']['lastname']} <{$classes['Owner']['email']}>",$subject,nl2br($message),$headers);
 		
@@ -567,7 +567,7 @@ class ChallengesController extends AppController{
 		
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: noreply@puentesonline.com' . "\r\n";
+			$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
 		
 			if($status == 'C'){
 				// if user accepted, send notification
@@ -631,7 +631,7 @@ class ChallengesController extends AppController{
 
 						$headers  = 'MIME-Version: 1.0' . "\r\n";
 						$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-						$headers .= 'From: noreply@puentesonline.com' . "\r\n";
+						$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
 						
 						mail("{$u['firstname']} {$u['lastname']} <{$u['email']}>",'Bridge Expiration Notice',nl2br($message),$headers);
 					}

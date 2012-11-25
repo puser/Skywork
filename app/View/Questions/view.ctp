@@ -1,6 +1,6 @@
 <div class="box-head">
 	<span class="icon2 icon2-listcountgreen"><?php echo $q_num; ?></span>
-	<h2 ><?php echo 'Question '.$q_num; //stripslashes($question['Question']['section']); ?></h2>
+	<h2 ><?php echo ($question['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . $q_num); //stripslashes($question['Question']['section']); ?></h2>
 	<div class="clear"></div>
 </div>
 <div class="box-content">
@@ -25,7 +25,7 @@
 
 <script type="text/javascript">
 function limitText(limitField){
-	limitNum = <?php echo $question['Challenge']['max_response_length']; ?>;
+	limitNum = <?php echo (@$question['Challenge']['max_response_length'] ? $question['Challenge']['max_response_length'] : '1000000'); ?>;
 	if(limitField.val() && limitField.val().match(/ /g).length + 1 > limitNum){
 		<?php if($question['Challenge']['max_response_length'] && $question['Challenge']['allow_exceeded_length'] != 1){ ?>
 			do{
