@@ -56,7 +56,7 @@
 		
 			<h1><?php echo __('Summary') ?></h1>
 			<div id="sidemenu">
-				<?php if($challenges[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
+				<?php if($challenge[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
 					<ul>
 						<?php if($challenge[0]['Group']){
 							$this_group = array_pop($challenge[0]['Group']);
@@ -516,7 +516,7 @@ function saveAnnotation(){
 function annotaterInit(cssSelector) {
 
 	var options = {};
-	options.form = '<div class="answer-comment-box"><textarea name="comment" class="comment-textarea"></textarea><div class="vote"><ul><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().next().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;"></a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().prev().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;"></a></li></ul></div><div class="comment-submit"><img src="/images/loadingWheel.gif" style="display:none;" /><a href="#" onclick="if($(\'.jQueryTextAnnotaterDialogForm input.comment-type\').val() == \'N\'){ alert(\'You must select Like or Dislike to save a comment.\'); }else{ saveAnnotation(); }return false;" class="btn1"><span>Comment</span></a></div><a href="#" class="removeAnnotationBtn deleteComment" style="float: right;color: #000;text-decoration: underline;padding-top: 2px;">Remove this comment</a><div class="clear"></div><div class="callout-corner"></div><a href="#" class="close" onclick="$(\'.jQueryTextAnnotaterDialog\').hide();return false;"></a><input type="hidden" name="type" class="comment-type" value="N" /><input type="hidden" name="id" class="comment-id" value="" /></div>';
+	options.form = '<div class="answer-comment-box"><textarea name="comment" class="comment-textarea"></textarea><div class="vote"><ul><li class="voteneutral"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(2);return false;">General</a></li><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;">Like</a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;">Dislike</a></li></ul></div><div class="comment-submit"><img src="/images/loadingWheel.gif" style="display:none;" /><a href="#" onclick="if($(\'.jQueryTextAnnotaterDialogForm input.comment-type\').val() == \'N\'){ alert(\'You must select Like or Dislike to save a comment.\'); }else{ saveAnnotation(); }return false;" class="btn1"><span>Comment</span></a></div><a href="#" class="removeAnnotationBtn deleteComment" style="float: right;color: #000;text-decoration: underline;padding-top: 2px;">Remove this comment</a><div class="clear"></div><div class="callout-corner"></div><a href="#" class="close" onclick="$(\'.jQueryTextAnnotaterDialog\').hide();return false;"></a><input type="hidden" name="type" class="comment-type" value="N" /><input type="hidden" name="id" class="comment-id" value="" /></div>';
 	options.annotateCharacters = false; 
 	options.formDeleteAnnotationButton = '.removeAnnotationBtn';
 
@@ -559,12 +559,19 @@ function annotaterInit(cssSelector) {
 			if($('.jQueryTextAnnotaterDialogForm textarea').val() == ''){
 				$('.vote .votedown').removeClass('inactive');
 				$('.vote .voteup').removeClass('inactive');
+				$('.vote .voteneutral').removeClass('inactive');
 			}else if($('.jQueryTextAnnotaterDialogForm input.comment-type').val() == '0'){
 				$('.vote .votedown').removeClass('inactive');
 				$('.vote .voteup').addClass('inactive');
+				$('.vote .voteneutral').addClass('inactive');
+			}else if($('.jQueryTextAnnotaterDialogForm input.comment-type').val() == '1'){
+				$('.vote .votedown').addClass('inactive');
+				$('.vote .voteneutral').addClass('inactive');
+				$('.vote .voteup').removeClass('inactive');
 			}else{
 				$('.vote .votedown').addClass('inactive');
-				$('.vote .voteup').removeClass('inactive');
+				$('.vote .voteneutral').removeClass('inactive');
+				$('.vote .voteup').addClass('inactive');
 			}
 		},25);
 	});

@@ -12,7 +12,7 @@
 	<div id="sidemenu" >
 		<ul>
 			<li><a class="icon icon4-student" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Students') ?></a></li>
-			<?php if($challenges[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
+			<?php if($challenge['Challenge']['collaboration_type'] != 'NONE'){ ?>
 				<li><a class="icon icon4-question" href="/metrics/view_questions/<?php echo $challenge['Challenge']['id']; ?>/"><?php echo __('Question Activity') ?></a></li>
 				<?php if($challenge['Challenge']['instructor_ratings']){ ?>
 					<li><a class="icon icon4-graph" href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>/0/1"><?php echo __('Charting') ?></a></li>
