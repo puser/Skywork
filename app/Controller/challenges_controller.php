@@ -148,18 +148,20 @@ class ChallengesController extends AppController{
 				$user_group = false;
 				$user_buffer = array();
 				foreach($g['User'] as $u){
-					if($u['id'] == $_SESSION['User']['id']) $user_group = true;
-					
-					@$user_buffer["{$u['firstname']} {$u['lastname']}"][0] = 0;
-					@$user_buffer["{$u['firstname']} {$u['lastname']}"][1] = 0;
-					foreach($challenge['Question'] as $q){
-						//$this->Response->hasMany['Responses']['conditions'][] = 'Responses.response_type = "A"';
-						//$this->Response->hasMany['Responses']['conditions'][] = "Responses.user_id = {$u['id']}";
-						$res = $this->Response->find('first',array('conditions'=>array('Question.id'=>$q['id'],'User.id'=>$u['id']),'recursive'=>2));
+					if($u['user_type'] != 'L'){
+						if($u['id'] == $_SESSION['User']['id']) $user_group = true;
 						
-						if(@$res['Comment']){
-							foreach($res['Comment'] as $c){
-								if(@$c['User']['user_type'] != 'L') @$user_buffer["{$u['firstname']} {$u['lastname']}"][$c['type']]++;
+						@$user_buffer["{$u['firstname']} {$u['lastname']}"][0] = 0;
+						@$user_buffer["{$u['firstname']} {$u['lastname']}"][1] = 0;
+						foreach($challenge['Question'] as $q){
+							//$this->Response->hasMany['Responses']['conditions'][] = 'Responses.response_type = "A"';
+							//$this->Response->hasMany['Responses']['conditions'][] = "Responses.user_id = {$u['id']}";
+							$res = $this->Response->find('first',array('conditions'=>array('Question.id'=>$q['id'],'User.id'=>$u['id']),'recursive'=>2));
+							
+							if(@$res['Comment']){
+								foreach($res['Comment'] as $c){
+									if(@$c['User']['user_type'] != 'L') @$user_buffer["{$u['firstname']} {$u['lastname']}"][$c['type']]++;
+								}
 							}
 						}
 					}
