@@ -2,13 +2,13 @@
 <div id="startbridge-information" class="box-startbridge box-white rounded">
 	<div class="box-head">
 		<span class="icon2 icon2-pen"></span>
-		<h2><?php echo __('Bridge Information') ?></h2>
+		<h2><?php echo __('Assignment Information') ?></h2>
 		<div class="clear"></div>
 	</div>
 	<div class="box-content information-fields-1">
 		<ul class="fieldset">
 			<li>
-				<p class="label"><?php echo __('Name of Bridge') ?></p>
+				<p class="label"><?php echo __('Name of Assignment') ?></p>
 				<input type="text" class="checkdefault" value="<?php echo (@$challenge ? @$challenge['Challenge']['name'] : ''); ?>" name="challenge[Challenge][name]" id="challengeName" default="<?php echo __('Type name here') ?>" size="60" />
 			</li>
 			<li class="cols2">
@@ -124,7 +124,7 @@
 </div>
 
 <div style="width: 120px; margin: 0 auto; ">
-	<a onclick="$('#challenge_data').submit();" class="btn2"><span><?php echo __('Save &amp; Next') ?></span></a>
+	<a id="info_save" onclick="$('#challenge_data').submit();" class="btn2"><span><?php echo __('Save &amp; Next') ?></span></a>
 </div>
 
 <input type="hidden" name="next_step" value="people" />

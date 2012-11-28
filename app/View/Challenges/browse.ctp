@@ -3,7 +3,7 @@
 <?php if($_SESSION['User']['user_type'] == 'L'){ ?>
 	<div id="startbridge" class="rounded box-white">
 		<a href="/challenges/update/" class="btn1"><span><?php echo __('Begin') ?></span></a>
-		<a href="/challenges/update/"><h2><?php echo __('Start a Bridge') ?></h2></a> 
+		<a href="/challenges/update/"><h2><?php echo __('Start an Online Assignment') ?></h2></a> 
 		<div class="clear"></div>
 	</div>
 <?php } ?>
