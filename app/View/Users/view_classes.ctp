@@ -3,7 +3,9 @@
 	<div id="sidemenu">
 		<ul>
 			<li<?php if(!$connections){ ?> class="active"<?php } ?>><a class="icon icon-class" href="/users/view/classes/"><?php echo __('Classes') ?></a></li>
-			<li<?php if($connections){ ?> class="active"<?php } ?>><a class="icon icon-connection" href="/users/view/connections/"><?php echo __('Connections') ?></a></li>
+			<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
+				<li<?php if($connections){ ?> class="active"<?php } ?>><a class="icon icon-connection" href="/users/view/connections/"><?php echo __('Connections') ?></a></li>
+			<?php } ?>
 		</ul>
 	</div>
 </div>
@@ -15,7 +17,7 @@
 			<div class="box-actions">
 				<ul>
 					<?php if($_SESSION['User']['user_type'] != 'P'){
-						if(!$connections){ ?>
+						if(!$connections && $_SESSION['User']['user_type'] == 'L'){ ?>
 							<li><a class="icon4 icon4-plus modal-link" href="#<?php echo ($_SESSION['User']['user_type'] == 'C' ? 'modal-collab-access' : 'modal-addclass'); ?>"><?php echo __('Create Class') ?></a></li>
 						<?php }else{ ?>
 							<li><a class="icon4 icon4-plus modal-link" href="#modal-joinsharedclass"><?php echo __('Find an instructor') ?></a></li>
@@ -52,7 +54,7 @@
 					$ex_groups = array();
 					$idx = 1;
 					foreach($user['ClassSet'] as $k=>$g){
-						if(($connections && $g['ClassSet']['owner_id'] == $_SESSION['User']['id']) || (!$connections && $g['ClassSet']['owner_id'] != $_SESSION['User']['id'])) continue;
+						if($_SESSION['User']['user_type'] != 'P' && (($connections && $g['ClassSet']['owner_id'] == $_SESSION['User']['id']) || (!$connections && $g['ClassSet']['owner_id'] != $_SESSION['User']['id']))) continue;
 						$ex_groups[$g['ClassSet']['id']] = 1;
 						$idx++;
 						?>

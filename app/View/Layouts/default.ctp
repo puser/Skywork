@@ -62,9 +62,7 @@
 						echo __($_SESSION['User']['email']);
 					}?></a></span>
 				<span class="user-home"><a <?php if($this->request->params['controller'] == 'challenges' && $this->request->params['action'] == 'view'){ ?>href="#modalExitChoices" class="show-overlay" <?php }else{ ?>href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>" <?php } ?>><?php echo __('Home') ?></a></span>
-				<?php if(@$_SESSION['User']['user_type'] != 'P'){ ?>
-					<span class="user-home"><a <?php if($this->request->params['controller'] == 'challenges' && $this->request->params['action'] == 'view'){ ?>href="#modalExitChoices" class="show-overlay" <?php }else{ ?>href="/users/view/classes/"<?php } ?>><?php echo __('Classes') ?></a></span>
-				<?php } ?>
+				<span class="user-home"><a <?php if($this->request->params['controller'] == 'challenges' && $this->request->params['action'] == 'view'){ ?>href="#modalExitChoices" class="show-overlay" <?php }else{ ?>href="/users/view/classes/"<?php } ?>><?php echo __('Classes') ?></a></span>
 				<span class="user-account"><a <?php if($this->request->params['controller'] == 'challenges' && $this->request->params['action'] == 'view'){ ?>href="#modalExitChoices" class="show-overlay" <?php }else{ ?>href="/users/view/" <?php } ?>><?php echo __('Account') ?></a></span>
 				<span class="user-logout"><a href="#logoutModal" class="show-overlay"><?php echo __('Logout') ?></a></span>
 			</div><!-- #topmenu -->
