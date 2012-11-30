@@ -444,6 +444,8 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon2-listcountgreen {background: url("/images/icon-listcountgreen.png") no-repeat center center; width: 35px;  font-family: Lucida Grande, Helvetica, Arial, sans-serif;  font-size: 22px; text-align: center; color: #ffffff; line-height: 35px; padding-top: 3px; }
 .box-startbridge .icon2.icon2-listcountgreen {padding-top: 0px; height: 35px;}
 
+.icon2-greencheck {background: url("/images/icons/greencheck_header_26x28.png") no-repeat center center; width: 30px; }
+
 .box-startbridge .icon2-class {width: 60px;}
 
 /** 12x12 */

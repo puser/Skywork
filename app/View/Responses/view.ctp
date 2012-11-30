@@ -191,6 +191,13 @@
 						<?php }
 					} ?>
 				</ul>
+				<?php if(!$completed){ ?>
+					<ul>
+						<li>
+							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/greencheck_menu_16.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/"<?php if(@$complete_eval){ ?> class="active"<?php } ?>><?php echo __('I\'m Done!') ?></a>
+						</li>
+					</ul>
+				<?php } ?>
 			</div>
 		<?php } ?>
 	</div>
@@ -228,136 +235,175 @@
 			if(@$q['Response'][0]){
 				$responseCount++; ?>
 			<div class="question-item"<?php if(!$completed){ ?> style="overflow:hidden;"<?php } ?>>
-				<div class="box-head">
-					<span class="icon2 icon2-listcountgreen"><?php echo ($k+1); ?></span><a name="<?php echo $q['id']; ?>" href="#"> </a>
-					<h2><?php echo ($challenge[0]['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . ($k+1));//$q['section']; ?></h2>
-					<?php if($completed && $_SESSION['User']['user_type'] != 'P' && ($challenge[0]['Challenge']['instructor_ratings'] || $challenge[0]['Challenge']['student_ratings']) && $q['response_total']){ ?>
-						<div class="summary-quality">
-							<span class="<?php echo ($q['response_total'] == 1 ? 'great' : ($q['response_total'] == 2 ? 'good' : ($q['response_total'] == 3 ? 'average' : ($q['response_total'] == 4 ? 'poor' : 'poor')))); ?>">
-								<?php echo ($q['response_total'] == 1 ? __('Very High') : ($q['response_total'] == 2 ? __('Good') : ($q['response_total'] == 3 ? __('Average') : ($q['response_total'] == 4 ? __('Below Average') : __('Poor'))))); ?> <?php echo __('Quality') ?>
-							</span>
-							<?php if(!$k && !@$_REQUEST['notips']){ ?><a class="tooltip-mark tooltip-mark-question" title="<?php echo __('Average quality for this Question') ?>"></a><?php } ?>
-						</div>
-					<?php }elseif(!$completed && (($challenge[0]['Challenge']['instructor_ratings'] && $_SESSION['User']['user_type'] == 'I') || ($challenge[0]['Challenge']['student_ratings'] && $_SESSION['User']['user_type'] == 'P'))){ ?>
-						<div class="like-scale">
-							<ul id="response_scale_<?php echo $q['Response'][0]['id']; ?>">
-								<li class="scale1<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 1) echo ' selected'; ?>"><span><?php echo __('Very High') ?> <?php echo __('Quality') ?></span></li>
-								<li class="scale2<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 2) echo ' selected'; ?>"><span><?php echo __('Good') ?> <?php echo __('Quality') ?></span></li>
-								<li class="scale3<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 3) echo ' selected'; ?>"><span><?php echo __('Average') ?> <?php echo __('Quality') ?></span></li>
-								<li class="scale4<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 4) echo ' selected'; ?>"><span><?php echo __('Below Average') ?> <?php echo __('Quality') ?></span></li>
-								<li class="scale5<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 5) echo ' selected'; ?>"><span><?php echo __('Poor') ?> <?php echo __('Quality') ?></span></li>
-							</ul>
-						</div>
-					<?php } ?>
-					<div class="clear"></div>
-				</div>
-				<div class="box-content">
-					<ul class="fieldset2">
-						<li>
-							<p class="label-text ">
-								<span class="black6">
-									<?php echo stripslashes($q['question']); ?>
+				<?php if(@$complete_eval){ ?>
+					<div class="box-head">
+						<span class="icon2 icon2-greencheck"></span>
+						<h2><?php echo __('Evaluation of Completed Assignment') ?></h2>
+					</div>
+					<div class="box-content" style="font-size:20px;">
+						<?php if($challenge[0]['Challenge']['collaboration_type'] == 'NONE'){ ?>
+							You have clicked to finish evaluating your student’s work. You may: 
+							<br /><br />
+							Click Send to Students:<br />
+							1. Puentes will send an automated email notifying your students<br />
+							2. Your students will be able to see your comments and corrections
+							<br /><br />
+							Click Continue Evaluating Student Work:<br />
+							Choose this option if you feel that you would like to continue evaluating <br />
+							student work and send your comments and corrections at a later point.
+							<br /><br /><br />
+					
+							<div style="margin:0 auto;width:150px;">
+								<div style="width:150px;float:left;">
+									<a href="/responses/submit_evaluation/<?php echo $challenge[0]['Challenge']['id']; ?>/" class="btn2"><?php echo __('Send to Students') ?></a>
+								</div>
+							</div>
+							<a style="float:right;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
+						<?php }else{ ?>
+							This is where you would opt to send your comments and corrections back to <br />
+							your students. Your students, however, are still completing the collaboration<br />
+							(Due Date 2) and will finish <?php echo date_format($challenge[0]['Challenge']['responses_due'],'m/d/Y'); ?>.
+							<br /><br />
+							Once they’re done with Due Date 2, you will have access to the metrics section<br />
+							and will be able to opt to send to your comments and corrections back to your <br />
+							students.
+							<br /><br /><br />
+							
+							<a style="float:right;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
+						<?php } ?>
+					</div>
+				<?php }else{ ?>
+					<div class="box-head">
+						<span class="icon2 icon2-listcountgreen"><?php echo ($k+1); ?></span><a name="<?php echo $q['id']; ?>" href="#"> </a>
+						<h2><?php echo ($challenge[0]['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . ($k+1));//$q['section']; ?></h2>
+						<?php if($completed && $_SESSION['User']['user_type'] != 'P' && ($challenge[0]['Challenge']['instructor_ratings'] || $challenge[0]['Challenge']['student_ratings']) && $q['response_total']){ ?>
+							<div class="summary-quality">
+								<span class="<?php echo ($q['response_total'] == 1 ? 'great' : ($q['response_total'] == 2 ? 'good' : ($q['response_total'] == 3 ? 'average' : ($q['response_total'] == 4 ? 'poor' : 'poor')))); ?>">
+									<?php echo ($q['response_total'] == 1 ? __('Very High') : ($q['response_total'] == 2 ? __('Good') : ($q['response_total'] == 3 ? __('Average') : ($q['response_total'] == 4 ? __('Below Average') : __('Poor'))))); ?> <?php echo __('Quality') ?>
 								</span>
-							</p>
-							<div class="textvalue">
-								<p id="responseBody<?php echo $k; ?>">
-									<?php
-									$q['Response'][0]['response_body'] = stripslashes($q['Response'][0]['response_body']);
-									$mod_response = $q['Response'][0]['response_body'];
-									foreach(@$q['Response'][0]['Comment'] as $i=>$c){
-										if(!@$user_colors[$c['user_id']]) $user_colors[$c['user_id']] = array_pop($all_colors);
-										if(!$all_colors) $all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
+								<?php if(!$k && !@$_REQUEST['notips']){ ?><a class="tooltip-mark tooltip-mark-question" title="<?php echo __('Average quality for this Question') ?>"></a><?php } ?>
+							</div>
+						<?php }elseif(!$completed && (($challenge[0]['Challenge']['instructor_ratings'] && $_SESSION['User']['user_type'] == 'I') || ($challenge[0]['Challenge']['student_ratings'] && $_SESSION['User']['user_type'] == 'P'))){ ?>
+							<div class="like-scale">
+								<ul id="response_scale_<?php echo $q['Response'][0]['id']; ?>">
+									<li class="scale1<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 1) echo ' selected'; ?>"><span><?php echo __('Very High') ?> <?php echo __('Quality') ?></span></li>
+									<li class="scale2<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 2) echo ' selected'; ?>"><span><?php echo __('Good') ?> <?php echo __('Quality') ?></span></li>
+									<li class="scale3<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 3) echo ' selected'; ?>"><span><?php echo __('Average') ?> <?php echo __('Quality') ?></span></li>
+									<li class="scale4<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 4) echo ' selected'; ?>"><span><?php echo __('Below Average') ?> <?php echo __('Quality') ?></span></li>
+									<li class="scale5<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 5) echo ' selected'; ?>"><span><?php echo __('Poor') ?> <?php echo __('Quality') ?></span></li>
+								</ul>
+							</div>
+						<?php } ?>
+						<div class="clear"></div>
+					</div>
+					<div class="box-content">
+						<ul class="fieldset2">
+							<li>
+								<p class="label-text ">
+									<span class="black6">
+										<?php echo stripslashes($q['question']); ?>
+									</span>
+								</p>
+								<div class="textvalue">
+									<p id="responseBody<?php echo $k; ?>">
+										<?php
+										$q['Response'][0]['response_body'] = stripslashes($q['Response'][0]['response_body']);
+										$mod_response = $q['Response'][0]['response_body'];
+										foreach(@$q['Response'][0]['Comment'] as $i=>$c){
+											if(!@$user_colors[$c['user_id']]) $user_colors[$c['user_id']] = array_pop($all_colors);
+											if(!$all_colors) $all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
 										
-										if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
+											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
 										
-										$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
+											$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
 										
-										if(!$completed){
-											$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $k),
-																									'formValues'	=> array(	array(	'name'	=> 'comment',
-																									 																'value'	=> $c['comment'] ),
-																																					array(	'name'	=> 'type',
-																																									'value'	=> $c['type'] ),
-																																					array(	'name'	=> 'id',
-																																									'value'	=> $c['id'] )));
-																																								
-											for($j = 1;$j <= substr_count($q['Response'][0]['response_body'],' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($q['Response'][0]['response_body']) - $c['segment_start']);$j++){
-												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $j + $k),
+											if(!$completed){
+												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $k),
 																										'formValues'	=> array(	array(	'name'	=> 'comment',
 																										 																'value'	=> $c['comment'] ),
 																																						array(	'name'	=> 'type',
 																																										'value'	=> $c['type'] ),
 																																						array(	'name'	=> 'id',
 																																										'value'	=> $c['id'] )));
+																																								
+												for($j = 1;$j <= substr_count($q['Response'][0]['response_body'],' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($q['Response'][0]['response_body']) - $c['segment_start']);$j++){
+													$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $j + $k),
+																											'formValues'	=> array(	array(	'name'	=> 'comment',
+																											 																'value'	=> $c['comment'] ),
+																																							array(	'name'	=> 'type',
+																																											'value'	=> $c['type'] ),
+																																							array(	'name'	=> 'id',
+																																											'value'	=> $c['id'] )));
+												}
+												$commentCount++;
 											}
-											$commentCount++;
 										}
-									}
-									
-									if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
-										$wordpos = 0;
-										for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response,$_REQUEST['highlight'],$wordpos + 1);
-										$mod_response = substr_replace($mod_response,'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
-									}
-									
-									echo ($completed ? nl2br($mod_response) : nl2br($q['Response'][0]['response_body']));
-									$start_offset += substr_count($q['Response'][0]['response_body'],' ');
-									?>
-								</p>
-								<?php 
-								if($completed){
-									$mod_response = array();
-									foreach(@$q['Response'][0]['Comment'] as $c){
-										if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue; 
-										if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
-										
-										$mod_response[$c['user_id']] = $c['segment_start'] + $c['segment_length'] > strlen($mod_response[$c['user_id']]) || $c['segment_length'] < 0 ? ($mod_response[$c['user_id']] . '</span>') : (substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']));
-										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start']);
-										$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); 
 									
 										if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
 											$wordpos = 0;
-											for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response[$c['user_id']],$_REQUEST['highlight'],$wordpos + 1);
-											$mod_response[$c['user_id']] = substr_replace($mod_response[$c['user_id']],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
+											for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response,$_REQUEST['highlight'],$wordpos + 1);
+											$mod_response = substr_replace($mod_response,'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 										}
+									
+										echo ($completed ? nl2br($mod_response) : nl2br($q['Response'][0]['response_body']));
+										$start_offset += substr_count($q['Response'][0]['response_body'],' ');
+										?>
+									</p>
+									<?php 
+									if($completed){
+										$mod_response = array();
+										foreach(@$q['Response'][0]['Comment'] as $c){
+											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue; 
+											if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
 										
-									}foreach($mod_response as $kmr=>$mr){ ?>
-										<p id="responseBody<?php echo $k; ?>_<?php echo $kmr.'_'.$k; ?>" style="display:none;">
-											<?php echo nl2br($mr); ?>
-										</p>
-									<?php }
-								}
+											$mod_response[$c['user_id']] = $c['segment_start'] + $c['segment_length'] > strlen($mod_response[$c['user_id']]) || $c['segment_length'] < 0 ? ($mod_response[$c['user_id']] . '</span>') : (substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']));
+											$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start']);
+											$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); 
+									
+											if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
+												$wordpos = 0;
+												for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response[$c['user_id']],$_REQUEST['highlight'],$wordpos + 1);
+												$mod_response[$c['user_id']] = substr_replace($mod_response[$c['user_id']],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
+											}
+										
+										}foreach($mod_response as $kmr=>$mr){ ?>
+											<p id="responseBody<?php echo $k; ?>_<?php echo $kmr.'_'.$k; ?>" style="display:none;">
+												<?php echo nl2br($mr); ?>
+											</p>
+										<?php }
+									}
 								
-								if(!$completed){ ?>
-									<div style="display:none;" class="notice-for-edit">
-										<?php echo __('Highlight a section of the text to add a comment.') ?>
-									</div>
-									<div style="background-image:none;" class="notice-for-edit spacer"> </div>
-								<?php } ?>
-							</div>
-						</li>
-					</ul>
-					<?php
-					$q['Response'][0]['Comment'] = @array_reverse($q['Response'][0]['Comment'],true);
-					foreach(@$q['Response'][0]['Comment'] as $c){ ?>
-					<div class="question-comments <?php echo ($c['type'] == 2 ? 'neutral' : ($c['type'] ? 'like' : 'dislike')); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" id="commentDetail_<?php echo $c['id']; ?>" style="display:none;margin-bottom:5px;position:relative;" onmouseover="if(!$(this).hasClass('activeDetail')){ $(this).find('.studentwork-more').show(); }" onmouseout="$(this).find('.studentwork-more').hide();">
-						<p>
-							<span class="highlight-blue" style="background-color:<?php echo $user_colors[$c['user_id']]; ?> !important;"><?php echo "{$c['User']['firstname']} {$c['User']['lastname']}"; ?></span>
-							<?php
-							if(@$_REQUEST['highlight'] && @$_REQUEST['comment_id'] == $c['id']){
-								$wordpos = 0;
-								for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($c['comment'],$_REQUEST['highlight'],$wordpos + 1);
-								$c['comment'] = substr_replace($c['comment'],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
-							}
-							echo stripslashes($c['comment']); ?>
-						</p>
+									if(!$completed){ ?>
+										<div style="display:none;" class="notice-for-edit">
+											<?php echo __('Highlight a section of the text to add a comment.') ?>
+										</div>
+										<div style="background-image:none;" class="notice-for-edit spacer"> </div>
+									<?php } ?>
+								</div>
+							</li>
+						</ul>
+						<?php
+						$q['Response'][0]['Comment'] = @array_reverse($q['Response'][0]['Comment'],true);
+						foreach(@$q['Response'][0]['Comment'] as $c){ ?>
+						<div class="question-comments <?php echo ($c['type'] == 2 ? 'neutral' : ($c['type'] ? 'like' : 'dislike')); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" id="commentDetail_<?php echo $c['id']; ?>" style="display:none;margin-bottom:5px;position:relative;" onmouseover="if(!$(this).hasClass('activeDetail')){ $(this).find('.studentwork-more').show(); }" onmouseout="$(this).find('.studentwork-more').hide();">
+							<p>
+								<span class="highlight-blue" style="background-color:<?php echo $user_colors[$c['user_id']]; ?> !important;"><?php echo "{$c['User']['firstname']} {$c['User']['lastname']}"; ?></span>
+								<?php
+								if(@$_REQUEST['highlight'] && @$_REQUEST['comment_id'] == $c['id']){
+									$wordpos = 0;
+									for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($c['comment'],$_REQUEST['highlight'],$wordpos + 1);
+									$c['comment'] = substr_replace($c['comment'],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
+								}
+								echo stripslashes($c['comment']); ?>
+							</p>
 						
-						<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="setTimeout(function(){ show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>'); },15);">
-							<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-						</a>
+							<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="setTimeout(function(){ show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>'); },15);">
+								<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
+							</a>
+						</div>
+						<?php } ?>
 					</div>
-					<?php } ?>
-				</div>
+				<?php } ?>
 			</div>
 			<?php }
 		} ?>
@@ -365,18 +411,21 @@
 	
 	<div class="clear"></div>
 	
-	<?php if(!@$ajax){ ?>
-	<div style="width: 275px; margin: 0 auto; ">
-		<div style="width: 120px; float: left;" id="nextStudentBtn">
-			<a href="#" onclick="next<?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Question' : 'Student'); ?>();return false;" class="btn2">
-				<span><?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Continue' : 'Next Student'); ?></span>
-			</a>
+	<?php if(!@$ajax && !@$complete_eval){ ?>
+		<div style="width: 275px; margin: 0 auto; ">
+			<div style="width:160px;display:none;float:left;" id="finishedEvalBtn">
+				<a href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/" class="btn1"><?php echo __('I\'m Done Evaluating') ?></a>
+			</div>
+			<div style="width: 120px; float: left;" id="nextStudentBtn">
+				<a href="#" onclick="next<?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Question' : 'Student'); ?>();return false;" class="btn2">
+					<span><?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Continue' : 'Next Student'); ?></span>
+				</a>
+			</div>
+			<div style="width:120px;float:right;" id="topOfPage">
+				<a href="#" class="btn3"><span><?php echo __('Top of Page') ?></span></a>
+			</div>
+			<div class="clear"></div>
 		</div>
-		<div style="width:120px;float:right;" id="topOfPage">
-			<a href="#" class="btn3"><span><?php echo __('Top of Page') ?></span></a>
-		</div>
-		<div class="clear"></div>
-	</div>
 	<?php } ?>
 	
 	<a class="show-overlay" href="#modalSaveChoices" id="finalDialog" style="display:none;"> </a>
@@ -401,10 +450,38 @@
 			<div class="clear"></div>
 		</div>
 	</div>
+	
+	<div id="modalPreEval" style="height:400px;overflow:hidden;">
+		<div class="box-heading grey-line">
+			<span class="icon icon-star"></span>
+			<h2 class="page-subtitle label-text"><?php echo __('Due Date 2') ?></h2>
+		</div>
+
+		<br />
+		<p class="blue textAlignCenter" style="font-size:15px;width:390px;margin-left:45px;margin-right:45px;">
+			<?php
+			$warning_message = __('Your students are currently completing the collaboration (Due Date 2) which is set to expire {due_date_2}. However, you may begin evaluating the assignments immediately, you just won\'t have access to the metrics section until Due Date 2 is over.  We\'ll send you an email notifying you when that happens.');
+			$warning_message = str_replace('{due_date_2}',date_format($challenge[0]['Challenge']['responses_due'],'m/d/Y'),$warning_message);
+			echo $warning_message;
+			?>
+		</p>
+		<br /><br /><br />
+		<div class="exitSaveOptions" style="width:475px;margin-left:13px;">
+			<a style="float:left;cursor:pointer;width:180px;" href="/" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save and Go Home') ?></span></a>
+			<a style="float:right;cursor:pointer;width:240px;" onclick="jQuery.fancybox.close();firstStudent();return false;" class="btn3 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Save, but Continue to Edit Answers') ?></span></a>
+			<div class="clear"></div>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript">
-$(document).ready(function(){	
+$(document).ready(function(){
+	
+	<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
+		if(!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length){
+			$('#finishedEvalBtn').show();
+		}
+	<?php } ?>
 	
 	<?php if(@$_REQUEST['highlight'] && @$_REQUEST['comment_id']){ ?>
 		$('#commentMarker_<?php echo @$_REQUEST['comment_id']; ?>').click();

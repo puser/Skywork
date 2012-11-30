@@ -57,7 +57,7 @@ class ResponsesController extends AppController{
 				}
 			}
 			$this->redirect('/responses/view/'.$challenge_id.'/'.($redirect_user ? $redirect_user : 'error'));
-		}
+		}elseif($user_id == 'complete_eval') $this->set('complete_eval',true);
 		
 		$this->set('challenge',$challenge);
 		$this->set('user_id',$user_id);
@@ -102,6 +102,10 @@ class ResponsesController extends AppController{
 			echo '0';
 			die();
 		}
+	}
+	
+	function submit_evaluation($challenge_id){
+		
 	}
 }
 ?>
