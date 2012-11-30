@@ -28,7 +28,7 @@
 				<tr>
 					<th class="col1"><a href="/dashboard/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php if(@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
-					else{echo '';} ?>" style="position:relative;"><?php echo __('Bridge Name') ?></a></th>
+					else{echo '';} ?>" style="position:relative;"><?php echo __('Assignment Name') ?></a></th>
 					<th class="col2"><a href="/dashboard/?sort=answer_date&dir=<?php echo (@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
