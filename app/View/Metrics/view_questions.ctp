@@ -40,12 +40,19 @@
 				<table id="metrics-question-activity" class="table-type-1">
 					<thead>
 						<tr>
-							<th class="col1" width=""><a href="#" class="sort"><?php echo __('Student Name') ?></a></th>
-							<th class="col2" width="15%"><a href="#" class="sort"><?php echo __('Question') ?></th>
-							<th class="col3" width="15%"><a href="#" class="sort image-btn"><img src="/images/icons/icon-like-19x21.png" /></th>
-							<th class="col4" width="15%"><a href="#" class="sort image-btn"><img src="/images/icons/icon-like2-20x20.png" /></th>
-							<th class="col5" width="20%"><a href="#" class="sort"><?php echo __('Activity Level') ?><span class="question tooltip-mark-question" title="<?php echo __('These are questions with the most activity') ?>"></span></a></th>
-							<th class="col6" width="10%"></th>
+							<th class="col1" valign="top"><a href="#" class="sort"><?php echo __('Student Name') ?></a></th>
+							<th class="col2" valign="top" align="center" width="10%"><a href="#" class="sort"><?php echo __('Question') ?></th>
+							<th class="col3" valign="top" align="center" width="10%">
+								<a style="font-size:9px;color:#000;" href="#" class="sort image-btn"><img src="/images/icons/icon-neutral-20x20.png" /><div style="margin-top:-5px;">Neutral</div>
+							</th>
+							<th class="col4" valign="top" align="center" width="10%">
+								<a style="font-size:9px;color:#000;" href="#" class="sort image-btn"><img src="/images/icons/icon-like-19x21.png" /><div style="margin-top:-5px;">Like</div>
+							</th>
+							<th class="col5" valign="top" align="center" width="10%">
+								<a style="font-size:9px;color:#000;" href="#" class="sort image-btn"><img src="/images/icons/icon-like2-20x20.png" /><div style="margin-top:-5px;">Dislike</div>
+							</th>
+							<th class="col6" valign="top" align="center" width="20%"><a href="#" class="sort"><?php echo __('Activity Level') ?><span class="question tooltip-mark-question" title="<?php echo __('These are questions with the most activity') ?>"></span></a></th>
+							<th class="col7" width="10%"></th>
 						</tr>
 					</thead>
 					
@@ -60,6 +67,7 @@
 								<tr<?php if($idx % 2){ ?> class="alternate"<?php } ?>>
 									<td class="col1"><a href="#"><?php echo "{$r['User']['firstname']} {$r['User']['lastname']}"; ?></a></td>
 									<td class="col2"><?php echo ($k + 1);?></td>
+									<td class="col3"><?php echo $r['neutral_comments']; ?></td>
 									<td class="col3"><?php echo $r['positive_comments']; ?></td>
 									<td class="col4"><?php echo $r['negative_comments']; ?></td>
 									<td class="col5">

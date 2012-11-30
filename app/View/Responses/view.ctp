@@ -340,7 +340,7 @@
 					<?php
 					$q['Response'][0]['Comment'] = @array_reverse($q['Response'][0]['Comment'],true);
 					foreach(@$q['Response'][0]['Comment'] as $c){ ?>
-					<div class="question-comments <?php echo ($c['type'] ? 'like' : 'dislike'); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" id="commentDetail_<?php echo $c['id']; ?>" style="display:none;margin-bottom:5px;position:relative;" onmouseover="if(!$(this).hasClass('activeDetail')){ $(this).find('.studentwork-more').show(); }" onmouseout="$(this).find('.studentwork-more').hide();">
+					<div class="question-comments <?php echo ($c['type'] == 2 ? 'neutral' : ($c['type'] ? 'like' : 'dislike')); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" id="commentDetail_<?php echo $c['id']; ?>" style="display:none;margin-bottom:5px;position:relative;" onmouseover="if(!$(this).hasClass('activeDetail')){ $(this).find('.studentwork-more').show(); }" onmouseout="$(this).find('.studentwork-more').hide();">
 						<p>
 							<span class="highlight-blue" style="background-color:<?php echo $user_colors[$c['user_id']]; ?> !important;"><?php echo "{$c['User']['firstname']} {$c['User']['lastname']}"; ?></span>
 							<?php

@@ -146,7 +146,8 @@ class MetricsController extends AppController{
 			foreach($q['Response'] as $i=>$r){
 				$challenge['Question'][$k]['Response'][$i]['positive_comments'] = 0;
 				$challenge['Question'][$k]['Response'][$i]['negative_comments'] = 0;
-				foreach($r['Comment'] as $c) $challenge['Question'][$k]['Response'][$i][($c['type'] ? 'positive' : 'negative') . '_comments']++;
+				$challenge['Question'][$k]['Response'][$i]['neutral_comments'] = 0;
+				foreach($r['Comment'] as $c) $challenge['Question'][$k]['Response'][$i][($c['type'] == 2 ? 'neutral' : ($c['type'] ? 'positive' : 'negative')) . '_comments']++;
 				
 				$max_comments = count($r['Comment']) > $max_comments ? count($r['Comment']) : $max_comments;
 				$min_comments = count($r['Comment']) < $min_comments ? count($r['Comment']) : $min_comments;

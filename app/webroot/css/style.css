@@ -635,6 +635,7 @@ a.customize-link {display: block; padding-left: 25px; background: url('/images/i
 
 .question-comments {display: block; border: 2px dashed #cccccc; padding: 8px 8px 8px 40px; color: #000000; font-size: 12px; background: url('/images/icons/icon-like-19x21.png') no-repeat 10px 10px; }
 .question-comments.dislike {display: block; border: 2px dashed #cccccc; padding: 8px 8px 8px 40px; color: #000000; font-size: 12px; background: url('/images/icons/icon-like2-20x20.png') no-repeat 10px 10px; }
+.question-comments.neutral {display: block; border: 2px dashed #cccccc; padding: 8px 8px 8px 40px; color: #000000; font-size: 12px; background: url('/images/icons/icon-neutral-20x20.png') no-repeat 10px 10px; }
 
 /**
  * Page: View Completed - Student 
