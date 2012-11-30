@@ -429,6 +429,7 @@
 	<?php } ?>
 	
 	<a class="show-overlay" href="#modalSaveChoices" id="finalDialog" style="display:none;"> </a>
+	<a class="show-overlay" href="#modalPreEval" id="showPreEval" style="display:none;"> </a>
 
 </div>
 
@@ -467,8 +468,8 @@
 		</p>
 		<br /><br /><br />
 		<div class="exitSaveOptions" style="width:475px;margin-left:13px;">
-			<a style="float:left;cursor:pointer;width:180px;" href="/" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save and Go Home') ?></span></a>
-			<a style="float:right;cursor:pointer;width:240px;" onclick="jQuery.fancybox.close();firstStudent();return false;" class="btn3 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Save, but Continue to Edit Answers') ?></span></a>
+			<a style="float:left;cursor:pointer;width:180px;" onclick="jQuery.fancybox.close();" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Begin Evaluating') ?></span></a>
+			<a style="float:right;cursor:pointer;width:240px;" href="/" class="btn3 btn-savecontinue aligncenter"><span class="inner"><?php echo __('I\'ll come back later') ?></span></a>
 			<div class="clear"></div>
 		</div>
 	</div>
@@ -481,6 +482,8 @@ $(document).ready(function(){
 		if(!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length){
 			$('#finishedEvalBtn').show();
 		}
+	<?php }if(@$complete_eval && $challenge[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
+		$('#showPreEval').click();
 	<?php } ?>
 	
 	<?php if(@$_REQUEST['highlight'] && @$_REQUEST['comment_id']){ ?>
