@@ -417,6 +417,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon-envelope {background-image: url('/images/icons/icon-envelope-25x25-bw.png'); }
 #sidemenu li a.icon-calendar {background-image: url('/images/icons/icon-calendar-23x21-bw.png'); background-position: 21px center; }
 .icon-class {background-image: url('/images/icons/icon-class-35x20-bw.png');}
+.icon-connection {background-image: url('/images/icons/icon-connection-27x24-bw.png');}
 .icon-token {background-image: url('/images/icons/icon-token-32x33.png'); }
 .icon-plus {background-image: url('/images/icons/icon-plus-29x29.png'); }
 .icon-customize {background-image: url('/images/icons/icon-customize-26x27.png'); }
@@ -428,6 +429,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .active .icon-envelope {background-image: url('/images/icons/icon-envelope-25x25.png'); }
 #sidemenu li.active a.icon-calendar {background-image: url('/images/icons/icon-calendar-23x21.png');  background-position: 17px center; }
 .active .icon-class, .icon-class-color {background-image: url('/images/icons/icon-class-35x20.png'); }
+.active .icon-connection, .icon-connection-color {background-image: url('/images/icons/icon-connection-27x24.png'); }
 
 /** 45x45 */
 .icon2-docinspect {background-image: url('/images/icons/icon-doc-inspect-39x43.png'); }
@@ -437,6 +439,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon2-envelope {background-image: url('/images/icons/icon-envelope-41x39.png'); }
 .icon2-calendar {background-image: url('/images/icons/icon-calendar-42x38.png'); }
 .icon2-class {background-image: url('/images/icons/icon-class-60x31.png'); }
+.icon2-connection {background-image: url('/images/icons/icon-connection-43x36.png'); }
 .icon2-question {background-image: url('/images/icons/icon-question-39x34.png'); }
 .icon2-graph {background-image: url('/images/icons/icon-graph-32x31.png'); }
 .icon2-flag {background-image: url('/images/icons/icon-flag-32x28.png'); }

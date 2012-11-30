@@ -1,9 +1,9 @@
 <div id="sidebarleft">
-	<h1><?php echo __('My Account') ?></h1>
+	<h1><?php echo __('Classes') ?></h1>
 	<div id="sidemenu">
 		<ul>
-			<li><a class="icon icon-calendar" href="/users/view/"><?php echo __('My Account') ?></a></li>
-			<li class="active"><a class="icon icon-class" href="#"><?php echo __('Classes') ?></a></li>
+			<li<?php if(!$connections){ ?> class="active"<?php } ?>><a class="icon icon-class" href="/users/view/classes/"><?php echo __('Classes') ?></a></li>
+			<li<?php if($connections){ ?> class="active"<?php } ?>><a class="icon icon-connection" href="/users/view/connections/"><?php echo __('Connections') ?></a></li>
 		</ul>
 	</div>
 </div>
@@ -14,17 +14,20 @@
 			
 			<div class="box-actions">
 				<ul>
-					<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
-						<li><a class="icon4 icon4-plus modal-link" href="#<?php echo ($_SESSION['User']['user_type'] == 'C' ? 'modal-collab-access' : 'modal-addclass'); ?>"><?php echo __('Create Class') ?></a></li>
-						<li><a class="icon4 icon4-plus modal-link" href="#modal-joinsharedclass"><?php echo __('Join shared class') ?></a></li>
-					<?php }else{ ?>
+					<?php if($_SESSION['User']['user_type'] != 'P'){
+						if(!$connections){ ?>
+							<li><a class="icon4 icon4-plus modal-link" href="#<?php echo ($_SESSION['User']['user_type'] == 'C' ? 'modal-collab-access' : 'modal-addclass'); ?>"><?php echo __('Create Class') ?></a></li>
+						<?php }else{ ?>
+							<li><a class="icon4 icon4-plus modal-link" href="#modal-joinsharedclass"><?php echo __('Find an instructor') ?></a></li>
+						<?php }
+					}else{ ?>
 						<li><a class="icon4 icon4-plus modal-link" href="#modal-joinstudentclass"><?php echo __('Join class') ?></a></li>
 					<?php } ?>
 				</ul>
 			</div>
 			
-			<span class="icon2 icon2-class" style="width:56px;"></span>
-			<h2><?php echo __('Edit Classes') ?></h2>
+			<span class="icon2 icon2-<?php echo ($connections ? 'connection' : 'class'); ?>" style="width:56px;"></span>
+			<h2><?php echo __($connections ? 'Connected Classes' : 'Your Classes') ?></h2>
 			<div class="clear"></div>
 		</div>
 		<div class="box-content">
@@ -47,10 +50,13 @@
 				<tbody>
 					<?php 
 					$ex_groups = array();
+					$idx = 1;
 					foreach($user['ClassSet'] as $k=>$g){
+						if(($connections && $g['ClassSet']['owner_id'] == $_SESSION['User']['id']) || (!$connections && $g['ClassSet']['owner_id'] != $_SESSION['User']['id'])) continue;
 						$ex_groups[$g['ClassSet']['id']] = 1;
+						$idx++;
 						?>
-					<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.deleteChallenge').show();" onmouseout="$(this).find('.deleteChallenge').hide();">
+					<tr<?php if(!($idx%2)){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.deleteChallenge').show();" onmouseout="$(this).find('.deleteChallenge').hide();">
 						<td>
 							<?php if(array_search($g['ClassSet']['id'],$requested_groups) !== false){ ?>
 							<a href="/classes/view_request/<?php echo $g['ClassSet']['id']; ?>" class="show-overlay" id="viewGroupLink<?php echo $g['ClassSet']['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['ClassSet']['id']; ?>);">
@@ -84,7 +90,7 @@
 						foreach($invites as $k=>$g){
 							$ex_groups[$g['ClassSet']['id']] = 1;
 							?>
-							<tr<?php if(!(($k+count($user['ClassSet']))%2)){ ?> class="alternate"<?php } ?>>
+							<tr<?php if(!(($k+$idx)%2)){ ?> class="alternate"<?php } ?>>
 								<td>
 									<a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_invite" class="show-overlay">
 										<?php echo '<span class="red">*</span> ' . $g['ClassSet']['group_name']; ?>

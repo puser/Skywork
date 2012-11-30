@@ -3,7 +3,7 @@
 	<div id="sidemenu">
 		<ul>
 			<li class="active"><a class="icon icon-calendar" href="#"><?php echo __('My Account') ?></a></li>
-			<li><a class="icon icon-class" href="/users/view/classes/"><?php echo __('Classes') ?></a></li>
+			<!-- <li><a class="icon icon-class" href="/users/view/classes/"><?php echo __('Classes') ?></a></li> -->
 		</ul>
 	</div>
 </div>

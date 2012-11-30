@@ -21,7 +21,7 @@ class UsersController extends AppController{
 		$class_ids = '';
 		foreach($user['ClassSet'] as $c) $class_ids .= ($class_ids ? ',' : '') . $c['id'];
 
-		if($show=='classes'){
+		if($show == 'classes' || $show == 'connections'){
 			$this->ClassSet->Behaviors->attach('Containable');
 			$user['ClassSet'] = $class_ids ? $this->ClassSet->find('all',array('conditions'=>"ClassSet.id IN($class_ids)","order"=>$sort,'contain'=>array('User'=>array('conditions'=>'User.user_type = "P"'),'Owner'))) : array();
 			$this->set('user',$user);
@@ -47,6 +47,7 @@ class UsersController extends AppController{
 			$this->set('saved',$saved);
 			$this->set('requested_groups',$requested_groups);
 			$this->set('pending_groups',$pending_groups);
+			$this->set('connections',($show == 'connections' ? 1 : 0));
 			$this->set('groups',$this->ClassSet->find('all',array('conditions'=>$conditions)));
 			$this->render('view_classes');
 		}else{

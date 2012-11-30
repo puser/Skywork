@@ -49,7 +49,13 @@
 						<?php $k++; } ?>
 					</tbody>
 				</table><br />
-				<?php } ?>
+				
+					<?php if(count($groups) - count($ex_groups) > 0){ ?>
+					<div style="font-size:12px;padding-bottom:5px;">
+						<span style="color:#597aa8;">Create a Bridge?</span> (Add multiple classes into the same assignment)
+					</div>
+				
+				<?php }} ?>
 				
 				<input type="hidden" name="lastClassAdded" id="lastClassAdded" value="" />
 				<select style="width:150px;" name="challenge[ClassSet][]" onchange="$('#lastClassAdded').val($(this).val());save_challenge('update_people');">
