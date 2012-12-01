@@ -414,7 +414,9 @@
 	<?php if(!@$ajax && !@$complete_eval){ ?>
 		<div style="width: 275px; margin: 0 auto; ">
 			<div style="width:160px;display:none;float:left;" id="finishedEvalBtn">
-				<a href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/" class="btn1"><?php echo __('I\'m Done Evaluating') ?></a>
+				<a href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/" class="btn1">
+					<span><?php echo __('I\'m Done Evaluating') ?></span>
+				</a>
 			</div>
 			<div style="width: 120px; float: left;" id="nextStudentBtn">
 				<a href="#" onclick="next<?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Question' : 'Student'); ?>();return false;" class="btn2">
