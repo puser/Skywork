@@ -262,7 +262,7 @@
 						<?php }else{ ?>
 							This is where you would opt to send your comments and corrections back to <br />
 							your students. Your students, however, are still completing the collaboration<br />
-							(Due Date 2) and will finish <?php echo date_format($challenge[0]['Challenge']['responses_due'],'m/d/Y'); ?>.
+							(Due Date 2) and will finish <?php echo date_format(date_create($challenge[0]['Challenge']['responses_due']),'m/d/Y'); ?>.
 							<br /><br />
 							Once they’re done with Due Date 2, you will have access to the metrics section<br />
 							and will be able to opt to send to your comments and corrections back to your <br />
@@ -464,7 +464,7 @@
 		<p class="blue textAlignCenter" style="font-size:15px;width:390px;margin-left:45px;margin-right:45px;">
 			<?php
 			$warning_message = __('Your students are currently completing the collaboration (Due Date 2) which is set to expire {due_date_2}. However, you may begin evaluating the assignments immediately, you just won\'t have access to the metrics section until Due Date 2 is over.  We\'ll send you an email notifying you when that happens.');
-			$warning_message = str_replace('{due_date_2}',date_format($challenge[0]['Challenge']['responses_due'],'m/d/Y'),$warning_message);
+			$warning_message = str_replace('{due_date_2}',date_format(date_create($challenge[0]['Challenge']['responses_due']),'m/d/Y'),$warning_message);
 			echo $warning_message;
 			?>
 		</p>
@@ -484,7 +484,7 @@ $(document).ready(function(){
 		if(!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length){
 			$('#finishedEvalBtn').show();
 		}
-	<?php }if(@$complete_eval && $challenge[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
+	<?php }if(!$completed && $challenge[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
 		$('#showPreEval').click();
 	<?php } ?>
 	

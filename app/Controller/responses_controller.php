@@ -14,7 +14,7 @@ class ResponsesController extends AppController{
 		$contains = array(	'Collaborator',
 												'ClassSet'	=> array('User'),
 												'Group'			=> array('User'),
-												'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . ($user_id ? $user_id : $_SESSION['User']['id']),
+												'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . ($user_id && $user_id != 'complete_eval' ? $user_id : $_SESSION['User']['id']),
 																																	'Responses'		=> array(	'conditions'	=> ($completed ? '' : "Responses.user_id = " . $_SESSION['User']['id'])),
 																																	'Comment' 	 	=> array(	'conditions'	=> ($completed ? '' : "Comment.user_id = ". $_SESSION['User']['id']), 
 																																													'order' => 'Comment.segment_start DESC',
