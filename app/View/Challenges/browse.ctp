@@ -54,17 +54,19 @@
 				$now = date_create();
 				foreach($challenges as $k=>$challenge){
 					$a_date = date_create($challenge['Challenge']['answers_due']);
-					$r_date = date_create($challenge['Challenge']['responses_due']);
+					$r_date = $challenge['Challenge']['responses_due'] ? date_create($challenge['Challenge']['responses_due']) : NULL;
 					
 					if($_SESSION['User']['user_type'] == 'L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){
 						$challenge_click = "$('#challenge_accept_link').attr('href','/challenges/instructor_confirm/".$challenge['Challenge']['id']."');$('#challenge_accept_link').click();return false;";
 					}elseif(($_SESSION['User']['user_type'] == 'L' || @$challenge['collaborator']) && $a_date > $now && $challenge['Challenge']['status'] != 'D'){
 						$challenge_click = "$('#date1_exp_warning').html('" . date_format($a_date,'m/d/Y') . "');$('#date2_exp_warning').html('" . date_format($r_date,'m/d/Y') . "');";
+						if(!$r_date) $challenge_click .= "$('#collab_exp_warning').hide();";
+						else $challenge_click .= "$('#collab_exp_warning').show();";
 						$challenge_click .= "$('#duedate_warning_link').click();return false;";
-					}elseif($_SESSION['User']['user_type'] == 'P' && $r_date > $now && $a_date < $now && $challenge['Challenge']['collaboration_type'] == 'NONE'){
+					}elseif($_SESSION['User']['user_type'] == 'P' && $a_date < $now && $challenge['Challenge']['collaboration_type'] == 'NONE' && !$challenge['Challenge']['eval_complete']){
 						$challenge_click .= "$('#skipcollab_warning_link').click();return false;";
 					}elseif(@$challenge['Users']){
-						if(($r_date > $now && $_SESSION['User']['user_type'] == 'L') || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now)){
+						if(($r_date > $now && $_SESSION['User']['user_type'] == 'L') || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now) || ($challenge['Challenge']['collaboration_type'] == 'NONE' && !$challenge['Challenge']['eval_complete'])){
 							$challenge_click = "window.location = '/responses/view/{$challenge['Challenge']['id']}" . ($_SESSION['User']['user_type'] == 'P' ? "/{$_SESSION['User']['id']}" : '') . "';";
 						}else{
 							$challenge_click = "show_user_list($(this).parent(),{$challenge['Challenge']['id']}," . ($_SESSION['User']['user_type'] == 'L' ? '1' : '0') . "," . ($r_date < $now ? '1' : '0') . ");";
@@ -81,7 +83,7 @@
 						</a>
 					</td>
 					<td><?php echo date_format($a_date,'m/d/Y g:ia'); ?></td>
-					<td><?php echo date_format($r_date,'m/d/Y g:ia'); ?></td>
+					<td><?php echo ($r_date ? date_format($r_date,'m/d/Y g:ia') : ''); ?></td>
 					<td><?php echo date_format(date_create($challenge['Challenge']['date_modified']),'m/d/Y'); ?></td>
 					<td><?php echo @$challenge['User']['firstname'].' '.@$challenge['User']['lastname']; ?></td>
 					<td>
@@ -175,7 +177,8 @@
 		<div class="modal-box-content">
 			<div style="text-align:center;margin:20px;line-height:25px;">
 				<?php
-				$warning_msg = __('Your students are currently completing the assignment. Due Date 1 expires {date1}. You will then have until {date2} to complete Due Date 2.');
+				$warning_msg = __('Your students are currently completing the assignment.');
+				$arning_msg .= ' <div style="display:inline;" id="collab_exp_warning">' . __('Due Date 1 expires {date1}. You will then have until {date2} to complete Due Date 2.') . "</span>";
 				$warning_msg = str_replace('{date1}','<span id="date1_exp_warning"> </span>',$warning_msg);
 				$warning_msg = str_replace('{date2}','<span id="date2_exp_warning"> </span>',$warning_msg);
 				echo $warning_msg;

@@ -218,7 +218,7 @@ if($('#challenge_type').val() == 'VID'){
 }
 
 if($('#collaboration_type').val() == 'NONE'){
-	//$('#duedate2_input').remove();
+	$('#duedate2_input').remove();
 	$('.anonymous_input').remove();
 }
 

@@ -218,61 +218,83 @@
 	</div>
 	<div class="clear"></div>
 	
-	<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded" style="min-height:30px;">
-		<?php 
-		$collab_ids = array(); 
-		if(@$_REQUEST['collaborator_comments']){
-			foreach($challenge[0]['Collaborator'] as $c) $collab_ids[] = $c['id'];
-		}
-		
-		$user_colors = array();
-		$all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
-		
-		$js_comments = array();
-		$responseCount = $start_offset = $commentCount = 0;
-		foreach($challenge[0]['Question'] as $k=>$q){
-			if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id && !$completed) continue;
-			if(@$q['Response'][0]){
-				$responseCount++; ?>
-			<div class="question-item"<?php if(!$completed){ ?> style="overflow:hidden;"<?php } ?>>
-				<?php if(@$complete_eval){ ?>
-					<div class="box-head">
-						<span class="icon2 icon2-greencheck"></span>
-						<h2><?php echo __('Evaluation of Completed Assignment') ?></h2>
-					</div>
-					<div class="box-content" style="font-size:20px;">
-						<?php if($challenge[0]['Challenge']['collaboration_type'] == 'NONE'){ ?>
-							You have clicked to finish evaluating your student’s work. You may: 
-							<br /><br />
-							Click Send to Students:<br />
-							1. Puentes will send an automated email notifying your students<br />
-							2. Your students will be able to see your comments and corrections
-							<br /><br />
-							Click Continue Evaluating Student Work:<br />
-							Choose this option if you feel that you would like to continue evaluating <br />
-							student work and send your comments and corrections at a later point.
-							<br /><br /><br />
+	<?php if(@$complete_eval){ ?>
+		<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded" style="min-height:30px;">
+			<div class="box-head">
+				<span class="icon2 icon2-greencheck"></span>
+				<h2><?php echo __('Evaluation of Completed Assignment') ?></h2>
+			</div>
+			<div class="clear"></div>
+			<div class="box-content" style="font-size:20px;">
+				<?php if($challenge[0]['Challenge']['eval_complete']){ ?>
+					You have already sent your comments and corrections to your students.<br />
+					You may, however, make as many changes and resend to your students.
+					<br /><br />
+					Click Send to Students:<br />
+					1. Puentes will send an automated email notifying your students<br />
+					2. Your students will be able to see your comments and corrections
+					<br /><br />
+					Click Continue Evaluating Student Work:<br />
+					Choose this option if you feel that you would like to continue evaluating<br />
+					student work and send your comments and corrections at a later point.<br /><br /><br />
 					
-							<div style="margin:0 auto;width:150px;">
-								<div style="width:150px;float:left;">
-									<a href="/responses/submit_evaluation/<?php echo $challenge[0]['Challenge']['id']; ?>/" class="btn2"><?php echo __('Send to Students') ?></a>
-								</div>
-							</div>
-							<a style="float:right;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
-						<?php }else{ ?>
-							This is where you would opt to send your comments and corrections back to <br />
-							your students. Your students, however, are still completing the collaboration<br />
-							(Due Date 2) and will finish <?php echo date_format(date_create($challenge[0]['Challenge']['responses_due']),'m/d/Y'); ?>.
-							<br /><br />
-							Once they’re done with Due Date 2, you will have access to the metrics section<br />
-							and will be able to opt to send to your comments and corrections back to your <br />
-							students.
-							<br /><br /><br />
-							
-							<a style="float:right;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
-						<?php } ?>
+					<div style="margin:0 auto;width:150px;">
+						<div style="width:150px;float:left;">
+							<a href="/responses/submit_evaluation/<?php echo $challenge[0]['Challenge']['id']; ?>/" class="btn2"><span><?php echo __('Re-send to Students') ?></span></a>
+						</div>
 					</div>
+					<a style="float:right;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
+				<?php }elseif($challenge[0]['Challenge']['collaboration_type'] == 'NONE' || $completed){ ?>
+					You have clicked to finish evaluating your student’s work. You may: 
+					<br /><br />
+					Click Send to Students:<br />
+					1. Puentes will send an automated email notifying your students<br />
+					2. Your students will be able to see your comments and corrections
+					<br /><br />
+					Click Continue Evaluating Student Work:<br />
+					Choose this option if you feel that you would like to continue evaluating <br />
+					student work and send your comments and corrections at a later point.
+					<br /><br /><br />
+		
+					<div style="margin:0 auto;width:150px;">
+						<div style="width:150px;float:left;">
+							<a href="/responses/submit_evaluation/<?php echo $challenge[0]['Challenge']['id']; ?>/" class="btn2"><span><?php echo __('Send to Students') ?></span></a>
+						</div>
+					</div>
+					<a style="float:right;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
 				<?php }else{ ?>
+					This is where you would opt to send your comments and corrections back to <br />
+					your students. Your students, however, are still completing the collaboration<br />
+					(Due Date 2) and will finish <?php echo date_format(date_create($challenge[0]['Challenge']['responses_due']),'m/d/Y'); ?>.
+					<br /><br />
+					Once they’re done with Due Date 2, you will have access to the metrics section<br />
+					and will be able to opt to send to your comments and corrections back to your <br />
+					students.
+					<br /><br /><br />
+				
+					<a style="float:right;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
+				<?php } ?>
+			</div>
+		</div>
+	<?php }else{ ?>
+	
+		<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded" style="min-height:30px;">
+			<?php 
+			$collab_ids = array(); 
+			if(@$_REQUEST['collaborator_comments']){
+				foreach($challenge[0]['Collaborator'] as $c) $collab_ids[] = $c['id'];
+			}
+		
+			$user_colors = array();
+			$all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
+		
+			$js_comments = array();
+			$responseCount = $start_offset = $commentCount = 0;
+			foreach($challenge[0]['Question'] as $k=>$q){
+				if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id && !$completed) continue;
+				if(@$q['Response'][0]){
+					$responseCount++; ?>
+				<div class="question-item"<?php if(!$completed){ ?> style="overflow:hidden;"<?php } ?>>
 					<div class="box-head">
 						<span class="icon2 icon2-listcountgreen"><?php echo ($k+1); ?></span><a name="<?php echo $q['id']; ?>" href="#"> </a>
 						<h2><?php echo ($challenge[0]['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . ($k+1));//$q['section']; ?></h2>
@@ -312,11 +334,11 @@
 										foreach(@$q['Response'][0]['Comment'] as $i=>$c){
 											if(!@$user_colors[$c['user_id']]) $user_colors[$c['user_id']] = array_pop($all_colors);
 											if(!$all_colors) $all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
-										
+									
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
-										
+									
 											$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
-										
+									
 											if(!$completed){
 												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $k),
 																										'formValues'	=> array(	array(	'name'	=> 'comment',
@@ -325,7 +347,7 @@
 																																										'value'	=> $c['type'] ),
 																																						array(	'name'	=> 'id',
 																																										'value'	=> $c['id'] )));
-																																								
+																																							
 												for($j = 1;$j <= substr_count($q['Response'][0]['response_body'],' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($q['Response'][0]['response_body']) - $c['segment_start']);$j++){
 													$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $j + $k),
 																											'formValues'	=> array(	array(	'name'	=> 'comment',
@@ -338,13 +360,13 @@
 												$commentCount++;
 											}
 										}
-									
+								
 										if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
 											$wordpos = 0;
 											for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response,$_REQUEST['highlight'],$wordpos + 1);
 											$mod_response = substr_replace($mod_response,'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 										}
-									
+								
 										echo ($completed ? nl2br($mod_response) : nl2br($q['Response'][0]['response_body']));
 										$start_offset += substr_count($q['Response'][0]['response_body'],' ');
 										?>
@@ -355,24 +377,24 @@
 										foreach(@$q['Response'][0]['Comment'] as $c){
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue; 
 											if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
-										
+									
 											$mod_response[$c['user_id']] = $c['segment_start'] + $c['segment_length'] > strlen($mod_response[$c['user_id']]) || $c['segment_length'] < 0 ? ($mod_response[$c['user_id']] . '</span>') : (substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']));
 											$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start']);
 											$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); 
-									
+								
 											if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
 												$wordpos = 0;
 												for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response[$c['user_id']],$_REQUEST['highlight'],$wordpos + 1);
 												$mod_response[$c['user_id']] = substr_replace($mod_response[$c['user_id']],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 											}
-										
+									
 										}foreach($mod_response as $kmr=>$mr){ ?>
 											<p id="responseBody<?php echo $k; ?>_<?php echo $kmr.'_'.$k; ?>" style="display:none;">
 												<?php echo nl2br($mr); ?>
 											</p>
 										<?php }
 									}
-								
+							
 									if(!$completed){ ?>
 										<div style="display:none;" class="notice-for-edit">
 											<?php echo __('Highlight a section of the text to add a comment.') ?>
@@ -396,18 +418,18 @@
 								}
 								echo stripslashes($c['comment']); ?>
 							</p>
-						
+					
 							<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="setTimeout(function(){ show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>'); },15);">
 								<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
 							</a>
 						</div>
 						<?php } ?>
 					</div>
-				<?php } ?>
-			</div>
-			<?php }
-		} ?>
-	</div>
+				</div>
+				<?php }
+			} ?>
+		</div>
+	<?php } ?>
 	
 	<div class="clear"></div>
 	
@@ -497,171 +519,175 @@ $(document).ready(function(){
 	<?php }if($user_id==='0'){ ?>
 		window.location = $("#sidemenu2 li:first-child li:first-child a").attr('href');
 	<?php } ?>
-	
-	if($(window).height() >= $(document).height()) $('#topOfPage').hide().parent().width(120);
-	if(!$('.question-item').length) $('#puentes-answer-questions').html('<?php echo __('This user has not submitted responses') ?>');
-	
-	<?php if(!$completed){ ?>
-		annotaterInit(".textvalue p");
-		$('.question-item').each(function(){
-			$(this).height($(this).height());
-		});
-		$('#puentes-answer-questions').height($('#puentes-answer-questions').height());
-	<?php }else{ ?>
-		if((!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length) || $('#instructor_comment_nav').hasClass('active') || $('#collab_comment_nav').hasClass('active')) $('#nextStudentBtn').hide();
-	<?php } ?>
-	
+		
 	$('#assignmentDialog').load('/attachments/view/case/<?php echo $challenge[0]['Challenge']['id']; ?>/1',function(){
 		$("#assignmentDialog").dialog({ autoOpen: false,minWidth: 740,minHeight: 500 });
 	});
 	
-	$('.like-scale li').click(function(){
-		$(this).siblings().removeClass('selected');
-		if(!$(this).parent().find('li selected').length){
-			editMessage = $(this).parents('.question-item').find('.notice-for-edit');
-			editMessage.fadeIn();
+	<?php if(!@$complete_eval){ ?>
+		if($(window).height() >= $(document).height()) $('#topOfPage').hide().parent().width(120);
+		if(!$('.question-item').length) $('#puentes-answer-questions').html('<?php echo __('This user has not submitted responses') ?>');
+	
+		<?php if(!$completed){ ?>
+			annotaterInit(".textvalue p");
+			$('.question-item').each(function(){
+				$(this).height($(this).height());
+			});
+			$('#puentes-answer-questions').height($('#puentes-answer-questions').height());
+		<?php }else{ ?>
+			if((!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length) || $('#instructor_comment_nav').hasClass('active') || $('#collab_comment_nav').hasClass('active')) $('#nextStudentBtn').hide();
+		<?php } ?>
+	
+		$('.like-scale li').click(function(){
+			$(this).siblings().removeClass('selected');
+			if(!$(this).parent().find('li selected').length){
+				editMessage = $(this).parents('.question-item').find('.notice-for-edit');
+				editMessage.fadeIn();
 			
-			editSpacer = $(this).parents('.question-item').find('.notice-for-edit.spacer');
-			editSpacer.hide();
+				editSpacer = $(this).parents('.question-item').find('.notice-for-edit.spacer');
+				editSpacer.hide();
 			
-			setTimeout(function(){
-				editMessage.fadeOut('slow',function(){
-					editSpacer.show();
-				});
-			},2200);
-		}else $(this).parent().find('li').removeClass('selected');
-		$(this).addClass('selected');
+				setTimeout(function(){
+					editMessage.fadeOut('slow',function(){
+						editSpacer.show();
+					});
+				},2200);
+			}else $(this).parent().find('li').removeClass('selected');
+			$(this).addClass('selected');
 		
-		r_parent = $(this).parent();
-		response_data = { response_id: r_parent.attr('id').replace('response_scale_',''),response_body: parseInt($(this).attr('class').replace('scale','')) };
-		if(r_parent.data('rID')) response_data.id = r_parent.data('rID');
+			r_parent = $(this).parent();
+			response_data = { response_id: r_parent.attr('id').replace('response_scale_',''),response_body: parseInt($(this).attr('class').replace('scale','')) };
+			if(r_parent.data('rID')) response_data.id = r_parent.data('rID');
 		
-		$.ajax({url:'/responses/update/',data:response_data,success:function(r){
-			r_parent.data('rID',r);
-		}});
-	});
+			$.ajax({url:'/responses/update/',data:response_data,success:function(r){
+				r_parent.data('rID',r);
+			}});
+		});
+	<?php } ?>
 });
 
-var currentAnnotation = null;
-var responses = new Array();
-<?php if($responseCount){
-	foreach($challenge[0]['Question'] as $k=>$q){
-		if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id) continue; ?>
-		responses.push({text:'<?php echo str_replace("\n",'~~',$q['Response'][0]['response_body']); ?>'.replace('~~',"\n"),id:<?php echo $q['Response'][0]['id']; ?>});
-	<?php }
-} ?>
+<?php if(!@$complete_eval && !@$completed){ ?>
+	var currentAnnotation = null;
+	var responses = new Array();
+	<?php if($responseCount){
+		foreach($challenge[0]['Question'] as $k=>$q){
+			if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id) continue; ?>
+			responses.push({text:'<?php echo str_replace("\n",'~~',$q['Response'][0]['response_body']); ?>'.replace('~~',"\n"),id:<?php echo $q['Response'][0]['id']; ?>});
+		<?php }
+	} ?>
 
-function saveAnnotation(){
-	start = currentAnnotation.annotation[0].elementId.replace('textAnnotate_','');
-	end = parseInt(currentAnnotation.annotation[currentAnnotation.annotation.length - 1].elementId.replace('textAnnotate_',''));
-	r_id = 0;
+	function saveAnnotation(){
+		start = currentAnnotation.annotation[0].elementId.replace('textAnnotate_','');
+		end = parseInt(currentAnnotation.annotation[currentAnnotation.annotation.length - 1].elementId.replace('textAnnotate_',''));
+		r_id = 0;
 	
-	lastPos = responseIdx = 0;
-	for(i = 0;i < end + 10;i++){
-		if(responses[responseIdx].text.substr(lastPos).indexOf(' ') == -1){
-			responseIdx++;
-			lastPos = responses[responseIdx].text.substr(0).indexOf(' ') + 1;
-		}else lastPos = responses[responseIdx].text.substr(lastPos).indexOf(' ') + lastPos + 1;
+		lastPos = responseIdx = 0;
+		for(i = 0;i < end + 10;i++){
+			if(responses[responseIdx].text.substr(lastPos).indexOf(' ') == -1){
+				responseIdx++;
+				lastPos = responses[responseIdx].text.substr(0).indexOf(' ') + 1;
+			}else lastPos = responses[responseIdx].text.substr(lastPos).indexOf(' ') + lastPos + 1;
 		
-		if(i + 1 + responseIdx == start && !r_id){
-			start = lastPos;
-			r_id = responses[responseIdx].id;
-		}else if(i + 1 + responseIdx == end){
-			end = responses[responseIdx].text.substr(lastPos).indexOf(' ') + lastPos + 1;
-			if(end == -1) end = responses[responseIdx].text.length;
-			break;
+			if(i + 1 + responseIdx == start && !r_id){
+				start = lastPos;
+				r_id = responses[responseIdx].id;
+			}else if(i + 1 + responseIdx == end){
+				end = responses[responseIdx].text.substr(lastPos).indexOf(' ') + lastPos + 1;
+				if(end == -1) end = responses[responseIdx].text.length;
+				break;
+			}
 		}
+	
+		if(end - start < 0) end = responses[responseIdx].text.length;
+		if(!r_id) r_id = responses[0].id;
+	
+		$('.comment-submit img').show();
+		$('.comment-submit a').hide();
+		$.ajax({url:'/comments/save/',data:{comment:{response_id:r_id,segment_start:start,segment_length:(end - start),comment:currentAnnotation.formValues[0].value,type:currentAnnotation.formValues[1].value,id:currentAnnotation.formValues[2].value}},success:function(r){
+			if(r){
+				$('.comment-id').val(r);
+				$('.answer-comment-box textarea').click();
+			}
+		
+			setTimeout(function(){
+				$('.comment-submit img').hide();
+				$('.comment-submit a').show();
+			
+				$('.jQueryTextAnnotaterDialog').hide();
+				$('.answer-comment-box .close').removeClass('removeAnnotationBtn').click();
+				currentAnnotation = null;
+			},5);
+		}});
 	}
-	
-	if(end - start < 0) end = responses[responseIdx].text.length;
-	if(!r_id) r_id = responses[0].id;
-	
-	$('.comment-submit img').show();
-	$('.comment-submit a').hide();
-	$.ajax({url:'/comments/save/',data:{comment:{response_id:r_id,segment_start:start,segment_length:(end - start),comment:currentAnnotation.formValues[0].value,type:currentAnnotation.formValues[1].value,id:currentAnnotation.formValues[2].value}},success:function(r){
-		if(r){
-			$('.comment-id').val(r);
-			$('.answer-comment-box textarea').click();
-		}
-		
-		setTimeout(function(){
-			$('.comment-submit img').hide();
-			$('.comment-submit a').show();
-			
-			$('.jQueryTextAnnotaterDialog').hide();
-			$('.answer-comment-box .close').removeClass('removeAnnotationBtn').click();
-			currentAnnotation = null;
-		},5);
-	}});
-}
 
-function annotaterInit(cssSelector) {
+	function annotaterInit(cssSelector) {
 
-	var options = {};
-	options.form = '<div class="answer-comment-box"><textarea name="comment" class="comment-textarea"></textarea><div class="vote"><ul><li class="voteneutral"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(2);return false;">General</a></li><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;">Like</a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;">Dislike</a></li></ul></div><div class="comment-submit"><img src="/images/loadingWheel.gif" style="display:none;" /><a href="#" onclick="if($(\'.jQueryTextAnnotaterDialogForm input.comment-type\').val() == \'N\'){ alert(\'You must select Like or Dislike to save a comment.\'); }else{ saveAnnotation(); }return false;" class="btn1"><span>Comment</span></a></div><a href="#" class="removeAnnotationBtn deleteComment" style="float: right;color: #000;text-decoration: underline;padding-top: 2px;">Remove this comment</a><div class="clear"></div><div class="callout-corner"></div><a href="#" class="close" onclick="$(\'.jQueryTextAnnotaterDialog\').hide();return false;"></a><input type="hidden" name="type" class="comment-type" value="N" /><input type="hidden" name="id" class="comment-id" value="" /></div>';
-	options.annotateCharacters = false; 
-	options.formDeleteAnnotationButton = '.removeAnnotationBtn';
+		var options = {};
+		options.form = '<div class="answer-comment-box"><textarea name="comment" class="comment-textarea"></textarea><div class="vote"><ul><li class="voteneutral"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(2);return false;">General</a></li><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;">Like</a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;">Dislike</a></li></ul></div><div class="comment-submit"><img src="/images/loadingWheel.gif" style="display:none;" /><a href="#" onclick="if($(\'.jQueryTextAnnotaterDialogForm input.comment-type\').val() == \'N\'){ alert(\'You must select Like or Dislike to save a comment.\'); }else{ saveAnnotation(); }return false;" class="btn1"><span>Comment</span></a></div><a href="#" class="removeAnnotationBtn deleteComment" style="float: right;color: #000;text-decoration: underline;padding-top: 2px;">Remove this comment</a><div class="clear"></div><div class="callout-corner"></div><a href="#" class="close" onclick="$(\'.jQueryTextAnnotaterDialog\').hide();return false;"></a><input type="hidden" name="type" class="comment-type" value="N" /><input type="hidden" name="id" class="comment-id" value="" /></div>';
+		options.annotateCharacters = false; 
+		options.formDeleteAnnotationButton = '.removeAnnotationBtn';
 
-	jQuery(cssSelector).textAnnotate(options);
+		jQuery(cssSelector).textAnnotate(options);
 
-	//annotation saved
-	jQuery(cssSelector).textAnnotate('bind', 'saveForm', function(data){
-		currentAnnotation = data;
-	});
+		//annotation saved
+		jQuery(cssSelector).textAnnotate('bind', 'saveForm', function(data){
+			currentAnnotation = data;
+		});
 	
-	jQuery(cssSelector).textAnnotate('bind', 'removeAnnotation', function(removedAnnotation){
-		$.ajax({url:'/comments/delete/' + removedAnnotation[0].formValues[2].value});
-	});
+		jQuery(cssSelector).textAnnotate('bind', 'removeAnnotation', function(removedAnnotation){
+			$.ajax({url:'/comments/delete/' + removedAnnotation[0].formValues[2].value});
+		});
 	
-	jQuery(cssSelector).textAnnotate('bind', 'addAnnotation', function(addedAnnotation){
-		setTimeout(function(){
-			$('.jQueryTextAnnotaterDialogForm input.comment-type').val('N');
-			$('.jQueryTextAnnotaterDialogForm input.comment-id').val('');
-			$('.vote .votedown').removeClass('inactive');
-			$('.vote .voteup').removeClass('inactive');
-		},75);
-	});
-	
-	jQuery(cssSelector).textAnnotate('bind', 'beforeShowDialog', function(data){
-		setTimeout(function(){
-			if($('.jQueryTextAnnotaterDialogForm textarea').val() != ''){
-				$('.answer-comment-box').height(110);
-				$('.answer-comment-box').css('top','-145px');
-				$('.deleteComment').show();
-				$('.comment-submit .btn1 span').html('Save');
-				$('.answer-comment-box .close').removeClass('removeAnnotationBtn');
-			}else{
-				$('.answer-comment-box').height(90);
-				$('.answer-comment-box').css('top','-125px');
-				$('.deleteComment').hide();
-				$('.comment-submit .btn1 span').html('Comment');
-				$('.answer-comment-box .close').addClass('removeAnnotationBtn');
-			}
-			
-			if($('.jQueryTextAnnotaterDialogForm textarea').val() == ''){
+		jQuery(cssSelector).textAnnotate('bind', 'addAnnotation', function(addedAnnotation){
+			setTimeout(function(){
+				$('.jQueryTextAnnotaterDialogForm input.comment-type').val('N');
+				$('.jQueryTextAnnotaterDialogForm input.comment-id').val('');
 				$('.vote .votedown').removeClass('inactive');
 				$('.vote .voteup').removeClass('inactive');
-				$('.vote .voteneutral').removeClass('inactive');
-			}else if($('.jQueryTextAnnotaterDialogForm input.comment-type').val() == '0'){
-				$('.vote .votedown').removeClass('inactive');
-				$('.vote .voteup').addClass('inactive');
-				$('.vote .voteneutral').addClass('inactive');
-			}else if($('.jQueryTextAnnotaterDialogForm input.comment-type').val() == '1'){
-				$('.vote .votedown').addClass('inactive');
-				$('.vote .voteneutral').addClass('inactive');
-				$('.vote .voteup').removeClass('inactive');
-			}else{
-				$('.vote .votedown').addClass('inactive');
-				$('.vote .voteneutral').removeClass('inactive');
-				$('.vote .voteup').addClass('inactive');
-			}
-		},25);
-	});
+			},75);
+		});
 	
-	<?php if($js_comments){ ?>
-		jQuery(cssSelector).textAnnotate('addAnnotations', <?php echo json_encode($js_comments); ?>);
-	<?php } ?>
-}
+		jQuery(cssSelector).textAnnotate('bind', 'beforeShowDialog', function(data){
+			setTimeout(function(){
+				if($('.jQueryTextAnnotaterDialogForm textarea').val() != ''){
+					$('.answer-comment-box').height(110);
+					$('.answer-comment-box').css('top','-145px');
+					$('.deleteComment').show();
+					$('.comment-submit .btn1 span').html('Save');
+					$('.answer-comment-box .close').removeClass('removeAnnotationBtn');
+				}else{
+					$('.answer-comment-box').height(90);
+					$('.answer-comment-box').css('top','-125px');
+					$('.deleteComment').hide();
+					$('.comment-submit .btn1 span').html('Comment');
+					$('.answer-comment-box .close').addClass('removeAnnotationBtn');
+				}
+			
+				if($('.jQueryTextAnnotaterDialogForm textarea').val() == ''){
+					$('.vote .votedown').removeClass('inactive');
+					$('.vote .voteup').removeClass('inactive');
+					$('.vote .voteneutral').removeClass('inactive');
+				}else if($('.jQueryTextAnnotaterDialogForm input.comment-type').val() == '0'){
+					$('.vote .votedown').removeClass('inactive');
+					$('.vote .voteup').addClass('inactive');
+					$('.vote .voteneutral').addClass('inactive');
+				}else if($('.jQueryTextAnnotaterDialogForm input.comment-type').val() == '1'){
+					$('.vote .votedown').addClass('inactive');
+					$('.vote .voteneutral').addClass('inactive');
+					$('.vote .voteup').removeClass('inactive');
+				}else{
+					$('.vote .votedown').addClass('inactive');
+					$('.vote .voteneutral').removeClass('inactive');
+					$('.vote .voteup').addClass('inactive');
+				}
+			},25);
+		});
+	
+		<?php if($js_comments){ ?>
+			jQuery(cssSelector).textAnnotate('addAnnotations', <?php echo json_encode($js_comments); ?>);
+		<?php } ?>
+	}
+<?php } ?>
 
 function nextStudent(){
 	if($('.userNav .active').parent().next().find('a').length){

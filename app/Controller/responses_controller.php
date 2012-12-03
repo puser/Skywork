@@ -105,7 +105,30 @@ class ResponsesController extends AppController{
 	}
 	
 	function submit_evaluation($challenge_id){
+		// send student emails
+		$challenge = $this->Challenge->find('first',array('conditions'=>'Challenge.id = {$challenge_id}','recursive'=>2));
+		foreach($challenge['ClassSet'] as $g){
+			foreach($g['User'] as $u){
+				if(@$sent_users[$u['id']]) continue;
+				else $sent_users[$u['id']] = 1;
+			
+				$message = __("{firstname},\n\nYour instructor has completed evaluation of your assignment, {bridge_name}, and it is ready for your viewing!\n\nClick here to check it out:\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team");
+				$message = str_replace('{firstname}',$u['firstname'],$message);
+				$message = str_replace('{bridge_name}',$challenge['Challenge']['name'],$message);
+
+				$headers  = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
+				
+				mail("{$u['firstname']} {$u['lastname']} <{$u['email']}>",'Your Assignment is Ready for Viewing',nl2br($message),$headers);
+			}
+		}
 		
+		// set eval_complete on challenge record
+		$this->Challenge->id = $challenge_id;
+		$this->Challenge->saveField('eval_complete','1');
+		
+		$this->redirect('/dashboard/');
 	}
 }
 ?>
