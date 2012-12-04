@@ -8,13 +8,14 @@ class ResponsesController extends AppController{
 		$this->checkAuth(@$_REQUEST['ajax'] ? true : false);
 		
 		$this->Challenge->id = $challenge_id;
-		$completed = $this->Challenge->field('if(responses_due < NOW(),1,0)');
+		$eval_complete = $this->Challenge->field('eval_complete');
+		$completed = $this->Challenge->field('collaboration_type') == 'NONE' && !$eval_complete ? 0 : ($eval_complete ? 1 : ($_SESSION['User']['user_type'] == 'L' ? 0 : $this->Challenge->field('if(responses_due < NOW(),1,0)')));
 			
 		$this->Challenge->Behaviors->attach('Containable');
 		$contains = array(	'Collaborator',
 												'ClassSet'	=> array('User'),
 												'Group'			=> array('User'),
-												'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . ($user_id ? $user_id : $_SESSION['User']['id']),
+												'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . ($user_id && $user_id != 'complete_eval' ? $user_id : $_SESSION['User']['id']),
 																																	'Responses'		=> array(	'conditions'	=> ($completed ? '' : "Responses.user_id = " . $_SESSION['User']['id'])),
 																																	'Comment' 	 	=> array(	'conditions'	=> ($completed ? '' : "Comment.user_id = ". $_SESSION['User']['id']), 
 																																													'order' => 'Comment.segment_start DESC',
@@ -57,7 +58,7 @@ class ResponsesController extends AppController{
 				}
 			}
 			$this->redirect('/responses/view/'.$challenge_id.'/'.($redirect_user ? $redirect_user : 'error'));
-		}
+		}elseif($user_id == 'complete_eval') $this->set('complete_eval',true);
 		
 		$this->set('challenge',$challenge);
 		$this->set('user_id',$user_id);
@@ -102,6 +103,33 @@ class ResponsesController extends AppController{
 			echo '0';
 			die();
 		}
+	}
+	
+	function submit_evaluation($challenge_id){
+		// send student emails
+		$challenge = $this->Challenge->find('first',array('conditions'=>"Challenge.id = {$challenge_id}",'recursive'=>2));
+		foreach($challenge['ClassSet'] as $g){
+			foreach($g['User'] as $u){
+				if(@$sent_users[$u['id']] || $u['user_type'] != 'P') continue;
+				else $sent_users[$u['id']] = 1;
+			
+				$message = __("{firstname},\n\nYour instructor has completed evaluation of your assignment, {bridge_name}, and it is ready for your viewing!\n\nClick here to check it out:\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team");
+				$message = str_replace('{firstname}',$u['firstname'],$message);
+				$message = str_replace('{bridge_name}',$challenge['Challenge']['name'],$message);
+
+				$headers  = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
+				
+				mail("{$u['firstname']} {$u['lastname']} <{$u['email']}>",'Your Assignment is Ready for Viewing',nl2br($message),$headers);
+			}
+		}
+		
+		// set eval_complete on challenge record
+		$this->Challenge->id = $challenge_id;
+		$this->Challenge->saveField('eval_complete','1');
+		
+		$this->redirect('/dashboard/');
 	}
 }
 ?>

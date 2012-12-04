@@ -40,7 +40,7 @@
 				</tbody>
 			</table>
 			
-			<?php if(date_create($challenge['Challenge']['responses_due']) < $now){ ?>
+			<?php if(date_create($challenge['Challenge']['responses_due']) < $now || $challenge['Challenge']['eval_complete']){ ?>
 				<?php if($_SESSION['User']['user_type'] == 'L'){ ?>
 					<a href="/metrics/view_students/<?php echo $challenge['Challenge']['id']; ?>" class="studentwork-more" id="students-highest-quality-more" style="display: block;text-align: center;padding-top: 10px;">
 						<img src="/images/graph-tiny.png" class="graphIcon" style="position: relative;top: 5px;" />
@@ -53,7 +53,7 @@
 					</a>
 				<?php } ?>
 			<?php } ?>
-		<?php }elseif(date_create($challenge['Challenge']['responses_due']) < $now){ ?>
+		<?php }elseif(date_create($challenge['Challenge']['responses_due']) < $now || $challenge['Challenge']['eval_complete']){ ?>
 			<a href="/responses/view/<?php echo $challenge['Challenge']['id']; ?>/0" class="studentwork-more" id="students-highest-quality-more" style="display: block;text-align: center;padding-top: 10px;">
 				<img src="/images/graph-tiny.png" class="graphIcon" style="position: relative;top: 5px;" />
 				<span style="display: inline-block;padding: 2px 10px 0;"><?php echo __('Go To Summary') ?></span><img src="/images/arrow-right-red.png" />

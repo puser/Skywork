@@ -447,6 +447,8 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon2-listcountgreen {background: url("/images/icon-listcountgreen.png") no-repeat center center; width: 35px;  font-family: Lucida Grande, Helvetica, Arial, sans-serif;  font-size: 22px; text-align: center; color: #ffffff; line-height: 35px; padding-top: 3px; }
 .box-startbridge .icon2.icon2-listcountgreen {padding-top: 0px; height: 35px;}
 
+.icon2-greencheck {background: url("/images/icons/greencheck_header_26x28.png") no-repeat center center; width: 30px; }
+
 .box-startbridge .icon2-class {width: 60px;}
 
 /** 12x12 */
@@ -638,6 +640,7 @@ a.customize-link {display: block; padding-left: 25px; background: url('/images/i
 
 .question-comments {display: block; border: 2px dashed #cccccc; padding: 8px 8px 8px 40px; color: #000000; font-size: 12px; background: url('/images/icons/icon-like-19x21.png') no-repeat 10px 10px; }
 .question-comments.dislike {display: block; border: 2px dashed #cccccc; padding: 8px 8px 8px 40px; color: #000000; font-size: 12px; background: url('/images/icons/icon-like2-20x20.png') no-repeat 10px 10px; }
+.question-comments.neutral {display: block; border: 2px dashed #cccccc; padding: 8px 8px 8px 40px; color: #000000; font-size: 12px; background: url('/images/icons/icon-neutral-20x20.png') no-repeat 10px 10px; }
 
 /**
  * Page: View Completed - Student 
@@ -868,8 +871,21 @@ a.studentwork-more:hover span {display: inline; }
 .answer-comment-box {background: #eff3fa; border: 1px solid #949494; display: block; width: 200px; height: 90px; padding: 10px; position: absolute; top: -125px; left: 20px; }
 .answer-comment-box textarea {display: block; width: 190px; height: 40px; padding: 5px; font-family: Arial, sans-serif; font-size: 12px; margin-bottom: 10px; }
 .answer-comment-box .vote {width: 90px; float: left; }
+.answer-comment-box .vote ul { margin-top:-3px; }
 .answer-comment-box .vote li {float: left; margin-right: 0px; }
-.answer-comment-box .vote li a {display: block; width: 30px; height: 30px; }
+.answer-comment-box .vote li a {
+	display: block; width: 30px; height: 30px;
+    font-size: 9px;
+    color: #000;
+    line-height: 68px;
+    text-align: center;
+	text-indent:-10000px;
+}
+.answer-comment-box .vote li a:hover {
+	text-indent:0px;
+	text-decoration:none !important;
+}
+
 .answer-comment-box .vote li.voteup a, .answer-comment-box .vote.voted li.selected.voteup a{background: url('/images/icons/icon-like-19x21.png') no-repeat center center; }
 .answer-comment-box .vote li.votedown a, .answer-comment-box .vote.voted li.selected.votedown a  {background: url('/images/icons/icon-like2-20x20.png') no-repeat center center; }
 .answer-comment-box .vote.voted li.voteup a,.answer-comment-box .vote li.voteup.inactive a {background: url('/images/icons/icon-like-19x21-bw.png') no-repeat center center; }
@@ -880,6 +896,8 @@ a.studentwork-more:hover span {display: inline; }
 .answer-comment-box .callout-corner {display: block; width: 18px; height: 12px; background: url('/images/comment-box-corner.png') no-repeat; position: absolute; bottom: -2px; left: -17px; }
 .answer-comment-box .close {display: block; width: 14px; height: 14px; background: url('/images/icons/icon-close-14x14-bw.png') no-repeat; position: absolute; top: -6px; right: -6px; }
 
+.answer-comment-box .vote li.voteneutral a, .answer-comment-box .vote.voted li.selected.voteneutral a{background: url('/images/icons/icon-neutral-20x20.png') no-repeat center center; }
+.answer-comment-box .vote.voted li.voteneutral a,.answer-comment-box .vote li.voteneutral.inactive a {background: url('/images/icons/icon-neutral-20x20-bw.png') no-repeat center center; }
 
 /** Rounded */
 .rounded {-moz-border-radius:10px;-khtml-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;}
