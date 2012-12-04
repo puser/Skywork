@@ -135,9 +135,9 @@ class ChallengesController extends AppController{
 				$this->Status->id = $status['Status']['id'];
 				$this->Status->saveField('status','D');
 			}else{
-				$status = array(	'user_id' 		=> $_SESSION['User']['id'],
-									'challenge_id'	=> $challenge_id,
-									'status'		=> 'D' );
+				$status = array(	'user_id' 			=> $_SESSION['User']['id'],
+													'challenge_id'	=> $challenge_id,
+													'status'				=> 'D' );
 				$this->Status->save($status);
 			}
 		}
@@ -224,6 +224,8 @@ class ChallengesController extends AppController{
 			// preprocess date/time inputs
 			if(@$_REQUEST['answers_due_hour']){
 				$_REQUEST['challenge']['Challenge']['answers_due'] = $_REQUEST['challenge']['Challenge']['answers_due'] . ' ' . ($_REQUEST['answers_due_meridian'] == 'AM' || $_REQUEST['answers_due_hour'] > 11 ? $_REQUEST['answers_due_hour'] : ($_REQUEST['answers_due_hour'] + 12)) . ':' . $_REQUEST['answers_due_minute'];
+			}
+			if(@$_REQUEST['responses_due_hour']){
 				$_REQUEST['challenge']['Challenge']['responses_due'] = $_REQUEST['challenge']['Challenge']['responses_due'] . ' ' . ($_REQUEST['responses_due_meridian'] == 'AM' || $_REQUEST['responses_due_hour'] > 11 ? $_REQUEST['responses_due_hour'] : ($_REQUEST['responses_due_hour'] + 12)) . ':' . $_REQUEST['responses_due_minute'];
 			}
 			

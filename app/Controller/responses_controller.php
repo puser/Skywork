@@ -8,7 +8,8 @@ class ResponsesController extends AppController{
 		$this->checkAuth(@$_REQUEST['ajax'] ? true : false);
 		
 		$this->Challenge->id = $challenge_id;
-		$completed = $this->Challenge->field('if(responses_due < NOW(),1,0)');
+		$eval_complete = $this->Challenge->field('eval_complete');
+		$completed = $this->Challenge->field('collaboration_type') == 'NONE' && !$eval_complete ? 0 : ($eval_complete ? 1 : ($_SESSION['User']['user_type'] == 'L' ? 0 : $this->Challenge->field('if(responses_due < NOW(),1,0)')));
 			
 		$this->Challenge->Behaviors->attach('Containable');
 		$contains = array(	'Collaborator',
@@ -106,10 +107,10 @@ class ResponsesController extends AppController{
 	
 	function submit_evaluation($challenge_id){
 		// send student emails
-		$challenge = $this->Challenge->find('first',array('conditions'=>'Challenge.id = {$challenge_id}','recursive'=>2));
+		$challenge = $this->Challenge->find('first',array('conditions'=>"Challenge.id = {$challenge_id}",'recursive'=>2));
 		foreach($challenge['ClassSet'] as $g){
 			foreach($g['User'] as $u){
-				if(@$sent_users[$u['id']]) continue;
+				if(@$sent_users[$u['id']] || $u['user_type'] != 'P') continue;
 				else $sent_users[$u['id']] = 1;
 			
 				$message = __("{firstname},\n\nYour instructor has completed evaluation of your assignment, {bridge_name}, and it is ready for your viewing!\n\nClick here to check it out:\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team");

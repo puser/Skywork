@@ -153,7 +153,7 @@
 												<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
 												<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
 											</a>
-											<?php if($u['id'] == $user_id){ ?>
+											<?php if($u['id'] == $user_id || @$complete_eval){ ?>
 												<script type="text/javascript">
 												$(document).ready(function(){	
 													$("#groupNav<?php echo $g['id']; ?> a.sidemenu2-title").trigger("click");
@@ -177,7 +177,7 @@
 												<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
 												<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
 											</a>
-											<?php if($u['id'] == $user_id){ ?>
+											<?php if($u['id'] == $user_id || @$complete_eval){ ?>
 												<script type="text/javascript">
 												$(document).ready(function(){	
 													$("#groupNav<?php echo $c['id']; ?> a.sidemenu2-title").trigger("click");
@@ -193,8 +193,8 @@
 				</ul>
 				<?php if(!$completed){ ?>
 					<ul>
-						<li>
-							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/greencheck_menu_16.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/"<?php if(@$complete_eval){ ?> class="active"<?php } ?>><?php echo __('I\'m Done!') ?></a>
+						<li<?php if(@$complete_eval){ ?> class="active"<?php } ?>>
+							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/greencheck_menu_16.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/"><?php echo __('I\'m Done!') ?></a>
 						</li>
 					</ul>
 				<?php } ?>
@@ -219,10 +219,11 @@
 	<div class="clear"></div>
 	
 	<?php if(@$complete_eval){ ?>
-		<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded" style="min-height:30px;">
+		<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded" style="min-height:30px;line-height:25px;">
 			<div class="box-head">
-				<span class="icon2 icon2-greencheck"></span>
+				<span class="icon2 icon2-greencheck" style="height:33px;"></span>
 				<h2><?php echo __('Evaluation of Completed Assignment') ?></h2>
+				<div class="clear"></div>
 			</div>
 			<div class="clear"></div>
 			<div class="box-content" style="font-size:20px;">
@@ -243,8 +244,8 @@
 							<a href="/responses/submit_evaluation/<?php echo $challenge[0]['Challenge']['id']; ?>/" class="btn2"><span><?php echo __('Re-send to Students') ?></span></a>
 						</div>
 					</div>
-					<a style="float:right;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
-				<?php }elseif($challenge[0]['Challenge']['collaboration_type'] == 'NONE' || $completed){ ?>
+					<a style="float:right;font-size:14px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
+				<?php }elseif($challenge[0]['Challenge']['collaboration_type'] == 'NONE' || date_create($challenge[0]['Challenge']['responses_due']) < date_create()){ ?>
 					You have clicked to finish evaluating your student’s work. You may: 
 					<br /><br />
 					Click Send to Students:<br />
@@ -261,7 +262,7 @@
 							<a href="/responses/submit_evaluation/<?php echo $challenge[0]['Challenge']['id']; ?>/" class="btn2"><span><?php echo __('Send to Students') ?></span></a>
 						</div>
 					</div>
-					<a style="float:right;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
+					<a style="float:right;font-size:14px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
 				<?php }else{ ?>
 					This is where you would opt to send your comments and corrections back to <br />
 					your students. Your students, however, are still completing the collaboration<br />
@@ -272,9 +273,11 @@
 					students.
 					<br /><br /><br />
 				
-					<a style="float:right;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
+					<a style="float:right;font-size:14px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
 				<?php } ?>
 			</div>
+			<br /><br />
+			<div class="clear"></div>
 		</div>
 	<?php }else{ ?>
 	
@@ -305,7 +308,7 @@
 								</span>
 								<?php if(!$k && !@$_REQUEST['notips']){ ?><a class="tooltip-mark tooltip-mark-question" title="<?php echo __('Average quality for this Question') ?>"></a><?php } ?>
 							</div>
-						<?php }elseif(!$completed && (($challenge[0]['Challenge']['instructor_ratings'] && $_SESSION['User']['user_type'] == 'I') || ($challenge[0]['Challenge']['student_ratings'] && $_SESSION['User']['user_type'] == 'P'))){ ?>
+						<?php }elseif(!$completed && (($challenge[0]['Challenge']['instructor_ratings'] && $_SESSION['User']['user_type'] != 'P') || ($challenge[0]['Challenge']['student_ratings'] && $_SESSION['User']['user_type'] == 'P'))){ ?>
 							<div class="like-scale">
 								<ul id="response_scale_<?php echo $q['Response'][0]['id']; ?>">
 									<li class="scale1<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 1) echo ' selected'; ?>"><span><?php echo __('Very High') ?> <?php echo __('Quality') ?></span></li>
@@ -435,7 +438,7 @@
 	
 	<?php if(!@$ajax && !@$complete_eval){ ?>
 		<div style="width: 275px; margin: 0 auto; ">
-			<div style="width:160px;display:none;float:left;" id="finishedEvalBtn">
+			<div style="padding-right:10px;width:160px;display:none;float:left;" id="finishedEvalBtn">
 				<a href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/" class="btn1">
 					<span><?php echo __('I\'m Done Evaluating') ?></span>
 				</a>
@@ -476,7 +479,7 @@
 		</div>
 	</div>
 	
-	<div id="modalPreEval" style="height:400px;overflow:hidden;">
+	<div id="modalPreEval" style="overflow:hidden;">
 		<div class="box-heading grey-line">
 			<span class="icon icon-star"></span>
 			<h2 class="page-subtitle label-text"><?php echo __('Due Date 2') ?></h2>
@@ -501,12 +504,14 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+	if($(window).height() >= $(document).height()) $('#topOfPage').hide().parent().width(120);
 	
 	<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
 		if(!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length){
-			$('#finishedEvalBtn').show();
+			$('#finishedEvalBtn').show().parent().width($('#finishedEvalBtn').parent().width() + 170);
+			
 		}
-	<?php }if(!$completed && $challenge[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
+	<?php }if(date_create($challenge[0]['Challenge']['responses_due']) > date_create() && $challenge[0]['Challenge']['collaboration_type'] != 'NONE' && !@$_REQUEST['notips'] && !@$complete_eval && $_SESSION['User']['user_type'] == 'L'){ ?>
 		$('#showPreEval').click();
 	<?php } ?>
 	
@@ -525,7 +530,6 @@ $(document).ready(function(){
 	});
 	
 	<?php if(!@$complete_eval){ ?>
-		if($(window).height() >= $(document).height()) $('#topOfPage').hide().parent().width(120);
 		if(!$('.question-item').length) $('#puentes-answer-questions').html('<?php echo __('This user has not submitted responses') ?>');
 	
 		<?php if(!$completed){ ?>
