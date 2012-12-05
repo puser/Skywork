@@ -81,7 +81,7 @@
 						}else{
 							foreach($challenge[0]['ClassSet'] as $c){ ?>
 								<li id="groupNav<?php echo $c['id']; ?>">
-									<a style="padding-left:30px;width:136px;" href="#" class="sidemenu2-title"><?php echo $c['group_name']; ?></a>
+									<a style="padding-left:30px;width:136px;" href="#" class="sidemenu2-title"  onclick="$('#instructor_comment_nav').removeClass('active');"><?php echo $c['group_name']; ?></a>
 									<ul>
 										<?php
 										// shift current user to front
