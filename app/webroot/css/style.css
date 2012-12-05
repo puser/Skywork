@@ -285,7 +285,7 @@ a{ cursor:pointer; }
  */
 .page-index #body {padding-top: 40px; }
 
-#startbridge {width: 450px; margin: 0 0 10px 25px; }
+#startbridge {width: 450px; margin: 0 0 40px 25px; }
 #startbridge h2 {padding: 5px 5px 5px 10px; display: block; width: 300px; margin: 0; margin-top: 3px;}
 #startbridge .btn1 {float: right;  position: relative; top: 0px; }
 #startbridge .btn1 span{padding: 0 20px 0 16px;}
@@ -342,11 +342,10 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 #sidemenu li.name a {padding-left: 10px; width: 160px; }
 #sidemenu li.active a.no-icon {padding-left: 10px; width: 156px; }
 #sidemenu li ul {display: none; position: relative; top: 8px; }
-#sidemenu li li {}
-#sidemenu li.active li a {background: #e6e6e6;border: none; padding: 6px 10px 6px 20px; width: 150px; color: #666666; }
-
+#sidemenu li.active li a {background: #e6e6e6;border: none; padding: 6px 10px 6px 20px; width: 150px; color: #666666;}
+#sidemenu li.active li a.active {color:black}
 #sidemenu li.active ul {display: block;}
-
+#sidemenu li.active li a:hover{text-decoration: underline; color:black}
 #sidemenu2 {display: block; width: 180px; }
 #sidemenu2 li {list-style: none; font-size: 14px; color: #666666; display: block; }
 #sidemenu2 li a {color: #666666; padding: 4px 10px; display: block; }
