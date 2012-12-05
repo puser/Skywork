@@ -24,7 +24,7 @@
 	</div>
 	<div class="clear"></div>
 	
-	<form id="challenge_data" method="POST" action="/challenges/update/<?php echo $challenge['Challenge']['id']; ?>/" enctype="multipart/form-data">
+	<form id="challenge_data" method="POST" action="/challenges/update/<?php echo $challenge['Challenge']['id']; ?>/dashboard" enctype="multipart/form-data">
 		<input type="hidden" name="challenge[Challenge][id]" id="id" value="<?php echo $challenge['Challenge']['id']; ?>" />
 
 		<div id="HelpDialog" style="display:none;text-align:center;"> </div>
