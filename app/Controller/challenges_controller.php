@@ -322,6 +322,14 @@ class ChallengesController extends AppController{
 		}
 		*/
 		
+		if($view=='update_active_status'){
+			$user_responses = array();
+			foreach($challenge_record['Question'] as $q){
+				foreach($q['Response'] as $r) @$user_responses[$r['user_id']]++;
+			}
+			$this->set('user_responses',$user_responses);
+		}
+		
 		if(@$challenge_record){
 			$this->set('challenge',$challenge_record);
 		}elseif($view=='template_basics'){
@@ -344,9 +352,10 @@ class ChallengesController extends AppController{
 			}
 			$this->set('groups',$groups);
 		}
+		
 		if($view=='dashboard') $this->redirect('/dashboard/');
-		if($view=='account') $this->redirect('/challenges/update/0/template_basics/');
-		elseif($view) $this->render($view,'ajax');
+		elseif($view=='account') $this->redirect('/challenges/update/0/template_basics/');
+		elseif($view) $this->render($view,strstr($view,'active') ? 'default' : 'ajax');
 		else{
 			if(@$_REQUEST['next_step']) $this->set('ini_view',$_REQUEST['next_step']);
 			$this->render('update_container');

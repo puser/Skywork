@@ -59,10 +59,11 @@
 					if($_SESSION['User']['user_type'] == 'L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){
 						$challenge_click = "$('#challenge_accept_link').attr('href','/challenges/instructor_confirm/".$challenge['Challenge']['id']."');$('#challenge_accept_link').click();return false;";
 					}elseif(($_SESSION['User']['user_type'] == 'L' || @$challenge['collaborator']) && $a_date > $now && $challenge['Challenge']['status'] != 'D'){
-						$challenge_click = "$('#date1_exp_warning').html('" . date_format($a_date,'m/d/Y') . "');$('#date2_exp_warning').html('" . @date_format($r_date,'m/d/Y') . "');";
-						if(!$r_date) $challenge_click .= "$('#collab_exp_warning').hide();";
-						else $challenge_click .= "$('#collab_exp_warning').show();";
-						$challenge_click .= "$('#duedate_warning_link').click();return false;";
+						// $challenge_click = "$('#date1_exp_warning').html('" . date_format($a_date,'m/d/Y') . "');$('#date2_exp_warning').html('" . @date_format($r_date,'m/d/Y') . "');";
+						// if(!$r_date) $challenge_click .= "$('#collab_exp_warning').hide();";
+						// else $challenge_click .= "$('#collab_exp_warning').show();";
+						// $challenge_click .= "$('#duedate_warning_link').click();return false;";
+						$challenge_click = "window.location = '/challenges/update/{$challenge['Challenge']['id']}/update_active_status/';return false;";
 					}elseif($_SESSION['User']['user_type'] == 'P' && (($a_date < $now && $challenge['Challenge']['collaboration_type'] == 'NONE') || ($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) < date_create())) && !$challenge['Challenge']['eval_complete']){
 						$challenge_click = "$('#skipcollab_warning_link').click();return false;";
 					}elseif(@$challenge['Users']){
