@@ -1,4 +1,4 @@
-<div class="clear" style="padding-top:40px;"></div>
+<div class="clear" style="padding-top:20px;"></div>
 
 <?php if($_SESSION['User']['user_type'] == 'L'){ ?>
 	<div id="startbridge" class="rounded box-white">
