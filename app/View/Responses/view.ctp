@@ -343,7 +343,8 @@
 											$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
 									
 											if(!$completed){
-												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $k),
+												$alt_response = str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body']));
+												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $k),
 																										'formValues'	=> array(	array(	'name'	=> 'comment',
 																										 																'value'	=> $c['comment'] ),
 																																						array(	'name'	=> 'type',
@@ -351,8 +352,8 @@
 																																						array(	'name'	=> 'id',
 																																										'value'	=> $c['id'] )));
 																																							
-												for($j = 1;$j <= substr_count($q['Response'][0]['response_body'],' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($q['Response'][0]['response_body']) - $c['segment_start']);$j++){
-													$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($q['Response'][0]['response_body'],' ',0,$c['segment_start']) : 0) + $start_offset + $j + $k),
+												for($j = 1;$j <= substr_count($alt_response,' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($alt_response) - $c['segment_start']);$j++){
+													$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $j + $k),
 																											'formValues'	=> array(	array(	'name'	=> 'comment',
 																											 																'value'	=> $c['comment'] ),
 																																							array(	'name'	=> 'type',
@@ -576,7 +577,7 @@ $(document).ready(function(){
 	<?php if($responseCount){
 		foreach($challenge[0]['Question'] as $k=>$q){
 			if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id) continue; ?>
-			responses.push({text:'<?php echo str_replace("\n",'~~',$q['Response'][0]['response_body']); ?>'.replace('~~',"\n"),id:<?php echo $q['Response'][0]['id']; ?>});
+			responses.push({text:'<?php echo str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body'])); ?>',id:<?php echo $q['Response'][0]['id']; ?>});
 		<?php }
 	} ?>
 
@@ -593,8 +594,15 @@ $(document).ready(function(){
 			}else lastPos = responses[responseIdx].text.substr(lastPos).indexOf(' ') + lastPos + 1;
 		
 			if(i + 1 + responseIdx == start && !r_id){
-				start = lastPos;
-				r_id = responses[responseIdx].id;
+				if(start == end){
+					end = responses[responseIdx].text.substr(lastPos).indexOf(' ') + lastPos + 1;
+					start = lastPos;
+					r_id = responses[responseIdx].id;
+					break;
+				}else{
+					start = lastPos;
+					r_id = responses[responseIdx].id;
+				}
 			}else if(i + 1 + responseIdx == end){
 				end = responses[responseIdx].text.substr(lastPos).indexOf(' ') + lastPos + 1;
 				if(end == -1) end = responses[responseIdx].text.length;
@@ -604,6 +612,7 @@ $(document).ready(function(){
 	
 		if(end - start < 0) end = responses[responseIdx].text.length;
 		if(!r_id) r_id = responses[0].id;
+		if(end == 0) end = responses[responseIdx].text.indexOf(' ');
 	
 		$('.comment-submit img').show();
 		$('.comment-submit a').hide();

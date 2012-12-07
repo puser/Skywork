@@ -93,17 +93,18 @@
 				<?php 
 				if(@$challenge['Question']){
 					foreach(@$challenge['Question'] as $k=>$question){ ?>
-				<li>
-					<p><!-- <input type="text" class="checkdefault assignment-section-title" value="<?php echo $question['section']; ?>" name="challenge[Question][<?php echo $k; ?>][section]" /> --> &nbsp;<a href="#" class="tooltip-mark-question" title="<?php echo __('One or two words summarizing this question') ?>"></a></p>
-					<input type="text" class="checkdefault" value="<?php echo $question['question']; ?>" name="challenge[Question][<?php echo $k; ?>][question]" size="60"/>
-				</li>
+						<li>
+							<p><!-- <input type="text" class="checkdefault assignment-section-title" value="<?php echo $question['section']; ?>" name="challenge[Question][<?php echo $k; ?>][section]" /> --> &nbsp;<a href="#" class="tooltip-mark-question" title="<?php echo __('One or two words summarizing this question') ?>"></a></p>
+							<input type="text" class="checkdefault" value="<?php echo $question['question']; ?>" name="challenge[Question][<?php echo $k; ?>][question]" size="60"/>
+							<input type="hidden" name="challenge[Question][<?php echo $k; ?>][id]" value="<?php echo $question['id']; ?>" />
+						</li>
 					<?php }
 				}else{
 					for($i=0;$i<2;$i++){ ?>
-				<li>
-					<p><!-- <input type="text" class="checkdefault assignment-section-title" default="<?php echo __('Section Title') ?>" value="" name="challenge[Question][<?php echo $i; ?>][section]" /> --></p>
-					<input type="text" class="checkdefault" default="<?php echo __('Type name here') ?>" value="" name="challenge[Question][<?php echo $i; ?>][question]" size="60"/>
-				</li>
+						<li>
+							<p><!-- <input type="text" class="checkdefault assignment-section-title" default="<?php echo __('Section Title') ?>" value="" name="challenge[Question][<?php echo $i; ?>][section]" /> --></p>
+							<input type="text" class="checkdefault" default="<?php echo __('Type name here') ?>" value="" name="challenge[Question][<?php echo $i; ?>][question]" size="60"/>
+						</li>
 					<?php }
 				} ?>
 			</ol>
@@ -120,6 +121,9 @@
 			<p><?php echo __('Write a description of this essay topic:') ?></p>
 			<p>
 				<textarea class="checkdefault" default="Write description here" name="challenge[Question][0][question]" style="width:550px;height:75px;padding:5px 7px;"><?php echo @$challenge['Question'][0]['question']; ?></textarea>
+				<?php if(@$challenge['Question'][0]['question']['id']){ ?>
+					<input type="hidden" name="challenge[Question][0][id]" value="<?php echo $question['id']; ?>" />
+				<?php } ?>
 			</p>
 		</span>
 	</div>

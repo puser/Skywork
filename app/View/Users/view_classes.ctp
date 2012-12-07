@@ -159,10 +159,17 @@
 							<div class="clear"></div>
 						</li>
 						<li class="radioinput">
-							<span class="label"><?php echo __('Make this class searchable') ?></span>
+							<span class="label"><?php echo __('How will students sign-up to your class?') ?></span>
+							<!-- DEPRECIATED
 							<div class="input">
 								<input type="radio" name="class[ClassSet][public]" value="1" id="make_class_searchable_yes" checked="checked" /> <label for="make_class_searchable_yes"><?php echo __('Yes') ?></label>
 								<input type="radio" name="class[ClassSet][public]" value="0" id="make_class_searchable_no" /> <label for="make_class_searchable_no"><?php echo __('No') ?></label>
+							</div>
+							-->
+							<div>
+								<input type="checkbox" />&nbsp; <?php echo __("I'll give them a code (a class token) and they'll sign themselves up through the homepage.") ?>
+								<div class="clear"></div>
+								<input type="checkbox" />&nbsp; <?php echo __("I'll add the students myself (you'll only be required to enter their email addresses).") ?>
 							</div>
 							<div class="clear"></div>
 						</li>
@@ -171,7 +178,8 @@
 					<p class="small"><?php echo __('Instructors will be able to search and request to join your class. For security purposes, they must know your email address and you will always be able to Accept or Reject their request.') ?></p>
 					<div class="clear"></div>
 					<div style="width: 250px; margin: 0 auto; ">
-						<a href="#" onclick="create_class();$('#tokenForNewClass').val('1');" class="btn2" style="width: 120px; float: left;" ><span><?php echo __('Generate Token') ?></span></a>
+						<a href="#" onclick="create_class();$('#tokenForNewClass').val('1');" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Generate Token') ?></span></a>
+						<a href="#" onclick="create_class();" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Add My Class') ?></span></a>
 						<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 						<div class="clear"></div>
 					</div>

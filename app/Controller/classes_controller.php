@@ -67,7 +67,6 @@ class ClassesController extends AppController{
 	function request_join(){
 		$this->checkAuth();
 		
-		// create pending status
 		foreach(@$_REQUEST['groups'] as $group_id){
 			$group = $this->ClassSet->findById($group_id);
 		

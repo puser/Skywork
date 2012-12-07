@@ -245,7 +245,7 @@ class ChallengesController extends AppController{
 					if(!@$q['question']) unset($_REQUEST['question'][$k]);
 					else $_REQUEST['challenge']['Question'][$k]['challenge_id'] = $challenge_id;
 				}
-				$this->Challenge->Question->deleteAll(array('challenge_id'=>$challenge_id));
+				//$this->Challenge->Question->deleteAll(array('challenge_id'=>$challenge_id));
 				$this->Challenge->Question->saveAll($_REQUEST['challenge']['Question']);
 			}
 			$challenge_record = $this->Challenge->find('first',array('conditions'=>"Challenge.id = {$challenge_id}",'recursive'=>2));

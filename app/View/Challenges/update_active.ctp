@@ -125,6 +125,7 @@
 								foreach(@$challenge['Question'] as $k=>$question){ ?>
 							<li>
 								<input type="text" class="checkdefault" value="<?php echo $question['question']; ?>" name="challenge[Question][<?php echo $k; ?>][question]" size="60"/>
+								<input type="hidden" name="challenge[Question][<?php echo $k; ?>][id]" value="<?php echo $question['id']; ?>" />
 							</li>
 								<?php }
 							}else{
@@ -142,6 +143,9 @@
 						<p><?php echo __('Write a description of this essay topic:') ?></p>
 						<p>
 							<textarea class="checkdefault" default="Write description here" name="challenge[Question][0][question]" style="width:550px;height:75px;padding:5px 7px;"><?php echo @$challenge['Question'][0]['question']; ?></textarea>
+							<?php if(@$challenge['Question'][0]['question']['id']){ ?>
+								<input type="hidden" name="challenge[Question][0][id]" value="<?php echo @$challenge['Question'][0]['id']; ?>" />
+							<?php } ?>
 						</p>
 					</span>
 				<?php } ?>
