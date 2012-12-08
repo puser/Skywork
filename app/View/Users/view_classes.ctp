@@ -141,7 +141,8 @@
 <div style="display: none;">
 	
 	<div id="modal-addclass">
-		<a style="display:none;" href="#modal-newtoken" class="btn2 modal-link" id="showGenerateToken"> </a>
+		<a href="#modal-newtoken" class="modal-link" id="showGenerateToken"> </a>
+		<a href="" class="modal-link" id="showAddManual"> </a>
 		<form id="create_class">
 			<input type="hidden" name="class[ClassSet][owner_id]" value="<?php echo $user['User']['id']; ?>" />
 			<input type="hidden" name="class[User][][user_id]" value="<?php echo $user['User']['id']; ?>" />
@@ -166,10 +167,12 @@
 								<input type="radio" name="class[ClassSet][public]" value="0" id="make_class_searchable_no" /> <label for="make_class_searchable_no"><?php echo __('No') ?></label>
 							</div>
 							-->
-							<div>
-								<input type="checkbox" />&nbsp; <?php echo __("I'll give them a code (a class token) and they'll sign themselves up through the homepage.") ?>
+							<div style="clear:both;padding-top:12px;font-size:14px;">
+								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#genTokenBtn').show();$('#addManualBtn').hide(); }else{ $('#genTokenBtn').hide();$('#addManualBtn').show(); }" />&nbsp;
+								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I'll give them a code (a class token) and they'll sign themselves up through the homepage.") ?></div>
 								<div class="clear"></div>
-								<input type="checkbox" />&nbsp; <?php echo __("I'll add the students myself (you'll only be required to enter their email addresses).") ?>
+								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#genTokenBtn').hide();$('#addManualBtn').show(); }else{ $('#genTokenBtn').show();$('#addManualBtn').hide(); }" />&nbsp;
+								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I'll add the students myself (you'll only be required to enter their email addresses).") ?></div>
 							</div>
 							<div class="clear"></div>
 						</li>
@@ -178,8 +181,8 @@
 					<p class="small"><?php echo __('Instructors will be able to search and request to join your class. For security purposes, they must know your email address and you will always be able to Accept or Reject their request.') ?></p>
 					<div class="clear"></div>
 					<div style="width: 250px; margin: 0 auto; ">
-						<a href="#" onclick="create_class();$('#tokenForNewClass').val('1');" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Generate Token') ?></span></a>
-						<a href="#" onclick="create_class();" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Add My Class') ?></span></a>
+						<a href="#" id="genTokenBtn" onclick="create_class();$('#tokenForNewClass').val('1');" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Generate Token') ?></span></a>
+						<a href="#" id="addManualBtn" onclick="create_class_manual();" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Add My Class') ?></span></a>
 						<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 						<div class="clear"></div>
 					</div>

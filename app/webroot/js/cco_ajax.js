@@ -401,6 +401,13 @@ function create_class(){
 	}});
 }
 
+function create_class_manual(){
+	$.ajax({url:'/classes/update/',data:$('#create_class').serialize(),type:'POST',success:function(r){
+		$('#showAddManual').attr('href','/classes/invite_member/' + r + '/student/');
+		$('#showAddManual').click();
+	}});
+}
+
 function update_token(){
 	$.ajax({url:'/classes/update_token/' + $('#newTokenClassID').val(),success:function(r){
 		$('#token_value').html(r);
