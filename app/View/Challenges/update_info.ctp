@@ -152,7 +152,7 @@
 				<span style="display:inline-block;width:15px;height:13px;background:url(/images/icons/icon-flag-15x30.png) top left no-repeat;padding-right:3px;vertical-align:middle;"> </span>
 				Allow students to pass maximum; create a flag when they do.
 			</span>
-			<span id="max_length_disabled">No maximum word count for each question</span><br />
+			<span id="max_length_disabled">Click to add a maximum word count for each question.</span><br />
 		</p>
 		<input type="hidden" name="challenge[Challenge][allow_exceeded_length]" id="maxLengthHidden" value="<?php echo @$challenge['Challenge']['allow_exceeded_length']; ?>" />
 		
