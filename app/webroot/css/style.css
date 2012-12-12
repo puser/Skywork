@@ -46,7 +46,7 @@ body {font-family: Helvetica, Arial, sans-serif; font-size: 12px; background: #c
 #wrapper {width: 1024px; margin: 15px auto 0 auto;}
 #header {border-bottom: 2px solid #0071bc; }
 #header .content {
-	height: 60px; position: relative; background: #ffffff; 
+	height: 67px; position: relative; background: #ffffff; 
 	border-top-left-radius: 8px; border-top-right-radius: 10px; 
 	-moz-border-top-left-radius: 8px; -moz-border-top-right-radius: 8px; 
 	-khtml-border-top-left-radius: 8px; -khtml-border-top-right-radius: 8px; 
@@ -246,7 +246,7 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
  * Logo 
  */
 #logo {position: absolute; top: 13px; left: 30px;}
-#logo a {display:block; margin-left: 13px; width: 391px; height: 46px; background: url("/images/logo.png") no-repeat;}
+#logo a {display:block; margin-left: 13px; width: 391px; height: 90px; background: url("/images/logo.png") no-repeat;}
 
 
 /**
@@ -255,7 +255,7 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
 #topmenu {position: absolute; right: 20px; top:10px; text-align: right;}
 #topmenu span {}
 #topmenu .user-name {margin-right: 30px;  }
-#topmenu .user-name a {font-size: 14px; color: #0071bc; font-weight: bold; text-decoration: none;}
+#topmenu .user-name a {font-size: 14px; color: #0071bc; font-family: Arial; font-weight: normal; text-decoration: none;}
 #topmenu .user-home, #topmenu .user-account, #topmenu .user-logout, #topmenu .user-admin, #topmenu .user-login {margin-right: 10px;}
 #topmenu .user-home a, #topmenu .user-account a, #topmenu .user-logout a, #topmenu .user-admin a, #topmenu .user-login a {font-size: 11px; padding-left: 16px;  height: 12px; font-weight: normal; color: #808080;}
 #topmenu .user-home a:hover, #topmenu .user-account a:hover, #topmenu .user-logout a:hover, #topmenu .user-admin a:hover {text-decoration: underline;}
@@ -312,7 +312,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 #bridgetable a.small-chart {display: block; width: 23px; height: 22px; background: url('/images/chart-small.png') no-repeat; }
 #bridgetable {margin-bottom: 20px; }
 
-.box-foot {display: block; position: relative; }
+.box-foot {display: block; position: relative;}
 .pagination {display: block; padding: 10px 0; height: 14px; }
 .pagination-prev {height: 14px; }
 .pagination-prev a {display: block; padding-left: 10px; background: url("/images/arrow-left-blue.png") no-repeat center left; color: #808080;}
@@ -326,7 +326,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 
 
 #sidebarleft {width: 200px; float: left; padding: 15px 0 0 15px;  color: #666666; }
-#sidebarleft h1 {color: #0071bc; font-size: 20px; font-family: Arial, sans-serif; font-weight: normal; padding-left: 0px; margin-bottom: 20px; }
+#sidebarleft h1 {color: #0071bc; font-size: 18pt; font-family: Arial, sans-serif; font-weight: normal; padding-left: 30px; margin-bottom: 20px; }
 #maincolumn {float: right; padding: 15px 15px 0 0; margin-bottom: 30px; }
 
 #sidemenu {display: block;}

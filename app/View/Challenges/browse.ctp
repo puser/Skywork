@@ -22,7 +22,7 @@
 		<div class="clear"></div>
 	</div>
 	
-	<div class="box-content">
+	<div class="box-content" style='height:340px'>
 		<table id="bridgetable" style="width:938.5px; margin-left:7px;">
 			<thead>
 				<tr>
