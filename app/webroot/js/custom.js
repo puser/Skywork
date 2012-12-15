@@ -64,7 +64,7 @@ jQuery(function($) {
 	/**
 	 * Login Form
 	 */
-	$("#overlayLoginLink").click(function(){
+	$("#overlayLoginLink,#overlayLoginLink2").click(function(){
 		if($(this).hasClass("activeForm")) {
 			$("#overlayLoginForm").css("display", "none");
 			$(this).removeClass("activeForm");
