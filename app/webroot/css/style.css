@@ -326,7 +326,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 
 
 #sidebarleft {width: 200px; float: left; padding: 15px 0 0 15px;  color: #666666; }
-#sidebarleft h1 {color: #0071bc; font-size: 18pt; font-family: Arial, sans-serif; font-weight: normal; padding-left: 30px; margin-bottom: 20px; }
+#sidebarleft h1 {color: #0071bc; font-size: 18px; font-family: Arial, sans-serif; font-weight: normal; padding-left: 30px; margin-bottom: 20px; }
 #maincolumn {float: right; padding: 15px 15px 0 0; margin-bottom: 30px; }
 
 #sidemenu {display: block;}
