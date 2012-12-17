@@ -47,7 +47,7 @@
 					<span class="user-home icon-home"><a href="/">Main</a></span>
 					<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#">Login</a></span>
 				
-					<div id="overlayLoginForm" class="rounded" style="text-align:left;top:25px;right:0px;">
+					<div id="overlayLoginForm" class="rounded" style="text-align:left;top:22px;right:0px;">
 						<ul class="fieldset2">
 							<li>
 								<div class="label alignleft">
@@ -99,7 +99,7 @@
 			
 				<div id="home-slider">
 					<div class="slides">
-						<div class="slide" style="width:820px;">
+						<div class="slide" style="width:720px;">
 							<div class="slide-content">
 								<img src="/slides/slide-2.jpg" />
 							</div>
@@ -110,7 +110,7 @@
 						</div>
 					</div>
 					<div class="control">
-						<a class="arrow" href="#" style="width:83px;"></a>
+						<a class="arrow" href="/pages/about/" style="width:83px;"></a>
 					</div>
 				</div>
 			
@@ -155,8 +155,8 @@
 								The process is the same, however, once students complete their assignment, they collaborate on answers. Connect your sections that are learning the same material and would have never spoken otherwise, or simply have your students work with other students in other cities in the world.
 							</p>
 						</div>
-						<div class="tab-content " id="tab-ten-reasons-content">
-							<ol>
+						<div class="tab-content " id="tab-ten-reasons-content" style="text-align:center;">
+							<ol style="list-style:none;">
 								<li>Assignments on Puentes are so much easier than paper!</li>
 								<li>The grading process simpler, more organized and easy to store. </li>
 								<li>Align your assignments with Common Core standards.</li>

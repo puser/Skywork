@@ -111,7 +111,7 @@ a.read-more-arrow {display: block; width: 15px; height: 10px; background: url('/
 .btn-savecontinue {width: 150px;}
 .btn-terminate, .btn-200 {width: 200px;}
 
-.btn-green-simple, a.btn-green-simple {font-size: 25px; font-family: 'Bookman Old Style', Times New Roman, serif; color: #f6f6f6; padding: 15px; background: #7cc525; border-radius: 4px; border: 1px solid #ffffff; text-decoration: none; display: inline-block; }
+.btn-green-simple, a.btn-green-simple {font-size: 20px; font-family: 'Bookman Old Style', Times New Roman, serif; color: #f6f6f6; padding: 12px; background: #7cc525; border-radius: 4px; border: 1px solid #ffffff; text-decoration: none; display: inline-block; }
 
 a.bridge-btn1 {background: #475f8e; color: #ffffff; -moz-border-radius:6px;-khtml-border-radius:6px;-webkit-border-radius:6px;border-radius:6px; display: inline-block; padding: 6px 10px; font-size: 14px; text-decoration: none;}
 .bridge-btn1 img {vertical-align: center; }
@@ -251,7 +251,7 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
  * Logo 
  */
 #logo {position: absolute; top: 13px; left: 30px;}
-#logo a {display:block; width: 391px; height: 46px; background: url("/images/corp/logo.png") no-repeat;}
+#logo a {display:block; width: 391px; height: 50px; background: url("/images/logo.png") no-repeat;}
 
 
 /**
@@ -265,6 +265,14 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
 #topmenu .user-home a, #topmenu .user-account a, #topmenu .user-logout a, #topmenu .user-admin a {font-size: 11px; padding-left: 16px;  height: 12px; font-weight: normal; color: #808080;}
 #topmenu .user-home a:hover, #topmenu .user-account a:hover, #topmenu .user-logout a:hover, #topmenu .user-admin a:hover {text-decoration: underline;}
 
+#overlayLoginLink2 {
+    border: 1px solid #fff;
+    padding: 7px 15px 7px 34px !important;
+}
+#overlayLoginLink2.activeForm {
+    border: 1px solid #ccc;
+    padding: 7px 15px 7px 34px !important;
+}
 
 /** Footer Menu */
 #footermenu {}
@@ -831,7 +839,7 @@ a.studentwork-more:hover span {display: inline; }
 /**
  * Site: Header
  */
-.site #header .content {height: 65px; }
+.site #header .content {height: 67px; }
 .site #logo {left: 60px; top: 10px; }
 
 
@@ -841,14 +849,14 @@ a.studentwork-more:hover span {display: inline; }
 .site #topmenu {top: 25px; right: 50px; }
 .site #topmenu .user-home {margin-right: 20px; }
 .site #topmenu .icon-home {background: url('/images/corp/icons/icon-home-17x16.png') no-repeat left center; padding-left: 9px; }
-.site #topmenu .icon-key {background: url('/images/corp/icons/icon-key-19x10.png') no-repeat left center; padding-left: 10px; }
+.site #topmenu .icon-key {background: url('/images/corp/icons/icon-key-19x10.png') no-repeat 8px center; }
 
 
 /**
  * Site: Home
  */
 #home-header {display: block; height: 130px; width: 100%; position: relative; }
-#home-header-introtext {font-size: 25px; color: #464646; font-family: 'Helvetica Oblique', 'Myriad Pro', Arial, Helvetica, sans-serif; position: relative; display: block; width: 640px; height: 130px; overflow: hidden; }
+#home-header-introtext {font-size: 25px; color: #7D7D7D; font-family: Arial, Helvetica, sans-serif; position: relative; display: block; width: 640px; height: 130px; overflow: hidden; }
 #home-header-introtext .slide {position: absolute; display: block; width: 640px; height: 130px; }
 #home-header-introtext .slide-1 .line1 {position: absolute; top: 40px; left: 30px; }
 #home-header-introtext .slide-1 .line2 {position: absolute; top: 75px; left: 220px; }
@@ -864,10 +872,10 @@ a.studentwork-more:hover span {display: inline; }
 /**
  * Site: Home Slider
  */
-#home-slider {display: block; width: 900px; height: 256px; background: #ffffff; border: 3px solid #edebe9; border-radius: 12px; position: relative; margin-bottom: 70px; }
-#home-slider .slides {display: block; width: 830px; }
-#home-slider .control a {position: absolute; right: 0; top: 0; display: block; width: 70px; height: 256px; border-left: 3px solid #edebe9; background: #ffffff url('/images/corp/slide-arrow-green.png') no-repeat center center; border-radius: 0 9px 9px 0; }
-#home-slider .control a.active {position: absolute; right: 0; top: 0; display: block; width: 70px; height: 256px; border-left: 3px solid #edebe9; background: #7bc523 url('/images/corp/slide-arrow-white.png') no-repeat center center; border-radius: 0 9px 9px 0; }
+#home-slider {display: block; width: 803px; height: 227px; background: #ffffff; border: 3px solid #edebe9; border-radius: 12px; position: relative; margin:0 auto 70px; }
+#home-slider .slides {display: block; width: 720px; }
+#home-slider .control a {position: absolute; right: 0; top: 0; display: block; width: 70px; height: 227px; border-left: 3px solid #edebe9; background: #ffffff url('/images/corp/slide-arrow-green.png') no-repeat center center; border-radius: 0 9px 9px 0; }
+#home-slider .control a.active {position: absolute; right: 0; top: 0; display: block; width: 70px; height: 227px; border-left: 3px solid #edebe9; background: #7bc523 url('/images/corp/slide-arrow-white.png') no-repeat center center; border-radius: 0 9px 9px 0; }
 
 #home-slider .slide {position: relative; width: 830px; border-radius: 12px 0 0 12px; overflow: hidden; }
 #home-slider .slide img {border-radius: 12px 0 0 12px;}
@@ -941,7 +949,7 @@ a.studentwork-more:hover span {display: inline; }
 .site-page {padding: 10px 0 50px 0; font-size: 20px; color: #86827f; line-height: 1.3em; }
 .site-page p, ul{margin-bottom: 1em; }
 .site-page p.site-page-header {margin: 0; text-decoration: underline; }
-#site-page-signup {display: block; padding: 40px; background: #ffffff; border: 3px solid #ebe8e6; text-align: center; margin: 100px 0 60px 0; }
+#site-page-signup {display: block; padding: 40px; background: url(/images/corp/signup_bg.png) top left no-repeat; border: 3px solid #ebe8e6; text-align: center; margin: 100px 0 60px 0; }
 
 
 /**
@@ -983,3 +991,4 @@ ul.accordion li .toggle-content {display: none; margin-bottom: 30px; }
 }
 
 
+#faq-div a,#faq-div p,#privacy-page p,#privacy-page ul,#terms-of-use-page p,#more-info-page p { font-size:93% !important; }

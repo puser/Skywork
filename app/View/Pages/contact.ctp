@@ -72,13 +72,11 @@
 	<div id="body">
 		
 		<div id="contact-us-page" class="site-page" >
-			<h1>Contact Us &amp; FAQ</h1>
-			
 			<div id="contact-us-form-div" class="width50 alignleft">
 			
 				
 				<h3 style="margin-bottom: 0">Help</h3>
-				<p>For help related issues, you may reach out to <a href="mailto:info@puentesonline.com">info@puentesonline.com</a></p>
+				<p style="font-size:93%;">For help related issues, you may reach out to <a href="mailto:info@puentesonline.com">info@puentesonline.com</a></p>
 				
 				<div id="contact-us-form">
 					
@@ -123,7 +121,7 @@
 			</div>
 			
 			<div id="faq-div" class="width50 alignright">
-				<h3 style="margin-top: 0">FAQ</h3>
+				<h3>FAQ</h3>
 				
 				<ul class="accordion">
 					<li>

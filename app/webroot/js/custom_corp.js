@@ -259,16 +259,12 @@ jQuery(document).ready(function($) {
 	/**
 	 * Home Slider
 	 */
-	$("#home-slider .control a").click(function(){
-		if($(this).hasClass("active")) {
+	$("#home-slider .control a").hover(function(){
+			$("#home-slider .slide .slide-info").animate({ right: 0, opacity: 1 }, 300);
+			$(this).addClass("active");  
+	},function(){
 			$("#home-slider .slide .slide-info").animate({ right: -203, opacity: 0 }, 300);
 			$(this).removeClass("active"); 
-		}
-		else {
-			$("#home-slider .slide .slide-info").animate({ right: 0, opacity: 1 }, 300);
-			$(this).addClass("active"); 
-		}
-		return false; 
 	}); 
 	
 	

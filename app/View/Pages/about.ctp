@@ -75,7 +75,7 @@
 		
 			<div id="more-info-what-is" class="more-info-div">
 				<p style="line-height:33px;"><br /><br />
-					<img align="right" src="/images/corp/paper_storm.png" style="padding-left:200px;" width="300" />
+					<img align="right" src="/images/corp/paper_storm.png" style="padding-left:245px;" width="255" />
 					Puentes takes the pain out of paper assignments. Rather than giving out assignments and receiving reams of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade and store all assignments through one easy-to-use portal.</p>
 			</div>
 			
@@ -85,8 +85,6 @@
 			<br />
 			<div id="more-info-tell-more" class="more-info-div">
 				
-				<h3>Tell me more...</h3>
-			
 				<div class="more-info-special">
 					<div class="alignleft polaroid-wrap" style="height:261px;"><img src="/images/corp/puentes_ss1.png" width="420" /></div>
 					<div class="alignright more-info-special-content">
