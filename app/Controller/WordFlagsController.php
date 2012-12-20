@@ -61,8 +61,8 @@ class WordFlagsController extends AppController {
 				$r = $q['Response'][0];
 				foreach($flags as $f){
 					if(strstr($r['response_body'],$f['WordFlag']['word']) !== false){
-						@$flagged_words[$f['WordFlag']['word']][] = array($r['id'],$r['question_id'],$r['user_id'],substr_count($r['response_body'],$f['WordFlag']['word']));
-						@$word_counts[$f['WordFlag']['word']] += substr_count($r['response_body'],$f['WordFlag']['word']);
+						@$flagged_words[$f['WordFlag']['word']][] = array($r['id'],$r['question_id'],$r['user_id'],substr_count(strtoupper($r['response_body']),strtoupper($f['WordFlag']['word'])));
+						@$word_counts[$f['WordFlag']['word']] += substr_count(strtoupper($r['response_body']),strtoupper($f['WordFlag']['word']));
 					}
 				}	
 				
@@ -72,8 +72,8 @@ class WordFlagsController extends AppController {
 					foreach($response['Comment'] as $c){
 						foreach($flags as $f){
 							if(strstr($c['comment'],$f['WordFlag']['word']) !== false){
-								@$flagged_comments[$f['WordFlag']['word']][] = array($c['id'],$response['Response']['id'],$response['Response']['user_id'],substr_count($c['comment'],$f['WordFlag']['word']));
-								@$word_counts[$f['WordFlag']['word']] += substr_count($c['comment'],$f['WordFlag']['word']);
+								@$flagged_comments[$f['WordFlag']['word']][] = array($c['id'],$response['Response']['id'],$response['Response']['user_id'],substr_count(strtoupper($c['comment']),strtoupper($f['WordFlag']['word'])));
+								@$word_counts[$f['WordFlag']['word']] += substr_count(strtoupper($c['comment']),strtoupper($f['WordFlag']['word']));
 							}
 						}
 					}

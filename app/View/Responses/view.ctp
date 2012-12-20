@@ -367,7 +367,7 @@
 								
 										if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
 											$wordpos = 0;
-											for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response,$_REQUEST['highlight'],$wordpos + 1);
+											for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos(strtoupper($mod_response),strtoupper($_REQUEST['highlight']),$wordpos + 1);
 											$mod_response = substr_replace($mod_response,'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 										}
 								
@@ -388,7 +388,7 @@
 								
 											if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
 												$wordpos = 0;
-												for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($mod_response[$c['user_id']],$_REQUEST['highlight'],$wordpos + 1);
+												for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos(strtoupper($mod_response[$c['user_id']]),strtoupper($_REQUEST['highlight']),$wordpos + 1);
 												$mod_response[$c['user_id']] = substr_replace($mod_response[$c['user_id']],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 											}
 									
@@ -417,7 +417,7 @@
 								<?php
 								if(@$_REQUEST['highlight'] && @$_REQUEST['comment_id'] == $c['id']){
 									$wordpos = 0;
-									for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos($c['comment'],$_REQUEST['highlight'],$wordpos + 1);
+									for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos(strtoupper($c['comment']),strtoupper($_REQUEST['highlight']),$wordpos + 1);
 									$c['comment'] = substr_replace($c['comment'],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 								}
 								echo stripslashes($c['comment']); ?>
