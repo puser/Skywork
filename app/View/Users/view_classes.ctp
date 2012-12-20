@@ -168,7 +168,7 @@
 							</div>
 							-->
 							<div style="clear:both;padding-top:12px;font-size:14px;">
-								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#genTokenBtn').show();$('#addManualBtn').hide(); }else{ $('#genTokenBtn').hide();$('#addManualBtn').show(); }" />&nbsp;
+								<input type="radio" name="addStudentMethod" style="float:left;" checked="checked" onchange="if($(this).attr('checked')){ $('#genTokenBtn').show();$('#addManualBtn').hide(); }else{ $('#genTokenBtn').hide();$('#addManualBtn').show(); }" />&nbsp;
 								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I'll give them a code (a class token) and they'll sign themselves up through the homepage.") ?></div>
 								<div class="clear"></div>
 								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#genTokenBtn').hide();$('#addManualBtn').show(); }else{ $('#genTokenBtn').show();$('#addManualBtn').hide(); }" />&nbsp;
@@ -177,11 +177,12 @@
 							<div class="clear"></div>
 						</li>
 					</ul>
+					<font color="red" >
+					<div align="center" id="warning" style="display:none; font-size: 14px; "> You must enter a class name </div>  </font> <br/>
 					<div class="clear"></div>
-					<p class="small"><?php echo __('Instructors will be able to search and request to join your class. For security purposes, they must know your email address and you will always be able to Accept or Reject their request.') ?></p>
 					<div class="clear"></div>
 					<div style="width: 250px; margin: 0 auto; ">
-						<a href="#" id="genTokenBtn" onclick="create_class();$('#tokenForNewClass').val('1');" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Generate Token') ?></span></a>
+						<a href="#" class="btn3" id="genTokenBtn" onclick="create_class();$('#tokenForNewClass').val('1');" class="btn2" style="width:120px;float:left;" ><span><?php echo __('Generate Token') ?></span></a>
 						<a href="#" id="addManualBtn" onclick="create_class_manual();" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Add My Class') ?></span></a>
 						<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 						<div class="clear"></div>
@@ -195,11 +196,11 @@
 		<div id="modal-joinsharedclass-box" class="modal-joinsharedclass-box modal-wrapper" style="width: 600px;" >
 			<div class="modal-box-head">
 				<span class="icon icon-class-color"></span>
-				<h2><?php echo __('Request to Join Shared Class(es)') ?></h2>
+				<h2><?php echo __('Find and Connect with an Instructor') ?></h2>
 			</div>
 			<div class="modal-box-content">
 				<br />
-				<p><?php echo __('Please enter the Professor\'s email:') ?></p>
+				<p><?php echo __('Please enter the Instructor\'s email:') ?></p>
 				<ul class="fieldset2">
 					<li>
 						<label><?php echo __('Email') ?></label>
