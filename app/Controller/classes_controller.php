@@ -1,7 +1,7 @@
 <?php
 class ClassesController extends AppController{
 	var $name = 'Classes';
-	var $uses = array('User','Challenge','ClassSet','Status','UserClass');
+	var $uses = array('User','Challenge','ClassSet','Status','UserClass','Response');
 	
 	function update($id = NULL){
 		$this->checkAuth();
@@ -144,12 +144,22 @@ class ClassesController extends AppController{
 			
 			foreach($class['Challenge'] as $c){
 				if($user_created > $c['answers_due']) continue;
+				
 				// count responses to questions in this challenge from this user_id; if >0, add as collaborator
+				$qids = array();
+				foreach($class['Challenge']['Question'] as $q) $qids[] = $q['id'];
+				if($this->Response->find('count',array('conditions' => array('Response.question_id IN('.implode(',',$qids).')','Response.user_id' => $u['id'])))){
+					$challenge_update = array('Challenge'=>array('id'=>$c['id']));
+					$challenge_update['Collaborator'] = array($u['id']);
+					foreach($challenge['Collaborator'] as $collab) if(array_search($collab['id'],$challenge_update['Collaborator']) === false) $challenge_update['Collaborator'][] = $collab['id'];
+					$this->Challenge->save($challenge_update);
+				}
 			}
 		}
 		
 		// remove all users from class
 		$this->UserClass->deleteAll(array('UserClass.class_id'=>$class_id),false);
+		$this->redirect('/users/view/classes/');
 	}
 	
 	function delete($id){
