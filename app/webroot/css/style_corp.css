@@ -840,13 +840,13 @@ a.studentwork-more:hover span {display: inline; }
  * Site: Header
  */
 .site #header .content {height: 67px; }
-.site #logo {left: 60px; top: 10px; }
+.site #logo {left: 96px; top: 10px; }
 
 
 /**
  * Site: Top Menu
  */
-.site #topmenu {top: 25px; right: 50px; }
+.site #topmenu {top: 25px; right: 86px; }
 .site #topmenu .user-home {margin-right: 20px; }
 .site #topmenu .icon-home {background: url('/images/corp/icons/icon-home-17x16.png') no-repeat left center; padding-left: 9px; }
 .site #topmenu .icon-key {background: url('/images/corp/icons/icon-key-19x10.png') no-repeat 8px center; }
@@ -855,10 +855,10 @@ a.studentwork-more:hover span {display: inline; }
 /**
  * Site: Home
  */
-#home-header {display: block; height: 130px; width: 100%; position: relative; }
+#home-header {display: block; height: 130px; width: 94.5%; position: relative; }
 #home-header-introtext {font-size: 25px; color: #7D7D7D; font-family: Arial, Helvetica, sans-serif; position: relative; display: block; width: 640px; height: 130px; overflow: hidden; }
 #home-header-introtext .slide {position: absolute; display: block; width: 640px; height: 130px; }
-#home-header-introtext .slide-1 .line1 {position: absolute; top: 40px; left: 30px; }
+#home-header-introtext .slide-1 .line1 {position: absolute; top: 53px; left: 51px; }
 #home-header-introtext .slide-1 .line2 {position: absolute; top: 75px; left: 220px; }
 #home-header-introtext .slide-2 .line1 {position: absolute; top: 57px; left: 50px; }
 
@@ -895,18 +895,20 @@ a.studentwork-more:hover span {display: inline; }
  * Site: Home Tabs
  */
 #home-tabs .tabs {padding-bottom: 30px; clear: both; }
-#home-tabs .tabs .tab {display: block; width: 231px; height: 100px; background: #ffffff; border: 3px solid #edebe9; float: left; margin-right: 95px; border-radius: 12px; cursor: pointer; position: relative; }
+#home-tabs .tabs .tab {display: block; width: 157px; height: 77px; background: #ffffff; border: 3px solid #edebe9; float: left; border-radius: 12px; cursor: pointer; position: relative; }
 #home-tabs .tabs .tab:last-child {margin-right: 0; }
-#home-tabs .icon {display: block; width: 45px; height: 100px; }
-#home-tabs .text {display: inline-block; position: relative; top: 26px; font-size: 21px; color: #86827f; width: 130px; line-height: 1.1em; }
+#home-tabs .icon {display: block; width: 45px; height: 79px; }
+#home-tabs .text {display: inline-block; position: relative; top: -66px; font-size: 18px; color: #86827f; width: 117px; line-height: 1.1em; margin-left: 52px; }
 
-#tab-quick-explain .icon {background: url('/images/corp/icons/icon-callout-41x37.png') no-repeat center left; float: left; margin: 0 15px 0 23px ; }
-#tab-quick-explain .text {margin-left: 12px; text-indent: -12px; }
+#tab-quick-explain .icon {background: url('/images/corp/icons/icon-callout-41x37.png') no-repeat center left; float: left; margin: 0 15px 0 8px ; background-size: 27px 24px}
+#tab-quick-explain .text { text-indent: -12px; }
 
-#tab-second-section .icon {background: url('/images/corp/icons/icon-globe-45x45.png') no-repeat center left; float: left; margin: 0 23px; }
-#tab-second-section .text {margin-left: 12px; text-indent: -12px; width: 120px; }
+#tab-second-section .icon {background: url('/images/corp/icons/icon-globe-45x45.png') no-repeat center left; float: left; margin: 0 11px; background-size: 30px 30px;}
+#tab-second-section .text {text-indent: -12px; width: 116px; }
+#tab-second-section {margin-left:158px}
 
-#tab-ten-reasons .icon {background: url('/images/corp/icons/icon-ten-45x45.png') no-repeat center left; float: left; margin: 0 23px; }
+#tab-ten-reasons .icon {background: url('/images/corp/icons/icon-ten-45x45.png') no-repeat center left; float: left; margin: 0 8px; background-size: 30px 30px;}
+#tab-ten-reasons {margin-left:158px}
 
 #home-tabs .tabs-content {padding: 30px 0; }
 #home-tabs .tab-content {font-size: 15px; color: #7d7d7d; line-height: 1.7em; padding: 30px 20px; display: none; opacity: 0; }
@@ -959,7 +961,7 @@ a.studentwork-more:hover span {display: inline; }
 .polaroid-wrap {display: block; width: 420px; height: 300px; border: 6px solid #ffffff; box-shadow: #cac9c9 0px 5px 15px; background: #acacac; }
 .more-info-special {margin-bottom: 50px; }
 .more-info-special-content {width: 440px; }
-.more-info-special-content li {background: url('/images/corp/circle-red-2.png') no-repeat 0px 7px; padding-left: 20px; }
+.more-info-special-content li {background: url('/images/corp/circle-red-2.png') no-repeat 0px 7px; padding-left: 20px; background-size: 8px 8px;}
 .more-info-special-title {color: #c84f44; }
 
 

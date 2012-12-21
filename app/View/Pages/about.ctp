@@ -74,13 +74,13 @@
 		<div id="more-info-page" class="site-page" >
 		
 			<div id="more-info-what-is" class="more-info-div">
-				<p style="line-height:33px;"><br /><br />
+				<p style="line-height:33px; margin-left: 52px; margin-top: -10px; margin-right: 56px;"><br /><br />
 					<img align="right" src="/images/corp/paper_storm.png" style="padding-left:245px;" width="255" />
 					Puentes takes the pain out of paper assignments. Rather than giving out assignments and receiving reams of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade and store all assignments through one easy-to-use portal.</p>
 			</div>
 			
-			<div id="more-info-how-does-it-work" class="more-info-div">
-				<img src="/images/corp/about_txt.png" style="padding-top:30px;" />
+			<div id="more-info-how-does-it-work" class="more-info-div" align="center">
+				<img src="/images/corp/about_txt.png" style="padding-top:30px; width:562px; height:154px;" />
 			</div>
 			<br />
 			<div id="more-info-tell-more" class="more-info-div">
@@ -89,15 +89,11 @@
 					<div class="alignleft polaroid-wrap" style="height:261px;"><img src="/images/corp/puentes_ss1.png" width="420" /></div>
 					<div class="alignright more-info-special-content">
 						<p class="more-info-special-title">1. Create the assignment:</p>
-						<ul>
-							<li>Select the kind of assignment you’d like to create</li>
-							<li>Fill out some information</li>
-							<li>Send to your class.</li>
+						<ul style='font-size: 93% !important;'>
+							<li>Select the kind of assignment you'd like to create, fill out some information, send to your class.</li>
+							<li>Upload a document, YouTube video, or assign an offline assignment from a textbook.</li>
+							<li>Add multiple class sections to an assignment.</li>
 						</ul>
-						<p>
-							Upload a document, YouTube video, or assign an offline assignment from a textbook<br />
-							Add multiple class sections to the same assignment 
-						</p>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -107,11 +103,8 @@
 					<div class="alignleft more-info-special-content">
 						<p class="more-info-special-title">2. Students Complete Assignment</p>
 						<p>Students complete the assignment by:</p>
-						<ul>
-							<li>Logging on to Puentes</li>
-							<li>Viewing your document or video</li>
-							<li>Answering your questions</li>
-							<li>Submitting by the Due Date</li>
+						<ul style='font-size: 93% !important;'>
+							<li>Logging on to Puentes, viewing your document or video, answering questions, submitting by the due date.</li>
 							<li>Everything is done in the same place!</li>
 						</ul>
 					</div>
@@ -123,7 +116,7 @@
 					<div class="alignright more-info-special-content">
 						<p class="more-info-special-title">3. Grading Made Easy</p>
 						<p>Grading with paper is old news - we have developed a way to make grading online really simple.</p>
-						<ul>
+						<ul style='font-size: 93% !important;'>
 							<li>Get a snapshot of each student before jumping into comments and corrections</li>
 							<li>Grade the assignment</li>
 							<li>Student is notified the homework has been graded</li>
