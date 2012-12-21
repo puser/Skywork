@@ -50,6 +50,8 @@ class UsersController extends AppController{
 			$this->set('connections',($show == 'connections' ? 1 : 0));
 			$this->set('groups',$this->ClassSet->find('all',array('conditions'=>$conditions)));
 			$this->render('view_classes');
+		}elseif($show == 'payments'){
+			$this->render('view_payments');
 		}else{
 			$this->set('user',$user);
 			$this->set('states',$this->State->find('all'));
@@ -358,6 +360,62 @@ class UsersController extends AppController{
 	function check_login(){
 		if(@$_SESSION['User']['id']) $this->redirect('/pages/home/');
 		else $this->redirect('/dashboard/');
+	}
+	
+	function process_payment(){
+		$trxnProperties = array(
+		  "User_Name"=>"",
+		  "Secure_AuthResult"=>"",
+		  "Ecommerce_Flag"=>"",
+		  "XID"=>"",
+		  "ExactID"=>$_POST["ddlPOS_ExactID"],				    //Payment Gateway
+		  "CAVV"=>"",
+		  "Password"=>"",					                //Gateway Password
+		  "CAVV_Algorithm"=>"",
+		  "Transaction_Type"=>$_POST["ddlPOS_Transaction_Type"],//Transaction Code I.E. Purchase="00" Pre-Authorization="01" etc.
+		  "Reference_No"=>$_POST["tbPOS_Reference_No"],
+		  "Customer_Ref"=>$_POST["tbPOS_Customer_Ref"],
+		  "Reference_3"=>$_POST["tbPOS_Reference_3"],
+		  "Client_IP"=>"",					                    //This value is only used for fraud investigation.
+		  "Client_Email"=>$_POST["tb_Client_Email"],			//This value is only used for fraud investigation.
+		  "Language"=>$_POST["ddlPOS_Language"],				//English="en" French="fr"
+		  "Card_Number"=>$_POST["tbPOS_Card_Number"],		    //For Testing, Use Test#s VISA="4111111111111111" MasterCard="5500000000000004" etc.
+		  "Expiry_Date"=>$_POST["ddlPOS_Expiry_Date_Month"] . $_POST["ddlPOS_Expiry_Date_Year"],//This value should be in the format MM/YY.
+		  "CardHoldersName"=>$_POST["tbPOS_CardHoldersName"],
+		  "Track1"=>"",
+		  "Track2"=>"",
+		  "Authorization_Num"=>$_POST["tbPOS_Authorization_Num"],
+		  "Transaction_Tag"=>$_POST["tbPOS_Transaction_Tag"],
+		  "DollarAmount"=>$_POST["tbPOS_DollarAmount"],
+		  "VerificationStr1"=>$_POST["tbPOS_VerificationStr1"],
+		  "VerificationStr2"=>"",
+		  "CVD_Presence_Ind"=>"",
+		  "Secure_AuthRequired"=>"",
+		  "Currency"=>"",
+		  "PartialRedemption"=>"",
+
+		  // Level 2 fields 
+		  "ZipCode"=>$_POST["tbPOS_ZipCode"],
+		  "Tax1Amount"=>$_POST["tbPOS_Tax1Amount"],
+		  "Tax1Number"=>$_POST["tbPOS_Tax1Number"],
+		  "Tax2Amount"=>$_POST["tbPOS_Tax2Amount"],
+		  "Tax2Number"=>$_POST["tbPOS_Tax2Number"],
+
+		  "SurchargeAmount"=>$_POST["tbPOS_SurchargeAmount"],	//Used for debit transactions only
+		  "PAN"=>$_POST["tbPOS_PAN"]							//Used for debit transactions only
+		  );
+
+
+		$client = new SoapClientHMAC("https://api.demo.globalgatewaye4.firstdata.com/transaction/v12/wsdl");
+		$trxnResult = $client->SendAndCommit($trxnProperties);
+
+
+		if(@$client->fault){
+		    // there was a fault, inform
+		    print "<B>FAULT:  Code: {$client->faultcode} <BR />";
+		    print "String: {$client->faultstring} </B>";
+		    $trxnResult["CTR"] = "There was an error while processing. No TRANSACTION DATA IN CTR!";
+		}
 	}
 	
 	// deauthenticate
