@@ -133,33 +133,38 @@ class ClassesController extends AppController{
 		die();
 	}
 	
-	function clean($class_id){
+	function clean($class_id=NULL){
 		$this->checkAuth();
-		$class = $this->ClassSet->find('first',array('conditions'=>'ClassSet.id = '.$id,'recursive'=>2));
-		if($class['Owner']['id'] != $_SESSION['User']['id']) return false;
+		if($class_id){
+			$class = $this->ClassSet->find('first',array('conditions'=>'ClassSet.id = '.$id,'recursive'=>2));
+			if($class['Owner']['id'] != $_SESSION['User']['id']) return false;
 		
-		// find each bridge that users participated in and add them as "collaborators"
-		foreach($class['User'] as $u){
-			$user_created = date_create($u['date_created']);
+			// find each bridge that users participated in and add them as "collaborators"
+			foreach($class['User'] as $u){
+				$user_created = date_create($u['date_created']);
 			
-			foreach($class['Challenge'] as $c){
-				if($user_created > $c['answers_due']) continue;
+				foreach($class['Challenge'] as $c){
+					if($user_created > $c['answers_due']) continue;
 				
-				// count responses to questions in this challenge from this user_id; if >0, add as collaborator
-				$qids = array();
-				foreach($class['Challenge']['Question'] as $q) $qids[] = $q['id'];
-				if($this->Response->find('count',array('conditions' => array('Response.question_id IN('.implode(',',$qids).')','Response.user_id' => $u['id'])))){
-					$challenge_update = array('Challenge'=>array('id'=>$c['id']));
-					$challenge_update['Collaborator'] = array($u['id']);
-					foreach($challenge['Collaborator'] as $collab) if(array_search($collab['id'],$challenge_update['Collaborator']) === false) $challenge_update['Collaborator'][] = $collab['id'];
-					$this->Challenge->save($challenge_update);
+					// count responses to questions in this challenge from this user_id; if >0, add as collaborator
+					$qids = array();
+					foreach($class['Challenge']['Question'] as $q) $qids[] = $q['id'];
+					if($this->Response->find('count',array('conditions' => array('Response.question_id IN('.implode(',',$qids).')','Response.user_id' => $u['id'])))){
+						$challenge_update = array('Challenge'=>array('id'=>$c['id']));
+						$challenge_update['Collaborator'] = array($u['id']);
+						foreach($challenge['Collaborator'] as $collab) if(array_search($collab['id'],$challenge_update['Collaborator']) === false) $challenge_update['Collaborator'][] = $collab['id'];
+						$this->Challenge->save($challenge_update);
+					}
 				}
 			}
-		}
 		
-		// remove all users from class
-		$this->UserClass->deleteAll(array('UserClass.class_id'=>$class_id),false);
-		$this->redirect('/users/view/classes/');
+			// remove all users from class
+			$this->UserClass->deleteAll(array('UserClass.class_id'=>$class_id),false);
+			$this->redirect('/users/view/classes/');
+		}else{
+			$this->set('class_id',$class_id);
+			$this->layout = 'ajax';
+		}
 	}
 	
 	function delete($id){

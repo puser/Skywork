@@ -5,7 +5,7 @@
 			<ul>
 				<?php if($_SESSION['User']['id'] == $class['Owner']['id']){ ?>
 					<li><a class="icon4 icon4-plus" href="/classes/invite_member/<?php echo $class['ClassSet']['id']; ?>/student/" id="inviteNewUserLink"><?php echo __('Add a new Student') ?></a></li>
-					<li><a class="icon4 icon4-remove" href="/classes/clean/<?php echo $class['ClassSet']['id']; ?>"><?php echo __('Remove All') ?></a></li>
+					<li><a class="icon4 icon4-remove show-overlay" href="/classes/clean/"><?php echo __('Remove All') ?></a></li>
 				<?php } ?>
 			</ul>
 		</div>
@@ -95,7 +95,7 @@
 </div>
 
 <script type="text/javascript"> 
-$('#inviteNewUserLink,.deleteStudentMemberLink').fancybox({
+$('#inviteNewUserLink,.deleteStudentMemberLink,.show-overlay').fancybox({
 	'hideOnOverlayClick' : false,
 	'showCloseButton' : false,
 	'centerOnScroll' : true
