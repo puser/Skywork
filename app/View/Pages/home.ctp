@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="/css/style_corp.css" />
-	<link rel="stylesheet" type="text/css" href="js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
 	<link rel="stylesheet" media="all" href="/js/mcs/jquery.mCustomScrollbar.css" />
 	
@@ -87,8 +87,7 @@
 							<span class="line1">End paper overload.</span>
 						</div>
 						<div class="slide slide-1">
-							<span class="line1">Students learn more.</span>
-							<span class="line2">You work less.</span>
+							<span class="line1">Students learn more, you work less.</span>
 						</div>
 						<div class="slide slide-1">
 							<span class="line1">Any other assignment is just an assignment.</span>
@@ -117,20 +116,21 @@
 				</div>
 			
 			
-				<div id="home-tabs">
+				<div id="home-tabs" style = "margin-left: 48px;"
+>
 				
 					<div class="tabs" >
 						<div class="tab" id="tab-quick-explain">
 							<span class="icon"></span>
 							<div class="text">
-								Quick Explanation
+								&nbsp;&nbsp;Quick Explanation
 							</div>
 							<span class="indicator"></span>
 						</div>
 						<div class="tab" id="tab-second-section">
 							<span class="icon"></span>
 							<div class="text">
-								Puentes Bridges
+								&nbsp;&nbsp;Puentes	Bridges
 							</div>
 							<span class="indicator"></span>
 						</div>
@@ -138,7 +138,6 @@
 							<span class="icon"></span>
 							<div class="text">
 								Reasons to join Puentes
-							</div>
 							<span class="indicator"></span>
 						</div>
 					</div>
