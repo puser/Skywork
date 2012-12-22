@@ -54,13 +54,13 @@
 									<div class="label alignleft">
 										<span class="red">*</span> <?php echo __('Email') ?>
 									</div>
-									<input type="text" class="inputText" id="loginUser" />
+									<input type="text" name="loginUser" class="inputText" id="loginUser" />
 								</li>
 								<li>
 									<div class="label alignleft">
 										<span class="red">*</span> <?php echo __('Password') ?>
 									</div> 
-									<input type="password" class="inputText" id="loginPass" />
+									<input type="password" name="loginPass" class="inputText" id="loginPass" />
 								</li>
 								<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
 							</ul>
@@ -509,6 +509,7 @@
 	$('#overlayLoginForm input').keydown(function (e){
 	    if(e.keyCode == 13){
 			check_login();
+			return false;
 		}
 	});
 	</script>
