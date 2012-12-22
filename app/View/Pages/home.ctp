@@ -48,22 +48,24 @@
 					<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#">Login</a></span>
 				
 					<div id="overlayLoginForm" class="rounded" style="text-align:left;top:22px;right:0px;">
-						<ul class="fieldset2">
-							<li>
-								<div class="label alignleft">
-									<span class="red">*</span> <?php echo __('Email') ?>
-								</div>
-								<input type="text" class="inputText" id="loginUser" />
-							</li>
-							<li>
-								<div class="label alignleft">
-									<span class="red">*</span> <?php echo __('Password') ?>
-								</div> 
-								<input type="password" class="inputText" id="loginPass" />
-							</li>
-							<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
-						</ul>
-						<div class="clear"></div>
+						<form id="loginBoxForm" method="POST" action="/dashboard/">
+							<ul class="fieldset2">
+								<li>
+									<div class="label alignleft">
+										<span class="red">*</span> <?php echo __('Email') ?>
+									</div>
+									<input type="text" class="inputText" id="loginUser" />
+								</li>
+								<li>
+									<div class="label alignleft">
+										<span class="red">*</span> <?php echo __('Password') ?>
+									</div> 
+									<input type="password" class="inputText" id="loginPass" />
+								</li>
+								<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
+							</ul>
+							<div class="clear"></div>
+						</form>
 
 						<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();"><?php echo __('I forgot my password') ?></a>
 						<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner"><?php echo __('Log in') ?></span></a>
