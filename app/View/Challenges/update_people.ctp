@@ -76,6 +76,7 @@
 			</li>
 		</ul>
 		<br /><br />
+		<!--
 		<p><?php echo __('Invite a Collaborator:') ?></p>
 		<?php if(@$queued_users){ ?>
 			<table class="table-type-1">
@@ -108,7 +109,7 @@
 		<?php } ?>
 		
 		<a href="/users/invite_collaborator/<?php echo $challenge['Challenge']['id']; ?>"<?php if(!$challenge['ClassSet']){ ?> onclick="alert('<?php echo __('Please add at least one group to this bridge to continue') ?>');return false;" class="icon-add"<?php }else{ ?> class="add-link show-overlay"<?php } ?> id="inviteNewUserLink"><?php echo __('Add an individual') ?></a>
-					
+		-->
 	</div>
 </div>
 
