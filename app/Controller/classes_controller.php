@@ -133,10 +133,10 @@ class ClassesController extends AppController{
 		die();
 	}
 	
-	function clean($class_id=NULL){
+	function clean($class_id=NULL,$warning=false){
 		$this->checkAuth();
-		if($class_id){
-			$class = $this->ClassSet->find('first',array('conditions'=>'ClassSet.id = '.$id,'recursive'=>2));
+		if(!$warning){
+			$class = $this->ClassSet->find('first',array('conditions'=>'ClassSet.id = '.$class_id,'recursive'=>2));
 			if($class['Owner']['id'] != $_SESSION['User']['id']) return false;
 		
 			// find each bridge that users participated in and add them as "collaborators"
@@ -159,7 +159,7 @@ class ClassesController extends AppController{
 			}
 		
 			// remove all users from class
-			$this->UserClass->deleteAll(array('UserClass.class_id'=>$class_id),false);
+			$this->UserClass->deleteAll(array('UserClass.user_id != '.$_SESSION['User']['id'],'UserClass.class_id'=>$class_id),false);
 			$this->redirect('/users/view/classes/');
 		}else{
 			$this->set('class_id',$class_id);

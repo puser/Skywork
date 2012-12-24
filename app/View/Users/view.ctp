@@ -24,8 +24,7 @@
 					<li><label><?php echo __('Last Name') ?></label> <input type="text" size="60" name="lastname" value="<?php echo $user['User']['lastname']; ?>" /></li>
 					<li>
 						<label><?php echo __('E-mail') ?></label>
-						<input type="text" size="60" name="email" value="<?php echo $user['User']['email']; ?>" />
-						<a href="#modal-preferences" class="show-overlay modal-link" style="color: #666666; font-size: 12px; "><?php echo __('Preferences') ?></a>
+						<input type="text" size="60" name="email" value="<?php echo $user['User']['email']; ?>" />-
 					</li>
 					<li>
 						<label><?php echo __('City') ?></label> <input type="text" size="20" class="width15" name="city" value="<?php echo $user['User']['city']; ?>" />
@@ -50,6 +49,18 @@
 					<li id='state_input' <?php if($user['User']['country'] == 'US' || $user['User']['country'] == ''){?>style='display:none'<?php } ?>>
 						<label><?php echo __('State/Province') ?></label><input type="text" id='other_state' size="20" class="width15" name="other_state" value="<?php if($user['User']['country'] == 'US'){ echo '';}else{ echo $user['User']['state']; }?>" />
 					</li>
+				</ul>
+				
+				<br /><br />
+				<p><?php echo __('Institution Info') ?></p>
+				<ul class="fieldset2">	
+					<li><label><?php echo __('Name of Institution') ?></label> <input type="text" value="<?php echo $user['User']['institution']; ?>" size="60" name="institution" /></li>
+					<li><label><?php echo __('Type') ?></label> <input type="text" size="60" value="<?php echo $user['User']['institution_type']; ?>" name="institution_type" /></li>
+				</ul>
+				
+				<br /><br />
+				<p><?php echo __('System Preferences') ?></p>
+				<ul class="fieldset2">	
 					<li>
 						<label><?php echo __('Language') ?></label> 
 						<select name="language" style="width: 120px;">
@@ -57,7 +68,13 @@
 							<option value="spa"<?php if($user['User']['language']=='spa'){ ?> selected="selected"<?php } ?>><?php echo __('Spanish') ?></option>
 						</select>
 					</li>
+					<li><label><?php echo __('Type') ?></label> <input type="password" size="60" name="institution_type" /></li>
+					<li>
+						<label><?php echo __('Email Preferences') ?></label>
+						<a href="#modal-preferences" class="show-overlay modal-link" style="color: #666666; font-size: 12px; "><?php echo __('Edit') ?></a>
+					</li>
 				</ul>
+				
 				<br /><br />
 				<p><?php echo __('Password') ?></p>
 				<span id="show_change_password" style='float: left; width: 250px; margin-right: 10px; color: #567AA9; font-size: 13px;'><?php echo __('To change your password click ') ?><a onclick="$('#change_password').show('fast'); $('#cancel_changes').show('fast'); $('#show_change_password').hide();"><u>here</u></a></span>

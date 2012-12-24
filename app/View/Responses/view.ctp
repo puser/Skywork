@@ -289,7 +289,7 @@
 			}
 		
 			$user_colors = array();
-			$all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
+			$all_colors = array('#F75D59','#736AFF','#C68E17','#3EA99F','#F88017');
 		
 			$js_comments = array();
 			$responseCount = $start_offset = $commentCount = 0;

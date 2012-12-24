@@ -75,7 +75,7 @@ class MetricsController extends AppController{
 						if($r['question_id'] && !in_array($r['question_id'],$checked_responses)){
 							$checked_responses[] = $r['question_id'];
 							$keystrokes += strlen($r['response_body']);
-							if(strlen($r['response_body']) >= $challenge['Challenge']['min_response_length']) @$activity[$u['id']]['responses']++;
+							if(str_word_count($r['response_body']) >= $challenge['Challenge']['min_response_length']) @$activity[$u['id']]['responses']++;
 						}elseif(!in_array($r['question_id'],$checked_responses)){
 							if(@$_REQUEST['quality'] == 'I' && $u['user_type'] != 'L') continue;
 							elseif(@$_REQUEST['quality'] == 'S' && $u['user_type'] != 'P') continue;
