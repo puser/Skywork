@@ -84,7 +84,7 @@
 									<a style="padding-left:30px;width:136px;" href="#" class="sidemenu2-title"  onclick="$('#instructor_comment_nav').removeClass('active');"><?php echo $c['group_name']; ?></a>
 									<ul>
 										<?php
-										// shift current user to front
+									// shift current user to front
 										foreach($c['User'] as $uk=>$u){
 											if($u['id'] == $_SESSION['User']['id']){
 												unset($c['User'][$uk]);
@@ -438,26 +438,27 @@
 	<div class="clear"></div>
 	
 	<?php if(!@$ajax && !@$complete_eval){ ?>
-		<div style="width: 275px; margin: 0 auto; ">
+		<div style="width: 275px; margin: 0 auto; " id='parentGototop'>
 			<div style="padding-right:10px;width:160px;display:none;float:left;" id="finishedEvalBtn">
 				<a href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/" class="btn1">
 					<span><?php echo __('I\'m Done Evaluating') ?></span>
 				</a>
 			</div>
-			<div style="width: 120px; float: left;" id="nextStudentBtn">
+<!-- 			<div style="width: 120px; float: left;" id="nextStudentBtn">
 				<a href="#" onclick="next<?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Question' : 'Student'); ?>();return false;" class="btn2">
 					<span><?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Continue' : 'Next Student'); ?></span>
 				</a>
 			</div>
-			<div style="width:120px;float:right;" id="topOfPage">
-				<a href="#" class="btn3"><span><?php echo __('Top of Page') ?></span></a>
-			</div>
+ -->		
 			<div class="clear"></div>
 		</div>
 	<?php } ?>
 	
 	<a class="show-overlay" href="#modalSaveChoices" id="finalDialog" style="display:none;"> </a>
 	<a class="show-overlay" href="#modalPreEval" id="showPreEval" style="display:none;"> </a>
+	<div style="width:120px;float:right;" id="topOfPage">
+		<a href="#" style="float:right; margin-right: 4px;margin-bottom: -15px;">^ <span style="color: #999;"><?php echo __('Go To Top') ?></span></a>
+	</div>
 
 </div>
 
@@ -505,7 +506,10 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	if($(window).height() >= $(document).height()) $('#topOfPage').hide().parent().width(120);
+	if($(window).height() >= $(document).height()) {
+		$('#topOfPage').hide();
+		$('#parentGototop').width(120)
+	}
 	
 	<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
 		if(!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length){

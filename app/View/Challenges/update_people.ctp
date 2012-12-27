@@ -137,7 +137,8 @@
 			<div style="text-align:center;margin:20px;"><?php echo nl2br($warning_msg); ?></div>	
 			<br />
 			<div style="width: 200px; margin: 0 auto; ">
-				<a href="#" class="btn2" style="width: 80px; float: left;" onclick="save_challenge_final();"><span><?php echo __('Send') ?></span></a>
+				<a href="#" id="sendmail" class="btn2" style="width: 80px; float: left;" onclick="save_challenge_final();"><span><?php echo __('Send') ?></span></a>
+				<a id="mailsent" class="btn2" style="width: 80px; float: left; display:none" ><span><?php echo __('Send') ?></span></a>
 				<a href="#" class="btn3" style="width: 100px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Don\'t send yet') ?></span></a>
 				<div class="clear"></div>
 			</div>

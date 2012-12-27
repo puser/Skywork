@@ -651,6 +651,10 @@ function save_challenge(redirect){
 
 function save_challenge_final(){
 	$('#challengeStatus').val('C');
+    var chk = document.getElementById('sendmail');
+    chk.style.display="none";
+	var chk1 = document.getElementById('mailsent');
+    chk1.style.display="";
 	/*
 	$.ajax({url:'/challenges/update/0/ajax',data:$('#challengeData').serialize(),type:'POST',success:function(r){
 		setTimeout('window.location = "/dashboard/";',1000);
