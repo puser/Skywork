@@ -1,7 +1,7 @@
 <div id="modal-cardinfo">
 	<div class="modal-wrapper" style="width: 600px;" >
 		<div class="modal-box-head">
-			<span class="icon3 icon-dollar"></span>
+			<span class="icon3 icon2-dollar"></span>
 			<h2><?php echo __('Payment Method') ?></h2>
 		</div>
 		<div class="modal-box-content" id="processing_content" style="display:none;text-align:center;">
