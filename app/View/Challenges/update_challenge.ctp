@@ -36,8 +36,8 @@
 		<p><?php echo __('Is your challenge offline?') ?></p>
 		<a id="offlineChallengeLink" onclick="$(this).hide();$('#offlineChallengeInput').show();return false;" href="#"><u><?php echo __("I'm assigning my challenge offline (e.g. the reading is in a textbook)") ?></u></a>
 		<div id="offlineChallengeInput" style="display:none;background:#fffef6;padding:5px 3px;">
-			<input type="text" value="Describe the Challenge (e.g. Read pages 145 - 173 in your textbook)..." style="color:#ccc;width:600px;margin-right:7px;padding:5px;" />
-			<a onclick="save_offline();" style="display:inline-block;width:104px;height:26px;color:#fff;text-align:center;background:url(/images/btn_continue.png) top left no-repeat;padding-top:8px;">Continue</a>
+			<input type="text" id="offline_challenge" value="Describe the Challenge (e.g. Read pages 145 - 173 in your textbook)..." style="color:#ccc;width:600px;margin-right:7px;padding:5px;"  onKeyup="click_continue();"/>
+			<a onclick="save_offline();" id="next_step" style="display:inline-block;width:104px;height:26px;color:#fff;text-align:center;background:url(/images/btn_continue.png) top left no-repeat;padding-top:8px;">Continue</a>
 		</div>
 	</div><br /><br />
 </div>
