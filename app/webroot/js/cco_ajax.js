@@ -1,9 +1,12 @@
 function check_login(){
 	$.ajax({url:'/users/login/ajax',data:{'login':$('#loginUser').val(),'password':$('#loginPass').val()},type:'POST',success:function(r){
-		if(r == 1) window.location = '/dashboard/';
-		else{
+		if(r == 1){
+			$('#loginBoxForm').submit();
+			//window.location = '/dashboard/';
+		}else{
 			$('#loginError').html('Email and password combination do not match!');
 			$('.errorNotification').show();
+			return false;
 		}
 	}});
 }
