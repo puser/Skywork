@@ -79,8 +79,18 @@
 			<div class="clear"></div>
 		</div>
 		<div class="box-content">
-			<p>Payments &nbsp;&nbsp;<a href="#">edit</a></p>
-			<span style="font-size:12px;">No payment method has been added yet.<br /><br /></span>
+			<p>Payments &nbsp;&nbsp;<a href="/users/update_payment/PREMIUM/" class="show-overlay">edit</a></p>
+			<?php if($user['User']['card_token']){ ?>
+				<span style="font-size:12px;"><?php echo $user['User']['card_type']; ?> ending in <?php echo substr($user['User']['card_token'],-4); ?></span><br /><br />
+				Next Payment is
+				<?php
+				$pmyt = date_create($user['User']['last_payment']);
+				date_add($pmyt,date_interval_create_from_date_string('1 month'));
+				echo date_format($pmyt,'F j, Y');
+				?>
+			<?php }else{ ?>
+				<span style="font-size:12px;">No payment method has been added yet.<br /><br /></span>
+			<?php } ?>
 		</div>
 	</div>
 	
@@ -119,7 +129,6 @@
 			</div>
 		</div>
 	</div>
-		
 </div>
 
 <script type="text/javascript">

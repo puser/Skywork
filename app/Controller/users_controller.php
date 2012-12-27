@@ -51,6 +51,7 @@ class UsersController extends AppController{
 			$this->set('groups',$this->ClassSet->find('all',array('conditions'=>$conditions)));
 			$this->render('view_classes');
 		}elseif($show == 'payments'){
+			$this->set('user',$user);
 			$this->render('view_payments');
 		}else{
 			$this->set('user',$user);
@@ -364,45 +365,99 @@ class UsersController extends AppController{
 		else $this->redirect('/dashboard/');
 	}
 	
+	function update_payment($tier=null){
+		if(@$_POST['card_num']){
+			// save tier & payment day
+			$u['User']['id'] = $_SESSION['User']['id'];
+			$u['User']['payment_day'] = date('j');
+			$u['User']['account_tier'] = $_REQUEST['account_tier'];
+			$this->User->save($u);
+			
+			$this->process_payment();
+		}else{
+			$this->layout = 'ajax';
+			$this->set('tier',$tier);
+		}
+	}
+	
 	function process_payment(){
 		$user = $this->User->findById($_SESSION['User']['id']);
 		
-		$trxnProperties = array(
-		  // "ExactID"=>'A28460-01', // PRODUCTION
-			"ExactID"=>'AD1689-05', // TESTING
-		  // "Password"=> "14r0z18j", // PRODUCTION
-		  "Password"=> "181jw558", // TESTING
-			"Transaction_Type"=>"00",
-		  "Customer_Ref"=>$user['User']['id'],
-		  "Client_Email"=>$user['User']['email'],
-		  "Language"=>'en',
-		  "Card_Number"=>$_POST["card_num"], // Test #s: VISA="4111111111111111" MasterCard="5500000000000004"
-		  "Expiry_Date"=>$_POST["card_expiry"], // format as MM/YY.
-		  "CardHoldersName"=>$_POST["card_name"],
-		  "DollarAmount"=> (@$user['User']['account_tier'] == 'PLATINUM' ? 19.99 : 9.99),
-		  "VerificationStr1"=>"{$_POST['street']}|{$_POST['zip']}|{$_POST['city']}|{$_POST['state']}|{$_POST['country']}",
-		  "VerificationStr2"=>$_POST['card_code'],
-		  "CVD_Presence_Ind"=>($_POST['card_code'] ? 1 : 0)
-		  );
-
+		// if we have a card token, use this for the transaction; otherwise, use the card number and save the returned token
+		if($user['User']['card_token'] && !@$_POST["card_num"]){
+			$trxnProperties = array(
+				/* PRODUCTION */
+			  // "ExactID"=>'A28460-01',
+				// "Password"=> "14r0z18j",
+			
+				/* TESTING */
+				"ExactID"=>'AD1689-05',
+			  "Password"=> "181jw558",
+		
+				"Transaction_Type"=>"00",
+			  "Customer_Ref"=>$user['User']['id'],
+			  "Client_Email"=>$user['User']['email'],
+			  "Language"=>'en',
+			  "Expiry_Date"=>$user['User']['card_expiry'],
+			  "CardHoldersName"=>$user['User']['card_name'],
+				"TransarmorToken"=>$user['User']['card_token'],
+				"CardType"=>$user['User']['card_type'],
+			  "DollarAmount"=> (@$user['User']['account_tier'] == 'PLATINUM' ? 19.99 : 9.99));
+		}else{
+			$trxnProperties = array(
+				/* PRODUCTION */
+			  // "ExactID"=>'A28460-01',
+				// "Password"=> "14r0z18j",
+			
+				/* TESTING */
+				"ExactID"=>'AD1689-05',
+			  "Password"=> "181jw558",
+		
+				"Transaction_Type"=>"00",
+			  "Customer_Ref"=>$user['User']['id'],
+			  "Client_Email"=>$user['User']['email'],
+			  "Language"=>'en',
+			  "Card_Number"=>$_POST["card_num"], // Test #s: VISA="4111111111111111" MasterCard="5500000000000004"
+			  "Expiry_Date"=>$_POST["card_expiry"], // format as MMYY
+			  "CardHoldersName"=>$_POST["card_name"],
+			  "DollarAmount"=> (@$user['User']['account_tier'] == 'PLATINUM' ? 19.99 : 9.99),
+			  "VerificationStr1"=>"{$_POST['street']}|{$_POST['zip']}|{$_POST['city']}|{$_POST['state']}|{$_POST['country']}",
+			  "VerificationStr2"=>$_POST['card_code'],
+			  "CVD_Presence_Ind"=>($_POST['card_code'] ? 1 : 0));
+		}
+		
 		$client = new SoapClientHMAC("https://api.demo.globalgatewaye4.firstdata.com/transaction/v12/wsdl");
 		$trxnResult = $client->SendAndCommit($trxnProperties);
 
 		if(@$client->fault){
-		    // there was a fault, inform
+		    // there was a fault
 		    print "<B>FAULT:  Code: {$client->faultcode} <BR />";
 		    print "String: {$client->faultstring} </B>";
 		    $trxnResult["CTR"] = "There was an error while processing. No TRANSACTION DATA IN CTR!";
 		}
 		
-		foreach($trxnResult as $key=>$value){
-			if ($key == "CTR") {
-				$value = nl2br($value);
-				print $value;
+		//print_r($trxnProperties);
+		//print_r($trxnResult);	
+		
+		if($trxnResult->Transaction_Error || $trxnResult->Transaction_Approved != 1){
+			die($trxnResult->EXact_Message);
+		}else{
+			// if initial payment was successful, save the token & related info
+			$u['User']['id'] = $user['User']['id'];
+			if($_POST["card_num"]){
+				$u['User']['card_name'] = $trxnResult->CardHoldersName;
+				$u['User']['card_type'] = $trxnResult->CardType;
+				$u['User']['card_expiry'] = $trxnResult->Expiry_Date;
+				$u['User']['card_token'] = $trxnResult->TransarmorToken;
 			}
+			
+			$u['User']['last_payment'] = DboSource::expression('NOW()');
+			$this->User->save($u);
+
+			// send success email
 		}
 		
-		die();
+		die('success');
 	}
 	
 	// deauthenticate
