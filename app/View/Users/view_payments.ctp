@@ -35,7 +35,7 @@
 					</li>
 					<li>
 						<div class="accordion-trigger">
-							<a class="btn1" style="display:block;"><span><?php echo __('Select') ?></span></a>
+							<a class="btn1" style="display:block;" id="premium_select"><span><?php echo __('Select') ?></span></a>
 							<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;"></div>
 							<p><?php echo __('Premium Account - $9.99/month') ?></p>
 							<div class="clear"></div>
@@ -46,7 +46,7 @@
 					</li>
 					<li class="alternate">
 						<div class="accordion-trigger">
-							<a class="btn1" style="display:block;"><span><?php echo __('Select') ?></span></a>
+							<a class="btn1" style="display:block;" id="platinum_select"><span><?php echo __('Select') ?></span></a>
 							<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;"></div>
 							<p><?php echo __('Platinum Account - $19.99/month') ?></p>
 							<div class="clear"></div>
@@ -156,5 +156,11 @@ $(".accordion-trigger").click(function(){
 	else $('#payment_summary').hide();
 });
 
-$(".accordion-trigger p").first().click();
+<?php if($user['User']['account_tier'] == 'PLATINUM'){ ?>
+	$('#platinum_select').click();
+<?php }elseif($user['User']['account_tier'] == 'PREMIUM'){ ?>
+	$('#premium_select').click();
+<?php }else{ ?>
+	$(".accordion-trigger p").first().click();
+<?php } ?>
 </script>
