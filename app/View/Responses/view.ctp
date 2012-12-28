@@ -54,7 +54,7 @@
 	
 		<?php }elseif($_SESSION['User']['user_type'] == 'P'){ ?>
 		
-			<h1><?php echo __('Summary') ?></h1>
+			<h1 id='studentsummary'><?php echo __('Summary') ?></h1>
 			<div id="sidemenu">
 				<?php if($challenge[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
 					<ul>
@@ -125,7 +125,7 @@
 					</ul>-->
 				<?php } ?>
 				<ul>
-					<li id="instructor_comment_nav" <?php if(@$_REQUEST['instructor_comments']){ ?>class="active"<?php } ?>>
+					<li id="instructor_comment_nav" <?php if(@$_REQUEST['instructor_comments'] || $challenge[0]['Challenge']['collaboration_type'] == 'NONE'){ ?>class="active"<?php } ?>>
 						<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/paper.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $_SESSION['User']['id']; ?>?notips=1&instructor_comments=1">Instructor Comments</a>
 					</li>
 					<?php if($challenge[0]['Collaborator']){ ?>
@@ -444,12 +444,12 @@
 					<span><?php echo __('I\'m Done Evaluating') ?></span>
 				</a>
 			</div>
-<!-- 			<div style="width: 120px; float: left;" id="nextStudentBtn">
+ 			<div style="width: 120px; float: left;" id="nextStudentBtn">
 				<a href="#" onclick="next<?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Question' : 'Student'); ?>();return false;" class="btn2">
 					<span><?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Continue' : 'Next Student'); ?></span>
 				</a>
 			</div>
- -->		
+		
 			<div class="clear"></div>
 		</div>
 	<?php } ?>
@@ -728,5 +728,9 @@ function nextQuestion(){
 
 function firstStudent(){
 	window.location = $('.userNav').first().find('a').attr('href');
+}
+
+if($('#studentsummary').html() == 'Summary'){
+	$('#nextStudentBtn').hide();
 }
 </script>
