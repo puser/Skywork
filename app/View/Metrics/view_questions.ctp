@@ -61,7 +61,7 @@
 						$idx = 0;
 						foreach($challenge['Question'] as $k=>$q){
 							foreach($q['Response'] as $r){
-								if(!$r['positive_comments'] && !$r['negative_comments']) continue;
+								if(!$r['positive_comments'] && !$r['negative_comments'] && !$r['neutral_comments']) continue;
 								elseif($idx >= 10) break;
 								$idx++; ?>
 								<tr<?php if($idx % 2){ ?> class="alternate"<?php } ?>>
