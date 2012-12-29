@@ -751,8 +751,4 @@ function hide_comments(rid,e){
 	$('.question-comments').hide();
 }
 
-function click_continue(){
-	if(event.keyCode == 13){
-		$('#next_step' ).click();
-	}
-}
+
