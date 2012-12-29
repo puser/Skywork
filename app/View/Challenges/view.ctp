@@ -24,7 +24,7 @@
 					<li class="action-preview"><a onclick="save_response('/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>');return false;" href="#"><?php echo __('Assignment') ?></a></li>
 				<?php }
 			} ?>	
-			<li class="action-save"><a href="#" onclick="save_response();return false;"><?php echo __('Save') ?></a></li>
+			<!-- <li class="action-save"><a href="#" onclick="save_response();return false;"><?php echo __('Save') ?></a></li> -->
 			<li class="action-exit"><a href="#modalExitChoices" class="show-overlay"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>
