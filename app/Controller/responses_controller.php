@@ -23,10 +23,14 @@ class ResponsesController extends AppController{
 												
 		$challenge = $this->Challenge->find('all',array('conditions'=>"Challenge.id = $challenge_id",'contain'=>$contains));
 	
-		if($completed){
+		$user_responses = $qids = array();
+		if($completed || $_SESSION['User']['user_type'] == 'L'){
 			foreach($challenge[0]['Question'] as $k=>$q){
-				foreach((@$q['Response'][0]['Responses'] ? @$q['Response'][0]['Responses'] : array()) as $r) @$challenge[0]['Question'][$k]['response_total'] += $r['response_body'];
-				@$challenge[0]['Question'][$k]['response_total'] = round(@$challenge[0]['Question'][$k]['response_total']/count($q['Response'][0]['Responses']));
+				$qids[] = $q['id'];
+				if($completed){
+					foreach((@$q['Response'][0]['Responses'] ? @$q['Response'][0]['Responses'] : array()) as $r) @$challenge[0]['Question'][$k]['response_total'] += $r['response_body'];
+					@$challenge[0]['Question'][$k]['response_total'] = round(@$challenge[0]['Question'][$k]['response_total']/count($q['Response'][0]['Responses']));
+				}
 			}
 		}
 				
@@ -60,9 +64,20 @@ class ResponsesController extends AppController{
 			$this->redirect('/responses/view/'.$challenge_id.'/'.($redirect_user ? $redirect_user : 'error'));
 		}elseif($user_id == 'complete_eval') $this->set('complete_eval',true);
 		
+		if($_SESSION['User']['user_type'] == 'L'){
+			foreach($challenge[0]['ClassSet'] as $cs){
+				foreach($cs['User'] as $u){
+					if($u['user_type'] == 'P'){
+						@$user_responses[$u['id']] += $this->Response->find('count',array('conditions'=>array('Response.user_id' => $u['id'],'Response.question_id IN(' . implode(',',$qids) . ')')));
+					}
+				}
+			}
+		}
+		
 		$this->set('challenge',$challenge);
 		$this->set('user_id',$user_id);
 		$this->set('completed',$completed);
+		$this->set('user_responses',$user_responses);
 			
 		if(@$_REQUEST['ajax']){
 			$this->set('ajax',true);

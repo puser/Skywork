@@ -67,7 +67,7 @@
 					}elseif($_SESSION['User']['user_type'] == 'P' && (($a_date < $now && $challenge['Challenge']['collaboration_type'] == 'NONE') || ($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) < date_create())) && !$challenge['Challenge']['eval_complete']){
 						$challenge_click = "$('#skipcollab_warning_link').click();return false;";
 					}elseif(@$challenge['Users']){
-						if(($r_date > $now && $_SESSION['User']['user_type'] == 'L') || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now) || ($challenge['Challenge']['collaboration_type'] == 'NONE' && !$challenge['Challenge']['eval_complete'])){
+						if((!$challenge['Challenge']['eval_complete'] && $_SESSION['User']['user_type'] == 'L') || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now) || ($challenge['Challenge']['collaboration_type'] == 'NONE' && !$challenge['Challenge']['eval_complete'])){
 							$challenge_click = "window.location = '/responses/view/{$challenge['Challenge']['id']}" . ($_SESSION['User']['user_type'] == 'P' ? "/{$_SESSION['User']['id']}" : '') . "';";
 						}else{
 							$challenge_click = "show_user_list($(this).parent(),{$challenge['Challenge']['id']}," . ($_SESSION['User']['user_type'] == 'L' ? '1' : '0') . "," . ($r_date < $now ? '1' : '0') . ");";
