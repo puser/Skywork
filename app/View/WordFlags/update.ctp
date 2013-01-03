@@ -20,7 +20,7 @@
 		
 		<br />
 		<div style="border:3px dashed #ccc;padding:10px;">
-			<?php echo (@$word ? 'Edit this word' : 'Add a ' . ($type != 'PHRASE' ? 'word' : 'phrase') . 'to this list'); ?>:<br />
+			<?php echo (@$word ? 'Edit this word' : 'Add a ' . ($type != 'PHRASE' ? 'word' : 'phrase') . ' to this list'); ?>:<br />
 			<input type="text" style="margin-bottom:10px;" id="wordInput" value="<?php echo @$word; ?>" /><br />
 		
 			<?php if($type == 'EXPL'){ ?>
