@@ -73,18 +73,27 @@
 						<td><?php echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}"; ?></td>
 						<td>
 							<?php if($g['Owner']['id']==$_SESSION['User']['id']){ ?>
-							<div class="item-actions">
-								<a href="#" class="item-actions-icon"></a>
-								<div class="item-actions-popup rounded2">
-									<ul>
-										<li><a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_sharing" class="icon3 icon3-plus modal-link"><?php echo __('Share Class') ?></a></li>
-										<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['ClassSet']['id']; ?>,'<?php echo $g['ClassSet']['group_name']; ?>','<?php echo ($g['ClassSet']['auth_token'] ? $g['ClassSet']['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link"><?php echo __('View Token') ?></a></li>
-										<li><a href="/classes/update/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen modal-link"><?php echo __('Edit Class') ?></a></li>
-										<li><a id="edit_student_<?php echo $g['ClassSet']['id']; ?>" href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-sm_green modal-link"><?php echo __('Edit Students') ?></a></li>
-										<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/classes/delete/<?php echo $g['ClassSet']['id']; ?>/');" class="icon3 icon3-close modal-link"><?php echo __('Delete Class') ?></a></li>
-									</ul>
+								<div class="item-actions">
+									<a href="#" class="item-actions-icon"></a>
+									<div class="item-actions-popup rounded2">
+										<ul>
+											<li><a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_sharing" class="icon3 icon3-plus modal-link"><?php echo __('Share Class') ?></a></li>
+											<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['ClassSet']['id']; ?>,'<?php echo $g['ClassSet']['group_name']; ?>','<?php echo ($g['ClassSet']['auth_token'] ? $g['ClassSet']['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link"><?php echo __('View Token') ?></a></li>
+											<li><a href="/classes/update/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen modal-link"><?php echo __('Edit Class') ?></a></li>
+											<li><a id="edit_student_<?php echo $g['ClassSet']['id']; ?>" href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-sm_green modal-link"><?php echo __('Edit Students') ?></a></li>
+											<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/classes/delete/<?php echo $g['ClassSet']['id']; ?>/');" class="icon3 icon3-close modal-link"><?php echo __('Delete Class') ?></a></li>
+										</ul>
+									</div>
 								</div>
-							</div>
+							<?php }else{ ?>
+								<div class="item-actions">
+									<a href="#" class="item-actions-icon"></a>
+									<div class="item-actions-popup rounded2">
+										<ul>
+											<li><a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $g['ClassSet']['id'].",".$_SESSION['User']['id']; ?>);jQuery.fancybox.close();$('#deleteMemberLink').unbind(); });return false;" class="icon3 icon3-close modal-link"><?php echo __('Delete') ?></a></li>
+										</ul>
+									</div>
+								</div>
 							<?php } ?>
 						</td>
 					</tr>

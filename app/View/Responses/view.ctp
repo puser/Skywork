@@ -337,10 +337,13 @@
 										foreach(@$q['Response'][0]['Comment'] as $i=>$c){
 											if(!@$user_colors[$c['user_id']]) $user_colors[$c['user_id']] = array_pop($all_colors);
 											if(!$all_colors) $all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
+											
+											$br_offset = substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
+											$br_offset += substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
 									
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
-									
-											$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start']);
+					
+											$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start'] + $br_offset) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start'] + $br_offset);
 									
 											if(!$completed){
 												$alt_response = str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body']));
@@ -379,12 +382,16 @@
 									if($completed){
 										$mod_response = array();
 										foreach(@$q['Response'][0]['Comment'] as $c){
+											
+											$br_offset = substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
+											$br_offset += substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
+											
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue; 
 											if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
 									
-											$mod_response[$c['user_id']] = $c['segment_start'] + $c['segment_length'] > strlen($mod_response[$c['user_id']]) || $c['segment_length'] < 0 ? ($mod_response[$c['user_id']] . '</span>') : (substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length']) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length']));
-											$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start']);
-											$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start']) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start']); 
+											$mod_response[$c['user_id']] = $c['segment_start'] + $c['segment_length'] > strlen($mod_response[$c['user_id']]) || $c['segment_length'] < 0 ? ($mod_response[$c['user_id']] . '</span>') : (substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length'] + $br_offset) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length'] + $br_offset));
+											$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start'] + $br_offset) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start'] + $br_offset);
+											$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start'] + $br_offset) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start'] + $br_offset); 
 								
 											if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
 												$wordpos = 0;
@@ -589,7 +596,7 @@ $(document).ready(function(){
 		start = currentAnnotation.annotation[0].elementId.replace('textAnnotate_','');
 		end = parseInt(currentAnnotation.annotation[currentAnnotation.annotation.length - 1].elementId.replace('textAnnotate_',''));
 		r_id = 0;
-	
+
 		lastPos = responseIdx = 0;
 		for(i = 0;i < end + 10;i++){
 			if(responses[responseIdx].text.substr(lastPos).indexOf(' ') == -1){
@@ -613,9 +620,14 @@ $(document).ready(function(){
 				break;
 			}
 		}
-	
+		start = parseInt(start);
+		
 		if(end - start < 0) end = responses[responseIdx].text.length;
-		if(!r_id) r_id = responses[0].id;
+		else if(end - start == 0 && responseIdx) end = start + responses[responseIdx].text.substr(lastPos).indexOf(' ');
+		
+		if(!r_id && responseIdx) r_id = responses[responseIdx].id;
+		else if(!r_id) r_id = responses[0].id;
+		
 		if(end == 0) end = responses[responseIdx].text.indexOf(' ');
 	
 		$('.comment-submit img').show();
