@@ -226,7 +226,7 @@
 				<div class="clear"></div>
 			</div>
 			<div class="clear"></div>
-			<div class="box-content" style="font-size:20px;">
+			<div class="box-content" style="font-size:12pt;">
 				<?php if($challenge[0]['Challenge']['eval_complete']){ ?>
 					You have already sent your comments and corrections to your students.<br />
 					You may, however, make as many changes and resend to your students.
