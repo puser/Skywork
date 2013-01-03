@@ -1,5 +1,5 @@
 <div id="sidebarleft">
-	<h1><?php echo __('Start a Bridge') ?></h1>
+	<h1><?php echo __('Assignment') ?></h1>
 	<div id="sidemenu">
 		<ul>
 			<li id="menu_challenge" class="active"><a class="icon icon-docinspect" onclick="$.bbq.pushState({view:'challenge'});"><?php echo __('Step 1') ?></a></li>

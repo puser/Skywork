@@ -32,7 +32,14 @@
 						$k = 0;
 						foreach($group_set as $g){
 							$ex_groups[] = $g['id'];
-							$class_user_count += count($g['User']);
+							$class_user_count += count($g['User']);							
+							$instructor = 0;
+							foreach($g['User'] as $c):
+								if($c['user_type'] == 'L'):
+									$instructor++;								
+								endif;
+							endforeach;
+							$class_user_count = $class_user_count - $instructor;							
 							?>
 						<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> id="challengeGroup<?php echo $g['id']; ?>">
 							<td<?php if($challenge['Group']){ ?> style="background:url('/images/icons/icon-flash-13x19.png') right no-repeat;"<?php } ?>>

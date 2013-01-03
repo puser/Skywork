@@ -86,7 +86,13 @@
 					<td><?php echo date_format($a_date,'m/d/Y g:ia'); ?></td>
 					<td><?php echo ($r_date ? date_format($r_date,'m/d/Y g:ia') : ''); ?></td>
 					<td><?php echo date_format(date_create($challenge['Challenge']['date_modified']),'m/d/Y'); ?></td>
-					<td><?php echo @$challenge['User']['firstname'].' '.@$challenge['User']['lastname']; ?></td>
+					<td><?php $name = @$challenge['User']['firstname'].' '.@$challenge['User']['lastname'];							
+							if(strlen($name) > 12){
+							 echo substr($name,0,12).'...';
+							}
+							else{
+								echo $name;
+							} ?></td>
 					<td>
 						<?php if($_SESSION['User']['user_type']=='L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){ ?>
 							<?php echo __($challenge['Status'][0]['status'] == 'P' || $challenge['User']['id'] == $_SESSION['User']['id'] ? 'Accept?' : ($challenge['Status'][0]['status'] == 'C' ? 'Accepted' : 'Rejected')) ?>
