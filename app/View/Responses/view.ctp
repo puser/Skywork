@@ -226,7 +226,7 @@
 				<div class="clear"></div>
 			</div>
 			<div class="clear"></div>
-			<div class="box-content" style="font-size:12pt;">
+			<div class="box-content" style="font-size:12pt;margin-left: 120px;">
 				<?php if($challenge[0]['Challenge']['eval_complete']){ ?>
 					You have already sent your comments and corrections to your students.<br />
 					You may, however, make as many changes and resend to your students.
@@ -240,7 +240,7 @@
 					student work and send your comments and corrections at a later point.<br /><br /><br />
 					
 					<div style="margin:0 auto;width:150px;">
-						<div style="width:150px;float:left;">
+						<div style="width:150px;float:left;margin-left: -62px;">
 							<a href="/responses/submit_evaluation/<?php echo $challenge[0]['Challenge']['id']; ?>/" class="btn2"><span><?php echo __('Re-send to Students') ?></span></a>
 						</div>
 					</div>
@@ -258,7 +258,7 @@
 					<br /><br /><br />
 		
 					<div style="margin:0 auto;width:150px;">
-						<div style="width:150px;float:left;">
+						<div style="width:150px;float:left;margin-left: -62px;">
 							<a href="/responses/submit_evaluation/<?php echo $challenge[0]['Challenge']['id']; ?>/" class="btn2"><span><?php echo __('Send to Students') ?></span></a>
 						</div>
 					</div>
