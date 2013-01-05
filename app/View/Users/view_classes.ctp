@@ -191,8 +191,8 @@
 					<div class="clear"></div>
 					<div class="clear"></div>
 					<div style="width: 250px; margin: 0 auto; ">
-						<a href="#" class="btn2" id="genTokenBtn" onclick="create_class();$('#tokenForNewClass').val('1');" class="btn2" style="width:120px;float:left;" ><span><?php echo __('Generate Token') ?></span></a>
-						<a href="#" id="addManualBtn" onclick="create_class_manual();" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Add My Class') ?></span></a>
+						<a href="#" class="btn2" id="genTokenBtn" onclick="create_class();$('#tokenForNewClass').val('1');$(this).attr('onclick','');setTimeout(function(){ $(this).attr('onclick','create_class();$(\'#tokenForNewClass\').val(\'1\');'); },650);" class="btn2" style="width:120px;float:left;" ><span><?php echo __('Generate Token') ?></span></a>
+						<a href="#" id="addManualBtn" onclick="create_class_manual();$(this).attr('onclick','');setTimeout(function(){ $(this).attr('onclick','create_class_manual();'); },650);" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Add My Class') ?></span></a>
 						<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 						<div class="clear"></div>
 					</div>

@@ -29,6 +29,9 @@
 #activeFlag {
 	background-color:#ff8d8d;
 }
+.commentHover {
+	background-color:#eee !important;
+}
 </style>
 
 <div id="assignmentDialog" style="display:none;text-align:center;"> </div>
@@ -338,8 +341,8 @@
 											if(!@$user_colors[$c['user_id']]) $user_colors[$c['user_id']] = array_pop($all_colors);
 											if(!$all_colors) $all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
 											
-											$br_offset = substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
-											$br_offset += substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
+											$br_offset = @substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
+											$br_offset += @substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
 									
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
 					
@@ -383,8 +386,8 @@
 										$mod_response = array();
 										foreach(@$q['Response'][0]['Comment'] as $c){
 											
-											$br_offset = substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
-											$br_offset += substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
+											$br_offset = @substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
+											$br_offset += @substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
 											
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue; 
 											if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
@@ -418,7 +421,7 @@
 						<?php
 						$q['Response'][0]['Comment'] = @array_reverse($q['Response'][0]['Comment'],true);
 						foreach(@$q['Response'][0]['Comment'] as $c){ ?>
-						<div class="question-comments <?php echo ($c['type'] == 2 ? 'neutral' : ($c['type'] ? 'like' : 'dislike')); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" id="commentDetail_<?php echo $c['id']; ?>" style="display:none;margin-bottom:5px;position:relative;" onmouseover="if(!$(this).hasClass('activeDetail')){ $(this).find('.studentwork-more').show(); }" onmouseout="$(this).find('.studentwork-more').hide();">
+						<div class="question-comments <?php echo ($c['type'] == 2 ? 'neutral' : ($c['type'] ? 'like' : 'dislike')); ?> comment_detail_<?php echo $c['user_id'] . '_' . $k; ?>" id="commentDetail_<?php echo $c['id']; ?>" style="display:none;margin-bottom:5px;position:relative;" onmouseover="if(!$(this).hasClass('activeDetail')){ $(this).addClass('commentHover'); }" onmouseout="$(this).removeClass('commentHover');" onclick="setTimeout(function(){ show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>'); },15);">
 							<p>
 								<span class="highlight-blue" style="background-color:<?php echo $user_colors[$c['user_id']]; ?> !important;"><?php echo "{$c['User']['firstname']} {$c['User']['lastname']}"; ?></span>
 								<?php
@@ -429,10 +432,6 @@
 								}
 								echo stripslashes($c['comment']); ?>
 							</p>
-					
-							<a href="#<?php echo $q['id']; ?>" class="studentwork-more" style="display:none;position:absolute;top:12px;right:12px;" onclick="setTimeout(function(){ show_comment('<?php echo $k; ?>','<?php echo $c['user_id'].'_'.$k; ?>','<?php echo $c['id']; ?>','<?php echo $user_colors[$c['user_id']]; ?>'); },15);">
-								<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
-							</a>
 						</div>
 						<?php } ?>
 					</div>
@@ -588,7 +587,7 @@ $(document).ready(function(){
 	<?php if($responseCount){
 		foreach($challenge[0]['Question'] as $k=>$q){
 			if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id) continue; ?>
-			responses.push({text:'<?php echo str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body'])); ?>',id:<?php echo $q['Response'][0]['id']; ?>});
+			responses.push({text:'<?php echo str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body'])); ?>'.trim(),id:<?php echo $q['Response'][0]['id']; ?>});
 		<?php }
 	} ?>
 
@@ -598,13 +597,14 @@ $(document).ready(function(){
 		r_id = 0;
 
 		lastPos = responseIdx = 0;
-		for(i = 0;i < end + 10;i++){
+		for(i = 0;i < end + 10;i++){ console.log(responses[responseIdx].text.substr(lastPos) + ' ~~ ' + responses[responseIdx].text.substr(lastPos).indexOf(' ') + ' -- ' + responseIdx + '!!');
 			if(responses[responseIdx].text.substr(lastPos).indexOf(' ') == -1){
 				responseIdx++;
-				lastPos = responses[responseIdx].text.substr(0).indexOf(' ') + 1;
+				//lastPos = responses[responseIdx].text.substr(0).indexOf(' ') + 1;
+				lastPos = 0;
 			}else lastPos = responses[responseIdx].text.substr(lastPos).indexOf(' ') + lastPos + 1;
 		
-			if(i + 1 + responseIdx == start && !r_id){
+			if(i + 1 == start && !r_id){
 				if(start == end){
 					end = responses[responseIdx].text.substr(lastPos).indexOf(' ') + lastPos + 1;
 					start = lastPos;
@@ -614,7 +614,7 @@ $(document).ready(function(){
 					start = lastPos;
 					r_id = responses[responseIdx].id;
 				}
-			}else if(i + 1 + responseIdx == end){
+			}else if(i + 1 == end){
 				end = responses[responseIdx].text.substr(lastPos).indexOf(' ') + lastPos + 1;
 				if(end == -1) end = responses[responseIdx].text.length;
 				break;
