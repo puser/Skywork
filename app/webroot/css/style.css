@@ -124,6 +124,7 @@ a.bridge-btn4:hover {background: #d27968; text-decoration: none;}
 
 a.icon-add {display: inline-block; padding: 5px 5px 5px 30px; font-size: 12px; background: url('/images/icons/icon-plus-21x20.png') no-repeat center left; }
 
+.edit_mode { background: url('/images/edit-active-header.png') repeat left; margin-top: -10px; width: 768px; margin-left: -10px;}
 
 /**
  * Form Elements

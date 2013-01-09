@@ -15,14 +15,6 @@
 						<input type="text" size="50" id="createClassName" name="class[ClassSet][group_name]" value="<?php echo $class['ClassSet']['group_name']; ?>" />
 						<div class="clear"></div>
 					</li>
-					<li class="radioinput">
-						<span class="label"><?php echo __('Make this class searchable') ?></span>
-						<div class="input">
-							<input type="radio" name="class[ClassSet][public]" value="1" id="make_class_searchable_yes" <?php if($class['ClassSet']['public']){ ?>checked="checked" <?php } ?>/> <label for="make_class_searchable_yes"><?php echo __('Yes') ?> </label>
-							<input type="radio" name="class[ClassSet][public]" value="0" id="make_class_searchable_no" <?php if(!$class['ClassSet']['public']){ ?>checked="checked" <?php } ?> /> <label for="make_class_searchable_no"><?php echo __('No') ?> </label>
-						</div>
-						<div class="clear"></div>
-					</li>
 				</ul>
 				<div class="clear"></div>
 				<p class="small"><?php echo __('Instructors will be able to search and request to join your class. For security purposes, they must know your email address and you will always be able to Accept or Reject their request.') ?></p>
