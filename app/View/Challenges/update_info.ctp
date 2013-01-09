@@ -103,7 +103,7 @@
 					for($i=0;$i<2;$i++){ ?>
 						<li>
 							<p><!-- <input type="text" class="checkdefault assignment-section-title" default="<?php echo __('Section Title') ?>" value="" name="challenge[Question][<?php echo $i; ?>][section]" /> --></p>
-							<input type="text" class="checkdefault" default="<?php echo __('Type name here') ?>" value="" name="challenge[Question][<?php echo $i; ?>][question]" size="60"/>
+							<input type="text" class="checkdefault" default="<?php echo __('Type name here') ?>" value="" name="challenge[Question][<?php echo $i; ?>][question]" size="60" id = "<?php echo 'question_'.$i; ?>"/>
 						</li>
 					<?php }
 				} ?>
@@ -120,7 +120,7 @@
 			-->
 			<p><?php echo __('Write a description of this essay topic:') ?></p>
 			<p>
-				<textarea class="checkdefault" default="Write description here" name="challenge[Question][0][question]" style="width:550px;height:75px;padding:5px 7px;"><?php echo @$challenge['Question'][0]['question']; ?></textarea>
+				<textarea class="checkdefault" id = 'essay' default="Write description here" name="challenge[Question][0][question]" style="width:550px;height:75px;padding:5px 7px;"><?php echo @$challenge['Question'][0]['question']; ?></textarea>
 				<?php if(@$challenge['Question'][0]['question']['id']){ ?>
 					<input type="hidden" name="challenge[Question][0][id]" value="<?php echo $question['id']; ?>" />
 				<?php } ?>
@@ -190,9 +190,12 @@
 		</div>
 	</div>	
 </div>
-
+<div id = 'warning' style='display:none; color:red' align='center'>You must enter questions or an essay topic to continue.</div><br/>
 <div style="width: 120px; margin: 0 auto; ">
-	<a id="info_save" onclick="$('#challenge_data').submit();" class="btn2"><span><?php echo __('Save &amp; Next') ?></span></a>
+	<a id = "info_save" 
+		onclick = "var que = $('#question_0').val();  var essay = $('#essay').val(); 
+					if(que == '' || essay == ''){	$('#warning').show();}
+					else{ $('#challenge_data').submit();}" class="btn2"><span><?php echo __('Save &amp; Next') ?></span></a>
 </div>
 
 <input type="hidden" name="next_step" value="people" />

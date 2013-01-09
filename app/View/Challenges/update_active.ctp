@@ -29,7 +29,7 @@
 
 		<div id="HelpDialog" style="display:none;text-align:center;"> </div>
 		<div id="startbridge-information" class="box-startbridge box-white rounded">
-			<div class="box-head">
+			<div class="box-head edit_mode">
 				<span class="icon2 icon2-pen"></span>
 				<h2><?php echo __('Assignment Information (Edit Mode)') ?></h2>
 				<div class="clear"></div>

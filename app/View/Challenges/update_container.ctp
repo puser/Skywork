@@ -6,7 +6,9 @@
 			<li id="menu_assignment"><a class="icon icon-docopen" onclick="$.bbq.pushState({view:'assignment'});"><?php echo __('Step 2') ?></a></li>
 			<li id="menu_collaboration"><a class="icon icon-cycle" onclick="$.bbq.pushState({view:'collaboration'});"><?php echo __('Step 3') ?></a></li>
 			<li id="menu_info"><a class="icon icon-pen" onclick="$.bbq.pushState({view:'info'});"><?php echo __('Information') ?></a></li>
-			<li id="menu_people"><a class="icon icon-envelope" onclick="$('#challenge_data').submit();"><?php echo __('Send to Class') ?></a></li>
+			<li id="menu_people"><a class="icon icon-envelope" onclick="var que = $('#question_0').val();  var essay = $('#essay').val(); 
+					if(que == '' || essay == ''){	$('#warning').show();}
+					else{ $('#challenge_data').submit();}"><?php echo __('Send to Class') ?></a></li>
 		</ul>
 	</div>
 </div>
