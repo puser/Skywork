@@ -29,7 +29,7 @@
 	<script type="text/javascript" src="/js/custom.js" ></script>
 	<script type="text/javascript" src="/js/custom_corp.js" ></script>
 	<script type="text/javascript" src="/js/cco_ajax.js?v=7" ></script>
-
+	
 </head>
 <body class="site page page-index">
 	
@@ -37,160 +37,96 @@
 <script type="text/javascript"> window.location = '/dashboard/'; </script>
 <?php }else{ ?>
 	
-	<div id="wrapper">
+<div id="wrapper">
 
-		<div id="header" class="round round-main">
-			<div class="content rounded-top">
-			
-				<div id="logo"><a href="/"></a></div>
-				<div id="topmenu">
-					<span class="user-home icon-home"><a href="/">Main</a></span>
-					<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#">Login</a></span>
-				
-					<div id="overlayLoginForm" class="rounded" style="text-align:left;top:22px;right:0px;">
-						<form id="loginBoxForm" method="POST" action="/dashboard/">
-							<ul class="fieldset2">
-								<li>
-									<div class="label alignleft">
-										<span class="red">*</span> <?php echo __('Email') ?>
-									</div>
-									<input type="text" name="loginUser" class="inputText" id="loginUser" />
-								</li>
-								<li>
-									<div class="label alignleft">
-										<span class="red">*</span> <?php echo __('Password') ?>
-									</div> 
-									<input type="password" name="loginPass" class="inputText" id="loginPass" />
-								</li>
-								<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
-							</ul>
-							<div class="clear"></div>
-						</form>
-
-						<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();"><?php echo __('I forgot my password') ?></a>
-						<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner"><?php echo __('Log in') ?></span></a>
-						<div class="clear"></div>
-					</div>
-				</div>
-
-			
-			</div>
-		</div><!-- #header -->
-	
-		<div id="body">
+	<div id="header">
 		
-			<div id="corpsite-home">
+		<div id="logo"><a href="/"></a></div>
+		<div id="topmenu">
+			<span class="user-home icon-home"><a href="/">Main</a></span>
+			<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#">Login</a></span>
 		
-				<div id="home-header">
-					<div id="home-header-introtext">
-						<div class="slide slide-1">
-							<span class="line1">End paper overload.</span>
-						</div>
-						<div class="slide slide-1">
-							<span class="line1">Students learn more, you work less.</span>
-						</div>
-						<div class="slide slide-1">
-							<span class="line1">Any other assignment is just an assignment.</span>
-						</div>
-					</div>
-			
-					<a href="#joinModalInstructor" id="sign-up-free" class="btn-green-simple show-overlay" >It's Free! Sign up</a>
-				</div>
+			<div id="overlayLoginForm" class="rounded" style="text-align:left;top:22px;right:0px;">
+				<form id="loginBoxForm" method="POST" action="/dashboard/">
+					<ul class="fieldset2">
+						<li>
+							<div class="label alignleft">
+								<span class="red">*</span> <?php echo __('Email') ?>
+							</div>
+							<input type="text" name="loginUser" class="inputText" id="loginUser" />
+						</li>
+						<li>
+							<div class="label alignleft">
+								<span class="red">*</span> <?php echo __('Password') ?>
+							</div> 
+							<input type="password" name="loginPass" class="inputText" id="loginPass" />
+						</li>
+						<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
+					</ul>
+					<div class="clear"></div>
+				</form>
+
+				<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();"><?php echo __('I forgot my password') ?></a>
+				<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner"><?php echo __('Log in') ?></span></a>
 				<div class="clear"></div>
-			
-				<div id="home-slider">
-					<div class="slides">
-						<div class="slide" style="width:720px;">
-							<div class="slide-content">
-								<img src="/slides/slide-2.jpg" />
-							</div>
-							<div class="slide-info" style="cursor:pointer;" onclick="window.location='/pages/about/';">
-								<p>Learn how Puentes <br />can help you and <br /> your classroom<br /><br />
-								<img src="/images/corp/slide-description.png" /></p>
-							</div>
-						</div>
-					</div>
-					<div class="control">
-						<a class="arrow" href="/pages/about/" style="width:83px;"></a>
-					</div>
-				</div>
-			
-			
-				<div id="home-tabs" style = "margin-left: 48px;"
->
-				
-					<div class="tabs" >
-						<div class="tab" id="tab-quick-explain">
-							<span class="icon"></span>
-							<div class="text">
-								&nbsp;&nbsp;Quick Explanation
-							</div>
-							<span class="indicator"></span>
-						</div>
-						<div class="tab" id="tab-second-section">
-							<span class="icon"></span>
-							<div class="text">
-								&nbsp;&nbsp;Puentes	Bridges
-							</div>
-							<span class="indicator"></span>
-						</div>
-						<div class="tab" id="tab-ten-reasons">
-							<span class="icon"></span>
-							<div class="text">
-								Reasons to join Puentes
-							<span class="indicator"></span>
-						</div>
-					</div>
-					<div class="clear"></div>
-				
-					<div class="tabs-content" >
-						<div class="tab-content" id="tab-quick-explain-content">
-							<p>Puentes takes the pain out of paper assignments. Rather than giving out assignments and receiving reams of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade and store all assignments through one easy-to-use portal.</p>
-						</div>
-						<div class="tab-content " id="tab-second-section-content">
-							<p>
-								<strong>Don’t just create assignments. Create Bridges.</strong><br />
-								Puentes (Bridges in Spanish), allows you to connect with other Instructors through like-minded assignments. Bring students together by subject matter to make their assignments relevant, actionable and memorable. Connect students in the same town, city, or or in another country. Whether in Rome, GA or Rome, Italy,  Paris, TX or Paris, France.   Puentes makes learning relevant. No matter where you are.  
-							</p>
-							<p>
-								The process is the same, however, once students complete their assignment, they collaborate on answers. Connect your sections that are learning the same material and would have never spoken otherwise, or simply have your students work with other students in other cities in the world.
-							</p>
-						</div>
-						<div class="tab-content " id="tab-ten-reasons-content" style="text-align:center;">
-							<ol style="list-style:none;">
-								<li>Assignments on Puentes are so much easier than paper!</li>
-								<li>The grading process simpler, more organized and easy to store. </li>
-								<li>Align your assignments with Common Core standards.</li>
-								<li>Your students take part in a cross-cultural experience.</li>
-								<li>It's green!</li>
-								<li>Less expensive than other applications</li>
-								<li>Students will never again say "My dog ate my homework."</li>
-								<li>It's fun</li>
-								<li>It's simple</li>
-								<li>It's built specifically for Instructors</li>
-							</ol>
-						</div>
-					</div>
-					<div class="clear"></div>
-				</div>
-		
 			</div>
-		
 		</div>
-			
+		
+		<div id="mainmenu">
+			<ul>
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/pages/about/">Product</a></li>
+				<li><a href="http://blog.puentesonline.com/">Blog</a></li>
+				<li><a href="/pages/contact/">Contact</a></li>
+			</ul>
+		</div>
+	</div><!-- #header -->
 	
-		<div id="footer">
-			<div class="alignleft" id="logofooter"></div>
-			<div class="alignright" id="footermenu">
-				<ul>
-					<li><a href="/pages/contact">Contact Us/FAQ</a></li>
-					<li><a href="/pages/privacy">Privacy Policy</a></li>
-					<li><a href="/pages/terms">Terms and Conditions</a></li>
-				</ul>
+	<div id="slider">
+		<div class="slides">
+			<div id="slide-1" class="slide">
+				<img src="slides/slide-1.png" />
+				
+				<div class="slide-info">
+					<h2>Students learn more, you work less.</h2>
+					<p>The easiest way to create, distribute &amp; evaluate your assignments. All online.</p>
+					<a href="#" class="btn1 btn1-v2" style=""><span class="inner">Sign up! It's Free</span></a>
+				</div>
 			</div>
-			<div class="clear"></div>
-		</div><!-- #footer -->
+		</div>
+	</div>
 	
+	<div id="body">
+		
+		<div class="contentmain">
+			<div class="homequote">
+				<p>"Any other assignment is just an assignment." - Miami-based Professor</p>
+			</div>
+			
+			<h4>Quick Explanation</h4>
+			<p><img class="icon" src="/images/icons/icon-bubble.png" /> Puentes takes the pain out of paper assignments. Rather than giving out assignments and receiving reams of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade and store all assignments through one easy-to-use portal.</p>
+			<p>&nbsp;</p>
+			
+			<h4>Puentes Bridge</h4>
+			<p><img class="icon" src="/images/icons/icon-globe.png" /> Don't just create assignments. Create Bridges. Puentes (Bridges in Spanish), allows you to connect with other instructors through like-minded assignments. Bring students together by subject matter to make their assignments relevant, actionable and memorable. Connect students in the same town, city, or in another country. Whether in Rome, GA or Rome, Italy, Paris, TX or Paris, France. Puentes makes learning relevant. No matter where you are.</p>
+			<p>The process is the same, however, once students complete their assignment, they collaborate on answers. Connect your sections that are learning the same material and would have never spoken otherwise, or simply have your students work with other students in other cities in the world.</p>
+			<p>&nbsp;</p>
+			
+			<h4>Reasons to Join Puentes</h4>
+			<ul>
+				<li><strong>10.</strong> It's <span class="red">built specifically for Instructors</span>.</li>
+				<li><strong>9.</strong> It's simple.</li>
+				<li><strong>8.</strong> It's fun.</li>
+				<li><strong>7.</strong> Students will never again say "My dog ate my homework."</li>
+				<li><strong>6.</strong> <span class="red">Less expensive</span> than other applications.</li>
+				<li><strong>5.</strong> It's green!</li>
+				<li><strong>4.</strong> Your students take part in a <span class="red">cross-cultural</span> experience.</li>
+				<li><strong>3.</strong> Align your assignments with Common Core standards.</li>
+				<li><strong>2.</strong> The grading process simpler, more <span class="red">organized</span> and easy to store.</li>
+				<li><strong>1.</strong> Assignments on Puentes are so much <span class="red">easier than paper</span>!</li>
+			</ul>
+		</div>
+		
 	</div>
 	
 	<?php if(@$user){ ?>
@@ -575,7 +511,6 @@
 	    }
 	}
 	</script>
-
 	
 </body>
 </html>

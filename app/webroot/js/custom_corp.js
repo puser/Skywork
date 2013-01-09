@@ -24,29 +24,6 @@ jQuery(document).ready(function($) {
 	});
 	
 	
-	/**
-	 * Tooltips
-	 */
-	$(".tooltip-mark").tooltip({
-		track: true, 
-		delay: 0, 
-		showURL: false, 
-		opacity: 1, 
-		fixPNG: true, 
-		extraClass: "pretty fancy", 
-		top: -15, 
-		left: 20 
-	});
-	
-	
-	/**
-	 * Scrollbar
-	 */
-	if($("#mcs_container").length)
-		$("#mcs_container").mCustomScrollbar("vertical",300,"easeOutCirc",1.05,"auto","yes","yes",15); 
-	
-	
-	
 	
 	/**
 	 * Input Fields - Check Default
@@ -259,13 +236,42 @@ jQuery(document).ready(function($) {
 	/**
 	 * Home Slider
 	 */
-	$("#home-slider .control a").hover(function(){
-			$("#home-slider .slide .slide-info").animate({ right: 0, opacity: 1 }, 300);
-			$(this).addClass("active");  
-	},function(){
+	$("#home-slider .control a").click(function(){
+		if($(this).hasClass("active")) {
 			$("#home-slider .slide .slide-info").animate({ right: -203, opacity: 0 }, 300);
 			$(this).removeClass("active"); 
+		}
+		else {
+			$("#home-slider .slide .slide-info").animate({ right: 0, opacity: 1 }, 300);
+			$(this).addClass("active"); 
+		}
+		return false; 
 	}); 
+	
+	
+	/**
+	 * Login Form
+	 */
+	$("#overlayLoginLink").click(function(){
+		if($(this).hasClass("activeForm")) {
+			$("#overlayLoginForm").css("display", "none");
+			$(this).removeClass("activeForm");
+		}
+		
+		else {
+			$("#overlayLoginForm").css("display", "block");
+			$(this).addClass("activeForm");
+			$('#loginUser').focus();
+			
+			$(document).keyup(function(e) {
+			  if (e.keyCode == 27) { 
+			  	$("#overlayLoginForm").css("display", "none");
+				$(this).removeClass("activeForm");
+			  } 
+			});
+		}
+	
+	});
 	
 	
 	/**
