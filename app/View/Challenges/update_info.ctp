@@ -190,7 +190,6 @@
 		</div>
 	</div>	
 </div>
-<<<<<<< HEAD
 
 <span id="fieldValidateDate1" style="display:none;">
 	<p class="textAlignCenter red" style="margin-left:265px; color:red;padding-left:40px;"><?php echo __('Due Date has already passed!') ?></p>
