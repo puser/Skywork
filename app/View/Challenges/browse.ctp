@@ -26,26 +26,26 @@
 		<table id="bridgetable" style="width:938.5px; margin-left:7px;">
 			<thead>
 				<tr>
-					<th class="col1"><a href="/dashboard/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php if(@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
+					<th class="col1" align='left'><a href="/dashboard/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php if(@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
 					else{echo '';} ?>" style="position:relative;"><?php echo __('Assignment Name') ?></a></th>
-					<th class="col2"><a href="/dashboard/?sort=answer_date&dir=<?php echo (@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
+					<th class="col2" align='left'><a href="/dashboard/?sort=answer_date&dir=<?php echo (@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
 					else{echo '';} ?>" style="padding-right:15px;position:relative;"><?php echo __('Due Date 1') ?> <span class="tooltip" title="<?php echo __('Students answer questions or write essay') ?>"></span></span></th>
-					<th class="col3"><a href="/dashboard/?sort=response_date&dir=<?php echo (@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
+					<th class="col3" align='left'><a href="/dashboard/?sort=response_date&dir=<?php echo (@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
 					else{echo '';} ?>" style="padding-right:15px;position:relative;"><?php echo __('Due Date 2') ?> <span class="tooltip" title="<?php echo __('Time for feedback and collaboration') ?>"></span></a></span></th>
-					<th class="col4"><a href="/dashboard/?sort=edit_date&dir=<?php echo (@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
+					<th class="col4" align='left'><a href="/dashboard/?sort=edit_date&dir=<?php echo (@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
 					else{echo '';} ?>"><?php echo __('Last Edit') ?></a></th>
-					<th class="col5"><a href="/dashboard/?sort=creator&dir=<?php echo (@$_REQUEST['sort']=='creator'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
+					<th class="col5" align='left'><a href="/dashboard/?sort=creator&dir=<?php echo (@$_REQUEST['sort']=='creator'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='creator'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='creator'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
 					else{echo '';} ?>"><?php echo __('Creator') ?></a></th>
-					<th class="col6"><a href="#"><?php echo __('Status') ?></a></th>
+					<th class="col6" align='left'><a href="#"><?php echo __('Status') ?></a></th>
 					<th style="width:20px;"></th>
 				</tr>
 			</thead>
@@ -67,7 +67,7 @@
 					}elseif($_SESSION['User']['user_type'] == 'P' && (($a_date < $now && $challenge['Challenge']['collaboration_type'] == 'NONE') || ($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) < date_create())) && !$challenge['Challenge']['eval_complete']){
 						$challenge_click = "$('#skipcollab_warning_link').click();return false;";
 					}elseif(@$challenge['Users']){
-						if(($r_date > $now && $_SESSION['User']['user_type'] == 'L') || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now) || ($challenge['Challenge']['collaboration_type'] == 'NONE' && !$challenge['Challenge']['eval_complete'])){
+						if((!$challenge['Challenge']['eval_complete'] && $_SESSION['User']['user_type'] == 'L') || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now) || ($challenge['Challenge']['collaboration_type'] == 'NONE' && !$challenge['Challenge']['eval_complete'])){
 							$challenge_click = "window.location = '/responses/view/{$challenge['Challenge']['id']}" . ($_SESSION['User']['user_type'] == 'P' ? "/{$_SESSION['User']['id']}" : '') . "';";
 						}else{
 							$challenge_click = "show_user_list($(this).parent(),{$challenge['Challenge']['id']}," . ($_SESSION['User']['user_type'] == 'L' ? '1' : '0') . "," . ($r_date < $now ? '1' : '0') . ");";
@@ -86,7 +86,13 @@
 					<td><?php echo date_format($a_date,'m/d/Y g:ia'); ?></td>
 					<td><?php echo ($r_date ? date_format($r_date,'m/d/Y g:ia') : ''); ?></td>
 					<td><?php echo date_format(date_create($challenge['Challenge']['date_modified']),'m/d/Y'); ?></td>
-					<td><?php echo @$challenge['User']['firstname'].' '.@$challenge['User']['lastname']; ?></td>
+					<td><?php $name = @$challenge['User']['firstname'].' '.@$challenge['User']['lastname'];							
+							if(strlen($name) > 12){
+							 echo substr($name,0,12).'...';
+							}
+							else{
+								echo $name;
+							} ?></td>
 					<td>
 						<?php if($_SESSION['User']['user_type']=='L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){ ?>
 							<?php echo __($challenge['Status'][0]['status'] == 'P' || $challenge['User']['id'] == $_SESSION['User']['id'] ? 'Accept?' : ($challenge['Status'][0]['status'] == 'C' ? 'Accepted' : 'Rejected')) ?>

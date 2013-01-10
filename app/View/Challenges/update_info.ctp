@@ -27,11 +27,11 @@
 					</div>
 					<p class="label" style="clear:both;margin-top:10px;"><?php echo __('Due Date 1 Time Deadline:') ?></p>
 					<div class="date-input">
-						<input name="answers_due_hour" style="width:20px;" value="<?php echo (@$challenge ? (substr($challenge['Challenge']['answers_due'],11,2) > 12 ? substr($challenge['Challenge']['answers_due'],11,2) - 12 : substr($challenge['Challenge']['answers_due'],12,2)) : '08'); ?>" /> :
-						<input name="answers_due_minute" style="width:20px;" value="<?php echo (@$challenge ? substr($challenge['Challenge']['answers_due'],14,2) : '00'); ?>"  />
-						<select name="answers_due_meridian">
-							<option value="AM" <?php echo (@$challenge && substr($challenge['Challenge']['answers_due'],11,2) <= 12 ? 'selected="selected"' : ''); ?>>AM</option>
-							<option value="PM" <?php echo (!@$challenge || substr($challenge['Challenge']['answers_due'],11,2) > 12 ? 'selected="selected"' : ''); ?>>PM</option>
+						<input name="answers_due_hour" id="answers_due_hour" style="width:20px;" value="<?php echo (@$challenge ? (substr($challenge['Challenge']['answers_due'],11,2) > 12 ? substr($challenge['Challenge']['answers_due'],11,2) - 12 : substr($challenge['Challenge']['answers_due'],11,2)) : '08'); ?>" /> :
+						<input name="answers_due_minute" id="answers_due_minute" style="width:20px;" value="<?php echo (@$challenge ? substr($challenge['Challenge']['answers_due'],14,2) : '00'); ?>"  />
+						<select name="answers_due_meridian" id="answers_due_meridian">
+							<option value="AM" <?php echo (@$challenge && substr($challenge['Challenge']['answers_due'],11,2) < 12 ? 'selected="selected"' : ''); ?>>AM</option>
+							<option value="PM" <?php echo (!@$challenge || substr($challenge['Challenge']['answers_due'],11,2) >= 12 ? 'selected="selected"' : ''); ?>>PM</option>
 						<select>
 						<span style="position:relative;top: 2px;left: 6px;">EST</span>
 					</div>
@@ -44,11 +44,11 @@
 					</div>
 					<p class="label" style="clear:both;margin-top:10px;"><?php echo __('Due Date 2 Time Deadline:') ?></p>
 					<div class="date-input">
-						<input name="responses_due_hour" style="width:20px;" value="<?php echo (@$challenge['Challenge']['responses_due'] ? (substr($challenge['Challenge']['responses_due'],11,2) > 12 ? substr($challenge['Challenge']['responses_due'],11,2) - 12 : substr($challenge['Challenge']['responses_due'],12,2)) : '08'); ?>" /> :
-						<input name="responses_due_minute" style="width:20px;" value="<?php echo (@$challenge['Challenge']['responses_due'] ? substr($challenge['Challenge']['responses_due'],14,2) : '00'); ?>"  />
-						<select name="responses_due_meridian">
-							<option value="AM" <?php echo (@$challenge && substr($challenge['Challenge']['responses_due'],11,2) <= 12 ? 'selected="selected"' : ''); ?>>AM</option>
-							<option value="PM" <?php echo (!@$challenge || substr($challenge['Challenge']['responses_due'],11,2) > 12 ? 'selected="selected"' : ''); ?>>PM</option>
+						<input name="responses_due_hour" id="responses_due_hour" style="width:20px;" value="<?php echo (@$challenge['Challenge']['responses_due'] ? (substr($challenge['Challenge']['responses_due'],11,2) > 12 ? substr($challenge['Challenge']['responses_due'],11,2) - 12 : substr($challenge['Challenge']['responses_due'],11,2)) : '08'); ?>" /> :
+						<input name="responses_due_minute" id="responses_due_minute" style="width:20px;" value="<?php echo (@$challenge['Challenge']['responses_due'] ? substr($challenge['Challenge']['responses_due'],14,2) : '00'); ?>"  />
+						<select name="responses_due_meridian" id="responses_due_meridian">
+							<option value="AM" <?php echo (@$challenge && substr($challenge['Challenge']['responses_due'],11,2) < 12 ? 'selected="selected"' : ''); ?>>AM</option>
+							<option value="PM" <?php echo (!@$challenge || substr($challenge['Challenge']['responses_due'],11,2) >= 12 ? 'selected="selected"' : ''); ?>>PM</option>
 						<select>
 						<span style="position:relative;top: 2px;left: 6px;">EST</span>
 					</div>
@@ -103,7 +103,7 @@
 					for($i=0;$i<2;$i++){ ?>
 						<li>
 							<p><!-- <input type="text" class="checkdefault assignment-section-title" default="<?php echo __('Section Title') ?>" value="" name="challenge[Question][<?php echo $i; ?>][section]" /> --></p>
-							<input type="text" class="checkdefault" default="<?php echo __('Type name here') ?>" value="" name="challenge[Question][<?php echo $i; ?>][question]" size="60"/>
+							<input type="text" class="checkdefault" default="<?php echo __('Type name here') ?>" value="" name="challenge[Question][<?php echo $i; ?>][question]" size="60" id = "<?php echo 'question_'.$i; ?>"/>
 						</li>
 					<?php }
 				} ?>
@@ -120,7 +120,7 @@
 			-->
 			<p><?php echo __('Write a description of this essay topic:') ?></p>
 			<p>
-				<textarea class="checkdefault" default="Write description here" name="challenge[Question][0][question]" style="width:550px;height:75px;padding:5px 7px;"><?php echo @$challenge['Question'][0]['question']; ?></textarea>
+				<textarea class="checkdefault" id = 'essay' default="Write description here" name="challenge[Question][0][question]" style="width:550px;height:75px;padding:5px 7px;"><?php echo @$challenge['Question'][0]['question']; ?></textarea>
 				<?php if(@$challenge['Question'][0]['question']['id']){ ?>
 					<input type="hidden" name="challenge[Question][0][id]" value="<?php echo $question['id']; ?>" />
 				<?php } ?>
@@ -191,8 +191,21 @@
 	</div>	
 </div>
 
+<span id="fieldValidateDate1" style="display:none;">
+	<p class="textAlignCenter red" style="margin-left:265px; color:red;padding-left:40px;"><?php echo __('Due Date has already passed!') ?></p>
+</span>
+
+<span id="fieldValidateDate2" style="display:none;">
+	<p class="textAlignCenter red" style="margin-left:285px; color:red"><?php echo __('Due Date 2 must be after Due Date 1') ?></p>
+</span>
+
 <div style="width: 120px; margin: 0 auto; ">
-	<a id="info_save" onclick="$('#challenge_data').submit();" class="btn2"><span><?php echo __('Save &amp; Next') ?></span></a>
+	<a id="info_save" onclick="validate_info();return false;" class="btn2"><span><?php echo __('Save &amp; Next') ?></span></a>
+</div>
+
+<div id = 'warning' style='display:none; color:red' align='center'>You must enter questions or an essay topic to continue.</div><br/>
+<div style="width: 120px; margin: 0 auto; ">
+	<a id = "info_save" onclick = "var que = $('#question_0').val();  var essay = $('#essay').val(); if(que == '' || essay == ''){	$('#warning').show();}else{ $('#challenge_data').submit();}" class="btn2"><span><?php echo __('Save &amp; Next') ?></span></a>
 </div>
 
 <input type="hidden" name="next_step" value="people" />
@@ -224,6 +237,20 @@ if($('#challenge_type').val() == 'VID'){
 if($('#collaboration_type').val() == 'NONE'){
 	$('#duedate2_input').remove();
 	$('.anonymous_input').remove();
+}
+
+function validate_info(){
+	$('#fieldValidateDate1').hide();
+	$('#fieldValidateDate2').hide();
+	
+	var now = <?php echo ((date_format(date_create(),'G') * 60) + date_format(date_create(),'i')); ?>;
+	var a_due = ((parseInt($('#answers_due_hour').val(),10) + ($('#answers_due_meridian').val() == 'PM' ? 12 : 0)) * 60) + parseInt($('#answers_due_minute').val(),10);
+	if($('#collaboration_type').val() != 'NONE') var r_due = ((parseInt($('#responses_due_hour').val(),10) + ($('#responses_due_meridian').val() == 'PM' ? 12 : 0)) * 60) + parseInt($('#responses_due_minute').val(),10);
+	else var r_due = 0;
+	
+	if($('#answers_due').val() == '<?php echo date_format(date_create(),'Y-m-d'); ?>' && a_due <= now) $('#fieldValidateDate1').show();
+	else if($('#collaboration_type').val() != 'NONE' && $('#responses_due').val() == $('#answers_due').val() && r_due <= a_due) $('#fieldValidateDate2').show();
+	else $('#challenge_data').submit();
 }
 
 function check_max_length(){

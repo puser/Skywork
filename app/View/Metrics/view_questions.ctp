@@ -1,6 +1,5 @@
 <style type="text/css"> .activity-level span{ display:none; } </style>
 <div id="assignmentDialog" style="display:none;text-align:center;"> </div>
-
 <div id="sidebarleft">
 	<h1><?php echo __('Metrics Section') ?></h1>
 	<div id="sidemenu" >
@@ -61,7 +60,7 @@
 						$idx = 0;
 						foreach($challenge['Question'] as $k=>$q){
 							foreach($q['Response'] as $r){
-								if(!$r['positive_comments'] && !$r['negative_comments']) continue;
+								if(!$r['positive_comments'] && !$r['negative_comments'] && !$r['neutral_comments']) continue;
 								elseif($idx >= 10) break;
 								$idx++; ?>
 								<tr<?php if($idx % 2){ ?> class="alternate"<?php } ?>>
@@ -115,15 +114,25 @@
 		$('#assignmentDialog').load('/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>/1',function(){
 			$("#assignmentDialog").dialog({ autoOpen: false,minWidth: 740 });
 		});
-		
-		$("#metrics-question-activity").tablesorter({ 
-				sortList: [[4,1]],
-				cssDesc: 'sortup',
-				cssAsc: 'sortdown',
-        textExtraction: function(node){ 
-					return $(node).children('a').length ? $(node).children('a').html() : ($(node).children('div').length ? $(node).children('.activity-level').children('span').first().css('width') : $(node).html());
-        } 
-    });
+
+		<?php if($challenge['Challenge']['collaboration_type'] == 'RATE'){ ?>
+			$("#metrics-question-activity").tablesorter({ 
+					cssDesc: 'sortup',
+					cssAsc: 'sortdown',
+					textExtraction: function(node){ 
+						return $(node).children('a').length ? $(node).children('a').html() : ($(node).children('div').length ? $(node).children('.activity-level').children('span').first().css('width') : $(node).html());
+					} 
+			});
+		<?php } else { ?>
+				$("#metrics-question-activity").tablesorter({ 
+						sortList: [[4,1]], 
+						cssDesc: 'sortup',
+						cssAsc: 'sortdown',
+						textExtraction: function(node){ 
+							return $(node).children('a').length ? $(node).children('a').html() : ($(node).children('div').length ? $(node).children('.activity-level').children('span').first().css('width') : $(node).html());
+						} 
+				});
+		<?php } ?>
 
 		$("#metrics-question-activity").bind("sortEnd",function() { 
 			$('#metrics-question-activity tbody tr').removeClass('alternate');

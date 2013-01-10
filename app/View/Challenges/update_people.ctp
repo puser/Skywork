@@ -32,7 +32,14 @@
 						$k = 0;
 						foreach($group_set as $g){
 							$ex_groups[] = $g['id'];
-							$class_user_count += count($g['User']);
+							$class_user_count += count($g['User']);							
+							$instructor = 0;
+							foreach($g['User'] as $c):
+								if($c['user_type'] == 'L'):
+									$instructor++;								
+								endif;
+							endforeach;
+							$class_user_count = $class_user_count - $instructor;							
 							?>
 						<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> id="challengeGroup<?php echo $g['id']; ?>">
 							<td<?php if($challenge['Group']){ ?> style="background:url('/images/icons/icon-flash-13x19.png') right no-repeat;"<?php } ?>>
@@ -76,7 +83,9 @@
 			</li>
 		</ul>
 		<br /><br />
-		<p><?php echo __('Invite a Collaborator:') ?></p>
+
+<!--		<p><?php echo __('Invite a Collaborator:') ?></p> -->
+
 		<?php if(@$queued_users){ ?>
 			<table class="table-type-1">
 				<thead>
@@ -107,8 +116,10 @@
 			</table>
 		<?php } ?>
 		
-		<a href="/users/invite_collaborator/<?php echo $challenge['Challenge']['id']; ?>"<?php if(!$challenge['ClassSet']){ ?> onclick="alert('<?php echo __('Please add at least one group to this bridge to continue') ?>');return false;" class="icon-add"<?php }else{ ?> class="add-link show-overlay"<?php } ?> id="inviteNewUserLink"><?php echo __('Add an individual') ?></a>
-					
+
+<!-- 		<a href="/users/invite_collaborator/<?php echo $challenge['Challenge']['id']; ?>"<?php if(!$challenge['ClassSet']){ ?> onclick="alert('<?php echo __('Please add at least one group to this bridge to continue') ?>');return false;" class="icon-add"<?php }else{ ?> class="add-link show-overlay"<?php } ?> id="inviteNewUserLink"><?php echo __('Add an individual') ?></a>
+ -->					
+
 	</div>
 </div>
 
@@ -137,7 +148,8 @@
 			<div style="text-align:center;margin:20px;"><?php echo nl2br($warning_msg); ?></div>	
 			<br />
 			<div style="width: 200px; margin: 0 auto; ">
-				<a href="#" class="btn2" style="width: 80px; float: left;" onclick="save_challenge_final();"><span><?php echo __('Send') ?></span></a>
+				<a href="#" id="sendmail" class="btn2" style="width: 80px; float: left;" onclick="save_challenge_final();"><span><?php echo __('Send') ?></span></a>
+				<a id="mailsent" class="btn2" style="width: 80px; float: left; display:none" ><span><?php echo __('Send') ?></span></a>
 				<a href="#" class="btn3" style="width: 100px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Don\'t send yet') ?></span></a>
 				<div class="clear"></div>
 			</div>

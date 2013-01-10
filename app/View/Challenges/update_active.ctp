@@ -29,7 +29,7 @@
 
 		<div id="HelpDialog" style="display:none;text-align:center;"> </div>
 		<div id="startbridge-information" class="box-startbridge box-white rounded">
-			<div class="box-head">
+			<div class="box-head edit_mode">
 				<span class="icon2 icon2-pen"></span>
 				<h2><?php echo __('Assignment Information (Edit Mode)') ?></h2>
 				<div class="clear"></div>
@@ -154,7 +154,7 @@
 		
 		<a href="#modalDeleteChoices" class="show-overlay" style="float:right;top:5px;position:relative;">Delete this Assignment</a>
 		<div style="width: 180px; margin: 0 auto; ">
-			<a id="info_save" onclick="$('#challenge_data').submit();" class="btn2"><span><?php echo __('Resend this Assignment') ?></span></a>
+			<a href="#modalProgress" id="info_save" onclick="$('#challenge_data').submit();progressIndicator();" class="show-overlay btn2"><span><?php echo __('Resend this Assignment') ?></span></a>
 		</div>
 
 		<input type="hidden" name="next_step" value="people" />
@@ -171,8 +171,17 @@
 		$('#HelpDialog').load('/challenges/viewpdf/Help.pdf',function(){
 			$("#HelpDialog").dialog({ autoOpen: false,minWidth: 740,minHeight: 500 });
 		});
-		</script>
 		
+		function progressIndicator(){
+			var currentDot = 0;
+			setInterval(function(){
+				if(currentDot == 3){
+					currentDot = 0;
+					$('.progressDot').hide();
+				}else $('#progress' + ++currentDot).show();
+			},500);
+		}
+		</script>
 		
 	</form>
 	
@@ -181,6 +190,9 @@
 <div class="clear"></div>
 
 <div style="display:none;">
+	<div id="modalProgress" style="width:200px;height:35px;text-align:center;font-size:16px;color:#00467F;line-height:35px;">
+		Working <span id="progress1" class="progressDot" style="display:none;">.</span> <span id="progress2" class="progressDot" style="display:none;">.</span> <span id="progress3" class="progressDot" style="display:none;">.</span>
+	</div>
 	<div id="modalDeleteChoices" style="width:460px;height:190px;">
 		<div class="modal-box-head">
 			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><span class="icon5 icon5-close" style="margin:0;height:24px;"></span><?php echo __('Delete') ?></h2>

@@ -157,6 +157,13 @@ class UsersController extends AppController{
 		if(@$user['ClassSet']){
 			foreach($user['ClassSet'] as $g) if(array_search($g['id'],$user_update['ClassSet']) === false) $user_update['ClassSet'][] = $g['id'];
 		}
+		
+		// set a new temporary password if the user has never signed in
+		if(!$tmp_password && (!@$user['User']['last_login'] || @$user['User']['last_login'] == '0000-00-00 00:00:00')){
+			$tmp_password = substr(sha1(time().rand(1000,10000)),0,5);
+			$user_update['User']['password'] = sha1($tmp_password.$this->salt);
+		}
+		
 		$this->User->save($user_update);
 		
 		// build invite url & message body

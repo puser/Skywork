@@ -397,18 +397,26 @@ function create_group(){
 }
 
 function create_class(){
-	$.ajax({url:'/classes/update/',data:$('#create_class').serialize(),type:'POST',success:function(r){
-		$('#newTokenClassID').val(r);
-		$('#tokenClassName').html($('#createClassName').val() + ' Token');
-		$('#showGenerateToken').click();
-	}});
+	if($('#createClassName').val() == ''){
+		$('#warning').show();
+	} else{
+		$.ajax({url:'/classes/update/',data:$('#create_class').serialize(),type:'POST',success:function(r){
+			$('#newTokenClassID').val(r);
+			$('#tokenClassName').html($('#createClassName').val() + ' Token');
+			$('#showGenerateToken').click();
+		}});
+	}
 }
 
 function create_class_manual(){
-	$.ajax({url:'/classes/update/',data:$('#create_class').serialize(),type:'POST',success:function(r){
-		$('#showAddManual').attr('href','/classes/invite_member/' + r + '/student/');
-		$('#showAddManual').click();
-	}});
+	if($('#createClassName').val() == ''){
+		$('#warning').show();
+	} else{
+		$.ajax({url:'/classes/update/',data:$('#create_class').serialize(),type:'POST',success:function(r){
+			$('#showAddManual').attr('href','/classes/invite_member/' + r + '/student/');
+			$('#showAddManual').click();
+		}});
+	}
 }
 
 function update_token(){
@@ -646,6 +654,10 @@ function save_challenge(redirect){
 
 function save_challenge_final(){
 	$('#challengeStatus').val('C');
+    var chk = document.getElementById('sendmail');
+    chk.style.display="none";
+	var chk1 = document.getElementById('mailsent');
+    chk1.style.display="";
 	/*
 	$.ajax({url:'/challenges/update/0/ajax',data:$('#challengeData').serialize(),type:'POST',success:function(r){
 		setTimeout('window.location = "/dashboard/";',1000);
@@ -741,3 +753,5 @@ function hide_comments(rid,e){
 	$(e).hide();
 	$('.question-comments').hide();
 }
+
+

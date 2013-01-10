@@ -54,10 +54,7 @@
 			<div class="box-head">
 				<span class="icon2 icon2-people-green"></span>
 				<h2><?php echo __('Student Analysis:') ?> <?php echo __('All Students') ?></h2>
-				
-				<?php if($challenges[0]['Challenge']['collaboration_type'] != 'NONE'){ ?>
-					<a href="#modal-customize" class="modal-link customize-link"><?php echo __('Customize') ?></a>
-				<?php } ?>
+						
 				<div class="clear"></div>
 			</div>
 			<div class="box-content">
