@@ -6,7 +6,6 @@
 	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="./favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
 	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
-	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="/css/style_corp.css" />
 	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
@@ -43,7 +42,6 @@
 		
 		<div id="logo"><a href="/"></a></div>
 		<div id="topmenu">
-			<span class="user-home icon-home"><a href="/">Main</a></span>
 			<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#">Login</a></span>
 		
 			<div id="overlayLoginForm" class="rounded" style="text-align:left;top:22px;right:0px;">
@@ -85,12 +83,12 @@
 	<div id="slider">
 		<div class="slides">
 			<div id="slide-1" class="slide">
-				<img src="slides/slide-1.png" />
+				<img src="/slides/slide-1.png" />
 				
 				<div class="slide-info">
 					<h2>Students learn more, you work less.</h2>
 					<p>The easiest way to create, distribute &amp; evaluate your assignments. All online.</p>
-					<a href="#" class="btn1 btn1-v2" style=""><span class="inner">Sign up! It's Free</span></a>
+					<a href="#joinModalInstructor" class="show-overlay btn1 btn1-v2" style=""><span class="inner">Sign up! It's Free</span></a>
 				</div>
 			</div>
 		</div>
@@ -104,11 +102,11 @@
 			</div>
 			
 			<h4>Quick Explanation</h4>
-			<p><img class="icon" src="/images/icons/icon-bubble.png" /> Puentes takes the pain out of paper assignments. Rather than giving out assignments and receiving reams of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade and store all assignments through one easy-to-use portal.</p>
+			<p><img class="icon" src="/images/corp/icons/icon-bubble.png" /> Puentes takes the pain out of paper assignments. Rather than giving out assignments and receiving reams of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade and store all assignments through one easy-to-use portal.</p>
 			<p>&nbsp;</p>
 			
 			<h4>Puentes Bridge</h4>
-			<p><img class="icon" src="/images/icons/icon-globe.png" /> Don't just create assignments. Create Bridges. Puentes (Bridges in Spanish), allows you to connect with other instructors through like-minded assignments. Bring students together by subject matter to make their assignments relevant, actionable and memorable. Connect students in the same town, city, or in another country. Whether in Rome, GA or Rome, Italy, Paris, TX or Paris, France. Puentes makes learning relevant. No matter where you are.</p>
+			<p><img class="icon" src="/images/corp/icons/icon-globe.png" /> Don't just create assignments. Create Bridges. Puentes (Bridges in Spanish), allows you to connect with other instructors through like-minded assignments. Bring students together by subject matter to make their assignments relevant, actionable and memorable. Connect students in the same town, city, or in another country. Whether in Rome, GA or Rome, Italy, Paris, TX or Paris, France. Puentes makes learning relevant. No matter where you are.</p>
 			<p>The process is the same, however, once students complete their assignment, they collaborate on answers. Connect your sections that are learning the same material and would have never spoken otherwise, or simply have your students work with other students in other cities in the world.</p>
 			<p>&nbsp;</p>
 			

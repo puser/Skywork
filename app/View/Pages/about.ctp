@@ -6,7 +6,6 @@
 	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="./favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
 	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
-	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="/css/style_corp.css" />
 	<link rel="stylesheet" type="text/css" href="js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
@@ -34,79 +33,107 @@
 <body class="site page page-index">
 <div id="wrapper">
 
-	<div id="header" class="round round-main">
-		<div class="content rounded-top">
-			
-			<div id="logo"><a href="/"></a></div>
-			<div id="topmenu">
-				<span class="user-home icon-home"><a href="/">Main</a></span>
-				<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#">Login</a></span>
-			
-				<div id="overlayLoginForm" class="rounded" style="text-align:left;top:22px;right:0px;">
-					<form id="loginBoxForm" method="POST" action="/dashboard/">
-						<ul class="fieldset2">
-							<li>
-								<div class="label alignleft">
-									<span class="red">*</span> <?php echo __('Email') ?>
-								</div>
-								<input type="text" class="inputText" id="loginUser" />
-							</li>
-							<li>
-								<div class="label alignleft">
-									<span class="red">*</span> <?php echo __('Password') ?>
-								</div> 
-								<input type="password" class="inputText" id="loginPass" />
-							</li>
-							<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
-						</ul>
-						<div class="clear"></div>
-					</form>
-
-					<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();"><?php echo __('I forgot my password') ?></a>
-					<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner"><?php echo __('Log in') ?></span></a>
+	<div id="header">
+		<div id="logo"><a href="/"></a></div>
+		<div id="topmenu">
+			<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#">Login</a></span>
+		
+			<div id="overlayLoginForm" class="rounded" style="text-align:left;top:22px;right:0px;">
+				<form id="loginBoxForm" method="POST" action="/dashboard/">
+					<ul class="fieldset2">
+						<li>
+							<div class="label alignleft">
+								<span class="red">*</span> <?php echo __('Email') ?>
+							</div>
+							<input type="text" name="loginUser" class="inputText" id="loginUser" />
+						</li>
+						<li>
+							<div class="label alignleft">
+								<span class="red">*</span> <?php echo __('Password') ?>
+							</div> 
+							<input type="password" name="loginPass" class="inputText" id="loginPass" />
+						</li>
+						<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
+					</ul>
 					<div class="clear"></div>
-				</div>
+				</form>
+
+				<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();"><?php echo __('I forgot my password') ?></a>
+				<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner"><?php echo __('Log in') ?></span></a>
+				<div class="clear"></div>
 			</div>
-			
+		</div>
+		
+		<div id="mainmenu">
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li class="active"><a href="/pages/about/">Product</a></li>
+				<li><a href="http://blog.puentesonline.com/">Blog</a></li>
+				<li><a href="/pages/contact/">Contact</a></li>
+			</ul>
 		</div>
 	</div><!-- #header -->
 	
 	<div id="body">
 		
-		<div id="more-info-page" class="site-page" >
-		
-			<div id="more-info-what-is" class="more-info-div">
-				<p style="line-height:33px; margin-left: 52px; margin-top: -10px; margin-right: 56px;"><br /><br />
-					<img align="right" src="/images/corp/paper_storm.png" style="padding-left:245px;" width="255" />
-					Puentes takes the pain out of paper assignments. Rather than giving out assignments and receiving reams of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade and store all assignments through one easy-to-use portal.</p>
+		<div class="contentmain">
+			
+			
+			<div id="product-overview">
+				
+				<div id="product-compare">
+					
+					<div id="product-problem" class="product-overview-box">
+						<h4>The Problem</h4>
+						
+						<img src="/images/corp/product-the-problem.png" />
+					
+					</div>
+					
+					<div id="product-solution" class="product-overview-box">
+						<h4>The Puentes Solution</h4>
+						
+						<ul>
+							<li><span class="icon icon-123"></span> Create an assignment</li>
+							<li><span class="icon icon-preview"></span> Students complete</li>
+							<li><span class="icon icon-connect"></span> Students give feedback</li>
+							<li><span class="icon icon-instructor-analytics"></span> Instructor evaluates</li>
+						</ul>
+						
+					</div>
+					
+					<div class="clear"></div>
+					
+					<p>Puentes takes the pain out of paper assignments. Rather than giving out assignments and receiving reams of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade and store all assignments through one easy-to-use portal. </p>
+					
+				</div>
+			
+			
 			</div>
 			
-			<div id="more-info-how-does-it-work" class="more-info-div" align="center">
-				<img src="/images/corp/about_txt.png" style="padding-top:30px; width:562px; height:154px;" />
-			</div>
-			<br />
+			
 			<div id="more-info-tell-more" class="more-info-div">
 				
 				<div class="more-info-special">
-					<div class="alignleft polaroid-wrap" style="height:261px;"><img src="/images/corp/puentes_ss1.png" width="420" /></div>
+					<div class="alignleft polaroid-wrap" style="height:323px;"><img src="/images/corp/puentes_ss1.png" width="520" /></div>
 					<div class="alignright more-info-special-content">
-						<p class="more-info-special-title">1. Create the assignment:</p>
-						<ul style='font-size: 93% !important;'>
+						<p class="more-info-special-title">Create an Assignment</p>
+						<ul>
 							<li>Select the kind of assignment you'd like to create, fill out some information, send to your class.</li>
-							<li>Upload a document, YouTube video, or assign an offline assignment from a textbook.</li>
-							<li>Add multiple class sections to an assignment.</li>
+							<li>Upload a document, YouTube video, or assign an offline assignment from a textbook. </li>
+							<li>Add multiple class sections to the same assignment</li>
 						</ul>
 					</div>
 					<div class="clear"></div>
 				</div>
 				
 				<div class="more-info-special">
-					<div class="alignright polaroid-wrap" style="height:266px;"><img src="/images/corp/puentes_ss2.png" width="420" /></div>
+					<div class="alignright polaroid-wrap" style="height:332px;"><img src="/images/corp/puentes_ss2.png" width="520" /></div>
 					<div class="alignleft more-info-special-content">
-						<p class="more-info-special-title">2. Students Complete Assignment</p>
-						<p>Students complete the assignment by:</p>
-						<ul style='font-size: 93% !important;'>
-							<li>Logging on to Puentes, viewing your document or video, answering questions, submitting by the due date.</li>
+						<p class="more-info-special-title">Students Complete</p>
+						<p>Students complete their assignment by:</p>
+						<ul>
+							<li>Logging on to Puentes, Viewing your document or video, Answering your questions, Submitting by the Due Date</li>
 							<li>Everything is done in the same place!</li>
 						</ul>
 					</div>
@@ -114,15 +141,14 @@
 				</div>
 				
 				<div class="more-info-special">
-					<div class="alignleft polaroid-wrap" style="height:206px;"><img src="/images/corp/puentes_ss3.png" width="420" /></div>
+					<div class="alignleft polaroid-wrap" style="height:257px;"><img src="/images/corp/puentes_ss3.png" width="520" /></div>
 					<div class="alignright more-info-special-content">
-						<p class="more-info-special-title">3. Grading Made Easy</p>
+						<p class="more-info-special-title">Instructor Evaluates</p>
 						<p>Grading with paper is old news - we have developed a way to make grading online really simple.</p>
-						<ul style='font-size: 93% !important;'>
+						<ul>
 							<li>Get a snapshot of each student before jumping into comments and corrections</li>
-							<li>Grade the assignment</li>
-							<li>Student is notified the homework has been graded</li>
-							<li>Store grades and archive assignments for future use</li>
+							<li>Grade the assignment.</li>
+							<li>Store grades and archive assignments for future use.</li>
 						</ul>
 					</div>
 					<div class="clear"></div>
@@ -133,29 +159,17 @@
 			
 			<div id="site-page-signup">
 				
-				<p><em>End the paper overload</em></p>
-				<a href="#joinModalInstructor" class="btn-green-simple show-overlay">Sign-up Now! It's Free!</a>
+				<h1>End paper overload</h1>
+				<a href="#joinModalInstructor" class="show-overlay btn1 btn1-v2" style="width: 200px; margin: 0 auto; " ><span class="inner ">Sign-up! It's Free</span></a>
 			
 			</div>
 			
 		</div>
+			
+		</div>
 		
 	</div>
-			
 	
-	<div id="footer">
-		<div class="alignleft" id="logofooter"></div>
-		<div class="alignright" id="footermenu">
-			<ul>
-				<li><a href="/pages/contact">Contact Us/FAQ</a></li>
-				<li><a href="/pages/privacy">Privacy Policy</a></li>
-				<li><a href="/pages/terms">Terms and Conditions</a></li>
-			</ul>
-		</div>
-		<div class="clear"></div>
-	</div><!-- #footer -->
-	
-</div>
 
 <div style="display:none;">
 	
