@@ -197,9 +197,9 @@ class MetricsController extends AppController{
 		
 		foreach($user_text as $k=>$t){
 			foreach($flags as $f){
-				if(substr_count($t,$f['WordFlag']['word']) >= $f['WordFlag']['count']){
-					@$user_flag_total[$k] += substr_count($t,$f['WordFlag']['word']);
-					@$user_flags[$k][$f['WordFlag']['flag_type']][$f['WordFlag']['word']] += substr_count($t,$f['WordFlag']['word']);
+				if(substr_count(strtoupper($t),strtoupper($f['WordFlag']['word'])) >= $f['WordFlag']['count']){
+					@$user_flag_total[$k] += substr_count(strtoupper($t),strtoupper($f['WordFlag']['word']));
+					@$user_flags[$k][$f['WordFlag']['flag_type']][$f['WordFlag']['word']] += substr_count(strtoupper($t),strtoupper($f['WordFlag']['word']));
 				}
 			}
 		}

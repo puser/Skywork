@@ -415,6 +415,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon-pen {background-image: url('/images/icons/icon-pen-23x23-bw.png'); }
 .icon-envelope {background-image: url('/images/icons/icon-envelope-25x25-bw.png'); }
 #sidemenu li a.icon-calendar {background-image: url('/images/icons/icon-calendar-23x21-bw.png'); background-position: 21px center; }
+#sidemenu li a.icon-pay {background-image: url('/images/icons/icon-pay-31x24.png'); background-position: 21px center; }
 .icon-class {background-image: url('/images/icons/icon-class-35x20-bw.png');}
 .icon-connection {background-image: url('/images/icons/icon-connection-27x24-bw.png');}
 .icon-token {background-image: url('/images/icons/icon-token-32x33.png'); }
@@ -438,6 +439,8 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon2-pen {background-image: url('/images/icons/icon-pen-33x34.png'); }
 .icon2-envelope {background-image: url('/images/icons/icon-envelope-41x39.png'); }
 .icon2-calendar {background-image: url('/images/icons/icon-calendar-42x38.png'); }
+.icon2-pay {background-image: url('/images/icons/icon-pay-51x39.png'); }
+.icon2-dollar {background-image: url('/images/icons/icon-dollar-44x25.png'); }
 .icon2-class {background-image: url('/images/icons/icon-class-60x31.png'); }
 .icon2-connection {background-image: url('/images/icons/icon-connection-43x36.png'); }
 .icon2-question {background-image: url('/images/icons/icon-question-39x34.png'); }
@@ -454,6 +457,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 
 /** 12x12 */
 .icon3-plus {background-image: url('/images/icons/icon-plus-13x13.png'); }
+.icon-refer {background-image: url('/images/icons/icon-refer-43x39.png');width:44px !important;height:39px !important; }
 .icon3-token {background-image: url('/images/icons/icon-token-12x13.png'); }
 .icon3-sm_green {background-image: url('/images/icons/icon-people-green-13x13.png'); }
 .icon3-pen {background-image: url('/images/icons/icon-pen-12x12.png'); }

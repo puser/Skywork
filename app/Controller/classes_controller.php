@@ -133,6 +133,25 @@ class ClassesController extends AppController{
 		die();
 	}
 	
+	function clean($class_id){
+		$this->checkAuth();
+		$class = $this->ClassSet->find('first',array('conditions'=>'ClassSet.id = '.$id,'recursive'=>2));
+		if($class['Owner']['id'] != $_SESSION['User']['id']) return false;
+		
+		// find each bridge that users participated in and add them as "collaborators"
+		foreach($class['User'] as $u){
+			$user_created = date_create($u['date_created']);
+			
+			foreach($class['Challenge'] as $c){
+				if($user_created > $c['answers_due']) continue;
+				// count responses to questions in this challenge from this user_id; if >0, add as collaborator
+			}
+		}
+		
+		// remove all users from class
+		$this->UserClass->deleteAll(array('UserClass.class_id'=>$class_id),false);
+	}
+	
 	function delete($id){
 		$this->checkAuth();
 		$group = $this->ClassSet->findById($id);
