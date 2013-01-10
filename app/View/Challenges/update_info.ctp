@@ -199,13 +199,9 @@
 	<p class="textAlignCenter red" style="margin-left:285px; color:red"><?php echo __('Due Date 2 must be after Due Date 1') ?></p>
 </span>
 
-<div style="width: 120px; margin: 0 auto; ">
-	<a id="info_save" onclick="validate_info();return false;" class="btn2"><span><?php echo __('Save &amp; Next') ?></span></a>
-</div>
-
 <div id = 'warning' style='display:none; color:red' align='center'>You must enter questions or an essay topic to continue.</div><br/>
 <div style="width: 120px; margin: 0 auto; ">
-	<a id = "info_save" onclick = "var que = $('#question_0').val();  var essay = $('#essay').val(); if(que == '' || essay == ''){	$('#warning').show();}else{ $('#challenge_data').submit();}" class="btn2"><span><?php echo __('Save &amp; Next') ?></span></a>
+	<a id = "info_save" onclick = "var que = $('#question_0').val();  var essay = $('#essay').val(); if(que == '' || essay == ''){	$('#warning').show();}else{ validate_info(); }" class="btn2"><span><?php echo __('Save &amp; Next') ?></span></a>
 </div>
 
 <input type="hidden" name="next_step" value="people" />
