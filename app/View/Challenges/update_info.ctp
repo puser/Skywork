@@ -190,6 +190,7 @@
 		</div>
 	</div>	
 </div>
+<!-- warning for essay -->
 <div id = 'warning' style='display:none; color:red' align='center'>You must enter questions or an essay topic to continue.</div><br/>
 <div style="width: 120px; margin: 0 auto; ">
 	<a id = "info_save" 
