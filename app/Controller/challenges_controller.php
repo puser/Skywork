@@ -117,13 +117,19 @@ class ChallengesController extends AppController{
 		
 		$challenges = array_filter($challenges);
 		
-		$limit_reached = false;
+		$limit_reached = $monthly_count = false;
 		if($_SESSION['User']['user_type'] == 'L'){
 			$monthly_count = $this->Challenge->find('count',array('conditions'=>array('Challenge.user_id'=>$_SESSION['User']['id'],'Challenge.date_modified BETWEEN DATE_SUB(NOW(),INTERVAL 1 MONTH) AND NOW()')));
-			if($user['User']['account_tier'] == 'STANDARD' && $monthly_count >= 2) $limit_reached = true;
+			if(($user['User']['account_tier'] == 'STANDARD' && $monthly_count >= 2) || ($user['User']['account_tier'] == 'PREMIUM' && $monthly_count >= 6)){
+				$limit_reached = true;
+				$monthly_count = 0;
+			}elseif($user['User']['account_tier'] == 'STANDARD') $monthly_count = 2 - $monthly_count;
+			elseif($user['User']['account_tier'] == 'PREMIUM') $monthly_count = 6 - $monthly_count;
+			elseif($user['User']['account_tier'] == 'PLATINUM') $monthly_count = false;
 		}
 		
 		$this->set('limit_reached',$limit_reached);
+		$this->set('monthly_count',$monthly_count);
 		$this->set('challenges',array_slice($challenges,($page - 1) * 10,10));
 		$this->set('status',$status);
 		$this->set('total',count($challenges));
@@ -226,6 +232,13 @@ class ChallengesController extends AppController{
 	// create or update a challenge
 	function update($challenge_id=NULL,$view=NULL){
 		$this->checkAuth();
+		
+		$monthly_count = $this->Challenge->find('count',array('conditions'=>array('Challenge.user_id'=>$_SESSION['User']['id'],'Challenge.date_modified BETWEEN DATE_SUB(NOW(),INTERVAL 1 MONTH) AND NOW()')));
+		if(($_SESSION['User']['account_tier'] == 'STANDARD' && $monthly_count >= 2) || ($_SESSION['User']['account_tier'] == 'PREMIUM' && $monthly_count >= 6)) $this->redirect('/');
+		elseif($_SESSION['User']['account_tier'] == 'STANDARD') $monthly_count = 2 - $monthly_count;
+		elseif($_SESSION['User']['account_tier'] == 'PREMIUM') $monthly_count = 6 - $monthly_count;
+		elseif($_SESSION['User']['account_tier'] == 'PLATINUM') $monthly_count = false;
+		$this->set('monthly_count',$monthly_count);
 	
 		if($challenge_id) $challenge_record = $this->Challenge->find('first',array('conditions'=>"Challenge.id = ".$challenge_id,'recursive'=>2));
 		if(@$_REQUEST['challenge']){

@@ -3,7 +3,8 @@
 <?php if($_SESSION['User']['user_type'] == 'L'){ ?>
 	<div id="startbridge" class="rounded box-white">
 		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="alert('You have reached your monthly limit for new bridges. Please upgrade your account to continue.');return false;"<?php } ?> class="btn1"><span><?php echo __('Begin') ?></span></a>
-		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="alert('You have reached your monthly limit for new bridges. Please upgrade your account to continue.');return false;"<?php } ?>><h2><?php echo __('Start an Assignment') ?></h2></a> 
+		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="alert('You have reached your monthly limit for new bridges. Please upgrade your account to continue.');return false;"<?php } ?>><h2><?php echo __('Start an Assignment'); if($monthly_count !== false){ ?> <sup style="
+    font-size:12px;vertical-align:top;top:-6px;position:relative;"><?php echo $monthly_count; ?></sup><?php } ?></h2></a> 
 		<div class="clear"></div>
 	</div>
 <?php } ?>

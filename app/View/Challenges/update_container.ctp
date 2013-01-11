@@ -1,5 +1,6 @@
 <div id="sidebarleft">
-	<h1><?php echo __('Assignment') ?></h1>
+	<h1><?php echo __('Assignment'); if($monthly_count !== false){ ?> <sup style="
+  font-size:12px;vertical-align:top;top:-6px;position:relative;"><?php echo $monthly_count; ?></sup><?php } ?></h1>
 	<div id="sidemenu">
 		<ul>
 			<li id="menu_challenge" class="active"><a class="icon icon-docinspect" onclick="$.bbq.pushState({view:'challenge'});"><?php echo __('Step 1') ?></a></li>

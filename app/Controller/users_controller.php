@@ -379,6 +379,7 @@ class UsersController extends AppController{
 			$u['User']['payment_day'] = date('j');
 			$u['User']['account_tier'] = $_REQUEST['account_tier'];
 			$this->User->save($u);
+			$_SESSION['User']['account_tier'] = $_REQUEST['account_tier'];
 			
 			$this->process_payment();
 		}else{
