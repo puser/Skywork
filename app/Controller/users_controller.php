@@ -168,7 +168,7 @@ class UsersController extends AppController{
 		
 		if($send_invite){
 			if(!$tmp_password) $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team");
-			else $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n\nYour username is your email: <b>{user_email}</b>\nYour temporary password is: <b>{password}</b>\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team");
+			else $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to the class {classname} on Puentes - Assignments. On Demand!\n\nYour username is your email: <b>{user_email}</b>\nYour temporary password is: <b>{password}</b>\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team");
 			$message = str_replace('{first_name_1}',$user['User']['firstname'],$message);
 			$message = str_replace('{first_name_2}',$class['Owner']['firstname'],$message);
 			$message = str_replace('{last_name_2}',$class['Owner']['lastname'],$message);
