@@ -91,7 +91,7 @@
 			<div class="clear"></div>
 		</div>
 		<div class="box-content">
-			<p>Payments &nbsp;&nbsp;<a href="/users/update_payment/PREMIUM/" class="show-overlay">edit</a></p>
+			<p>Payments &nbsp;&nbsp;<a href="/users/update_payment/PREMIUM/" id="edit_payment_method" class="show-overlay">edit</a></p>
 			<?php if($user['User']['card_token']){ ?>
 				<span style="font-size:12px;"><?php echo $user['User']['card_type']; ?> ending in <?php echo substr($user['User']['card_token'],-4); ?></span><br /><br />
 				Next Payment is
@@ -151,8 +151,10 @@ $('.accordion-trigger a').click(function(){
 	$(this).parent().find('a').first().hide();
 	$(this).parent().find('div').first().show();
 		
-	if($(this).parent().parent().index('.accordion>li') == 1 || $(this).parent().parent().index('.accordion>li') == 2) $('#payment_summary').show();
-	else $('#payment_summary').hide();
+	if($(this).parent().parent().index('.accordion>li') == 1 || $(this).parent().parent().index('.accordion>li') == 2){
+		$('#payment_summary').show();
+		$('#edit_payment_method').click();
+	}else $('#payment_summary').hide();
 });
 
 $(".accordion-trigger").click(function(){
