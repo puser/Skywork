@@ -91,7 +91,7 @@
 					</div>
 					
 					<div id="product-solution" class="product-overview-box">
-						<h4>The Puentes Solution</h4>
+						<h4 style = "margin-right: 38px;">The Puentes Solution</h4>
 						
 						<ul>
 							<li><span class="icon icon-123"></span> Create an assignment</li>

@@ -6,6 +6,7 @@ function check_login(){
 		}else{
 			$('#loginError').html('Email and password combination do not match!');
 			$('.errorNotification').show();
+			$('#overlayLoginForm').height('164px')
 			return false;
 		}
 	}});

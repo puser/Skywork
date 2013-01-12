@@ -103,6 +103,10 @@
 							<label for="contact-subject">Subject</label>
 							<select name="subject" id="contact-subject">
 								<option value="">What's on your mind? </option>
+								<option value="A question">A question</option>
+								<option value="A comment">A comment</option>
+								<option value="A complaint">A complaint</option>
+								<option value="General feedback">General feedback</option>
 							</select>
 						</li>
 						<li>
@@ -124,33 +128,21 @@
 				
 				<ul class="accordion">
 					<li>
-						<a href="#" class="toggle">How do I connect with other Instructors?</a>
-						<div class="toggle-content">
-							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple methods of troubleshooting:</p>
-						</div>
-					</li>
-					<li>
-						<a href="#" class="toggle">How do I connect with other Instructors?</a>
-						<div class="toggle-content">
-							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple methods of troubleshooting:</p>
-						</div>
-					</li>
-					<li>
 						<a href="#" class="toggle">Is my class information private?</a>
 						<div class="toggle-content">
-							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple methods of troubleshooting:</p>
+							<p>Yes, absolutely. Your privacy is of absolute importance to the company. Please visit our Privacy Policy for more information. Please send us a note using our Contact Us form if you have any other questions.</p>
 						</div>
 					</li>
 					<li>
 						<a href="#" class="toggle">Can I use Puentes if our school/institution uses applications like Blackboard and/or others?</a>
 						<div class="toggle-content">
-							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple methods of troubleshooting:</p>
+							<p>There are lots of free services that are used by Instructors all over the country. Unless your school or college licenses with us, Puentes is an independent service from your institution, and signing up is extremely easy.</p>
 						</div>
 					</li>
 					<li>
 						<a href="#" class="toggle">Why am I not getting Puentes emails?</a>
 						<div class="toggle-content">
-							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple methods of troubleshooting:</p>
+							<p>There may be a chance that your emails are going to your spam folder. To avoid this, add info@puentesonline to your safe list.</p>
 						</div>
 					</li>
 					<li>
@@ -166,15 +158,33 @@
 						</div>
 					</li>
 					<li>
-						<a href="#" class="toggle">How often do you update the application?</a>
+						<a href="#" class="toggle">What is a class Token?</a>
 						<div class="toggle-content">
-							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple methods of troubleshooting:</p>
+							<p>After you create a class, you have the option to create a code (what we call a class Token), which you give to your students. Your students will then sign themselves up to your class using that code through the home page.</p>
 						</div>
 					</li>
 					<li>
-						<a href="#" class="toggle">Who started Puentes?</a>
+						<a href="#" class="toggle">How do I connect with other Instructors?</a>
 						<div class="toggle-content">
-							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple methods of troubleshooting:</p>
+							<p>Go to the Classes section found on the top of the application. Then navigate to the Connections section. There you will find a button labeled “Find an Instructor.” Simply add their email address and search for them.</p>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="toggle">How often do you update the application?</a>
+						<div class="toggle-content">
+							<p>There is constant updating and improvements, big and small. Therefore, it is important to receive feedback from you, our users. We want to continue providing the best quality product we possibly can.</p>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="toggle">Who created Puentes?</a>
+						<div class="toggle-content">
+							<p>Puentes was originally created by Sean Daly. The first commercially viable product was created in collaboration with Benjamin Rawn and Wifredo Fernandez.</p>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="toggle">How do I unsubscribe?</a>
+						<div class="toggle-content">
+							<p>First off, we would be sad to see you go. But if necessary, send us an email to info@puentesonline.com with UNSUBSCRIBE in the subject of the email. Please include your username, and feel free to add an explanation with your reason for leaving us.</p>
 						</div>
 					</li>
 				</ul>
