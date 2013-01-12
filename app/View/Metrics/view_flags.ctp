@@ -171,6 +171,7 @@
 								</div>
 							</td>
 						</tr>
+						<!-- DEPRECIATED 1/12/2012
 						<tr class="alternate">
 							<td>Phrase Flag</td>
 							<td>05/10/2012</td>
@@ -184,6 +185,7 @@
 								</div>
 							</td>
 						</tr>
+						-->
 					</tbody>
 				</table>
 			

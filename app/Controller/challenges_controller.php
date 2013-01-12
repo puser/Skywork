@@ -266,7 +266,13 @@ class ChallengesController extends AppController{
 											'type'			=> @$_REQUEST['attachment'][$k]['type'] );
 				}
 				if(@$attachments) $this->Challenge->Attachment->saveAll($attachments);
-			}elseif(@$_REQUEST['video_embed']) $this->Challenge->Attachment->saveAll(array(array('challenge_id'=>$challenge_id,'file_location'=>$_REQUEST['video_embed'],'type'=>'C')));
+			}elseif(@$_REQUEST['video_embed']){
+				if(strpos($_REQUEST['video_embed'],'youtu.be')) $_REQUEST['video_embed'] = '<iframe width="560" height="315" src="http://www.youtube.com/embed/' . substr($_REQUEST['video_embed'],strpos($_REQUEST['video_embed'],'youtu.be') + 8) . '" frameborder="0" allowfullscreen></iframe>';
+				elseif(strpos($_REQUEST['video_embed'],'watch?v=')) $_REQUEST['video_embed'] = '<iframe width="560" height="315" src="http://www.youtube.com/embed/' . substr($_REQUEST['video_embed'],strpos($_REQUEST['video_embed'],'watch?v=') + 8) . '" frameborder="0" allowfullscreen></iframe>';
+				
+				$this->Challenge->Attachment->deleteAll(array('challenge_id'=>$challenge_id,'type'=>'C'));
+				$this->Challenge->Attachment->saveAll(array(array('challenge_id'=>$challenge_id,'file_location'=>$_REQUEST['video_embed'],'type'=>'C')));	
+			}
 			elseif(@$_REQUEST['offline_challenge']) $this->Challenge->Attachment->saveAll(array(array('challenge_id'=>$challenge_id,'file_location'=>$_REQUEST['offline_challenge'],'type'=>'C')));
 			
 			/*	TEMPLATES DEPRECIATED FOR PUENTES v1
