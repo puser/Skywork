@@ -117,6 +117,13 @@ class ChallengesController extends AppController{
 		
 		$challenges = array_filter($challenges);
 		
+		$limit_reached = false;
+		if($_SESSION['User']['user_type'] == 'L'){
+			$monthly_count = $this->Challenge->find('count',array('conditions'=>array('Challenge.user_id'=>$_SESSION['User']['id'],'Challenge.date_modified BETWEEN DATE_SUB(NOW(),INTERVAL 1 MONTH) AND NOW()')));
+			if($user['User']['account_tier'] == 'STANDARD' && $monthly_count >= 2) $limit_reached = true;
+		}
+		
+		$this->set('limit_reached',$limit_reached);
 		$this->set('challenges',array_slice($challenges,($page - 1) * 10,10));
 		$this->set('status',$status);
 		$this->set('total',count($challenges));

@@ -50,6 +50,9 @@ class UsersController extends AppController{
 			$this->set('connections',($show == 'connections' ? 1 : 0));
 			$this->set('groups',$this->ClassSet->find('all',array('conditions'=>$conditions)));
 			$this->render('view_classes');
+		}elseif($show == 'payments'){
+			$this->set('user',$user);
+			$this->render('view_payments');
 		}else{
 			$this->set('user',$user);
 			$this->set('states',$this->State->find('all'));
@@ -250,8 +253,9 @@ class UsersController extends AppController{
 	// authenticate
 	function login($ajax=false){
 		if((@$_REQUEST['betakey'] == 'BETATEST' && @$_REQUEST['user_type'] == 'L') || (@$_REQUEST['betakey'] == 'BETACOLLAB' && @$_REQUEST['user_type'] == 'C')){
-			if(!@$_REQUEST['password'] || @$_REQUEST['password'] != @$_REQUEST['password_confirm']) $this->redirect('/login/?signup_error=pass&signup_type='.$_REQUEST['user_type']);
-			elseif(!@$_REQUEST['login'] || $this->User->findByEmail(strtolower($_REQUEST['login']))) $this->redirect('/login/?signup_error=email&signup_type='.$_REQUEST['user_type']);
+			// password verification depreciated for instructors with v1.3 corp site
+			// if(!@$_REQUEST['password'] || @$_REQUEST['password'] != @$_REQUEST['password_confirm']) $this->redirect('/login/?signup_error=pass&signup_type='.$_REQUEST['user_type']);
+			if(!@$_REQUEST['login'] || $this->User->findByEmail(strtolower($_REQUEST['login']))) die('duplicate');
 			
 			$new_user = array(	'User' =>
 													array(	'email'				=> strtolower($_REQUEST['login']),
@@ -278,9 +282,10 @@ class UsersController extends AppController{
 		}elseif(@$_REQUEST['classtoken']){
 			$class = $this->ClassSet->findByAuthToken($_REQUEST['classtoken']);
 			$instructor = $this->User->findByEmail(@$_REQUEST['instructor_email']);
-			if(!@$class['ClassSet']['id'] || @$class['ClassSet']['owner_id'] != $instructor['User']['id']) $this->redirect('/login/?signup_error=token&signup_type='.$_REQUEST['user_type']);
-			elseif(!@$_REQUEST['password'] || @$_REQUEST['password'] != @$_REQUEST['password_confirm']) $this->redirect('/login/?signup_error=pass&signup_type='.$_REQUEST['user_type']);
-			elseif(!@$_REQUEST['login'] || $this->User->findByEmail(strtolower($_REQUEST['login']))) $this->redirect('/login/?signup_error=email&signup_type='.$_REQUEST['user_type']);
+			if(!@$class['ClassSet']['id'] || @$class['ClassSet']['owner_id'] != $instructor['User']['id']) die('bad_token');
+			// password verification depreciated for instructors with v1.3 corp site
+			// elseif(!@$_REQUEST['password'] || @$_REQUEST['password'] != @$_REQUEST['password_confirm']) $this->redirect('/login/?signup_error=pass&signup_type='.$_REQUEST['user_type']);
+			elseif(!@$_REQUEST['login'] || $this->User->findByEmail(strtolower($_REQUEST['login']))) die('duplicate');
 			
 			$new_user = array(	'User' =>
 													array(	'email'			=> strtolower($_REQUEST['login']),
@@ -373,6 +378,101 @@ class UsersController extends AppController{
 		else $this->redirect('/dashboard/');
 	}
 	
+	function update_payment($tier=null){
+		if(@$_POST['card_num']){
+			// save tier & payment day
+			$u['User']['id'] = $_SESSION['User']['id'];
+			$u['User']['payment_day'] = date('j');
+			$u['User']['account_tier'] = $_REQUEST['account_tier'];
+			$this->User->save($u);
+			
+			$this->process_payment();
+		}else{
+			$this->layout = 'ajax';
+			$this->set('tier',$tier);
+		}
+	}
+	
+	function process_payment(){
+		$user = $this->User->findById($_SESSION['User']['id']);
+		
+		// if we have a card token, use this for the transaction; otherwise, use the card number and save the returned token
+		if($user['User']['card_token'] && !@$_POST["card_num"]){
+			$trxnProperties = array(
+				/* PRODUCTION */
+			  // "ExactID"=>'A28460-01',
+				// "Password"=> "14r0z18j",
+			
+				/* TESTING */
+				"ExactID"=>'AD1689-05',
+			  "Password"=> "181jw558",
+		
+				"Transaction_Type"=>"00",
+			  "Customer_Ref"=>$user['User']['id'],
+			  "Client_Email"=>$user['User']['email'],
+			  "Language"=>'en',
+			  "Expiry_Date"=>$user['User']['card_expiry'],
+			  "CardHoldersName"=>$user['User']['card_name'],
+				"TransarmorToken"=>$user['User']['card_token'],
+				"CardType"=>$user['User']['card_type'],
+			  "DollarAmount"=> (@$user['User']['account_tier'] == 'PLATINUM' ? 19.99 : 9.99));
+		}else{
+			$trxnProperties = array(
+				/* PRODUCTION */
+			  // "ExactID"=>'A28460-01',
+				// "Password"=> "14r0z18j",
+			
+				/* TESTING */
+				"ExactID"=>'AD1689-05',
+			  "Password"=> "181jw558",
+		
+				"Transaction_Type"=>"00",
+			  "Customer_Ref"=>$user['User']['id'],
+			  "Client_Email"=>$user['User']['email'],
+			  "Language"=>'en',
+			  "Card_Number"=>$_POST["card_num"], // Test #s: VISA="4111111111111111" MasterCard="5500000000000004"
+			  "Expiry_Date"=>$_POST["card_expiry"], // format as MMYY
+			  "CardHoldersName"=>$_POST["card_name"],
+			  "DollarAmount"=> (@$user['User']['account_tier'] == 'PLATINUM' ? 19.99 : 9.99),
+			  "VerificationStr1"=>"{$_POST['street']}|{$_POST['zip']}|{$_POST['city']}|{$_POST['state']}|{$_POST['country']}",
+			  "VerificationStr2"=>$_POST['card_code'],
+			  "CVD_Presence_Ind"=>($_POST['card_code'] ? 1 : 0));
+		}
+		
+		$client = new SoapClientHMAC("https://api.demo.globalgatewaye4.firstdata.com/transaction/v12/wsdl");
+		$trxnResult = $client->SendAndCommit($trxnProperties);
+
+		if(@$client->fault){
+		    // there was a fault
+		    print "<B>FAULT:  Code: {$client->faultcode} <BR />";
+		    print "String: {$client->faultstring} </B>";
+		    $trxnResult["CTR"] = "There was an error while processing. No TRANSACTION DATA IN CTR!";
+		}
+		
+		//print_r($trxnProperties);
+		//print_r($trxnResult);	
+		
+		if($trxnResult->Transaction_Error || $trxnResult->Transaction_Approved != 1){
+			die($trxnResult->EXact_Message);
+		}else{
+			// if initial payment was successful, save the token & related info
+			$u['User']['id'] = $user['User']['id'];
+			if($_POST["card_num"]){
+				$u['User']['card_name'] = $trxnResult->CardHoldersName;
+				$u['User']['card_type'] = $trxnResult->CardType;
+				$u['User']['card_expiry'] = $trxnResult->Expiry_Date;
+				$u['User']['card_token'] = $trxnResult->TransarmorToken;
+			}
+			
+			$u['User']['last_payment'] = DboSource::expression('NOW()');
+			$this->User->save($u);
+
+			// send success email
+		}
+		
+		die('success');
+	}
+	
 	// deauthenticate
 	function logout(){
 		$this->Session->delete('User');
@@ -382,5 +482,36 @@ class UsersController extends AppController{
 	function session_logout(){
 		$this->layout = 'ajax';
 	}
+}
+
+/* for payment transactions */
+class SoapClientHMAC extends SoapClient {
+  public function __doRequest($request, $location, $action, $version, $one_way = NULL) {
+		global $context;
+		/* PRODUCTION */
+		// $hmackey = "Koyr_iZIq3HcaRqIYx9JHtT82xC1LA3C";
+		// $keyid = "13136";
+		
+		/* TESTING */
+		$hmackey = "TuloMl3mBZg4si2~k6sKUGIkh29ch1kU";
+		$keyid = "11318";
+		
+		$hashtime = date("c");
+		$hashstr = "POST\ntext/xml; charset=utf-8\n" . sha1($request) . "\n" . $hashtime . "\n" . parse_url($location,PHP_URL_PATH);
+		$authstr = base64_encode(hash_hmac("sha1",$hashstr,$hmackey,TRUE));
+		if (version_compare(PHP_VERSION, '5.3.11') == -1) {
+			ini_set("user_agent", "PHP-SOAP/" . PHP_VERSION . "\r\nAuthorization: GGE4_API " . $keyid . ":" . $authstr . "\r\nx-gge4-date: " . $hashtime . "\r\nx-gge4-content-sha1: " . sha1($request));
+		} else {
+			stream_context_set_option($context,array("http" => array("header" => "authorization: GGE4_API " . $keyid . ":" . $authstr . "\r\nx-gge4-date: " . $hashtime . "\r\nx-gge4-content-sha1: " . sha1($request))));
+		}
+    return parent::__doRequest($request, $location, $action, $version, $one_way);
+  }
+  
+  public function SoapClientHMAC($wsdl, $options = NULL) {
+		global $context;
+		$context = stream_context_create();
+		$options['stream_context'] = $context;
+		return parent::SoapClient($wsdl, $options);
+  }
 }
 ?>
