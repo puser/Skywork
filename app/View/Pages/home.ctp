@@ -65,7 +65,8 @@
 				</form>
 
 				<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();"><?php echo __('I forgot my password') ?></a>
-				<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner"><?php echo __('Log in') ?></span></a>
+				<a href="#" onclick="check_login();" class="btn2 alignright" id="overlaySubmitLoginLink"><span class="inner">Sign In</span></a>
+
 				<div class="clear"></div>
 			</div>
 		</div>
