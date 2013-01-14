@@ -401,12 +401,12 @@ class UsersController extends AppController{
 		if($user['User']['card_token'] && !@$_POST["card_num"]){
 			$trxnProperties = array(
 				/* PRODUCTION */
-			  // "ExactID"=>'A28460-01',
-				// "Password"=> "14r0z18j",
+			  "ExactID"=>'A28460-01',
+				"Password"=> "14r0z18j",
 			
 				/* TESTING */
-				"ExactID"=>'AD1689-05',
-			  "Password"=> "181jw558",
+				// "ExactID"=>'AD1689-05',
+			  // "Password"=> "181jw558",
 		
 				"Transaction_Type"=>"00",
 			  "Customer_Ref"=>$user['User']['id'],
@@ -420,12 +420,12 @@ class UsersController extends AppController{
 		}else{
 			$trxnProperties = array(
 				/* PRODUCTION */
-			  // "ExactID"=>'A28460-01',
-				// "Password"=> "14r0z18j",
+			  "ExactID"=>'A28460-01',
+				"Password"=> "14r0z18j",
 			
 				/* TESTING */
-				"ExactID"=>'AD1689-05',
-			  "Password"=> "181jw558",
+				// "ExactID"=>'AD1689-05',
+			  // "Password"=> "181jw558",
 		
 				"Transaction_Type"=>"00",
 			  "Customer_Ref"=>$user['User']['id'],
@@ -440,7 +440,7 @@ class UsersController extends AppController{
 			  "CVD_Presence_Ind"=>($_POST['card_code'] ? 1 : 0));
 		}
 		
-		$client = new SoapClientHMAC("https://api.demo.globalgatewaye4.firstdata.com/transaction/v12/wsdl");
+		$client = new SoapClientHMAC("https://api.globalgatewaye4.firstdata.com/transaction/v12/wsdl");
 		$trxnResult = $client->SendAndCommit($trxnProperties);
 
 		if(@$client->fault){
@@ -490,12 +490,12 @@ class SoapClientHMAC extends SoapClient {
   public function __doRequest($request, $location, $action, $version, $one_way = NULL) {
 		global $context;
 		/* PRODUCTION */
-		// $hmackey = "Koyr_iZIq3HcaRqIYx9JHtT82xC1LA3C";
-		// $keyid = "13136";
+		$hmackey = "Koyr_iZIq3HcaRqIYx9JHtT82xC1LA3C";
+		$keyid = "13136";
 		
 		/* TESTING */
-		$hmackey = "TuloMl3mBZg4si2~k6sKUGIkh29ch1kU";
-		$keyid = "11318";
+		// $hmackey = "TuloMl3mBZg4si2~k6sKUGIkh29ch1kU";
+		// $keyid = "11318";
 		
 		$hashtime = date("c");
 		$hashstr = "POST\ntext/xml; charset=utf-8\n" . sha1($request) . "\n" . $hashtime . "\n" . parse_url($location,PHP_URL_PATH);
