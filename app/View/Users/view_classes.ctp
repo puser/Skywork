@@ -85,7 +85,7 @@
 										</ul>
 									</div>
 								</div>
-							<?php }else{ ?>
+							<?php }elseif($_SESSION['User']['user_type'] != 'P'){ ?>
 								<div class="item-actions">
 									<a href="#" class="item-actions-icon"></a>
 									<div class="item-actions-popup rounded2">

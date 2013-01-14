@@ -735,7 +735,8 @@ function nextQuestion(){
 			window.location = $('.userNav.active').next().find('a').attr('href');
 		});
 	}else{
-		$('#finalDialog').click();
+		// $('#finalDialog').click();
+		window.location = '/dashboard/';
 	}
 }
 

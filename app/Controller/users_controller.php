@@ -1,7 +1,7 @@
 <?php
 class UsersController extends AppController{
 	var $name = 'Users';
-	var $uses = array('User','ClassSet','Status','State', 'Country');
+	var $uses = array('User','ClassSet','Status','State','Country','WordFlag');
 
 	// view account settings
 	function view($show=NULL,$saved=false){
@@ -136,7 +136,7 @@ class UsersController extends AppController{
 		}
 		
 		// if user is re-invited with a new type, apply the new type to their record
-		if(@$user['User']['id'] && $type && $type != $user['User']['user_type']) $this->User->updateAll(array('User.user_type' => "'".$type."'"),array('User.id' => $user['User']['id']));
+		// if(@$user['User']['id'] && $type && $type != $user['User']['user_type']) $this->User->updateAll(array('User.user_type' => "'".$type."'"),array('User.id' => $user['User']['id']));
 		
 		// check for existing invite status
 		$status = array();
@@ -171,7 +171,7 @@ class UsersController extends AppController{
 		
 		if($send_invite){
 			if(!$tmp_password) $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team");
-			else $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n\nYour username is your email: <b>{user_email}</b>\nYour temporary password is: <b>{password}</b>\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team");
+			else $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to the class {classname} on Puentes - Assignments. On Demand!\n\nYour username is your email: <b>{user_email}</b>\nYour temporary password is: <b>{password}</b>\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team");
 			$message = str_replace('{first_name_1}',$user['User']['firstname'],$message);
 			$message = str_replace('{first_name_2}',$class['Owner']['firstname'],$message);
 			$message = str_replace('{last_name_2}',$class['Owner']['lastname'],$message);
@@ -269,6 +269,12 @@ class UsersController extends AppController{
 			$user = $this->User->save($new_user);
 			if(@$user['User']['id']) $this->Session->write('User',$user['User']);
 			else die('There was an error processing your request.');
+			
+			// create default flags
+			$this->WordFlag->save(array('flag_type'=>'EXPL','word'=>'damn','count'=>1,'user_id'=>$user['User']['id']));
+			$this->WordFlag->save(array('flag_type'=>'EXPL','word'=>'stupid','count'=>1,'user_id'=>$user['User']['id']));
+			$this->WordFlag->save(array('flag_type'=>'EXPL','word'=>'idiot','count'=>1,'user_id'=>$user['User']['id']));
+			$this->WordFlag->save(array('flag_type'=>'WORD','word'=>'you know','count'=>2,'user_id'=>$user['User']['id']));
 			
 			$this->redirect('/users/view/');
 		}elseif(@$_REQUEST['betakey'] && ((@$_REQUEST['betakey'] != 'BETATEST' && @$_REQUEST['user_type'] == 'L') || (@$_REQUEST['betakey'] != 'BETACOLLAB' && @$_REQUEST['user_type'] == 'C'))){

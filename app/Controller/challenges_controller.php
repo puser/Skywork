@@ -286,7 +286,13 @@ class ChallengesController extends AppController{
 											'type'			=> @$_REQUEST['attachment'][$k]['type'] );
 				}
 				if(@$attachments) $this->Challenge->Attachment->saveAll($attachments);
-			}elseif(@$_REQUEST['video_embed']) $this->Challenge->Attachment->saveAll(array(array('challenge_id'=>$challenge_id,'file_location'=>$_REQUEST['video_embed'],'type'=>'C')));
+			}elseif(@$_REQUEST['video_embed']){
+				if(strpos($_REQUEST['video_embed'],'youtu.be')) $_REQUEST['video_embed'] = '<iframe width="560" height="315" src="http://www.youtube.com/embed/' . substr($_REQUEST['video_embed'],strpos($_REQUEST['video_embed'],'youtu.be') + 8) . '" frameborder="0" allowfullscreen></iframe>';
+				elseif(strpos($_REQUEST['video_embed'],'watch?v=')) $_REQUEST['video_embed'] = '<iframe width="560" height="315" src="http://www.youtube.com/embed/' . substr($_REQUEST['video_embed'],strpos($_REQUEST['video_embed'],'watch?v=') + 8) . '" frameborder="0" allowfullscreen></iframe>';
+				
+				$this->Challenge->Attachment->deleteAll(array('challenge_id'=>$challenge_id,'type'=>'C'));
+				$this->Challenge->Attachment->saveAll(array(array('challenge_id'=>$challenge_id,'file_location'=>$_REQUEST['video_embed'],'type'=>'C')));	
+			}
 			elseif(@$_REQUEST['offline_challenge']) $this->Challenge->Attachment->saveAll(array(array('challenge_id'=>$challenge_id,'file_location'=>$_REQUEST['offline_challenge'],'type'=>'C')));
 			
 			/*	TEMPLATES DEPRECIATED FOR PUENTES v1
@@ -528,7 +534,10 @@ class ChallengesController extends AppController{
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
 		}else{
-			$message = __("Hi {firstname_1}!\n\nYour Instructor, {firstname_2} {lastname_2}, has sent you an invitation to join a Bridge on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n\nYou will have until:\n\n{duedate_1} to complete a series of questions.\n\n{duedate_2} to give feedback to other students.\n\nClick here to check it out:\n{bridge_link}\n\nSincerely,\nThe Puentes Team");
+			$message = __("Hi {firstname_1}!\n\nYour Instructor, {firstname_2} {lastname_2}, would like you to do your assignment online using Puentes - Assignments. On Demand!\n\nYou will have until:\n\n{duedate_1} to complete a series of questions.\n\n");
+			if($challenge['Challenge']['responses_due'] && $challenge['Challenge']['responses_due'] != '0000-00-00 00:00:00') $message .= __("{duedate_2} to give feedback to other students.\n\n");
+			$message .= __("Login here:\n{bridge_link}\n\nSincerely,\nThe Puentes Team");
+			
 			$message = str_replace('{firstname_1}',$user['User']['firstname'],$message);
 			$message = str_replace('{firstname_2}',$challenge['User']['firstname'],$message);
 			$message = str_replace('{lastname_2}',$challenge['User']['lastname'],$message);
@@ -553,7 +562,7 @@ class ChallengesController extends AppController{
 		$classes = $this->ClassSet->find('first',array('conditions'=>'ClassSet.id IN('.implode(',',$class_id).')','fields'=>'group_concat(distinct group_name separator ", ") as group_names,Owner.*','group'=>'ClassSet.owner_id'));
 		$challenge = $this->Challenge->findById($challenge_id);
 		
-		$message = __("Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited your class(es) ".$classes[0]['group_names']." to a Bridge on Puentes Online!\n\nYour students will have until {duedate_1} to complete Due Date 1 and until {duedate_2} to complete Due Date 2.\n\nClick here to Accept or Reject this bridge:\n{link_1}\n\nSincerely,\nThe Puentes Team");
+		$message = __("Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited your class(es) ".$classes[0]['group_names']." to an assignment on Puentes - Assignments. On Demand!\n\nYour students will have until {duedate_1} to complete Due Date 1 and until {duedate_2} to complete Due Date 2.\n\Login to Accept or Reject this bridge:\n{link_1}\n\nSincerely,\nThe Puentes Team");
 		$message = str_replace('{firstname_1}',$classes['Owner']['firstname'],$message);
 		$message = str_replace('{firstname_2}',$_SESSION['User']['firstname'],$message);
 		$message = str_replace('{lastname_2}',$_SESSION['User']['lastname'],$message);
