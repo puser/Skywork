@@ -36,9 +36,9 @@
 	<div id="header">
 		<div id="logo"><a href="/"></a></div>
 		<div id="topmenu">
-			<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#">Login</a></span>
+			<span class="user-logout icon-key" style="margin-right:0;"><a id="overlayLoginLink2" href="#" style="color:#567aa9;font-size:12px;">Sign in</a></span>
 		
-			<div id="overlayLoginForm" class="rounded" style="text-align:left;top:22px;right:0px;">
+			<div id="overlayLoginForm" class="rounded" style="text-align:left;top:20px;right:0px;">
 				<form id="loginBoxForm" method="POST" action="/dashboard/">
 					<ul class="fieldset2">
 						<li>
@@ -59,7 +59,8 @@
 				</form>
 
 				<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();"><?php echo __('I forgot my password') ?></a>
-				<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner"><?php echo __('Log in') ?></span></a>
+				<a href="#" onclick="check_login();" class="btn2 alignright" id="overlaySubmitLoginLink"><span class="inner">Sign In</span></a>
+
 				<div class="clear"></div>
 			</div>
 		</div>

@@ -25,7 +25,7 @@
 				<li<?php if($k%2) echo ' style="background:#eee;"'; ?>>
 					<?php echo $s['User']['firstname'].' '.$s['User']['lastname']; ?>
 					<span class="accept_status" <?php if(($_SESSION['User']['id'] == $s['user_id'] ? $status['Status']['status'] : $s['status']) == 'C') echo 'style="color:green;"'; ?>>
-						<?php echo __(($_SESSION['User']['id'] == $s['user_id'] ? $status['Status']['status'] : $s['status']) == 'P' ? 'Pending' : (($_SESSION['User']['id'] == $s['user_id'] ? $status['Status']['status'] : $s['status']) == 'C' ? 'Accepted' : 'Rejected')) ?>
+						<?php echo (($_SESSION['User']['id'] == $s['user_id'] ? $status['Status']['status'] : $s['status']) == 'P' ? __('Pending') : (($_SESSION['User']['id'] == $s['user_id'] ? $status['Status']['status'] : $s['status']) == 'C' ? __('Accepted') : __('Rejected'))) ?>
 					</span>
 				</li>
 			<?php } ?>

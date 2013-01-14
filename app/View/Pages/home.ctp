@@ -42,7 +42,7 @@
 		
 		<div id="logo"><a href="/"></a></div>
 		<div id="topmenu">
-			<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#" style = "color : #567aa9">Sign in</a></span>
+			<span class="user-logout icon-key" style="margin-right:0;"><a id="overlayLoginLink2" href="#" style="color:#567aa9;font-size:12px;">Sign in</a></span>
 		
 			<div id="overlayLoginForm" class="rounded" style="text-align:left;top:20px;right:0px;">
 				<form id="loginBoxForm" method="POST" action="/dashboard/">
@@ -99,7 +99,7 @@
 		
 		<div class="contentmain">
 			<div class="homequote">
-				<p>"Any other assignment is just an assignment." - Miami-based Professor</p>
+				<p>Any other assignment is just an assignment.</p>
 			</div>
 			
 			<h4>Quick Explanation</h4>

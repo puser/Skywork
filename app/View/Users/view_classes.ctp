@@ -29,7 +29,7 @@
 			</div>
 			
 			<span class="icon2 icon2-<?php echo ($connections ? 'connection' : 'class'); ?>" style="width:56px;"></span>
-			<h2><?php echo __($connections ? 'Connected Classes' : 'Your Classes') ?></h2>
+			<h2><?php echo ($connections ? __('Connected Classes') : __('Your Classes')); ?></h2>
 			<div class="clear"></div>
 		</div>
 		<div class="box-content">

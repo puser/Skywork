@@ -96,7 +96,7 @@
 							} ?></td>
 					<td>
 						<?php if($_SESSION['User']['user_type']=='L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){ ?>
-							<?php echo __($challenge['Status'][0]['status'] == 'P' || $challenge['User']['id'] == $_SESSION['User']['id'] ? 'Accept?' : ($challenge['Status'][0]['status'] == 'C' ? 'Accepted' : 'Rejected')) ?>
+							<?php echo ($challenge['Status'][0]['status'] == 'P' || $challenge['User']['id'] == $_SESSION['User']['id'] ? __('Accept?') : ($challenge['Status'][0]['status'] == 'C' ? __('Accepted') : __('Rejected'))); ?>
 						<?php }elseif(date_create($challenge['Challenge']['answers_due']) >= $now){ ?>
 							<?php if($challenge['Challenge']['status'] == 'D'){ ?><?php echo __('Building') ?>
 							<?php }elseif(@$challenge['Status'][0]['status']=='D'){ ?><?php echo __('In Use') ?>

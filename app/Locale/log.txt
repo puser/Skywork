@@ -1,0 +1,2 @@
+19:20:33: /Users/benrawn/Documents/clients/seandaly/cco/dev/app/Locale/spa/LC_MESSAGES/default.po:473: `msgid' and `msgstr' entries do not both end with '\n'
+19:20:33: /Applications/Poedit.app/Contents/MacOS/msgfmt: found 1 fatal error
