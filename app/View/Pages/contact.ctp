@@ -6,7 +6,6 @@
 	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="./favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
 	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
-	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="/css/style_corp.css" />
 	<link rel="stylesheet" type="text/css" href="js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
@@ -34,55 +33,57 @@
 <body class="site page page-index">
 <div id="wrapper">
 
-	<div id="header" class="round round-main">
-		<div class="content rounded-top">
-			
-			<div id="logo"><a href="/"></a></div>
-			<div id="topmenu">
-				<span class="user-home icon-home"><a href="/">Main</a></span>
-				<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#">Login</a></span>
-			
-				<div id="overlayLoginForm" class="rounded" style="text-align:left;top:22px;right:0px;">
-					<form id="loginBoxForm" method="POST" action="/dashboard/">
-						<ul class="fieldset2">
-							<li>
-								<div class="label alignleft">
-									<span class="red">*</span> <?php echo __('Email') ?>
-								</div>
-								<input type="text" class="inputText" id="loginUser" />
-							</li>
-							<li>
-								<div class="label alignleft">
-									<span class="red">*</span> <?php echo __('Password') ?>
-								</div> 
-								<input type="password" class="inputText" id="loginPass" />
-							</li>
-							<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
-						</ul>
-						<div class="clear"></div>
-					</form>
-
-					<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();"><?php echo __('I forgot my password') ?></a>
-					<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner"><?php echo __('Log in') ?></span></a>
+	<div id="header">
+		<div id="logo"><a href="/"></a></div>
+		<div id="topmenu">
+			<span class="user-logout icon-key"><a id="overlayLoginLink2" href="#">Login</a></span>
+		
+			<div id="overlayLoginForm" class="rounded" style="text-align:left;top:22px;right:0px;">
+				<form id="loginBoxForm" method="POST" action="/dashboard/">
+					<ul class="fieldset2">
+						<li>
+							<div class="label alignleft">
+								<span class="red">*</span> <?php echo __('Email') ?>
+							</div>
+							<input type="text" name="loginUser" class="inputText" id="loginUser" />
+						</li>
+						<li>
+							<div class="label alignleft">
+								<span class="red">*</span> <?php echo __('Password') ?>
+							</div> 
+							<input type="password" name="loginPass" class="inputText" id="loginPass" />
+						</li>
+						<li class="errorNotification"><span class="red" id="loginError"> &nbsp; </span></li>
+					</ul>
 					<div class="clear"></div>
-				</div>
+				</form>
+
+				<a id="overlayForgotPasswordLink" href="#" onclick="send_password_reset();"><?php echo __('I forgot my password') ?></a>
+				<a href="#" onclick="check_login();" class="btn1 alignright" id="overlaySubmitLoginLink"><span class="inner"><?php echo __('Log in') ?></span></a>
+				<div class="clear"></div>
 			</div>
-						
+		</div>
+		
+		<div id="mainmenu">
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/pages/about/">Product</a></li>
+				<li><a href="http://blog.puentesonline.com/">Blog</a></li>
+				<li class="active"><a href="/pages/contact/">Contact</a></li>
+			</ul>
 		</div>
 	</div><!-- #header -->
 	
 	<div id="body">
 		
-		<div id="contact-us-page" class="site-page" >
+		<div class="contentmain">
+			
+			
 			<div id="contact-us-form-div" class="width50 alignleft">
 			
-				
-				<h3 style="margin-bottom: 0">Help</h3>
-				<p style="font-size:93%;">For help related issues, you may reach out to <a href="mailto:info@puentesonline.com">info@puentesonline.com</a></p>
-				
 				<div id="contact-us-form">
 					
-					<p>Let us know your suggestions, comments and/or concerns by filling out the form below. We do review all emails that come in. However, we are not able to respond to all of them.</p>
+					<p>Let us know your suggestions, comments and/or concerns by filling out the form below.</p>
 					
 					<form action="" method="post">
 					<ul>
@@ -101,11 +102,11 @@
 						<li>
 							<label for="contact-subject">Subject</label>
 							<select name="subject" id="contact-subject">
-								<option value="">What's on your mind?</option>
-								<option>A question</option>
-								<option>A comment</option>
-								<option>A complaint</option>
-								<option>General feedback</option>
+								<option value="">What's on your mind? </option>
+								<option value="A question">A question</option>
+								<option value="A comment">A comment</option>
+								<option value="A complaint">A complaint</option>
+								<option value="General feedback">General feedback</option>
 							</select>
 						</li>
 						<li>
@@ -123,7 +124,7 @@
 			</div>
 			
 			<div id="faq-div" class="width50 alignright">
-				<h3>FAQ</h3>
+				<p style="font-size: 18px;">FAQ</p>
 				
 				<ul class="accordion">
 					<li>
@@ -135,28 +136,25 @@
 					<li>
 						<a href="#" class="toggle">Can I use Puentes if our school/institution uses applications like Blackboard and/or others?</a>
 						<div class="toggle-content">
-							<p>There are lots of free services that are used by Instructors all over the country. Unless your school or college licenses with us, Puentes is an independent service from your institution, and signing up is extremely easy. </p>
+							<p>There are lots of free services that are used by Instructors all over the country. Unless your school or college licenses with us, Puentes is an independent service from your institution, and signing up is extremely easy.</p>
 						</div>
 					</li>
 					<li>
 						<a href="#" class="toggle">Why am I not getting Puentes emails?</a>
 						<div class="toggle-content">
-							<p>There may be a chance that your emails are going to your spam folder. To avoid this, add noreply@puentesonline to your safe list.</p>
+							<p>There may be a chance that your emails are going to your spam folder. To avoid this, add info@puentesonline to your safe list.</p>
 						</div>
 					</li>
 					<li>
-						<a href="#" class="toggle">What are typical troubleshooting methods for Puentes?</a>
+						<a href="#" class="toggle">What is typical troubleshooting for Puentes?</a>
 						<div class="toggle-content">
-							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple methods of troubleshooting:<br /><br />
-
-							1. Try refreshing the page (make sure you save any unfinished work first)<br />
-							2. Try updating your browser to the latest version (Puentes will probably not work its best on Internet Explorer 2004)<br />
-							3. Try quitting the browser and restarting (this is worst case scenario, but it sometimes works)<br /><br />
-
-							If none of these methods work, please feel free
-							to reach out to us at info@puentesonline.com
-							and we will get back to you asap.
-							</p>
+							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple methods of troubleshooting:</p>
+							<ol class="list-arabic">
+								<li>Try refreshing the page (make sure you save any unfinished work first)</li>
+								<li>Try updating your browser to the latest version (Puentes will probably not work its best on Internet Explorer 2004)</li>
+								<li>Try quitting the browser and restarting (this is worst case scenario, but it sometimes works)</li>
+							</ol>
+							<p>If none of these methods work, please feel free to reach out to us at <a href="mailto:info@puentesonline.com">info@puentesonline.com</a> and we will get back to you asap.</p>
 						</div>
 					</li>
 					<li>
@@ -168,7 +166,7 @@
 					<li>
 						<a href="#" class="toggle">How do I connect with other Instructors?</a>
 						<div class="toggle-content">
-							<p>Go to the Classes section found on the top of the application. Then navigate to the Connections section. There you will find a button labeled ‚ÄúFind an Instructor.‚Äù Simply add their email address and search for them.</p>
+							<p>Go to the Classes section found on the top of the application. Then navigate to the Connections section. There you will find a button labeled ìFind an Instructor.î Simply add their email address and search for them.</p>
 						</div>
 					</li>
 					<li>
@@ -180,37 +178,23 @@
 					<li>
 						<a href="#" class="toggle">Who created Puentes?</a>
 						<div class="toggle-content">
-							<p>Puentes was originally created by Sean Daly. The first commercially viable product was created by himself, Benjamin Rawn and Wifredo Fernandez.</p>
+							<p>Puentes was originally created by Sean Daly. The first commercially viable product was created in collaboration with Benjamin Rawn and Wifredo Fernandez.</p>
 						</div>
 					</li>
 					<li>
 						<a href="#" class="toggle">How do I unsubscribe?</a>
 						<div class="toggle-content">
-							<p>First off, we would be sad to see you go. But if necessary, send us an email to noreply@puentesonline.com with UNSUBSCRIBE in the subject of the email. Please include your username, and feel free to add an explanation with your reason for leaving us.</p>
+							<p>First off, we would be sad to see you go. But if necessary, send us an email to info@puentesonline.com with UNSUBSCRIBE in the subject of the email. Please include your username, and feel free to add an explanation with your reason for leaving us.</p>
 						</div>
 					</li>
 				</ul>
 			</div>
 			
-			<div class="clear"></div>
+		</div>
 			
 		</div>
 		
 	</div>
-			
 	
-	<div id="footer">
-		<div class="alignleft" id="logofooter"></div>
-		<div class="alignright" id="footermenu">
-			<ul>
-				<li><a href="/pages/contact/">Contact Us/FAQ</a></li>
-				<li><a href="/pages/privacy/">Privacy Policy</a></li>
-				<li><a href="/pages/terms/">Terms and Conditions</a></li>
-			</ul>
-		</div>
-		<div class="clear"></div>
-	</div><!-- #footer -->
-	
-</div>
 </body>
 </html>
