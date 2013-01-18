@@ -343,13 +343,18 @@
 											
 											$br_offset = @substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
 											$br_offset += @substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
+											
+											$c['segment_start'] += strlen(substr($q['Response'][0]['response_body'],0,$c['segment_start'])) - strlen(utf8_decode(substr($q['Response'][0]['response_body'],0,$c['segment_start'])));
+											//$c['segment_length'] -= strlen(substr($q['Response'][0]['response_body'],0,$c['segment_start'])) - strlen(utf8_decode(substr($q['Response'][0]['response_body'],0,$c['segment_start'])));
+											
 									
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
 					
 											$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start'] + $br_offset) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start'] + $br_offset);
 									
 											if(!$completed){
-												$alt_response = str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body']));
+												
+												$alt_response = utf8_decode(str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body'])));
 												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $k),
 																										'formValues'	=> array(	array(	'name'	=> 'comment',
 																										 																'value'	=> $c['comment'] ),
@@ -388,6 +393,9 @@
 											
 											$br_offset = @substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
 											$br_offset += @substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
+											
+											$c['segment_start'] += strlen(substr($q['Response'][0]['response_body'],0,$c['segment_start'])) - strlen(utf8_decode(substr($q['Response'][0]['response_body'],0,$c['segment_start'])));
+											$c['segment_length'] -= strlen(substr($q['Response'][0]['response_body'],0,$c['segment_start'])) - strlen(utf8_decode(substr($q['Response'][0]['response_body'],0,$c['segment_start'])));
 											
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue; 
 											if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
@@ -597,7 +605,7 @@ $(document).ready(function(){
 		r_id = 0;
 
 		lastPos = responseIdx = 0;
-		for(i = 0;i < end + 10;i++){ console.log(responses[responseIdx].text.substr(lastPos) + ' ~~ ' + responses[responseIdx].text.substr(lastPos).indexOf(' ') + ' -- ' + responseIdx + '!!');
+		for(i = 0;i < end + 10;i++){
 			if(responses[responseIdx].text.substr(lastPos).indexOf(' ') == -1){
 				responseIdx++;
 				//lastPos = responses[responseIdx].text.substr(0).indexOf(' ') + 1;
