@@ -154,7 +154,7 @@ $('.accordion-trigger a').click(function(){
 	if($(this).parent().parent().index('.accordion>li') == 1 || $(this).parent().parent().index('.accordion>li') == 2){
 		$('#payment_summary').show();
 		
-		if($(this).attr('id') == 'premium_select') $('#edit_payment_method').attr('href','/users/update_payment/PLATINUM/');
+		if($(this).attr('id') == 'platinum_select') $('#edit_payment_method').attr('href','/users/update_payment/PLATINUM/');
 		else $('#edit_payment_method').attr('href','/users/update_payment/PREMIUM/');
 		$('#edit_payment_method').click();
 	}else $('#payment_summary').hide();

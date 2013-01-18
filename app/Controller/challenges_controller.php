@@ -1,14 +1,13 @@
 <?php
 class ChallengesController extends AppController{
 	var $name = 'Challenges';
-	var $uses = array('User','Challenge','ClassSet','Status','Response','Group','UsersGroup','Comment');
+	var $uses = array('User','Challenge','ClassSet','Status','Response','Group','UsersGroup','Comment','ChallegesClasses');
 	
 	// view all challenges (dashboard)
 	function browse($status=NULL,$page=1){
 		$this->checkAuth();
 		$this->Challenge->Behaviors->attach('Containable');
 		$conditions = array();
-		$group = 'Challenge.id ';
 		
 		$this->Challenge->hasMany['Status']['conditions'] = array("Status.user_id = {$_SESSION['User']['id']}");
 		
@@ -27,8 +26,7 @@ class ChallengesController extends AppController{
 		if(@$_REQUEST['dir']=='a' || !@$_REQUEST['sort']) $sort .= ' DESC';
 		else $sort .= ' ASC';
 		
-		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'group'=>$group,'contain'=>array('Collaborator','User','Question','Status','ClassSet'=>array('User'),'Group'=>array('User'))));
-
+		// get a list of challenge ids that user's classes has access to
 		$this->User->hasMany['Status']['conditions'] = 'Status.challenge_id IS NULL';
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
@@ -36,9 +34,23 @@ class ChallengesController extends AppController{
 			if($user['User']['user_type'] != 'L' || $g['owner_id'] == $user['User']['id']) $groups[$g['id']] = 1;
 		}
 		
+		if($groups){
+			$full_groups = implode(',',array_keys($groups));
+			$cids = $this->Challenge->query('select group_concat(distinct challenge_id separator ",") as g from challenges_classes where class_id in ('.$full_groups.') group by class_id');
+			$cs = '';
+			foreach($cids as $cid) $cs .= ($cs ? ',' : '') . $cid[0]['g'];
+			$cids = $this->Challenge->query('select group_concat(distinct challenge_id separator ",") as g from challenges_collaborators where user_id = '.$_SESSION['User']['id']);
+			$cs .= ($cs && $cids[0][0]['g'] ? ',' : '') . $cids[0][0]['g'];
+			if($cs){
+				$conditions[] = '(Challenge.id IN ('.$cs.') || Challenge.user_id = '.$_SESSION['User']['id'].')';
+			}
+		}
+		
+		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'contain'=>array('Collaborator'=>array('fields'=>array('Collaborator.id')),'User','Question'=>array('fields'=>array('Question.id')),'Status','ClassSet'=>array('User'=>array('fields'=>array('User.id,User.firstname,User.lastname','User.email'))),'Group'=>array('User'=>array('fields'=>array('User.id,User.firstname,User.lastname,User.email'))))));
+		
 		$join_dates = array();
 		foreach(@$user['Status'] as $s) $join_dates[$s['class_id']] = date_create($s['date_created']);
-		
+				
 		$now = date_create();
 		//$now->setTime(0,0);
 		foreach($challenges as $k=>$c){
