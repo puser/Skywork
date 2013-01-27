@@ -344,8 +344,8 @@
 											$br_offset = @substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
 											$br_offset += @substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
 											
-											$c['segment_start'] += strlen(substr($q['Response'][0]['response_body'],0,$c['segment_start'])) - strlen(utf8_decode(substr($q['Response'][0]['response_body'],0,$c['segment_start'])));
-											//$c['segment_length'] -= strlen(substr($q['Response'][0]['response_body'],0,$c['segment_start'])) - strlen(utf8_decode(substr($q['Response'][0]['response_body'],0,$c['segment_start'])));
+											$rbody_tmp = substr($q['Response'][0]['response_body'],0,$c['segment_start']);
+											$c['segment_start'] += strlen($rbody_tmp) - strlen(utf8_decode($rbody_tmp));
 											
 									
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
@@ -391,12 +391,14 @@
 										$mod_response = array();
 										foreach(@$q['Response'][0]['Comment'] as $c){
 											
+											$rbody_tmp = substr($q['Response'][0]['response_body'],0,$c['segment_start']);
+											$rlen_tmp = substr($q['Response'][0]['response_body'],$c['segment_start'],$c['segment_start']+$c['segment_length']);
+											$c['segment_start'] += strlen($rbody_tmp) - strlen(utf8_decode($rbody_tmp));
+								//			$c['segment_length'] += strlen($rlen_tmp) - strlen(utf8_decode($rlen_tmp));
+											
 											$br_offset = @substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
 											$br_offset += @substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
-											
-											$c['segment_start'] += strlen(substr($q['Response'][0]['response_body'],0,$c['segment_start'])) - strlen(utf8_decode(substr($q['Response'][0]['response_body'],0,$c['segment_start'])));
-											$c['segment_length'] -= strlen(substr($q['Response'][0]['response_body'],0,$c['segment_start'])) - strlen(utf8_decode(substr($q['Response'][0]['response_body'],0,$c['segment_start'])));
-											
+																					
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue; 
 											if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
 									
@@ -595,7 +597,7 @@ $(document).ready(function(){
 	<?php if($responseCount){
 		foreach($challenge[0]['Question'] as $k=>$q){
 			if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id) continue; ?>
-			responses.push({text:'<?php echo str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body'])); ?>'.trim(),id:<?php echo $q['Response'][0]['id']; ?>});
+			responses.push({text:'<?php echo str_replace("'","\\'",str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body']))); ?>'.trim(),id:<?php echo $q['Response'][0]['id']; ?>});
 		<?php }
 	} ?>
 
@@ -660,7 +662,7 @@ $(document).ready(function(){
 	function annotaterInit(cssSelector) {
 
 		var options = {};
-		options.form = '<div class="answer-comment-box"><textarea name="comment" class="comment-textarea"></textarea><div class="vote"><ul><li class="voteneutral"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(2);return false;">General</a></li><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;">Like</a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;">Dislike</a></li></ul></div><div class="comment-submit"><img src="/images/loadingWheel.gif" style="display:none;" /><a href="#" onclick="if($(\'.jQueryTextAnnotaterDialogForm input.comment-type\').val() == \'N\'){ alert(\'You must select Like or Dislike to save a comment.\'); }else{ saveAnnotation(); }return false;" class="btn1"><span>Comment</span></a></div><a href="#" class="removeAnnotationBtn deleteComment" style="float: right;color: #000;text-decoration: underline;padding-top: 2px;">Remove this comment</a><div class="clear"></div><div class="callout-corner"></div><a href="#" class="close" onclick="$(\'.jQueryTextAnnotaterDialog\').hide();return false;"></a><input type="hidden" name="type" class="comment-type" value="2" /><input type="hidden" name="id" class="comment-id" value="" /></div>';
+		options.form = '<div class="answer-comment-box"><textarea name="comment" class="comment-textarea"></textarea><div class="vote"><ul><li class="voteneutral"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(2);return false;">General</a></li><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;">Like</a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;">Dislike</a></li></ul></div><div class="comment-submit"><img src="/images/loadingWheel.gif" style="display:none;" /><a href="#" onclick="if($(\'.jQueryTextAnnotaterDialogForm input.comment-type\').val() == \'N\'){ alert(\'You must select Like or Dislike to save a comment.\'); }else{ saveAnnotation(); }return false;" class="btn1"><span>Comment</span></a></div><a href="#" class="removeAnnotationBtn deleteComment" style="float: right;color: #000;text-decoration: underline;padding-top: 2px;">Remove this comment</a><div class="clear"></div><div class="callout-corner"></div><a href="#" class="close removeAnnotationBtn" onclick="$(\'.jQueryTextAnnotaterDialog\').hide();return false;"></a><input type="hidden" name="type" class="comment-type" value="2" /><input type="hidden" name="id" class="comment-id" value="" /></div>';
 		options.annotateCharacters = false; 
 		options.formDeleteAnnotationButton = '.removeAnnotationBtn';
 
@@ -672,7 +674,7 @@ $(document).ready(function(){
 		});
 	
 		jQuery(cssSelector).textAnnotate('bind', 'removeAnnotation', function(removedAnnotation){
-			$.ajax({url:'/comments/delete/' + removedAnnotation[0].formValues[2].value});
+			if(removedAnnotation[0].formValues) $.ajax({url:'/comments/delete/' + removedAnnotation[0].formValues[2].value});
 		});
 	
 		jQuery(cssSelector).textAnnotate('bind', 'addAnnotation', function(addedAnnotation){
@@ -719,6 +721,20 @@ $(document).ready(function(){
 					$('.vote .voteup').addClass('inactive');
 				}
 			},25);
+		});
+		
+		jQuery(cssSelector).textAnnotate('bind', 'beforeHideDialog', function(data){
+			
+			// if there's no id for this comment and no content, delete it; otherwise, save it
+			if($('.jQueryTextAnnotaterDialogForm input.comment-id').val() == '' && $('.jQueryTextAnnotaterDialogForm textarea').val() == ''){
+	//		$('.answer-comment-box .close').click();
+			}else if($('.jQueryTextAnnotaterDialogForm input.comment-id').val() == ''){
+		/*	saveAnnotation();
+				setTimeout(function(){
+					$('.answer-comment-box .close').click();
+				},10); */
+			}
+			
 		});
 	
 		<?php if($js_comments){ ?>

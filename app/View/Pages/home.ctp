@@ -89,7 +89,7 @@
 				<div class="slide-info">
 					<h2>Students learn more, you work less.</h2>
 					<p>The easiest way to create, distribute &amp; evaluate your assignments. All online.</p>
-					<a href="#joinModalInstructor" class="show-overlay btn1 btn1-v2" style=""><span class="inner">Sign up! It's Free</span></a>
+					<a href="#joinModalInit" class="show-overlay btn1 btn1-v2" style=""><span class="inner">Sign up! It's Free</span></a>
 				</div>
 			</div>
 		</div>
@@ -136,6 +136,14 @@
 	<a href="#resetPasswordModal" visible="false" id="resetTrigger" class="add-link show-overlay"></a>
 	<?php } ?>
 	<div style="display:none;">
+		
+		<div id="joinModalInit" class="joinModal" style="width:455px;height:265px;">
+			<h1 style="color:#EE4036;font-size:23px;font-weight:normal;padding-left:10px;">I am...</h1>
+			<div style="width:430px;padding:0 10px;">
+				<a href="#joinModalInstructor" class="show-overlay" onmouseover="$(this).find('img').attr('src','/images/newuser_instruct_active.png');" onmouseout="$(this).find('img').attr('src','/images/newuser_instruct.png');" style="margin-right:30px;"><img src="/images/newuser_instruct.png" /></a>
+				<a href="#joinModalStudent" class="show-overlay" onmouseover="$(this).find('img').attr('src','/images/newuser_student_active.png');" onmouseout="$(this).find('img').attr('src','/images/newuser_student.png');"><img src="/images/newuser_student.png" /></a>
+			</div>
+		</div>
 		
 		<div id="joinModalInstructor" class="joinModal " >
 			<div class="box-heading joinTabs">
@@ -511,5 +519,18 @@
 	}
 	</script>
 	
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-34919643-1']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
 </body>
 </html>

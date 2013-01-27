@@ -246,6 +246,7 @@ class UsersController extends AppController{
 		}else{
 			$this->set('reset_password',true);
 			$this->set('user',$user);
+			$this->layout = 'ajax';
 			$this->render('/Pages/home');
 		}
 	}
@@ -276,6 +277,10 @@ class UsersController extends AppController{
 			$this->WordFlag->save(array('flag_type'=>'EXPL','word'=>'idiot','count'=>1,'user_id'=>$user['User']['id']));
 			$this->WordFlag->save(array('flag_type'=>'WORD','word'=>'you know','count'=>2,'user_id'=>$user['User']['id']));
 			
+			// send confirmation email
+			$message = __("Welcome to Puentes Online! Your account has been created successfully. Click on the link below to sign in.\n\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team");
+			mail("{$user['User']['email']}",__("Welcome to Puentes Online"),$message,'From: Puentes <noreply@puentesonline.com>');
+			
 			$this->redirect('/users/view/');
 		}elseif(@$_REQUEST['betakey'] && ((@$_REQUEST['betakey'] != 'BETATEST' && @$_REQUEST['user_type'] == 'L') || (@$_REQUEST['betakey'] != 'BETACOLLAB' && @$_REQUEST['user_type'] == 'C'))){
 			$this->redirect('/login/?signup_error=key&signup_type='.$_REQUEST['user_type']);
@@ -299,6 +304,10 @@ class UsersController extends AppController{
 			$user = $this->User->save($new_user);
 			if(@$user['User']['id']) $this->Session->write('User',$user['User']);
 			else die('There was an error processing your request.');
+			
+			// send confirmation email
+			$message = __("Welcome to Puentes Online! Your account has been created successfully. Click on the link below to sign in.\n\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team");
+			mail("{$user['User']['email']}",__("Welcome to Puentes Online"),$message,'From: Puentes <noreply@puentesonline.com>');
 			
 			$user_update['ClassSet'] = array($class['ClassSet']['id']);
 			$this->User->save($user_update);
@@ -483,13 +492,20 @@ class UsersController extends AppController{
 	function session_logout(){
 		$this->layout = 'ajax';
 	}
+	
+	function contact(){
+		if(@$_REQUEST['message'] && @$_REQUEST['email']){
+			mail("seand567@hotmail.com",@$_REQUEST['subject'],$_REQUEST['message'],"From: {$_REQUEST['first_name']} {$_REQUEST['last_name']} <{$_REQUEST['email']}>");
+		}
+		$this->redirect('/pages/contact/');
+	}
 }
 
 /* for payment transactions */
 class SoapClientHMAC extends SoapClient {
   public function __doRequest($request, $location, $action, $version, $one_way = NULL) {
 		global $context;
-		/* PRODUCTION */
+		/* PRODUCTION (transarmor token: kj23) */
 		$hmackey = "Koyr_iZIq3HcaRqIYx9JHtT82xC1LA3C";
 		$keyid = "13136";
 		

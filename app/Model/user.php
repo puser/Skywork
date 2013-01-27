@@ -47,8 +47,8 @@ class User extends AppModel{
 		if(isset($results['firstname'])) $results['firstname'] = $results['firstname'] || $results['lastname'] ? $results['firstname'] : $results['email'];
 		else{
 			foreach($results as $k => $v){
-				if(isset($results[$k]['User']['firstname'])) $results[$k]['User']['firstname'] = $v['User']['firstname'] || $v['User']['lastname'] ? $v['User']['firstname'] : $v['User']['email'];
-				elseif(isset($results[$k]['firstname'])) $results[$k]['firstname'] = $v['firstname'] || $v['lastname'] ? $v['firstname'] : $v['email'];
+				if(@isset($results[$k]['User']['firstname'])) $results[$k]['User']['firstname'] = $v['User']['firstname'] || $v['User']['lastname'] ? $v['User']['firstname'] : $v['User']['email'];
+				elseif(@isset($results[$k]['firstname'])) $results[$k]['firstname'] = $v['firstname'] || $v['lastname'] ? $v['firstname'] : $v['email'];
 			}
 		}
 		return $results;

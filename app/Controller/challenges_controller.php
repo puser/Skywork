@@ -28,6 +28,7 @@ class ChallengesController extends AppController{
 		
 		// get a list of challenge ids that user's classes has access to
 		$this->User->hasMany['Status']['conditions'] = 'Status.challenge_id IS NULL';
+		$this->User->hasMany['Status']['order'] = 'Status.id ASC';
 		$user = $this->User->findById($_SESSION['User']['id']);
 		$groups = array();
 		foreach(@$user['ClassSet'] as $g){
@@ -46,11 +47,11 @@ class ChallengesController extends AppController{
 			}
 		}
 		
-		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'contain'=>array('Collaborator'=>array('fields'=>array('Collaborator.id')),'User','Question'=>array('fields'=>array('Question.id')),'Status','ClassSet'=>array('User'=>array('fields'=>array('User.id,User.firstname,User.lastname','User.email'))),'Group'=>array('User'=>array('fields'=>array('User.id,User.firstname,User.lastname,User.email'))))));
+		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'contain'=>array('Collaborator'=>array('fields'=>array('Collaborator.id','Collaborator.user_type','Collaborator.firstname','Collaborator.lastname')),'User','Question'=>array('fields'=>array('Question.id')),'Status','ClassSet'=>array('User'=>array('fields'=>array('User.id,User.firstname,User.lastname','User.email'))),'Group'=>array('User'=>array('fields'=>array('User.id,User.firstname,User.lastname,User.email'))))));
 		
 		$join_dates = array();
 		foreach(@$user['Status'] as $s) $join_dates[$s['class_id']] = date_create($s['date_created']);
-				
+									
 		$now = date_create();
 		//$now->setTime(0,0);
 		foreach($challenges as $k=>$c){
@@ -62,9 +63,12 @@ class ChallengesController extends AppController{
 				}
 			}
 			foreach($c['Collaborator'] as $u){
+				if($u['user_type'] == 'P') @$challenges[$k]['Users'] = is_array($challenges[$k]['Users']) ? array_merge($challenges[$k]['Users'],array("{$u['firstname']} {$u['lastname']}" => $u)) : array("{$u['firstname']} {$u['lastname']}" => $u);
+				
 				if($u['id'] == $_SESSION['User']['id'] && $c['Challenge']['status'] != 'D'){
 					$vis = true;
-					$challenges[$k]['collaborator'] = true;
+					// depreciated; collaborator functionality repurposed for former students, etc:
+					// $challenges[$k]['collaborator'] = true;
 					break;
 				}
 			}

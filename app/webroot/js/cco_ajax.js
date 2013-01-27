@@ -6,7 +6,7 @@ function check_login(){
 		}else{
 			$('#loginError').html('Email and password combination do not match!');
 			$('.errorNotification').show();
-			$('#overlayLoginForm').height('164px')
+			$('#overlayLoginForm').height('164px');
 			return false;
 		}
 	}});
@@ -16,15 +16,18 @@ function send_password_reset(){
 	if(!$('#loginUser').val()){
 		$('#loginError').html('Please specify your email address in the field above.');
 		$('.errorNotification').show();
+		$('#overlayLoginForm').height('164px');
 		return false;
 	}
 	$.ajax({url:'/users/send_password_reset/'+$('#loginUser').val(),type:'POST',success:function(r){
 		if(r == 1){
 			$('#loginError').html('<span style="text-decoration:underline;">Email sent to inbox for new password!</span>');
 			$('.errorNotification').show();
+			$('#overlayLoginForm').height('164px');
 		}else{
 			$('#loginError').html('<span style="text-decoration:underline;">Email not recognized in records!</span>');
 			$('.errorNotification').show();
+			$('#overlayLoginForm').height('164px');
 		}
 	}});
 }

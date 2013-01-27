@@ -61,6 +61,15 @@ class ResponsesController extends AppController{
 					if(@$redirect_user) break;
 				}
 			}
+			if(!@$redirect_user){
+				foreach($challenge[0]['Collaborator'] as $u){
+					if($u['user_type'] == 'P'){
+						$redirect_user = $u['id'];
+						break;
+					}
+				}
+			}
+			
 			$this->redirect('/responses/view/'.$challenge_id.'/'.($redirect_user ? $redirect_user : 'error'));
 		}elseif($user_id == 'complete_eval') $this->set('complete_eval',true);
 		
