@@ -197,7 +197,7 @@
 				<?php if(!$completed){ ?>
 					<ul>
 						<li<?php if(@$complete_eval){ ?> class="active"<?php } ?>>
-							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/greencheck_menu_16.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/"><?php echo __('I\'m Done!') ?></a>
+							<a style="background-image:url(/images/icons/greencheck_menu_16.png);display: block; padding: 13px 10px 13px 60px; margin: 0 0 0 0; font-size: 14px; font-weight: normal; font-family: Helvetica, Arial, serif; background-position: 15px center; background-repeat: no-repeat; width: 110px; color: #666666; text-decoration: none;border-left: 4px solid #f5866c;background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 56px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/"><?php echo __('I\'m Done!') ?></a>
 						</li>
 					</ul>
 				<?php } ?>

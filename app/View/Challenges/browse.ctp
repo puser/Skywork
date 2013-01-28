@@ -3,8 +3,7 @@
 <?php if($_SESSION['User']['user_type'] == 'L'){ ?>
 	<div id="startbridge" class="rounded box-white">
 		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="alert('You have reached your monthly limit for new bridges. Please upgrade your account to continue.');return false;"<?php } ?> class="btn1"><span><?php echo __('Begin') ?></span></a>
-		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="alert('You have reached your monthly limit for new bridges. Please upgrade your account to continue.');return false;"<?php } ?>><h2><?php echo __('Start an Assignment'); if($monthly_count !== false){ ?> <sup style="
-    font-size:12px;vertical-align:top;top:-6px;position:relative;"><?php echo $monthly_count; ?></sup><?php } ?></h2></a> 
+		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="alert('You have reached your monthly limit for new bridges. Please upgrade your account to continue.');return false;"<?php } ?> style="text-decoration:none !important;"><h2><?php echo __('Start an Assignment'); if($monthly_count !== false){ ?> <sup style="color:#ED1C24;font-size:12px;vertical-align:top;top:-6px;position:relative;" alt="Assignments left for this month" title="Assignments left for this month"><?php echo $monthly_count; ?></sup><?php } ?></h2></a> 
 		<div class="clear"></div>
 	</div>
 <?php } ?>
@@ -15,9 +14,13 @@
 		<div class="filterbox">
 			<select class="cat" onchange="window.location = '/challenges/browse/'+$(this).val();" id="statusFilter">
 				<option value="" onclick="window.location = '/challenges/browse/';"><?php echo __('All') ?></option>
-				<option value="c"<?php if($status=='c') echo ' selected="selected";'; ?>><?php echo __('Completed') ?></option>
-				<option value="d"<?php if($status=='d') echo ' selected="selected";'; ?>><?php echo __('Draft') ?></option>
-				<option value="n"<?php if($status=='n') echo ' selected="selected";'; ?>><?php echo __('New') ?></option>
+				<option value="a"<?php if($status=='a') echo ' selected="selected";'; ?>><?php echo __('In Use') ?></option>
+				<?php if($_SESSION['User']['user_type'] == 'P'){ ?>
+					<option value="f"<?php if($status=='f') echo ' selected="selected";'; ?>><?php echo __('Feedback') ?></option>
+				<?php }else{ ?>
+					<option value="d"<?php if($status=='d') echo ' selected="selected";'; ?>><?php echo __('Create') ?></option>
+				<?php } ?>
+				<option value="e"<?php if($status=='e') echo ' selected="selected";'; ?>><?php echo __('Evaluate') ?></option>
 			</select>
 		</div>
 		<div class="clear"></div>
@@ -29,24 +32,26 @@
 				<tr>
 					<th class="col1" align='left'><a href="/dashboard/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php if(@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
-					else{echo '';} ?>" style="position:relative;"><?php echo __('Assignment Name') ?></a></th>
+					else{echo '';} ?>" style="position:relative;"><?php echo __('Assignments') ?></a></th>
+					<th class="col6" align='left'><a href="#"><?php echo __('Status') ?></a></th>
 					<th class="col2" align='left'><a href="/dashboard/?sort=answer_date&dir=<?php echo (@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
-					else{echo '';} ?>" style="padding-right:15px;position:relative;"><?php echo __('Due Date 1') ?> <span class="tooltip" title="<?php echo __('Students answer questions or write essay') ?>"></span></span></th>
+					else{echo '';} ?>" style="padding-right:15px;position:relative;"><?php echo __('Due Date') ?></th>
+					<!--
 					<th class="col3" align='left'><a href="/dashboard/?sort=response_date&dir=<?php echo (@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
 					else{echo '';} ?>" style="padding-right:15px;position:relative;"><?php echo __('Due Date 2') ?> <span class="tooltip" title="<?php echo __('Time for feedback and collaboration') ?>"></span></a></span></th>
-					<th class="col4" align='left'><a href="/dashboard/?sort=edit_date&dir=<?php echo (@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
-					if(@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
-					elseif(@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
-					else{echo '';} ?>"><?php echo __('Last Edit') ?></a></th>
+					-->
 					<th class="col5" align='left'><a href="/dashboard/?sort=creator&dir=<?php echo (@$_REQUEST['sort']=='creator'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='creator'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='creator'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
 					else{echo '';} ?>"><?php echo __('Creator') ?></a></th>
-					<th class="col6" align='left'><a href="#"><?php echo __('Status') ?></a></th>
+					<th class="col4" align='left'><a href="/dashboard/?sort=edit_date&dir=<?php echo (@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
+					if(@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
+					elseif(@$_REQUEST['sort']=='edit_date'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
+					else{echo '';} ?>"><?php echo __('Last Edit') ?></a></th>
 					<th style="width:20px;"></th>
 				</tr>
 			</thead>
@@ -65,7 +70,7 @@
 						// else $challenge_click .= "$('#collab_exp_warning').show();";
 						// $challenge_click .= "$('#duedate_warning_link').click();return false;";
 						$challenge_click = "window.location = '/challenges/update/{$challenge['Challenge']['id']}/update_active_status/';return false;";
-					}elseif($_SESSION['User']['user_type'] == 'P' && (($a_date < $now && $challenge['Challenge']['collaboration_type'] == 'NONE') || ($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) < date_create())) && !$challenge['Challenge']['eval_complete']){
+					}elseif($_SESSION['User']['user_type'] == 'P' && (($a_date < $now && $challenge['Challenge']['collaboration_type'] == 'NONE') || ($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) < $now)) && !$challenge['Challenge']['eval_complete']){
 						$challenge_click = "$('#skipcollab_warning_link').click();return false;";
 					}elseif(@$challenge['Users']){
 						if((!$challenge['Challenge']['eval_complete'] && $_SESSION['User']['user_type'] == 'L') || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now) || ($challenge['Challenge']['collaboration_type'] == 'NONE' && !$challenge['Challenge']['eval_complete'])){
@@ -84,9 +89,33 @@
 							<?php echo $challenge['Challenge']['name']; ?>
 						</a>
 					</td>
-					<td><?php echo date_format($a_date,'m/d/Y g:ia'); ?></td>
-					<td><?php echo ($r_date ? date_format($r_date,'m/d/Y g:ia') : ''); ?></td>
-					<td><?php echo date_format(date_create($challenge['Challenge']['date_modified']),'m/d/Y'); ?></td>
+					<td>
+						<span class="true_status">
+						<?php if($_SESSION['User']['user_type']=='L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){
+							echo ($challenge['Status'][0]['status'] == 'P' || $challenge['User']['id'] == $_SESSION['User']['id'] ? __('Accept?') : ($challenge['Status'][0]['status'] == 'C' ? __('Accepted') : __('Rejected')));
+						}else{
+							if($challenge['Challenge']['status'] == 'D') echo __('Create');
+							elseif(($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) < $now) && $_SESSION['User']['user_type'] == 'P') echo __('Feedback');
+							elseif(($a_date > $now || ($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) > $now)) && !$challenge['Challenge']['eval_complete']) echo __('In Use');
+							elseif(!$challenge['Challenge']['eval_complete']) echo __('Evaluate');
+							elseif(!@$challenge['Status'] || @$challenge['Status'][0]['status']=='N') echo __('New');
+						} ?>
+						</span>
+						<span class="feedback_status" style="display:none;">Feedback</span>
+					</td>
+					<td>
+						<div style="position:relative;">
+							<span class="disp_date1">
+							<?php echo (($a_date < $now && $challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) > $now) ? date_format($r_date,'m/d/Y') : date_format($a_date,'m/d/Y')); ?>
+							</span>
+							<?php if($a_date > $now && $challenge['Challenge']['collaboration_type'] != 'NONE'){ ?>
+								<a href="#" style="display:none;position:absolute;left:-11px;" onclick="$(this).parent().parent().parent().find('.feedback_status').hide();$(this).parent().parent().parent().find('.true_status').show();$(this).parent().find('a').show();$(this).hide();$(this).parent().find('.disp_date1').show();$(this).parent().find('.disp_date2').hide();return false;"><img src="/images/arrow-left.png" /></a>
+								<span class="disp_date2" style="display:none;"><?php echo date_format($r_date,'m/d/Y'); ?></span>
+								<a href="#" onclick="$(this).parent().parent().parent().find('.feedback_status').show();$(this).parent().parent().parent().find('.true_status').hide();$(this).parent().find('a').show();$(this).hide();$(this).parent().find('.disp_date2').show();$(this).parent().find('.disp_date1').hide();return false;"><img style="padding-left:3px;" src="/images/arrow-right.png" /></a>
+							<?php } ?>
+						</div>
+					</td>
+					<!-- <td><?php echo ($r_date ? date_format($r_date,'m/d/Y g:ia') : ''); ?></td> -->
 					<td><?php $name = @$challenge['User']['firstname'].' '.@$challenge['User']['lastname'];							
 							if(strlen($name) > 12){
 							 echo substr($name,0,12).'...';
@@ -94,15 +123,7 @@
 							else{
 								echo $name;
 							} ?></td>
-					<td>
-						<?php if($_SESSION['User']['user_type']=='L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){ ?>
-							<?php echo ($challenge['Status'][0]['status'] == 'P' || $challenge['User']['id'] == $_SESSION['User']['id'] ? __('Accept?') : ($challenge['Status'][0]['status'] == 'C' ? __('Accepted') : __('Rejected'))); ?>
-						<?php }elseif(date_create($challenge['Challenge']['answers_due']) >= $now){ ?>
-							<?php if($challenge['Challenge']['status'] == 'D'){ ?><?php echo __('Building') ?>
-							<?php }elseif(@$challenge['Status'][0]['status']=='D'){ ?><?php echo __('In Use') ?>
-							<?php }elseif(!@$challenge['Status'] || @$challenge['Status'][0]['status']=='N'){ ?><?php echo __('New') ?><?php } ?>
-						<?php } ?>
-					</td>
+					<td><?php echo date_format(date_create($challenge['Challenge']['date_modified']),'m/d/Y'); ?></td>
 					<td>
 						<?php if($_SESSION['User']['id'] == $challenge['Challenge']['user_id']){ ?>
 							<div style="width:32px;height:10px;">
@@ -135,7 +156,7 @@
 				<?php }} ?>
 			</tbody>
 		</table>
-		<?php if(!$challenges){ ?><?php echo __('You do not yet have access to any bridges.') ?><?php } ?>
+		<?php if(!$challenges){ ?><?php echo ($status ? __('No bridges match your search.') : __('You do not yet have access to any bridges.')); ?><?php } ?>
 	</div>
 	
 	<div class="box-foot">

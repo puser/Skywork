@@ -11,8 +11,11 @@ class ChallengesController extends AppController{
 		
 		$this->Challenge->hasMany['Status']['conditions'] = array("Status.user_id = {$_SESSION['User']['id']}");
 		
-		if($status == 'd') $this->Challenge->hasMany['Status']['conditions'][] = 'Status.status = "D"';
-		elseif($status == 'c') $conditions[] = 'Challenge.status = "C" && Challenge.responses_due < CURDATE()';
+		if($status == 'd') $conditions[] = 'Challenge.status = "D"';
+		elseif($status == 'a') $conditions[] = 'Challenge.answers_due > CURDATE()' . ($_SESSION['User']['user_type'] == 'L' ? ' || (Challenge.responses_due > CURDATE() && Challenge.collaboration_type != "NONE")' : '');
+		elseif($status == 'f') $conditions[] = 'Challenge.responses_due < CURDATE() && Challenge.collaboration_type != "NONE"';
+		elseif($status == 'e') $conditions[] = '(Challenge.eval_complete = 0 || Challenge.eval_complete IS NULL && ((Challenge.answers_due < CURDATE() && Challenge.collaboration_type = "NONE") || (Challenge.responses_due < CURDATE() && Challenge.collaboration_type != "NONE")))';
+		
 		if($_SESSION['User']['user_type'] != 'L') $conditions[] = 'Challenge.status != "D"';
 		if(@$_SESSION['User']['date_created']) $conditions[] = 'Challenge.answers_due > "'. $_SESSION['User']['date_created'] . '"';
 		

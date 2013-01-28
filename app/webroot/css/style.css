@@ -258,7 +258,7 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
 #topmenu .user-name {margin-right: 30px;  }
 #topmenu .user-name a {font-size: 14px; color: #0071bc; font-family: Arial; font-weight: normal; text-decoration: none;}
 #topmenu .user-home, #topmenu .user-account, #topmenu .user-logout, #topmenu .user-admin, #topmenu .user-login {margin-right: 10px;}
-#topmenu .user-home a, #topmenu .user-account a, #topmenu .user-logout a, #topmenu .user-admin a, #topmenu .user-login a {font-size: 11px; padding-left: 16px;  height: 12px; font-weight: normal; color: #808080;}
+#topmenu .user-home a, #topmenu .user-account a, #topmenu .user-logout a, #topmenu .user-admin a, #topmenu .user-login a {font-size: 14px; padding-left: 16px;  height: 12px; font-weight: normal; color: #808080;}
 #topmenu .user-home a:hover, #topmenu .user-account a:hover, #topmenu .user-logout a:hover, #topmenu .user-admin a:hover {text-decoration: underline;}
 #topmenu .user-login a {background: url("/images/icon-logout.png") no-repeat center left; padding-left: 18px;}
 
@@ -297,13 +297,6 @@ a{ cursor:pointer; }
 /*
 #bridgelist .pagination-pages li.first-child a {border-right: none;}
 */
-#bridgetable .col1 {width: 400px; }
-#bridgetable .col2 {width: 135px; }
-#bridgetable .col3 {width: 135px; }
-#bridgetable .col4 {width: 120px; }
-#bridgetable .col5 {width: 130px; }
-#bridgetable .col6 {width: 60px;  }
-
 #bridgetable thead {text-align: left; font-size: 12px; }
 #bridgetable th {padding: 6px; }
 span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; height: 9px; background: url('/images/question.png') no-repeat; position: absolute; right: 0; top: -5px; }
@@ -416,8 +409,8 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon-pen {background-image: url('/images/icons/icon-pen-23x23-bw.png'); }
 .icon-envelope {background-image: url('/images/icons/icon-envelope-25x25-bw.png'); }
 #sidemenu li a.icon-calendar {background-image: url('/images/icons/icon-calendar-23x21-bw.png'); background-position: 21px center; }
-#sidemenu li a.icon-pay {background-image: url('/images/icons/icon-pay-31x24-bw.png'); background-position: 21px center; }
-#sidemenu li.active a.icon-pay {background-image: url('/images/icons/icon-pay-31x24.png'); background-position: 21px center; }
+#sidemenu li a.icon-pay {background-image: url('/images/icons/icon-pay-31x24-bw.png'); background-position: 16px center; }
+#sidemenu li.active a.icon-pay {background-image: url('/images/icons/icon-pay-31x24.png'); background-position: 12px center; }
 .icon-class {background-image: url('/images/icons/icon-class-35x20-bw.png');}
 .icon-connection {background-image: url('/images/icons/icon-connection-27x24-bw.png');}
 .icon-token {background-image: url('/images/icons/icon-token-32x33.png'); }
@@ -666,11 +659,11 @@ a.customize-link {display: block; padding-left: 25px; background: url('/images/i
 #bridgetable .cl-head li a {color: #00467f;}
 #bridgetable .cl-head li a img {position: relative; top: 4px; }
 #bridgetable .col1 {width: 390px;}
-#bridgetable .col2 {width: 125px;}
+#bridgetable .col2 {width: 101px;}
 #bridgetable .col3 {width: 125px;}
-#bridgetable .col4 {width: 110px;}
-#bridgetable .col5 {width: 130px;}
-#bridgetable .col6 {width: 40px;}
+#bridgetable .col4 {width: 101px;}
+#bridgetable .col5 {width: 101px;}
+#bridgetable .col6 {width: 101px;}
 #bridgetable .cl-body li {padding: 8px 6px;}
 #bridgetable .cl-body li.alternate {background: #f2f2f2;}
 #bridgetable .cl-body li a {color: #808080;}
