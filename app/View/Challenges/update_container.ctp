@@ -18,7 +18,7 @@
 
 	<div class="actionmenu">
 		<ul>
-			<li class="action-save"><a onclick="save_challenge('quiet');"><?php echo __('Save') ?></a></li>
+			<!-- <li class="action-save"><a onclick="save_challenge('quiet');"><?php echo __('Save') ?></a></li> -->
 			<li class="action-exit"><a href="#modalExitChoices" class="show-overlay"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>

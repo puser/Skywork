@@ -1,17 +1,17 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
-# Sean Daly <seand567@hotmail.com>, 2012.
+# Sean Daly <seand567@hotmail.com>, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2013-01-14 13:10-0500\n"
-"PO-Revision-Date: 2013-01-14 19:22+0100\n"
-"Last-Translator: Ben Rawn <ben.rawn@gmail.com>\n"
+"PO-Revision-Date: 2013-01-23 19:34-0400\n"
+"Last-Translator: Sean Daly <seand567@hotmail.com>\n"
 "Language-Team: Puentes\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Virtaal 0.7.1\n"
 
@@ -207,7 +207,7 @@ msgstr "Eliminar"
 
 #: View/Attachments/update.ctp:23
 msgid "Add another attachment"
-msgstr "Adjuntar otro archivo"
+msgstr "Adjunte otro archivo"
 
 #: View/Attachments/view.ctp:7
 msgid "Go to Questions"
@@ -231,7 +231,7 @@ msgstr "Actividad"
 #: View/Attachments/view.ctp:25
 #: View/Challenges/view.ctp:91
 msgid "The Assignment for this Bridge is:"
-msgstr ""
+msgstr "La actividad para este ensayo es:"
 
 #: View/Challenges/browse.ctp:5
 msgid "Begin"
@@ -240,7 +240,7 @@ msgstr "Empezar"
 #: View/Challenges/browse.ctp:6
 #, fuzzy
 msgid "Start an Assignment"
-msgstr "Seleccionar la actividad"
+msgstr "Crear un Puente"
 
 #: View/Challenges/browse.ctp:14
 msgid "My Portfolio"
@@ -265,7 +265,7 @@ msgstr "Nuevo"
 #: View/Challenges/browse.ctp:32
 #, fuzzy
 msgid "Assignment Name"
-msgstr "Actividad"
+msgstr "Nombre de la Actividad"
 
 #: View/Challenges/browse.ctp:36;183
 #: View/Challenges/update_active.ctp:45
@@ -312,7 +312,7 @@ msgstr "Estátus"
 #: View/Challenges/browse.ctp:99
 #, fuzzy
 msgid "Accept?"
-msgstr "Aceptar"
+msgstr "¿Aceptar?"
 
 #: View/Challenges/browse.ctp:99
 #: View/Challenges/instructor_accepted.ctp:28
@@ -366,12 +366,13 @@ msgstr "Avanzar"
 
 #: View/Challenges/browse.ctp:188
 msgid "Your students are currently completing the assignment."
-msgstr ""
+msgstr "Sus estudiantes están completando la actividad."
 
 #: View/Challenges/browse.ctp:189
-#, fuzzy
 msgid "Due Date 1 expires {date1}. You will then have until {date2} to complete Due Date 2."
-msgstr "Actualmente, sus estudiantes están completando el la actividad. La fecha límite es {date1}. Tiene que esperar hasta que el {date2} pase para completar la fecha límite 2."
+msgstr ""
+"La fecha límite 1 es {date1}. Tiene hasta el {date2} para completar la "
+"segunda fecha límite."
 
 #: View/Challenges/browse.ctp:199;217
 #: View/Challenges/instructor_accepted.ctp:36
@@ -387,6 +388,8 @@ msgstr "Cerrar"
 #: View/Challenges/browse.ctp:211
 msgid "Your Instructor is currently evaluating your assignment. When they are done, you will receive an email. Then you will be able to view your Instructor’s comments and corrections."
 msgstr ""
+"Su Instructor está evaluando su actividad. Cuando termine, va a recibir un "
+"correo electrónico. Después puede ver los comentarios y correccione."
 
 #: View/Challenges/browse.ctp:229
 #: View/Challenges/update_active.ctp:202
@@ -428,7 +431,10 @@ msgstr "Aceptar/Rechazar la petición para un Puente"
 
 #: View/Challenges/instructor_accepted.ctp:22
 msgid "Below are the names of the Instructors who will be participating in this bridge. Pending means they have not made a decision. All participating Instructors must Accept for the bridge to begin."
-msgstr "Abajo aparecen los nombres de los instructores que participan en este Puente. Si aparece como pendiente, significa que no han tomado una decisión. Todos los participantes tienen que aceptar para que este Puente comience."
+msgstr ""
+"Abajo aparecen los nombres de los instructores que participan en este "
+"Puente. Si aparece como pendiente, significa que no han tomado una decisión. "
+"Todos los participantes tienen que aceptar para que este Puente comience."
 
 #: View/Challenges/instructor_accepted.ctp:22
 msgid "To reconsider your decision, click on Back to Accept/Reject."
@@ -436,7 +442,7 @@ msgstr "Para reconsiderar su decisión, haga clic en Atrás para Aceptar/Rechaza
 
 #: View/Challenges/instructor_accepted.ctp:28
 msgid "Pending"
-msgstr ""
+msgstr "Pendiente"
 
 #: View/Challenges/instructor_accepted.ctp:38
 #: View/Challenges/instructor_rejected.ctp:16
@@ -549,12 +555,12 @@ msgstr "Valoración de los grupos"
 #: View/Challenges/stats_table.ctp:47
 #, fuzzy
 msgid "Go To Metrics"
-msgstr "Ir a las Estadísticas"
+msgstr "Ir a las estadísticas"
 
 #: View/Challenges/stats_table.ctp:52;59
 #, fuzzy
 msgid "Go To Summary"
-msgstr "Ir al Resumen"
+msgstr "Ir al resumen"
 
 #: View/Challenges/stats_table.ctp:68
 msgid "Most active questions:"
@@ -569,7 +575,7 @@ msgstr "Más información"
 #: View/Challenges/update_active_status.ctp:2
 #, fuzzy
 msgid "Edit Assignment"
-msgstr "Actividad"
+msgstr "Editar la actividad"
 
 #: View/Challenges/update_active.ctp:12
 #: View/Challenges/update_active_status.ctp:6
@@ -581,17 +587,17 @@ msgstr "Información"
 #: View/Challenges/update_active_status.ctp:15
 #, fuzzy
 msgid "Cancel & Exit"
-msgstr "Cancelar"
+msgstr "Cancelar y Salir"
 
 #: View/Challenges/update_active.ctp:34
 msgid "Assignment Information (Edit Mode)"
-msgstr ""
+msgstr "Información de Actividad (Editar)"
 
 #: View/Challenges/update_active.ctp:40
 #: View/Challenges/update_info.ctp:18
 #, fuzzy
 msgid "Name of Assignment"
-msgstr "Actividad"
+msgstr "Nombre de la actividad"
 
 #: View/Challenges/update_active.ctp:41;134
 #: View/Challenges/update_info.ctp:19;106
@@ -611,7 +617,7 @@ msgstr "Hora 2:"
 #: View/Challenges/update_active.ctp:85
 #: View/Challenges/update_info.ctp:60
 msgid "Upload the Assignment: Document"
-msgstr ""
+msgstr "Subir una Actividad: Documento"
 
 #: View/Challenges/update_active.ctp:89
 #: View/Challenges/update_info.ctp:65
@@ -631,18 +637,18 @@ msgstr "Reemplazar el documento actual"
 #: View/Challenges/update_active.ctp:104
 #: View/Challenges/update_info.ctp:79
 msgid "Video Embed Code"
-msgstr "Incluir el código del video"
+msgstr "Incluir el enlace del video"
 
 #: View/Challenges/update_active.ctp:104
 #: View/Challenges/update_info.ctp:79
 msgid "Help?"
-msgstr ""
+msgstr "Ayuda"
 
 #: View/Challenges/update_active.ctp:109
 #: View/Challenges/update_info.ctp:83
 #, fuzzy
 msgid "Offline Challenge"
-msgstr "Seleccionar un desafío"
+msgstr "Desafío fuera de Puentes"
 
 #: View/Challenges/update_active.ctp:121
 #: View/Challenges/update_info.ctp:91
@@ -662,12 +668,12 @@ msgstr "Escriba una descripción del tema de este ensayo:"
 #: View/Challenges/update_active.ctp:157
 #, fuzzy
 msgid "Resend this Assignment"
-msgstr "Seleccionar la actividad"
+msgstr "Re-enviar la actividad"
 
 #: View/Challenges/update_active_status.ctp:24
 #, fuzzy
 msgid "Status of the Assignment"
-msgstr "¿Cuál es la acitivad?"
+msgstr "Estatus de la actividad"
 
 #: View/Challenges/update_assignment.ctp:4
 msgid "Select Assignment"
@@ -686,7 +692,7 @@ msgstr "Seleccionar"
 
 #: View/Challenges/update_assignment.ctp:14
 msgid "Answer Questions"
-msgstr "Responder las preguntas"
+msgstr "Responder a las preguntas"
 
 #: View/Challenges/update_assignment.ctp:18
 msgid "The Instructor writes a series of (n) questions. Students then answer the questions assigned by the Instructor."
@@ -726,11 +732,12 @@ msgstr "En este desafío, el instructor asigna video a los estudiantes. En la se
 
 #: View/Challenges/update_challenge.ctp:36
 msgid "Is your challenge offline?"
-msgstr ""
+msgstr "¿El desafío está fuera de Puentes?"
 
 #: View/Challenges/update_challenge.ctp:37
 msgid "I'm assigning my challenge offline (e.g. the reading is in a textbook)"
 msgstr ""
+"La activadad está fuera de Puentes (ej una lectura en un libro de texto)"
 
 #: View/Challenges/update_collaboration.ctp:4
 msgid "Students Collaborate"
@@ -738,38 +745,41 @@ msgstr "Los estudiantes trabajan en grupo"
 
 #: View/Challenges/update_collaboration.ctp:8
 msgid "How will students collaborate on their Assignment?"
-msgstr "¿Como van a trabajar los estudiantes en grupo?"
+msgstr "¿Como van a colaborar los estudiantes en grupo?"
 
 #: View/Challenges/update_collaboration.ctp:14
 #, fuzzy
 msgid "This is a standard assignment"
-msgstr "¿Cuál es la acitivad?"
+msgstr "Esto es una actividad estándar"
 
 #: View/Challenges/update_collaboration.ctp:18
 msgid "There is no collaboration in a standard assignment. You will be giving your students an assignment, they will complete it by the Due Date you set, and they will return it back to you."
 msgstr ""
+"No hay colaboración en una actividad estándar. Les envías la actividad a los "
+"estudiantes y, cuando completen el ensayo, le van a entregar la actividad. "
 
 #: View/Challenges/update_collaboration.ctp:25
 #, fuzzy
 msgid "I would like my students to collaborate"
-msgstr "Quiero saltar la colaboración entre estudiantes "
+msgstr "Quiero que mis estudiantes comenten los trabajos de los demás"
 
 #: View/Challenges/update_collaboration.ctp:29
-#, fuzzy
 msgid "By allowing student collaboration, after students complete their assignments (Due Date 1), they will be able to write comments and give feedback to each other (Due Date 2)."
-msgstr "Actualmente, sus estudiantes están completando el la actividad. La fecha límite es {date1}. Tiene que esperar hasta que el {date2} pase para completar la fecha límite 2."
+msgstr ""
+"En una colaboración, los estudiantes completan la actividad solos, y podrán "
+"dar comentarios a otros estudiantes en su grupo."
 
 #: View/Challenges/update_container.ctp:6
 msgid "Step 1"
-msgstr ""
+msgstr "Paso 1"
 
 #: View/Challenges/update_container.ctp:7
 msgid "Step 2"
-msgstr ""
+msgstr "Paso 2"
 
 #: View/Challenges/update_container.ctp:8
 msgid "Step 3"
-msgstr ""
+msgstr "Paso 3"
 
 #: View/Challenges/update_container.ctp:12
 #: View/Challenges/update_people.ctp:4
@@ -788,7 +798,7 @@ msgstr "Salir"
 
 #: View/Challenges/update_container.ctp:50
 msgid "Would you like to save before returning to Home?"
-msgstr "¿Quiere guardar estos cambios antes de volver a la página de inicia?"
+msgstr "¿Quiere guardar estos cambios antes de volver a la página de inicio?"
 
 #: View/Challenges/update_container.ctp:53
 #: View/Challenges/view.ctp:77
@@ -803,7 +813,7 @@ msgstr "No guardar"
 #: View/Challenges/update_info.ctp:12
 #, fuzzy
 msgid "Assignment Information"
-msgstr "Información"
+msgstr "Información de la actividad"
 
 #: View/Challenges/update_info.ctp:97
 msgid "One or two words summarizing this question"
@@ -823,11 +833,11 @@ msgstr "Permitir que los estudiantes adjunten documentos, fotos, etc."
 
 #: View/Challenges/update_info.ctp:138
 msgid "Assignment Length (Min / Max)"
-msgstr ""
+msgstr "Duración de la actividad (min/max)"
 
 #: View/Challenges/update_info.ctp:161
 msgid "Advanced Options"
-msgstr ""
+msgstr "Opciones avanzadas"
 
 #: View/Challenges/update_info.ctp:167
 msgid "Anonymous"
@@ -840,32 +850,31 @@ msgstr "Mantener el amonimato entre los estudiantes"
 #: View/Challenges/update_info.ctp:174
 #, fuzzy
 msgid "Quality Scales"
-msgstr "Nivel"
+msgstr "Nivel de calidad"
 
 #: View/Challenges/update_info.ctp:177
 msgid "Use Quality Scales (Rate the quality of your students' work on a scale from High Quality to Poor Quality during Due Date 2.)"
-msgstr ""
+msgstr "Usar escalas de calidad."
 
 #: View/Challenges/update_info.ctp:183
 msgid "Allow instructor ratings: only the instructor may rate the quality of their students."
-msgstr ""
+msgstr "Permitir que solo el instructor califique."
 
 #: View/Challenges/update_info.ctp:187
 msgid "Allow student ratings: students may rate the quality of work for the other students in their group."
-msgstr ""
+msgstr "Permitir que los estudiantes califiquen a los demás."
 
 #: View/Challenges/update_info.ctp:195
 msgid "Due Date has already passed!"
-msgstr ""
+msgstr "¡Esta fecha de límite ya se ha pasado!"
 
 #: View/Challenges/update_info.ctp:199
-#, fuzzy
 msgid "Due Date 2 must be after Due Date 1"
-msgstr "Hora 2:"
+msgstr "Fecha límite 2 no puede ser antes de Fecha límite 1"
 
 #: View/Challenges/update_info.ctp:203;208
 msgid "Save &amp; Next"
-msgstr "Continuar"
+msgstr "Guardar y Continuar"
 
 #: View/Challenges/update_people.ctp:10
 msgid "Select Class(es) you would like to invite:"
@@ -978,20 +987,20 @@ msgstr "No enviar todavía"
 #: View/Challenges/view.ctp:2
 #, fuzzy
 msgid "Answer "
-msgstr "Responder las preguntas"
+msgstr "Responder"
 
 #: View/Challenges/view.ctp:39
 msgid "Miniumum"
-msgstr ""
+msgstr "Mínimo"
 
 #: View/Challenges/view.ctp:41
 msgid "Maximum"
-msgstr ""
+msgstr "Máximo"
 
 #: View/Challenges/view.ctp:43
 #, fuzzy
 msgid "Counter"
-msgstr "Continuar"
+msgstr "Medidor"
 
 #: View/Challenges/view.ctp:51
 msgid "You must complete this section"
@@ -999,17 +1008,22 @@ msgstr "Debe completar esta sección"
 
 #: View/Challenges/view.ctp:68
 msgid "You have until {due_date_time}, {due_date_day}, {due_date} to make further edits to you assignment. Would you like to save current edits before returning to Home?"
-msgstr "Tiene hasta {due_date_time}, {due_date_day}, {due_date} para realizar cambios en su actividad. ¿Desea guardar su información actual antes de ir a la página de inicio?"
+msgstr ""
+"Tiene hasta {due_date_time}, {due_date_day}, {due_date} para realizar "
+"cambios en su actividad. ¿Desea guardar su información actual antes de ir a "
+"la página de inicio?"
 
 #: View/Classes/clean.ctp:4;16
 #: View/Classes/view_students.ctp:8
 #, fuzzy
 msgid "Remove All"
-msgstr "Eliminar"
+msgstr "Sacar de la clase"
 
 #: View/Classes/clean.ctp:7
 msgid "Click Remove All to remove all of your students from this class. They will still have access to the assignments they have completed."
 msgstr ""
+"Hacer clic sacar a todos los estudiantes de esta clase. Ellos tendrán acceso "
+"a las actividades que han completado."
 
 #: View/Classes/create_professor.ctp:5
 msgid "Add Professor to Shared Class"
@@ -1042,16 +1056,19 @@ msgstr "Enviar una notificación"
 #: View/Classes/create_student.ctp:4
 #, fuzzy
 msgid "Register Student(s)"
-msgstr "Editar los estudiantes"
+msgstr "Registrar estudiantes"
 
 #: View/Classes/create_student.ctp:7
 msgid "Register your student(s) manually here. Add your students and send an automated email notification by clicking ‘Add.’ If they’re new to Puentes, that email will contain a temporary password."
 msgstr ""
+"Registre los estudiantes de forma manual. Añade sus estudiantes y envíe una "
+"notificación automática al hacer clic en 'Añade.' Si son nuevos en Puentes, "
+"esa notificación contendrá una contraseña temporal. "
 
 #: View/Classes/create_student.ctp:19
 #, fuzzy
 msgid "Add & register another"
-msgstr "Añadir otro"
+msgstr "Añadir y registrar otro"
 
 #: View/Classes/search_shared.ctp:3
 msgid "Select the Classes you would like to join:"
@@ -1096,9 +1113,8 @@ msgid "Allow to Join"
 msgstr "Aceptar petición"
 
 #: View/Classes/view_sharing.ctp:6
-#, fuzzy
 msgid "Add an Instructor"
-msgstr "Soy un instructor(a)"
+msgstr "Añadir un instructor"
 
 #: View/Classes/view_sharing.ctp:11
 msgid "Shared"
@@ -1122,23 +1138,22 @@ msgid "There are no students in this class."
 msgstr "No hay estudiantes en su clase."
 
 #: View/Classes/view_students.ctp:29
-#, fuzzy
 msgid "Last Logged In"
-msgstr "Iniciar sesión"
+msgstr "Última sesión"
 
 #: View/Classes/view_students.ctp:44;66
 msgid "Waiting for login..."
-msgstr ""
+msgstr "Esperando login..."
 
 #: View/Classes/view_students.ctp:52;75
 #: View/Users/view_classes.ctp:437;445
 #, fuzzy
 msgid "Resend"
-msgstr "Enviar"
+msgstr "Re-Enviar"
 
 #: View/Layouts/default.ctp:61
 msgid "Home"
-msgstr "Página de Inicia"
+msgstr "Página de Inicio"
 
 #: View/Layouts/default.ctp:62
 #: View/Users/view.ctp:140
@@ -1203,7 +1218,7 @@ msgstr "Normas de Privacidad"
 
 #: View/Layouts/default.ctp:126
 msgid "Terms of Use"
-msgstr ""
+msgstr "Términos"
 
 #: View/Metrics/view_chart.ctp:4
 #: View/Metrics/view_flags.ctp:11
@@ -1231,7 +1246,7 @@ msgstr "Gráficos"
 #: View/Metrics/view_questions.ctp:12
 #: View/Metrics/view_students.ctp:31
 msgid "Flagging"
-msgstr ""
+msgstr "Alerta"
 
 #: View/Metrics/view_chart.ctp:21
 #: View/Metrics/view_flags.ctp:32
@@ -1275,12 +1290,12 @@ msgstr "Incidentes"
 #: View/Metrics/view_flags.ctp:141
 #, fuzzy
 msgid "Flag Name"
-msgstr "Nombre de la Clase"
+msgstr "Nombre de la alerta"
 
 #: View/Metrics/view_flags.ctp:142
 #, fuzzy
 msgid "Created"
-msgstr "Creador"
+msgstr "Creado"
 
 #: View/Metrics/view_questions.ctp:43
 msgid "Question"
@@ -1327,7 +1342,7 @@ msgstr "Ejecutar"
 #: View/Pages/home.ctp:318
 #: View/Pages/home_old.ctp:176
 msgid "I'm a new user"
-msgstr "Soy un nuevo usuario"
+msgstr "Soy un nuevo usuario(a)"
 
 #: View/Pages/about.ctp:358
 #: View/Pages/home.ctp:321
@@ -1377,7 +1392,7 @@ msgstr "Soy un estudiante"
 #: View/Pages/home_old.ctp:56
 #, fuzzy
 msgid "I'm a Collaborator"
-msgstr "Invitar a un colaborador(a):"
+msgstr "Soy colaborador"
 
 #: View/Pages/home_old.ctp:69;139
 msgid "Beta-Test Key"
@@ -1395,7 +1410,7 @@ msgstr "Correo del instructor"
 #: View/Pages/home_old.ctp:110
 #, fuzzy
 msgid "School Email"
-msgstr "Email de instructor"
+msgstr "Email de institución"
 
 #: View/Responses/view.ctp:44
 msgid "Feedback"
@@ -1403,7 +1418,7 @@ msgstr "Comentarios"
 
 #: View/Responses/view.ctp:144
 msgid "Summary Page"
-msgstr "Página de Resumen"
+msgstr "Resumen"
 
 #: View/Responses/view.ctp:144
 msgid "Instructor Feedback"
@@ -1411,7 +1426,7 @@ msgstr "Comentarios"
 
 #: View/Responses/view.ctp:200
 msgid "I'm Done!"
-msgstr ""
+msgstr "¡Terminé!"
 
 #: View/Responses/view.ctp:215
 msgid "Metrics"
@@ -1419,21 +1434,21 @@ msgstr "Estadísticas"
 
 #: View/Responses/view.ctp:228
 msgid "Evaluation of Completed Assignment"
-msgstr ""
+msgstr "Evaluación de una activada completa"
 
 #: View/Responses/view.ctp:247
 #, fuzzy
 msgid "Re-send to Students"
-msgstr "Editar los estudiantes"
+msgstr "Re-enviar a los estudiantes"
 
 #: View/Responses/view.ctp:250;268;279
 msgid "Continue Evaluating Students"
-msgstr ""
+msgstr "Continuar evaluando estudiantes"
 
 #: View/Responses/view.ctp:265
 #, fuzzy
 msgid "Send to Students"
-msgstr "Editar los estudiantes"
+msgstr "Enviar a los estudiantes"
 
 #: View/Responses/view.ctp:310;317
 msgid "Very High"
@@ -1449,7 +1464,7 @@ msgstr "Normal"
 
 #: View/Responses/view.ctp:310;320
 msgid "Below Average"
-msgstr "Necesita Mejorar la "
+msgstr "Necesita Mejorar"
 
 #: View/Responses/view.ctp:310;321
 msgid "Poor"
@@ -1465,12 +1480,12 @@ msgstr "Destaque una sección del texto y añada un comentario"
 
 #: View/Responses/view.ctp:450
 msgid "I'm Done Evaluating"
-msgstr ""
+msgstr "Terminé evaluando"
 
 #: View/Responses/view.ctp:466
 #, fuzzy
 msgid "Go To Top"
-msgstr "Ir a la página de inicio"
+msgstr "Ir al principio"
 
 #: View/Responses/view.ctp:477
 msgid "Congratulations!"
@@ -1491,14 +1506,18 @@ msgstr "Gaurdar, pero continuar editando"
 #: View/Responses/view.ctp:499
 msgid "Your students are currently completing the collaboration (Due Date 2) which is set to expire {due_date_2}. However, you may begin evaluating the assignments immediately, you just won't have access to the metrics section until Due Date 2 is over.  We'll send you an email notifying you when that happens."
 msgstr ""
+"Sus estudiantes están completando la colaboración, que se expira "
+"{due_date_2}. Sin embargo, puede comenzar de evaluar la activadad ahora. "
+"Sólo no tiene acceso a la sección de estadísticas hasta que termine la fecha "
+"límite 2. Le enviaremos una notificación cuando sea posible."
 
 #: View/Responses/view.ctp:506
 msgid "Begin Evaluating"
-msgstr ""
+msgstr "Comenzar de evaluar"
 
 #: View/Responses/view.ctp:507
 msgid "I'll come back later"
-msgstr ""
+msgstr "Vuelvo luego"
 
 #: View/Responses/view.ctp:544
 msgid "This user has not submitted responses"
@@ -1528,20 +1547,22 @@ msgstr "Ir a la página de inicio"
 #: View/Users/update_payment.ctp:5
 #: View/Users/view_payments.ctp:90
 msgid "Payment Method"
-msgstr ""
+msgstr "Método de pago"
 
 #: View/Users/update_payment.ctp:12
 msgid "Please provide your credit card details below (all fields are required):"
 msgstr ""
+"Por favor, ponga sus datos de tarjeta de crédito (se requieren todos los "
+"campos):"
 
 #: View/Users/update_payment.ctp:18
 #, fuzzy
 msgid "Cardholder Name"
-msgstr "Nombre del Puente"
+msgstr "Titular"
 
 #: View/Users/update_payment.ctp:22
 msgid "Billing Address"
-msgstr ""
+msgstr "Dirección"
 
 #: View/Users/update_payment.ctp:26
 #: View/Users/view.ctp:30
@@ -1550,30 +1571,30 @@ msgstr "Ciudad"
 
 #: View/Users/update_payment.ctp:30
 msgid "Zip/Postal Code"
-msgstr ""
+msgstr "Código Postal"
 
 #: View/Users/update_payment.ctp:34
 #: View/Users/view.ctp:50
 msgid "State/Province"
-msgstr ""
+msgstr "Estado"
 
 #: View/Users/update_payment.ctp:38
 #: View/Users/view.ctp:33
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #: View/Users/update_payment.ctp:42
 #, fuzzy
 msgid "Card Number"
-msgstr "Nombre del Puente"
+msgstr "Número de tarjeta"
 
 #: View/Users/update_payment.ctp:46
 msgid "Expiration Date (format as MMYY)"
-msgstr ""
+msgstr "Fecha de expiración (MMAA)"
 
 #: View/Users/update_payment.ctp:50
 msgid "CVV Code"
-msgstr ""
+msgstr "Código CVV"
 
 #: View/Users/view.ctp:2;5;15
 #: View/Users/view_payments.ctp:2;5
@@ -1583,7 +1604,7 @@ msgstr "Mi Cuenta"
 #: View/Users/view.ctp:6
 #: View/Users/view_payments.ctp:6
 msgid "Pay Plan"
-msgstr ""
+msgstr "Pagos"
 
 #: View/Users/view.ctp:21
 msgid "Personal Info"
@@ -1600,15 +1621,15 @@ msgstr "Estado"
 #: View/Users/view.ctp:55
 #, fuzzy
 msgid "Institution Info"
-msgstr "No se pudo encontrar el Instructor"
+msgstr "Información de la institución"
 
 #: View/Users/view.ctp:57
 msgid "Name of Institution"
-msgstr ""
+msgstr "Nombre de la institución"
 
 #: View/Users/view.ctp:59
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: View/Users/view.ctp:67
 #, fuzzy
@@ -1635,11 +1656,11 @@ msgstr "Opciones de correo"
 #: View/Users/view.ctp:78
 #, fuzzy
 msgid "Edit"
-msgstr "Salir"
+msgstr "Editar"
 
 #: View/Users/view.ctp:84
 msgid "To change your password click "
-msgstr ""
+msgstr "Para cambiar su clave haga clic"
 
 #: View/Users/view.ctp:86
 msgid "Type Password"
@@ -1663,7 +1684,7 @@ msgstr "Eliminar"
 
 #: View/Users/view.ctp:108;116
 msgid "Passwords do not match!"
-msgstr ""
+msgstr "¡Las contraseñas no coinciden!"
 
 #: View/Users/view.ctp:111
 #, fuzzy
@@ -1715,7 +1736,7 @@ msgstr "Eliminar mi cuenta"
 #: View/Users/view_classes.ctp:7
 #, fuzzy
 msgid "Connections"
-msgstr "Continuar"
+msgstr "Conexiones"
 
 #: View/Users/view_classes.ctp:21;161
 msgid "Create Class"
@@ -1724,7 +1745,7 @@ msgstr "Crear una clase"
 #: View/Users/view_classes.ctp:23
 #, fuzzy
 msgid "Find an instructor"
-msgstr "Soy un instructor(a)"
+msgstr "Buscar un instructor(a)"
 
 #: View/Users/view_classes.ctp:26
 msgid "Join class"
@@ -1733,12 +1754,12 @@ msgstr "Unirse a una clase"
 #: View/Users/view_classes.ctp:32
 #, fuzzy
 msgid "Connected Classes"
-msgstr "Crear una clase"
+msgstr "Clases conectadas"
 
 #: View/Users/view_classes.ctp:32
 #, fuzzy
 msgid "Your Classes"
-msgstr "Unirse a una clase"
+msgstr "Sus clases"
 
 #: View/Users/view_classes.ctp:80
 msgid "Share Class"
@@ -1762,7 +1783,7 @@ msgstr "Por favor, escriba los detalles para crear una clase:"
 
 #: View/Users/view_classes.ctp:172
 msgid "How will students sign-up to your class?"
-msgstr ""
+msgstr "¿Como los estudiantes van a unir la clase?"
 
 #: View/Users/view_classes.ctp:175
 msgid "Yes"
@@ -1774,11 +1795,11 @@ msgstr "No"
 
 #: View/Users/view_classes.ctp:181
 msgid "I'll give them a code (a class token) and they'll sign themselves up through the homepage."
-msgstr ""
+msgstr "Les doy un código y unirán sólos a través del sitio web. "
 
 #: View/Users/view_classes.ctp:184
 msgid "I'll add the students myself (you'll only be required to enter their email addresses)."
-msgstr ""
+msgstr "Les agrego yo (solo hay que poner un correo electrónico)."
 
 #: View/Users/view_classes.ctp:194
 msgid "Generate Token"
@@ -1787,16 +1808,16 @@ msgstr "Generar un código"
 #: View/Users/view_classes.ctp:195
 #, fuzzy
 msgid "Add My Class"
-msgstr "Enviar a la Clase"
+msgstr "Añadir mi clase"
 
 #: View/Users/view_classes.ctp:208
 msgid "Find and Connect with an Instructor"
-msgstr ""
+msgstr "Buscar y conectar con un instructor(a)"
 
 #: View/Users/view_classes.ctp:212
 #, fuzzy
 msgid "Please enter the Instructor's email:"
-msgstr "Por favor, escriba el correo del instructor"
+msgstr "Por favor, escriba el correo del instructor:"
 
 #: View/Users/view_classes.ctp:222
 msgid "Continue"
@@ -1849,96 +1870,97 @@ msgstr "Ejecutar"
 #: View/Users/view_classes.ctp:441
 msgid "Are you sure you would like to resend the class invitation to this student?"
 msgstr ""
+"¿Está seguro que desea re-enviar la invitación a la clase a este estudiante?"
 
 #: View/Users/view_payments.ctp:15
 msgid "Purchase Plan"
-msgstr ""
+msgstr "Plan de pago"
 
 #: View/Users/view_payments.ctp:25
 msgid "Standard Account (Free!)"
-msgstr ""
+msgstr "Cuenta Estándar (¡Gratis!)"
 
 #: View/Users/view_payments.ctp:30
 msgid "Create and/or participate in up to two assignments per month."
-msgstr ""
+msgstr "Crear y/o participar en dos Puentes por mes."
 
 #: View/Users/view_payments.ctp:31
 msgid "You and your students get up to 200MB of total storage per month."
-msgstr ""
+msgstr "Sus estudiantes tienen hasta 200MB de almacenamiento por mes."
 
 #: View/Users/view_payments.ctp:32
 msgid "Your challenges (videos, documents, etc.) can be up to 5MB."
-msgstr ""
+msgstr "Sus desafíos (videos, documents, etc.) pueden ser de hasta 5MB."
 
 #: View/Users/view_payments.ctp:40
 msgid "Premium Account - $9.99/month"
-msgstr ""
+msgstr "Cuenta de pago - $9.99/mes"
 
 #: View/Users/view_payments.ctp:45
 msgid "Create and/or participate in up to six assignments per month."
-msgstr ""
+msgstr "Crear y/o participar en hasta seis Puentes por mes."
 
 #: View/Users/view_payments.ctp:46
 msgid "You and your students get up to 2 GB of storage in total storage."
-msgstr ""
+msgstr "Sus estudiantes tienen hasta 2 GB de almacenamiento por mes."
 
 #: View/Users/view_payments.ctp:47
 msgid "Your challenges (videos, documents, etc.) can be up to 25 MB."
-msgstr ""
+msgstr "Sus desafíos (videos, documents, etc.) pueden ser hasta 25MB."
 
 #: View/Users/view_payments.ctp:55
 msgid "Platinum Account - $19.99/month"
-msgstr ""
+msgstr "Cuenta platino - $19.99/mes"
 
 #: View/Users/view_payments.ctp:60;75
 msgid "Create and/or participate in unlimited assignments per month."
-msgstr ""
+msgstr "Crear y/o participar en actividades ilimitadas."
 
 #: View/Users/view_payments.ctp:61
 msgid "You and your students get up to 100GB in total storage."
-msgstr ""
+msgstr "Sus estudiantes tienen hasta 100GB de almacenamiento por mes."
 
 #: View/Users/view_payments.ctp:62;77
 msgid "Your challenges (videos, documents, etc.) are unlimited size."
-msgstr ""
+msgstr "Sus desafíos (videos, documents, etc.) no tienen límite."
 
 #: View/Users/view_payments.ctp:68
 #, fuzzy
 msgid "Referral"
-msgstr "Correo preferido"
+msgstr "Referencia"
 
 #: View/Users/view_payments.ctp:69
 msgid "Institutional Package"
-msgstr ""
+msgstr "Paquete de Institución"
 
 #: View/Users/view_payments.ctp:76
 msgid "You and your students get unlimited storage."
-msgstr ""
+msgstr "Almacenamiento sin límite."
 
 #: View/Users/view_payments.ctp:128
 #, fuzzy
 msgid "Send a Referral"
-msgstr "Enviar un correo"
+msgstr "Enviar una referencia"
 
 #: View/Users/view_payments.ctp:141
 msgid "Finish and Send"
-msgstr ""
+msgstr "Terminar y Enviar"
 
 #: View/WordFlags/update.ctp:38
 msgid "Add to list &amp; add another"
-msgstr ""
+msgstr "Añadir"
 
 #: View/WordFlags/update.ctp:43
 msgid "Add to list"
-msgstr ""
+msgstr "Añadir"
 
 #: View/WordFlags/update.ctp:50
 msgid "Save, go to next word"
-msgstr ""
+msgstr "Guardar, ir a la próxima palabra"
 
 #: View/WordFlags/update.ctp:55
 msgid "Remove word from list"
-msgstr ""
+msgstr "Eliminar palabra de la lista"
 
 #~ msgid "Start a Bridge"
 #~ msgstr "Crear un Puente"

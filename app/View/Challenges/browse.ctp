@@ -19,8 +19,8 @@
 					<option value="f"<?php if($status=='f') echo ' selected="selected";'; ?>><?php echo __('Feedback') ?></option>
 				<?php }else{ ?>
 					<option value="d"<?php if($status=='d') echo ' selected="selected";'; ?>><?php echo __('Create') ?></option>
+					<option value="e"<?php if($status=='e') echo ' selected="selected";'; ?>><?php echo __('Evaluate') ?></option>
 				<?php } ?>
-				<option value="e"<?php if($status=='e') echo ' selected="selected";'; ?>><?php echo __('Evaluate') ?></option>
 			</select>
 		</div>
 		<div class="clear"></div>
@@ -34,10 +34,10 @@
 					elseif(@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
 					else{echo '';} ?>" style="position:relative;"><?php echo __('Assignments') ?></a></th>
 					<th class="col6" align='left'><a href="#"><?php echo __('Status') ?></a></th>
-					<th class="col2" align='left'><a href="/dashboard/?sort=answer_date&dir=<?php echo (@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
+					<th class="col2" align='center'><a href="/dashboard/?sort=answer_date&dir=<?php echo (@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
-					else{echo '';} ?>" style="padding-right:15px;position:relative;"><?php echo __('Due Date') ?></th>
+					else{echo '';} ?>" style="padding-right:30px;position:relative;"><?php echo __('Due Date') ?></th>
 					<!--
 					<th class="col3" align='left'><a href="/dashboard/?sort=response_date&dir=<?php echo (@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
@@ -85,32 +85,32 @@
 					?>
 				<tr<?php if(!($k%2)){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.remove-class').show();" onmouseout="$(this).find('.remove-class').hide();">
 					<td>
-						<a href="/challenges/<?php echo ($challenge['Challenge']['status'] == 'D' ? 'update' : 'view') . '/' . $challenge['Challenge']['id'] . ($challenge['Challenge']['status'] == 'D' ? '#view=info' : ''); ?>" onclick="<?php echo $challenge_click; ?>">
+						<a href="<?php echo ($challenge['Challenge']['status'] == 'D' ? '/challenges/update' : '/attachments/embedded_view') . '/' . $challenge['Challenge']['id'] . ($challenge['Challenge']['status'] == 'D' ? '#view=info' : ''); ?>" onclick="<?php echo $challenge_click; ?>">
 							<?php echo $challenge['Challenge']['name']; ?>
 						</a>
 					</td>
 					<td>
 						<span class="true_status">
-						<?php if($_SESSION['User']['user_type']=='L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){
-							echo ($challenge['Status'][0]['status'] == 'P' || $challenge['User']['id'] == $_SESSION['User']['id'] ? __('Accept?') : ($challenge['Status'][0]['status'] == 'C' ? __('Accepted') : __('Rejected')));
-						}else{
-							if($challenge['Challenge']['status'] == 'D') echo __('Create');
-							elseif(($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) < $now) && $_SESSION['User']['user_type'] == 'P') echo __('Feedback');
-							elseif(($a_date > $now || ($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) > $now)) && !$challenge['Challenge']['eval_complete']) echo __('In Use');
-							elseif(!$challenge['Challenge']['eval_complete']) echo __('Evaluate');
-							elseif(!@$challenge['Status'] || @$challenge['Status'][0]['status']=='N') echo __('New');
-						} ?>
+							<?php if($_SESSION['User']['user_type']=='L' && $challenge['Challenge']['status'] == 'D' && @$challenge['Status'][0]['id']){
+								echo ($challenge['Status'][0]['status'] == 'P' || $challenge['User']['id'] == $_SESSION['User']['id'] ? __('Accept?') : ($challenge['Status'][0]['status'] == 'C' ? __('Accepted') : __('Rejected')));
+							}else{
+								if($challenge['Challenge']['status'] == 'D') echo __('Create');
+								elseif(($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) < $now) && $_SESSION['User']['user_type'] == 'P' && !$challenge['Challenge']['eval_complete']) echo __('Feedback');
+								elseif(($a_date > $now || ($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) > $now)) && !$challenge['Challenge']['eval_complete']) echo __('In Use');
+								elseif(!$challenge['Challenge']['eval_complete']) echo ($_SESSION['User']['user_type']=='L' ? __('Evaluate') : __('Complete'));
+								elseif(!@$challenge['Status'] || @$challenge['Status'][0]['status']=='N') echo __('New');
+							} ?>
 						</span>
 						<span class="feedback_status" style="display:none;">Feedback</span>
 					</td>
 					<td>
 						<div style="position:relative;">
 							<span class="disp_date1">
-							<?php echo (($a_date < $now && $challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) > $now) ? date_format($r_date,'m/d/Y') : date_format($a_date,'m/d/Y')); ?>
+							<?php echo (($a_date < $now && $challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) > $now) ? date_format($r_date,'m/d/Y g:ia') : date_format($a_date,'m/d/Y g:ia')); ?>
 							</span>
 							<?php if($a_date > $now && $challenge['Challenge']['collaboration_type'] != 'NONE'){ ?>
 								<a href="#" style="display:none;position:absolute;left:-11px;" onclick="$(this).parent().parent().parent().find('.feedback_status').hide();$(this).parent().parent().parent().find('.true_status').show();$(this).parent().find('a').show();$(this).hide();$(this).parent().find('.disp_date1').show();$(this).parent().find('.disp_date2').hide();return false;"><img src="/images/arrow-left.png" /></a>
-								<span class="disp_date2" style="display:none;"><?php echo date_format($r_date,'m/d/Y'); ?></span>
+								<span class="disp_date2" style="display:none;"><?php echo date_format($r_date,'m/d/Y g:ia'); ?></span>
 								<a href="#" onclick="$(this).parent().parent().parent().find('.feedback_status').show();$(this).parent().parent().parent().find('.true_status').hide();$(this).parent().find('a').show();$(this).hide();$(this).parent().find('.disp_date2').show();$(this).parent().find('.disp_date1').hide();return false;"><img style="padding-left:3px;" src="/images/arrow-right.png" /></a>
 							<?php } ?>
 						</div>

@@ -20,7 +20,7 @@
 				<ul id="payments-accordion" class="accordion">
 					<li class="alternate">
 						<div class="accordion-trigger">
-							<a class="btn1"><span><?php echo __('Select') ?></span></a>
+							<a class="btn1" id="standard_select"><span><?php echo __('Select') ?></span></a>
 							<div style="width: 64px;height: 12px;float:right;background: transparent url(/images/check_selected.png);margin: 6px 12px 0;display:none;"></div>
 							<p><?php echo __('Standard Account (Free!)') ?></p>
 							<div class="clear"></div>
@@ -143,21 +143,111 @@
 			</div>
 		</div>
 	</div>
+	
+	<div id="upgradeWarning">
+		<div class="modal-wrapper" style="width:600px;">
+			<div class="modal-box-head">
+				<span class="icon3 icon-confirm"></span>
+				<h2><?php echo __('Confirmation') ?></h2>
+			</div>
+			<div class="modal-box-content" style="text-align:center;color:#999;line-height:26px;">
+				You have selected to upgrade your purchanse plan. Click <br />
+				Upgrade to charge your card $10.00 immediately, and $19.99 <br />
+				on every monthly billing cycle thereafter. <br /><br />
+				<span style="color:#00467F;">Would you like to upgrade your account?</span><br /><br /><br />
+				<div style="width: 270px; margin: 0 auto; ">
+					<a class="btn2" style="width: 104px;float:left;" href="#" id="upgradeBtn"><span><?php echo __('Upgrade') ?></span></a>
+					<a class="btn3" style="width: 90px;float:right;" href="#" onclick="jQuery.fancybox.close(); return false;"><span><?php echo __('Cancel') ?></span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="downgradeWarning">
+		<div class="modal-wrapper" style="width:600px;">
+			<div class="modal-box-head">
+				<span class="icon3 icon-confirm"></span>
+				<h2><?php echo __('Confirmation') ?></h2>
+			</div>
+			<div class="modal-box-content" style="text-align:center;color:#999;line-height:26px;">
+				You have selected to downgrade your purchanse plan. By doing <br />
+				so, you will be allotted fewer assignments per month. Click <br />
+				Downgrade to begin charging the new amount on your next billing cycle. <br /><br /><br />
+				
+				<div style="text-align:left;">Type DOWNGRADE into the text box:</div>
+				<input type="text" style="width:98%;" id="downgradeConfirm" /><br /><br />
+				<a style="float:right;font-size:13px;" href="#" onclick="jQuery.fancybox.close(); return false;"><?php echo __('Exit &amp; Cancel Changes') ?></a>
+				<div style="width: 100px; margin: 0 auto; ">
+					<a class="btn3" style="width: 100%;" href="#" id="downgradeBtn"><span><?php echo __('Downgrade') ?></span></a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+<a href="#upgradeWarning" class="show-overlay" style="display:none;" id="upgradeWarningLink"> </a>
+<a href="#downgradeWarning" class="show-overlay" style="display:none;" id="downgradeWarningLink"> </a>
 
 <script type="text/javascript">
 $('.accordion-trigger a').click(function(){
-	$(".accordion-trigger").each(function(){ $(this).find('div').first().hide(); });
-	$(this).parent().find('a').first().hide();
-	$(this).parent().find('div').first().show();
-		
-	if($(this).parent().parent().index('.accordion>li') == 1 || $(this).parent().parent().index('.accordion>li') == 2){
-		$('#payment_summary').show();
-		
-		if($(this).attr('id') == 'platinum_select') $('#edit_payment_method').attr('href','/users/update_payment/PLATINUM/');
-		else $('#edit_payment_method').attr('href','/users/update_payment/PREMIUM/');
-		$('#edit_payment_method').click();
-	}else $('#payment_summary').hide();
+	var currentButton = this;
+	
+	var methodSelect = function(){
+		$(".accordion-trigger").each(function(){ $(this).find('div').first().hide(); });
+		$(currentButton).parent().find('a').first().hide();
+		$(currentButton).parent().find('div').first().show();
+
+		if($(currentButton).parent().parent().index('.accordion>li') == 1 || $(currentButton).parent().parent().index('.accordion>li') == 2){
+			$('#payment_summary').show();
+
+			if($(currentButton).attr('id') == 'platinum_select') $('#edit_payment_method').attr('href','/users/update_payment/PLATINUM/');
+			else $('#edit_payment_method').attr('href','/users/update_payment/PREMIUM/');
+			$('#edit_payment_method').click();
+		}else $('#payment_summary').hide();
+	};
+	
+	<?php if($user['User']['account_tier'] == 'PLATINUM'){ ?>
+		if($(this).attr('id') == 'standard_select' || $(this).find('a').first().attr('id') == 'premium_select'){
+			$('#downgradeWarningLink').click();
+			$('#downgradeBtn').unbind('click');
+			$('#downgradeBtn').click(function(){
+				if($('#downgradeConfirm').val() != 'DOWNGRADE'){
+					alert('Please type DOWNGRADE in the text box to proceed.');
+					return false;
+				}
+				
+				jQuery.fancybox.close();
+				$.ajax({url:'/users/downgrade_tier/PREMIUM'});
+				methodSelect();
+			});
+			return false;
+		}
+	<?php }elseif($user['User']['account_tier'] == 'PREMIUM'){ ?>
+		if($(this).attr('id') == 'standard_select'){
+			$('#downgradeWarningLink').click();
+			$('#downgradeBtn').unbind('click');
+			$('#downgradeBtn').click(function(){
+				if($('#downgradeConfirm').val() != 'DOWNGRADE'){
+					alert('Please type DOWNGRADE in the text box to proceed.');
+					return false;
+				}
+				
+				jQuery.fancybox.close();
+				$.ajax({url:'/users/downgrade_tier/STANDARD'});
+				methodSelect();
+			});
+			return false;
+		}else if($(this).attr('id') == 'platinum_select'){
+			$('#upgradeWarningLink').click();
+			$('#upgradeBtn').unbind('click');
+			$('#upgradeBtn').click(function(){
+				methodSelect();
+			});
+			return false;
+		}
+	<?php } ?>
+	
+	methodSelect();
 });
 
 $(".accordion-trigger").click(function(){

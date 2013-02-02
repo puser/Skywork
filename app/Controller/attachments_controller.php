@@ -12,6 +12,12 @@ class AttachmentsController extends AppController{
 		$this->set('attachment',$attachment);
 	}
 	
+	function embedded_view($challenge_id){
+		$this->checkAuth();
+		$this->set('attachment',$this->Attachment->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id,'Attachment.type'=>'C'))));
+		$this->set('challenge',$this->Attachment->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id))));
+	}
+	
 	function update($challenge_id=NULL){
 		$this->checkAuth(true);
 		$this->layout = 'ajax';

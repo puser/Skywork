@@ -4,15 +4,15 @@
 		<ul>
 			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?>
 				<?php if($challenge['Challenge']['challenge_type'] == 'OFFLINE'){ ?>
-					<li class="no-icon" onclick="save_response('/attachments/embedded_view/<?php echo $challenge['Challenge']['id']; ?>');return false;" href="#"><?php echo __('Assignment') ?></a></li>
+					<li class="active"><a class="no-icon" onclick="save_response('/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>');return false;" href="#"><?php echo __('Assignment') ?></a></li>
 				<?php }else{ ?>
-					<li><a class="no-icon" onclick="save_response('/attachments/embedded_view/<?php echo $challenge['Challenge']['id']; ?>');return false;" href="#"><?php echo __('Assignment') ?></a></li>
+					<li class="active"><a class="no-icon" onclick="save_response('/attachments/view/case/<?php echo $challenge['Challenge']['id']; ?>');return false;" href="#"><?php echo __('Assignment') ?></a></li>
 				<?php }
 			} ?>
 			<?php foreach($challenge['Question'] as $k=>$q){ if(!$q['question']) continue; ?>
-			<li class="<?php if(!$k){ ?>active<?php } ?>" id="questionNav<?php echo $q['id']; ?>"><a class="no-icon" onclick="save_response();" href="#<?php echo $q['id']; ?>"><?php $ques = $k + 1 ; echo ($challenge['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . $ques); ?></a></li>
+			<li><a class="no-icon" href="/challenges/view/<?php echo $challenge['Challenge']['id']; ?>#<?php echo $q['id']; ?>"><?php $ques = $k + 1 ; echo ($challenge['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . $ques); ?></a></li>
 			<?php }if($challenge['Challenge']['allow_attachments']){ ?>
-			<li id="questionNavAttach"><a class="no-icon" onclick="save_response();" href="#attachments"><?php echo __('Attach File(s)') ?></a></li>
+			<li id="questionNavAttach"><a class="no-icon" href="/challenges/view/<?php echo $challenge['Challenge']['id']; ?>#attachments"><?php echo __('Attach File(s)') ?></a></li>
 			<?php } ?>
 		</ul>
 	</div>
@@ -32,17 +32,14 @@
 	<div class="clear"></div>
 	
 	<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded">
-		<div id="questionContent"> </div>
-		<?php if($challenge['Challenge']['min_response_length'] > 1 || $challenge['Challenge']['max_response_length']){ ?>
-			<div style="text-align:right;">
-				<?php if($challenge['Challenge']['min_response_length'] > 1){ ?>
-					<span style="color:#ccc;padding-right:10px;"><?php echo __('Miniumum') ?>: <?php echo $challenge['Challenge']['min_response_length']; ?></span>
-				<?php }if($challenge['Challenge']['max_response_length']){ ?>
-					<span style="color:#ccc;padding-right:10px;"><?php echo __('Maximum') ?>: <?php echo $challenge['Challenge']['max_response_length']; ?></span>
-				<?php } ?>
-				<?php echo __('Counter') ?>: <span id="currentWordCount">0</span>
-			</div>
-		<?php } ?>
+		<div id="preview-contract" style="text-align:center;width:auto;margin-bottom:0;">
+			<?php
+			if($attachment['Challenge']['challenge_type'] == 'VID') echo stripslashes($attachment['Attachment']['file_location']);
+			elseif($attachment['Challenge']['challenge_type'] == 'OFFLINE') echo __('The Assignment for this Bridge is:') . "<br /><br /><strong>" . $attachment['Attachment']['file_location'] . "</strong>";
+			else{ ?>
+			<iframe src="http://docs.google.com/viewer?url=http%3A%2F%2Fpuentesonline.com%2Fuploads%2F<?php echo $attachment['Attachment']['file_location']; ?>&embedded=true" width="735" height="400" />
+			<?php } ?>
+		</div>
 	</div>
 	
 	<div class="clear"></div>
@@ -52,7 +49,7 @@
 	</div>
 	
 	<div style="width: 80px; margin: 0 auto;">
-		<a href="#" class="btn2" onclick="save_response('ajax');return false;"><span><?php echo __('Next') ?></span></a>
+		<a href="/challenges/view/<?php echo $challenge['Challenge']['id']; ?>" class="btn2"><span><?php echo __('Next') ?></span></a>
 	</div>
 
 </div>

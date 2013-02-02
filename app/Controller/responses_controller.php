@@ -85,7 +85,7 @@ class ResponsesController extends AppController{
 		
 		$this->set('challenge',$challenge);
 		$this->set('user_id',$user_id);
-		$this->set('completed',$completed);
+		$this->set('completed',@$_REQUEST['test_complete'] ? !$completed : $completed);
 		$this->set('user_responses',$user_responses);
 			
 		if(@$_REQUEST['ajax']){

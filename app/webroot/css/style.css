@@ -259,6 +259,7 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
 #topmenu .user-name a {font-size: 14px; color: #0071bc; font-family: Arial; font-weight: normal; text-decoration: none;}
 #topmenu .user-home, #topmenu .user-account, #topmenu .user-logout, #topmenu .user-admin, #topmenu .user-login {margin-right: 10px;}
 #topmenu .user-home a, #topmenu .user-account a, #topmenu .user-logout a, #topmenu .user-admin a, #topmenu .user-login a {font-size: 14px; padding-left: 16px;  height: 12px; font-weight: normal; color: #808080;}
+#topmenu .user-logout a { font-size:12px !important; }
 #topmenu .user-home a:hover, #topmenu .user-account a:hover, #topmenu .user-logout a:hover, #topmenu .user-admin a:hover {text-decoration: underline;}
 #topmenu .user-login a {background: url("/images/icon-logout.png") no-repeat center left; padding-left: 18px;}
 
@@ -453,6 +454,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 /** 12x12 */
 .icon3-plus {background-image: url('/images/icons/icon-plus-13x13.png'); }
 .icon-refer {background-image: url('/images/icons/icon-refer-43x39.png');width:44px !important;height:39px !important; }
+.icon-confirm {background-image: url('/images/icon-confirm.png');width:34px !important;height:30px !important; }
 .icon3-token {background-image: url('/images/icons/icon-token-12x13.png'); }
 .icon3-sm_green {background-image: url('/images/icons/icon-people-green-13x13.png'); }
 .icon3-pen {background-image: url('/images/icons/icon-pen-12x12.png'); }
@@ -658,12 +660,12 @@ a.customize-link {display: block; padding-left: 25px; background: url('/images/i
 #bridgetable .cl-head li.col1 {padding-left: 6px;}
 #bridgetable .cl-head li a {color: #00467f;}
 #bridgetable .cl-head li a img {position: relative; top: 4px; }
-#bridgetable .col1 {width: 390px;}
-#bridgetable .col2 {width: 101px;}
+#bridgetable .col1 {width: 370px;}
+#bridgetable .col2 {width: 136px;}
 #bridgetable .col3 {width: 125px;}
 #bridgetable .col4 {width: 101px;}
 #bridgetable .col5 {width: 101px;}
-#bridgetable .col6 {width: 101px;}
+#bridgetable .col6 {width: 86px;}
 #bridgetable .cl-body li {padding: 8px 6px;}
 #bridgetable .cl-body li.alternate {background: #f2f2f2;}
 #bridgetable .cl-body li a {color: #808080;}

@@ -197,7 +197,7 @@
 				<?php if(!$completed){ ?>
 					<ul>
 						<li<?php if(@$complete_eval){ ?> class="active"<?php } ?>>
-							<a style="background-image:url(/images/icons/greencheck_menu_16.png);display: block; padding: 13px 10px 13px 60px; margin: 0 0 0 0; font-size: 14px; font-weight: normal; font-family: Helvetica, Arial, serif; background-position: 15px center; background-repeat: no-repeat; width: 110px; color: #666666; text-decoration: none;border-left: 4px solid #f5866c;background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 56px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/"><?php echo __('I\'m Done!') ?></a>
+							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/greencheck_menu_16.png);background-position:4px 8px;background-repeat:no-repeat;<?php if(@$complete_eval){ ?>display: block; padding: 13px 10px 13px 60px; margin: 0 0 0 0; font-size: 14px; font-weight: normal; font-family: Helvetica, Arial, serif; background-position: 15px center; background-repeat: no-repeat; width: 110px; color: #666666; text-decoration: none;border-left: 4px solid #f5866c;background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 56px;<?php } ?>" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/"><?php echo __('I\'m Done!') ?></a>
 						</li>
 					</ul>
 				<?php } ?>
@@ -341,21 +341,25 @@
 											if(!@$user_colors[$c['user_id']]) $user_colors[$c['user_id']] = array_pop($all_colors);
 											if(!$all_colors) $all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
 											
-											$br_offset = @substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
-											$br_offset += @substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
+											$rbody_decoded = utf8_decode($q['Response'][0]['response_body']);
+											$br_offset = @substr_count($rbody_decoded,"\n\n",0,$c['segment_start']);
+											$br_offset += @substr_count(str_replace("\n\n","\n",$rbody_decoded),"\n",$c['segment_start'] + $br_offset,5);
+											$br_offset += @substr_count(str_replace("\n",' ',str_replace("\n\n","\n",$rbody_decoded)),"  ",0,$c['segment_start'] + $br_offset);
 											
 											$rbody_tmp = substr($q['Response'][0]['response_body'],0,$c['segment_start']);
-											$c['segment_start'] += strlen($rbody_tmp) - strlen(utf8_decode($rbody_tmp));
+											$rbody_tmp_decode = utf8_decode($rbody_tmp);
+											$c['segment_start'] += strlen($rbody_tmp) - strlen($rbody_tmp_decode);
 											
-									
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
 					
 											$mod_response = substr($q['Response'][0]['response_body'],0,$c['segment_start'] + $br_offset) . '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>' . substr(@$mod_response?$mod_response:$q['Response'][0]['response_body'],$c['segment_start'] + $br_offset);
 									
 											if(!$completed){
 												
-												$alt_response = utf8_decode(str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body'])));
-												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $k),
+												$alt_response = str_replace('  ',' ',str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body'])));
+												//$alt_response = utf8_decode($alt_response);
+												
+												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $k + 1),
 																										'formValues'	=> array(	array(	'name'	=> 'comment',
 																										 																'value'	=> $c['comment'] ),
 																																						array(	'name'	=> 'type',
@@ -363,7 +367,7 @@
 																																						array(	'name'	=> 'id',
 																																										'value'	=> $c['id'] )));
 																																							
-												for($j = 1;$j <= substr_count($alt_response,' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($alt_response) - $c['segment_start']);$j++){
+												for($j = 2;$j <= substr_count($alt_response,' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($alt_response) - $c['segment_start']);$j++){
 													$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $j + $k),
 																											'formValues'	=> array(	array(	'name'	=> 'comment',
 																											 																'value'	=> $c['comment'] ),
@@ -391,13 +395,14 @@
 										$mod_response = array();
 										foreach(@$q['Response'][0]['Comment'] as $c){
 											
-											$rbody_tmp = substr($q['Response'][0]['response_body'],0,$c['segment_start']);
-											$rlen_tmp = substr($q['Response'][0]['response_body'],$c['segment_start'],$c['segment_start']+$c['segment_length']);
-											$c['segment_start'] += strlen($rbody_tmp) - strlen(utf8_decode($rbody_tmp));
-								//			$c['segment_length'] += strlen($rlen_tmp) - strlen(utf8_decode($rlen_tmp));
+											$rbody_decoded = utf8_decode($q['Response'][0]['response_body']);
+											$br_offset = @substr_count($rbody_decoded,"\n\n",0,$c['segment_start']);
+											$br_offset += @substr_count(str_replace("\n\n","\n",$rbody_decoded),"\n",$c['segment_start'] + $br_offset,5);
+											$br_offset += @substr_count(str_replace("\n",' ',str_replace("\n\n","\n",$rbody_decoded)),"  ",0,$c['segment_start'] + $br_offset);
 											
-											$br_offset = @substr_count($q['Response'][0]['response_body'],"\n\n",0,$c['segment_start']);
-											$br_offset += @substr_count($q['Response'][0]['response_body'],"\n",$c['segment_start'] + $br_offset,5);
+											$rbody_tmp = substr($q['Response'][0]['response_body'],0,$c['segment_start']);
+											$rbody_tmp_decode = utf8_decode($rbody_tmp);
+											$c['segment_start'] += strlen($rbody_tmp) - strlen($rbody_tmp_decode);
 																					
 											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue; 
 											if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
@@ -597,7 +602,7 @@ $(document).ready(function(){
 	<?php if($responseCount){
 		foreach($challenge[0]['Question'] as $k=>$q){
 			if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id) continue; ?>
-			responses.push({text:'<?php echo str_replace("'","\\'",str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body']))); ?>'.trim(),id:<?php echo $q['Response'][0]['id']; ?>});
+			responses.push({text:'<?php echo str_replace("'","\\'",str_replace('  ',' ',str_replace("\n",' ',str_replace("\n\n","\n",$q['Response'][0]['response_body'])))); ?>'.trim(),id:<?php echo $q['Response'][0]['id']; ?>});
 		<?php }
 	} ?>
 

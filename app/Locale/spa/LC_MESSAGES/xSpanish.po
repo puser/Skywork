@@ -1,0 +1,1401 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Sean Daly <seand567@hotmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2012-09-24 04:28-0500\n"
+"PO-Revision-Date: 2012-09-24 11:40+0100\n"
+"Last-Translator: Ben Rawn <ben.rawn@gmail.com>\n"
+"Language-Team: Puentes\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
+
+#: Controller/challenges_controller.php:465
+msgid ""
+"Hi {firstname_1}!\n"
+"\n"
+"{firstname_2} {lastname_2} has invited you to collaborate with their classroom on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n"
+"\n"
+"You will be able to provide feedback to {firstname_2}'s students between the dates of:\n"
+"\n"
+"{duedate_1} and {duedate_2}.\n"
+"\n"
+"Lastly, Puentes is currently in invite-only beta, so you will need a Beta-Test Key. It is: BETATEST\n"
+"\n"
+"Click here to check it out\n"
+"{invite_link}\n"
+"\n"
+"Sincerely,\n"
+"The Puentes Team"
+msgstr ""
+
+#: Controller/challenges_controller.php:473;489;514
+msgid "Invitation from {first_name} {last_name}"
+msgstr ""
+
+#: Controller/challenges_controller.php:481
+msgid ""
+"Hi {firstname_1}!\n"
+"\n"
+"Your Instructor, {firstname_2} {lastname_2}, has sent you an invitation to join a Bridge on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n"
+"\n"
+"You will have until:\n"
+"\n"
+"{duedate_1} to complete a series of questions.\n"
+"\n"
+"{duedate_2} to give feedback to other students.\n"
+"\n"
+"Click here to check it out:\n"
+"{bridge_link}\n"
+"\n"
+"Sincerely,\n"
+"The Puentes Team"
+msgstr ""
+
+#: Controller/challenges_controller.php:506
+msgid ""
+"Hi {firstname_1}!\n"
+"\n"
+"{firstname_2} {lastname_2} has invited your class(es) "
+msgstr ""
+
+#: Controller/challenges_controller.php:564
+msgid ""
+"Hi {firstname_1}!\n"
+"\n"
+"{firstname_2} has accepted your request to join {bridge_name} on Puentes.\n"
+"\n"
+"Sincerely,\n"
+"The Puentes Team"
+msgstr ""
+
+#: Controller/challenges_controller.php:576
+msgid ""
+"Hi {firstname_1}!\n"
+"\n"
+"Sorry, {firstname_2} has declined the request to join {bridge_name} on Puentes.\n"
+"\n"
+"\"{rejection_text}\"\n"
+"\n"
+"Perhaps some other time!\n"
+"\n"
+"Sincerely,\n"
+"The Puentes Team"
+msgstr ""
+
+#: Controller/challenges_controller.php:614
+msgid ""
+"Hi {firstname}!\n"
+"\n"
+"The Bridge {bridge_name} is set to expire today at {expiration_time}.\n"
+"\n"
+"Click here make any final edits!\n"
+"http://puentesonline.com/\n"
+"\n"
+"Sincerely,\n"
+"The Puentes Team"
+msgstr ""
+
+#: Controller/users_controller.php:138
+msgid ""
+"{first_name_1},\n"
+"\n"
+"{first_name_2} requested for you to join the class {classname} on Puentes Online - the world's first feedback learning system.\n"
+"\n"
+"{begin_link}Click here to join this class!{end_link}\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"The Puentes Team"
+msgstr ""
+"{first_name_1},\n"
+"\n"
+"{first_name_2} le invita a que participe en Puentes Online - el primer sistema de feedback del mundo. Quiere que se unan las clases, {classname}. \n"
+"\n"
+"{begin_link}¡Haga clic aquí para empezar!{end_link}\n"
+"\n"
+"Saludos,\n"
+"\n"
+"El equipo de Puentes"
+
+#: Controller/users_controller.php:145
+msgid "{first_name} {last_name} wants you to join their Class"
+msgstr "{first_name} {last_name} quiere compartir su clase."
+
+#: Controller/users_controller.php:178
+msgid ""
+"{first_name},\n"
+"\n"
+"Someone (probably you), forgot the password on Puentes Online. Click on the link below to create a new password.\n"
+"\n"
+"{link}\n"
+"\n"
+"Sincerely,\n"
+"The Puentes Team"
+msgstr ""
+"{first_name},\n"
+"\n"
+"Probablemente se ha olvidado su contraseña en Puentes Online. Haga clic aquí para crear una nueva contraseña.\n"
+"\n"
+"{link}\n"
+"\n"
+"Saludos,\n"
+"El Equipo de Puentes"
+
+#: Controller/users_controller.php:182
+#: View/Pages/home.ctp:232;238
+msgid "New Password"
+msgstr "Nueva Contraseña"
+
+#: View/Attachments/update.ctp:2
+#: View/Challenges/view.ctp:8
+msgid "Attach File(s)"
+msgstr "Adjuntar Archivos"
+
+#: View/Attachments/update.ctp:12
+#: View/Challenges/update_people.ctp:45;95
+msgid "Remove"
+msgstr "Eliminar"
+
+#: View/Attachments/update.ctp:23
+msgid "Add another attachment"
+msgstr "Adjuntar otro archivo"
+
+#: View/Attachments/view.ctp:7
+msgid "Go to Questions"
+msgstr "Ir a las preguntas"
+
+#: View/Attachments/view.ctp:9
+msgid "Back"
+msgstr "Atrás"
+
+#: View/Attachments/view.ctp:13
+#: View/Challenges/update_container.ctp:6
+#: View/Challenges/view.ctp:20
+#: View/Metrics/view_chart.ctp:22
+#: View/Metrics/view_flags.ctp:22
+#: View/Metrics/view_questions.ctp:23
+#: View/Metrics/view_students.ctp:40
+#: View/Responses/view.ctp:128
+msgid "Assignment"
+msgstr "Actividad"
+
+#: View/Challenges/browse.ctp:5
+msgid "Begin"
+msgstr "Empezar"
+
+#: View/Challenges/browse.ctp:6
+#: View/Challenges/update_container.ctp:2
+msgid "Start a Bridge"
+msgstr "Crear un Puente"
+
+#: View/Challenges/browse.ctp:13
+msgid "My Portfolio"
+msgstr "Mi Carpeta"
+
+#: View/Challenges/browse.ctp:16
+msgid "All"
+msgstr "Todo"
+
+#: View/Challenges/browse.ctp:17
+msgid "Completed"
+msgstr "Completado"
+
+#: View/Challenges/browse.ctp:18
+msgid "Draft"
+msgstr "Borrador"
+
+#: View/Challenges/browse.ctp:19;77
+msgid "New"
+msgstr "Nuevo"
+
+#: View/Challenges/browse.ctp:29
+#, fuzzy
+msgid "Bridge Name"
+msgstr "Nombre del estudiante"
+
+#: View/Challenges/browse.ctp:30;154
+#: View/Challenges/update_info.ctp:15
+msgid "Due Date 1"
+msgstr "Fecha límite 1"
+
+#: View/Challenges/browse.ctp:30
+#: View/Challenges/update_info.ctp:15
+msgid "Students answer questions or write essay"
+msgstr "Los estudiantes contestan a las preguntas o escriben un ensayo"
+
+#: View/Challenges/browse.ctp:31
+#: View/Challenges/update_info.ctp:31
+msgid "Due Date 2"
+msgstr "Fecha límite 2"
+
+#: View/Challenges/browse.ctp:31
+#: View/Challenges/update_info.ctp:31
+msgid "Time for feedback and collaboration"
+msgstr "Duración de comentarios y colaboración"
+
+#: View/Challenges/browse.ctp:32
+#: View/Users/view_classes.ctp:35
+msgid "Last Edit"
+msgstr "Modificado en"
+
+#: View/Challenges/browse.ctp:33
+#: View/Users/view_classes.ctp:37
+msgid "Creator"
+msgstr "Creador"
+
+#: View/Challenges/browse.ctp:34
+msgid "Status"
+msgstr "Estátus"
+
+#: View/Challenges/browse.ctp:75
+msgid "Building"
+msgstr "Creando"
+
+#: View/Challenges/browse.ctp:76
+msgid "In Use"
+msgstr "En Uso"
+
+#: View/Challenges/browse.ctp:84;177
+#: View/Users/view_classes.ctp:230;367;384
+msgid "Delete"
+msgstr "Eliminar"
+
+#: View/Challenges/browse.ctp:92
+msgid "You"
+msgstr "Usted"
+
+#: View/Challenges/browse.ctp:101
+msgid "Anonymous User"
+msgstr "Usuario anónimo"
+
+#: View/Challenges/browse.ctp:110
+msgid "You do not yet have access to any bridges."
+msgstr "No tiene acceso a ningún puente."
+
+#: View/Challenges/browse.ctp:118
+msgid "Previous"
+msgstr "Anterior"
+
+#: View/Challenges/browse.ctp:122
+#: View/Challenges/view.ctp:39
+#: View/Metrics/view_flags.ctp:239
+#: View/Metrics/view_questions.ctp:85
+#: View/Metrics/view_students.ctp:125
+msgid "Next"
+msgstr "Avanzar"
+
+#: View/Challenges/browse.ctp:159
+msgid "Your students are currently completing the assignment. Due Date 1 expires {date1}. You will then have until {date2} to complete Due Date 2."
+msgstr "Actualmente, sus estudiantes están completando el la actividad. La fecha límite es {date1}. Tiene que esperar hasta que el {date2} pase para completar la fecha límite 2."
+
+#: View/Challenges/browse.ctp:169
+#: View/Challenges/instructor_accepted.ctp:36
+#: View/Users/view_classes.ctp:288
+msgid "Close"
+msgstr "Cerrar"
+
+#: View/Challenges/browse.ctp:181
+#, fuzzy
+msgid "Are you sure you want to delete this Bridge?"
+msgstr "¿Está seguro de que desea borrar? "
+
+#: View/Challenges/browse.ctp:184
+#: View/Users/view_classes.ctp:236;374;392
+msgid "Yes, Delete"
+msgstr "Borrar"
+
+#: View/Challenges/browse.ctp:185
+#: View/Challenges/split_groups.ctp:33;52
+#: View/Challenges/update_container.ctp:52
+#: View/Challenges/view.ctp:81
+#: View/Classes/create_professor.ctp:36
+#: View/Classes/create_student.ctp:25
+#: View/Classes/update.ctp:32
+#: View/Classes/view_sharing.ctp:42
+#: View/Classes/view_students.ctp:72
+#: View/Layouts/default.ctp:109
+#: View/Metrics/view_students.ctp:184
+#: View/Users/invite_collaborator.ctp:25
+#: View/Users/view.ctp:127
+#: View/Users/view_classes.ctp:160;187;216;239;263;313;375;393
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: View/Challenges/instructor_accepted.ctp:16
+#: View/Challenges/instructor_confirm.ctp:4
+#: View/Challenges/instructor_rejected.ctp:4
+#, fuzzy
+msgid "Accept/Reject Request for a Bridge"
+msgstr "Aceptar/Rechazar la petición para"
+
+#: View/Challenges/instructor_accepted.ctp:22
+msgid "Below are the names of the Instructors who will be participating in this bridge. Pending means they have not made a decision. All participating Instructors must Accept for the bridge to begin."
+msgstr ""
+
+#: View/Challenges/instructor_accepted.ctp:22
+msgid "To reconsider your decision, click on Back to Accept/Reject."
+msgstr ""
+
+#: View/Challenges/instructor_accepted.ctp:38
+#: View/Challenges/instructor_rejected.ctp:16
+msgid "Back to Accept/Reject"
+msgstr ""
+
+#: View/Challenges/instructor_confirm.ctp:11
+msgid ""
+"{name} has added your class(es) to a bridge with Due Date 1: {date1} and\n"
+"Due Date 2: {date2}. These are the class(es) that have been added:\n"
+"\n"
+"{classes}\n"
+"\n"
+"You can accept or reject this request. If you reject, you will have the opportunity to write a response."
+msgstr ""
+
+#: View/Challenges/instructor_confirm.ctp:21
+#: View/Classes/view_invite.ctp:30
+msgid "Accept"
+msgstr "Aceptar"
+
+#: View/Challenges/instructor_confirm.ctp:22
+#, fuzzy
+msgid "Reject"
+msgstr "Seleccionar"
+
+#: View/Challenges/instructor_rejected.ctp:10
+msgid "You have chosen to reject this bridge. Please provide an explanation and click Send Rejection.\n"
+msgstr ""
+
+#: View/Challenges/instructor_rejected.ctp:10
+msgid "If you want to reconsider your decision, click on Back to Accept/Reject."
+msgstr ""
+
+#: View/Challenges/instructor_rejected.ctp:18
+#, fuzzy
+msgid "Send Rejection"
+msgstr "Enviar una notificación"
+
+#: View/Challenges/leaderboard.ctp:5
+msgid "Group Activity"
+msgstr "Actividad en Grupo"
+
+#: View/Challenges/leaderboard.ctp:15
+msgid "Group Members"
+msgstr "Miembros del Grupo"
+
+#: View/Challenges/leaderboard.ctp:20
+#: View/Challenges/stats_table.ctp:69
+msgid "Likes vs dislikes for their work"
+msgstr "Me Gusta vs No Me Gusta para su trabajo"
+
+#: View/Challenges/leaderboard.ctp:27
+msgid "Not enough data exists to display details for this bridge"
+msgstr "No hay datos suficientes para mostrar los detalles de este puente"
+
+#: View/Challenges/split_groups.ctp:23
+msgid "Split class into groups"
+msgstr "Dividir la clase en grupos"
+
+#: View/Challenges/split_groups.ctp:27
+msgid "Number of Students per Group"
+msgstr "Número de estudiantes por grupo"
+
+#: View/Challenges/split_groups.ctp:28
+msgid "Go"
+msgstr "Avanzar"
+
+#: View/Challenges/split_groups.ctp:49
+#: View/Challenges/update_container.ctp:18
+#: View/Challenges/view.ctp:21
+#: View/Classes/update.ctp:31
+#: View/Classes/view_students.ctp:71
+#: View/Users/view.ctp:71;108
+#: View/Users/view_classes.ctp:100
+msgid "Save"
+msgstr "Guardar"
+
+#: View/Challenges/stats_table.ctp:5
+msgid "Student Work"
+msgstr "Tarea del estudiante"
+
+#: View/Challenges/stats_table.ctp:6
+msgid "Due Date 2:"
+msgstr "Fecha límite 2"
+
+#: View/Challenges/stats_table.ctp:19
+msgid "Students with highest quality work"
+msgstr "Estudiantes que han obtenido una mejor valoración"
+
+#: View/Challenges/stats_table.ctp:22
+msgid "According to You and Groups"
+msgstr "Valoración del instructor y grupos"
+
+#: View/Challenges/stats_table.ctp:23
+msgid "According to You"
+msgstr "Valoración del instructor"
+
+#: View/Challenges/stats_table.ctp:24
+msgid "According to Groups"
+msgstr "Valoración de los grupos"
+
+#: View/Challenges/stats_table.ctp:48
+#, fuzzy
+msgid "Go To Metrics"
+msgstr "Estadísticas"
+
+#: View/Challenges/stats_table.ctp:53
+#, fuzzy
+msgid "Go To Summary"
+msgstr "Resumen"
+
+#: View/Challenges/stats_table.ctp:64
+msgid "Most active questions:"
+msgstr "Las preguntas más activas"
+
+#: View/Challenges/stats_table.ctp:92
+#: View/Users/view_classes.ctp:260
+msgid "More Info"
+msgstr "Más información"
+
+#: View/Challenges/update_assignment.ctp:4
+msgid "Select Assignment"
+msgstr "Seleccionar la actividad"
+
+#: View/Challenges/update_assignment.ctp:8
+msgid "What is the Assignment?"
+msgstr "¿Cuál es la acitivad?"
+
+#: View/Challenges/update_assignment.ctp:12;23
+#: View/Challenges/update_challenge.ctp:12;23
+#: View/Challenges/update_collaboration.ctp:12
+msgid "Select"
+msgstr "Seleccionar"
+
+#: View/Challenges/update_assignment.ctp:14
+#: View/Challenges/view.ctp:2
+msgid "Answer Questions"
+msgstr "Responder las preguntas"
+
+#: View/Challenges/update_assignment.ctp:18
+msgid "The Instructor writes a series of (n) questions. Students then answer the questions assigned by the Instructor."
+msgstr "El instructor escribe una serie de preguntas. Después, los estudiantes contestan las preguntas asignadas por el instructor."
+
+#: View/Challenges/update_assignment.ctp:25
+msgid "Write an Essay"
+msgstr "Escribir un ensayo"
+
+#: View/Challenges/update_assignment.ctp:29
+msgid "The Instructor assigns and essay topic to students."
+msgstr "El instructor asigna el tema del ensayo a los estudiantes."
+
+#: View/Challenges/update_challenge.ctp:4
+msgid "Select a Challenge"
+msgstr "Seleccionar un desafío"
+
+#: View/Challenges/update_challenge.ctp:8
+msgid "What are you challenging your students to? Please select one of the following and continue."
+msgstr "¿Cuál es el desafío para sus estudiantes? Por favor, seleccione una de los siguienties y continue. "
+
+#: View/Challenges/update_challenge.ctp:14
+msgid "Read a Document"
+msgstr "Leer un documento"
+
+#: View/Challenges/update_challenge.ctp:18
+msgid "In this challenge, the Instructor assigns a document for students to watch. In the Information section you will browse for your document."
+msgstr "En este desafío, el instructor asigna una lectura a los estudiantes. En la sección de información, puede subir el documento.  "
+
+#: View/Challenges/update_challenge.ctp:25
+msgid "Watch a YouTube video"
+msgstr "Ver un video de YouTube"
+
+#: View/Challenges/update_challenge.ctp:29
+msgid "In this challenge, the Instructor assigns a YouTube video for students to watch. In the Information section you will copy and paste the YouTube link."
+msgstr "En este desafío, el instructor asigna video a los estudiantes. En la sección de información, puede copiar y pegar el enlace.  "
+
+#: View/Challenges/update_collaboration.ctp:4
+msgid "Students Collaborate"
+msgstr "Los estudiantes trabajan en grupo"
+
+#: View/Challenges/update_collaboration.ctp:8
+msgid "How will students collaborate on their Assignment?"
+msgstr "¿Como van a trabajar los estudiantes en grupo?"
+
+#: View/Challenges/update_collaboration.ctp:14
+msgid "Rate each other's work"
+msgstr "Valorar el trabajo de cada estudiante"
+
+#: View/Challenges/update_collaboration.ctp:18
+msgid "Once students complete their Assignments, students then use a Likert scale to rate and rank each other's work."
+msgstr "Cuando los estudiantes completen la actividad, usan una escala Likert para valorar el trabajo de los demás estudiantes."
+
+#: View/Challenges/update_collaboration.ctp:23
+msgid "I want to skip the student collaboration"
+msgstr "Quiero saltar la colaboración entre estudiantes "
+
+#: View/Challenges/update_container.ctp:5
+#: View/Users/view.ctp:97
+msgid "Challenges"
+msgstr "Desafíos"
+
+#: View/Challenges/update_container.ctp:7
+msgid "Collaborate"
+msgstr "Caloboración"
+
+#: View/Challenges/update_container.ctp:8
+msgid "Information"
+msgstr "Información"
+
+#: View/Challenges/update_container.ctp:9
+#: View/Challenges/update_people.ctp:4
+msgid "Send to Class"
+msgstr "Enviar a la Clase"
+
+#: View/Challenges/update_container.ctp:19;43
+#: View/Challenges/view.ctp:22;67
+#: View/Metrics/view_chart.ctp:23
+#: View/Metrics/view_flags.ctp:23
+#: View/Metrics/view_questions.ctp:24
+#: View/Metrics/view_students.ctp:42
+#: View/Responses/view.ctp:129
+msgid "Exit"
+msgstr "Salir"
+
+#: View/Challenges/update_container.ctp:47
+msgid "Would you like to save before returning to Home?"
+msgstr "¿Quiere guardar estos cambios antes de volver a la página de inicia?"
+
+#: View/Challenges/update_container.ctp:50
+#: View/Challenges/view.ctp:79
+msgid "Yes, Save Current"
+msgstr "Guardar"
+
+#: View/Challenges/update_container.ctp:51
+#: View/Challenges/view.ctp:80
+msgid "No, Don't Save"
+msgstr "No guardar"
+
+#: View/Challenges/update_info.ctp:4
+msgid "Challenge Information"
+msgstr "Información de desafío"
+
+#: View/Challenges/update_info.ctp:10
+msgid "Name of Challenge"
+msgstr "Nombre del Puente"
+
+#: View/Challenges/update_info.ctp:11;90
+msgid "Type name here"
+msgstr "Escriba su nombre"
+
+#: View/Challenges/update_info.ctp:20
+msgid "Due Date 1 Time Deadline:"
+msgstr "Hora:"
+
+#: View/Challenges/update_info.ctp:36
+msgid "Due Date 2 Time Deadline:"
+msgstr "Hora:"
+
+#: View/Challenges/update_info.ctp:49
+msgid "Document"
+msgstr "Documento"
+
+#: View/Challenges/update_info.ctp:54
+msgid "Current Document:"
+msgstr "Documento actual"
+
+#: View/Challenges/update_info.ctp:58
+msgid "Remove Document"
+msgstr "Eliminar este documento"
+
+#: View/Challenges/update_info.ctp:62
+msgid "Replace current document:"
+msgstr "Reemplazar el documento actual"
+
+#: View/Challenges/update_info.ctp:68
+msgid "Video Embed Code"
+msgstr "Incluir el código del video"
+
+#: View/Challenges/update_info.ctp:76
+msgid "Write the questions for your Assignment here:"
+msgstr "Escriba aquí las preguntas para sus estiantes:"
+
+#: View/Challenges/update_info.ctp:82
+msgid "One or two words summarizing this question"
+msgstr "Resuma esta pregunta en una o dos palabras  "
+
+#: View/Challenges/update_info.ctp:89
+msgid "Section Title"
+msgstr "Título de la sección"
+
+#: View/Challenges/update_info.ctp:95
+msgid "Add another"
+msgstr "Añadir otro"
+
+#: View/Challenges/update_info.ctp:99
+msgid "Write the essay topic in one or two words:"
+msgstr "Resuma el tema del ensayo en una o dos palabras  "
+
+#: View/Challenges/update_info.ctp:103
+msgid "Write a description of this essay topic:"
+msgstr "Escriba una descripción del tema de este ensayo:"
+
+#: View/Challenges/update_info.ctp:111
+msgid "Allow students to attach documents, photos, etc."
+msgstr "Permitir que los estudiantes adjunten documentos, fotos, etc."
+
+#: View/Challenges/update_info.ctp:113
+msgid "Anonymous"
+msgstr "Anónimo"
+
+#: View/Challenges/update_info.ctp:116
+msgid "Apply as anonymous (Assignment won't display names)"
+msgstr "Mantener el amonimato entre los estudiantes"
+
+#: View/Challenges/update_info.ctp:123
+msgid "Save &amp; Next"
+msgstr "Continuar"
+
+#: View/Challenges/update_people.ctp:10
+msgid "Select Class(es) you would like to invite:"
+msgstr "Seleccionar la(s) clase(s) que quiere invitar:"
+
+#: View/Challenges/update_people.ctp:19
+#: View/Classes/update.ctp:14
+#: View/Users/view_classes.ctp:34;142
+msgid "Class Name"
+msgstr "Nombre de la Clase"
+
+#: View/Challenges/update_people.ctp:67
+msgid "Class Groups"
+msgstr "Grupos dentro de la clase"
+
+#: View/Challenges/update_people.ctp:73
+msgid "Invite a Collaborator:"
+msgstr "Invite a un colaborador:"
+
+#: View/Challenges/update_people.ctp:78
+#: View/Classes/create_professor.ctp:11
+#: View/Classes/create_student.ctp:9
+#: View/Classes/view_invite.ctp:11
+#: View/Classes/view_request.ctp:10
+#: View/Classes/view_sharing.ctp:18
+#: View/Classes/view_students.ctp:26
+#: View/Users/invite_collaborator.ctp:9
+#: View/Users/view.ctp:23
+msgid "First Name"
+msgstr "Nombre"
+
+#: View/Challenges/update_people.ctp:79
+#: View/Classes/create_professor.ctp:15
+#: View/Classes/create_student.ctp:13
+#: View/Classes/view_invite.ctp:12
+#: View/Classes/view_request.ctp:11
+#: View/Classes/view_sharing.ctp:19
+#: View/Classes/view_students.ctp:27
+#: View/Users/invite_collaborator.ctp:13
+#: View/Users/view.ctp:24
+msgid "Last Name"
+msgstr "Apellido"
+
+#: View/Challenges/update_people.ctp:80
+#: View/Classes/create_professor.ctp:19
+#: View/Classes/create_student.ctp:17
+#: View/Classes/view_invite.ctp:13
+#: View/Classes/view_request.ctp:12
+#: View/Classes/view_sharing.ctp:20
+#: View/Classes/view_students.ctp:28
+#: View/Layouts/default.ctp:69
+#: View/Pages/home.ctp:215
+#: View/Users/invite_collaborator.ctp:17
+#: View/Users/view_classes.ctp:179
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: View/Challenges/update_people.ctp:81
+msgid "Already in Puentes?"
+msgstr "¿Usuario existente?"
+
+#: View/Challenges/update_people.ctp:91
+msgid "Send Invite"
+msgstr "Enviar invitación"
+
+#: View/Challenges/update_people.ctp:91
+msgid "Existing User"
+msgstr "Usuario existente"
+
+#: View/Challenges/update_people.ctp:104
+msgid "Please add at least one group to this bridge to continue"
+msgstr "Por favor, agregue al menos un grupo a este puente para continuar"
+
+#: View/Challenges/update_people.ctp:104
+msgid "Add an individual"
+msgstr "Añada una persona"
+
+#: View/Challenges/update_people.ctp:110
+msgid "You must invite at least one group/individual"
+msgstr "Hay que invitar por lo menos un grupo/persona"
+
+#: View/Challenges/update_people.ctp:114;116;117
+msgid "Save and Finish"
+msgstr "Guardar y Completar"
+
+#: View/Challenges/update_people.ctp:123
+#: View/Users/view.ctp:116
+msgid "Warning!"
+msgstr "¡Atención!"
+
+#: View/Challenges/update_people.ctp:128
+msgid ""
+"You have not created any groups for this bridge, meaning <strong>each</strong> student will have to give feedback to <strong>every</strong> other student. There are a total of {student_count} students.\n"
+"\n"
+"Would you like to send this Bridge?"
+msgstr ""
+
+#: View/Challenges/update_people.ctp:134
+#, fuzzy
+msgid "Send"
+msgstr "Compartida"
+
+#: View/Challenges/update_people.ctp:135
+msgid "Don't send yet"
+msgstr ""
+
+#: View/Challenges/view.ctp:35
+msgid "You must complete this section"
+msgstr "Debe completar esta sección"
+
+#: View/Challenges/view.ctp:70
+msgid "You have until {due_date_time}, {due_date_day}, {due_date} to make further edits to you assignment. Would you like to save current edits before returning to Home?"
+msgstr ""
+
+#: View/Classes/create_professor.ctp:5
+msgid "Add Professor to Shared Class"
+msgstr "Añada un Profesor para compartir la clase"
+
+#: View/Classes/create_professor.ctp:8
+msgid "Please enter the information below before adding to your class:"
+msgstr "Por favor, complete la información antes de agregar una clase:"
+
+#: View/Classes/create_professor.ctp:23
+msgid "Permissions"
+msgstr "Permisos"
+
+#: View/Classes/create_professor.ctp:25
+msgid "This Professor can add my class to a Bridge:"
+msgstr ""
+
+#: View/Classes/create_professor.ctp:26
+msgid "Only if (s)he requests and I accept"
+msgstr "Sólo si hay una petición y yo acepto"
+
+#: View/Classes/create_professor.ctp:27
+msgid "Without request"
+msgstr "Sin petición"
+
+#: View/Classes/create_professor.ctp:35
+msgid "Send Notification"
+msgstr "Enviar una notificación"
+
+#: View/Classes/create_student.ctp:4
+msgid "Add a User to Puentes"
+msgstr "Añada un usuario a Puentes"
+
+#: View/Classes/create_student.ctp:24
+#: View/Users/invite_collaborator.ctp:24
+msgid "Add"
+msgstr "Añadir"
+
+#: View/Classes/search_shared.ctp:3
+msgid "Select the Classes you would like to join:"
+msgstr "Seleccione las clases que le gustaría unirse:"
+
+#: View/Classes/search_shared.ctp:6
+msgid "Class(es)"
+msgstr "Clase(s)"
+
+#: View/Classes/search_shared.ctp:19
+msgid "Instructor not found"
+msgstr "No se pudo encontrar el Instructor"
+
+#: View/Classes/search_shared.ctp:20
+msgid "This instructor has restricted access to their classes"
+msgstr "Este instructor tiene acceso retringido a sus clases"
+
+#: View/Classes/update.ctp:8
+#: View/Users/view_classes.ctp:67
+msgid "Edit Class"
+msgstr "Editar la clase"
+
+#: View/Classes/update.ctp:11
+msgid "Edit Class Name and Save:"
+msgstr "Edite el nombre de la clase y guarde:"
+
+#: View/Classes/update.ctp:19
+#: View/Users/view_classes.ctp:147
+msgid "Make this class searchable"
+msgstr "Permita que esta clase pueda buscarse"
+
+#: View/Classes/update.ctp:21
+#: View/Users/view_classes.ctp:149
+msgid "Yes"
+msgstr "Sí"
+
+#: View/Classes/update.ctp:22
+#: View/Users/view_classes.ctp:150
+msgid "No"
+msgstr "No"
+
+#: View/Classes/update.ctp:28
+#: View/Users/view_classes.ctp:156
+msgid "Instructors will be able to search and request to join your class. For security purposes, they must know your email address and you will always be able to Accept or Reject their request."
+msgstr "Los instructores podrán buscar y enviar una petición para unirse a su clase. Por razones de seguridad, el instructor debe conocer su correo electrónico. Siempre podrá Aceptar o Rechazar su petición."
+
+#: View/Classes/view_invite.ctp:3
+msgid "Accept/Decline"
+msgstr "Aceptar/Rechazar"
+
+#: View/Classes/view_invite.ctp:31
+#: View/Classes/view_request.ctp:30
+msgid "Decline"
+msgstr "Rechazar"
+
+#: View/Classes/view_request.ctp:3
+msgid "Accept/Decline Request for"
+msgstr "Aceptar/Rechazar la petición para"
+
+#: View/Classes/view_request.ctp:29
+msgid "Allow to Join"
+msgstr "Aceptar petición"
+
+#: View/Classes/view_sharing.ctp:6
+msgid "Add a professor"
+msgstr "Añadir un instructor"
+
+#: View/Classes/view_sharing.ctp:11
+msgid "Shared"
+msgstr "Compartida"
+
+#: View/Classes/view_students.ctp:7
+msgid "Add a new Student"
+msgstr "Añadir un nuevo estudiante"
+
+#: View/Classes/view_students.ctp:8
+msgid "Clean class"
+msgstr "Borrar la clase"
+
+#: View/Classes/view_students.ctp:14
+#: View/Metrics/view_chart.ctp:7
+#: View/Metrics/view_flags.ctp:7
+#: View/Metrics/view_questions.ctp:8
+#: View/Metrics/view_students.ctp:9
+#: View/Users/view_classes.ctp:36
+msgid "Students"
+msgstr "Estudiantes"
+
+#: View/Classes/view_students.ctp:21
+msgid "There are no students in this class."
+msgstr "No hay estudiantes en su clase."
+
+#: View/Classes/view_students.ctp:29
+#: View/Users/view.ctp:30
+msgid "City"
+msgstr "Ciudad"
+
+#: View/Classes/view_students.ctp:30
+#: View/Users/view.ctp:32
+msgid "State"
+msgstr "Estado"
+
+#: View/Layouts/default.ctp:58
+msgid "Home"
+msgstr "Página de Inicio"
+
+#: View/Layouts/default.ctp:59
+#: View/Users/view.ctp:2;5;15
+#: View/Users/view_classes.ctp:2;5
+msgid "My Account"
+msgstr "Mi Cuenta"
+
+#: View/Layouts/default.ctp:60;101
+msgid "Logout"
+msgstr "Salir"
+
+#: View/Layouts/default.ctp:63
+msgid "Puentes Online is currently in private beta."
+msgstr "Puentes Online está actualmente en beta privado."
+
+#: View/Layouts/default.ctp:64
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: View/Layouts/default.ctp:75
+#: View/Pages/home.ctp:219
+msgid "Password"
+msgstr "Contraseña"
+
+#: View/Layouts/default.ctp:83
+msgid "I forgot my password"
+msgstr "No recuerdo mi contraseña"
+
+#: View/Layouts/default.ctp:84
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#: View/Layouts/default.ctp:105
+msgid "Are you sure you want to logout?"
+msgstr "¿Está seguro que desea cerrar la sesión?"
+
+#: View/Layouts/default.ctp:108
+msgid "Yes, Logout"
+msgstr "Terminar sesión"
+
+#: View/Layouts/default.ctp:121
+msgid "Privacy Policy"
+msgstr "Normas de Privacidad"
+
+#: View/Layouts/default.ctp:123
+msgid "Terms and Conditions"
+msgstr "Condiciones y Términos"
+
+#: View/Metrics/view_chart.ctp:4
+#: View/Metrics/view_flags.ctp:4
+#: View/Metrics/view_questions.ctp:5
+#: View/Metrics/view_students.ctp:5
+msgid "Metrics Section"
+msgstr "Estadísticas"
+
+#: View/Metrics/view_chart.ctp:8
+#: View/Metrics/view_flags.ctp:8
+#: View/Metrics/view_questions.ctp:9;34
+#: View/Metrics/view_students.ctp:25
+msgid "Question Activity"
+msgstr "Actividad en las preguntas"
+
+#: View/Metrics/view_chart.ctp:9;33
+#: View/Metrics/view_flags.ctp:9
+#: View/Metrics/view_questions.ctp:10
+#: View/Metrics/view_students.ctp:26
+msgid "Charting"
+msgstr "Gráficos"
+
+#: View/Metrics/view_chart.ctp:10
+#: View/Metrics/view_flags.ctp:10;33
+#: View/Metrics/view_questions.ctp:11
+#: View/Metrics/view_students.ctp:27
+msgid "Red Flags"
+msgstr ""
+
+#: View/Metrics/view_chart.ctp:21
+#: View/Metrics/view_flags.ctp:21
+#: View/Metrics/view_questions.ctp:22
+#: View/Metrics/view_students.ctp:39
+#: View/Responses/view.ctp:23
+msgid "Summary"
+msgstr "Resumen"
+
+#: View/Metrics/view_chart.ctp:34
+#: View/Metrics/view_flags.ctp:34
+#: View/Metrics/view_students.ctp:53;139
+msgid "Customize"
+msgstr "Personalizar"
+
+#: View/Metrics/view_chart.ctp:45;69
+#: View/Responses/view.ctp:153;160;161;162;163;164
+msgid "Quality"
+msgstr "Nivel"
+
+#: View/Metrics/view_chart.ctp:46;70
+msgid "Activity"
+msgstr "Actividad"
+
+#: View/Metrics/view_chart.ctp:68
+msgid "Student Quality / Activity in Bridge"
+msgstr "Nivel del trabajo / Actividad en el puente"
+
+#: View/Metrics/view_flags.ctp:41
+#: View/Metrics/view_questions.ctp:41
+#: View/Metrics/view_students.ctp:60
+msgid "Student Name"
+msgstr "Nombre del estudiante"
+
+#: View/Metrics/view_flags.ctp:42
+msgid "Incidents"
+msgstr ""
+
+#: View/Metrics/view_questions.ctp:42
+msgid "Question"
+msgstr "Pregunta"
+
+#: View/Metrics/view_questions.ctp:45
+msgid "Activity Level"
+msgstr "Nivel de actividad"
+
+#: View/Metrics/view_questions.ctp:45
+msgid "These are questions with the most activity"
+msgstr "Preguntas con más activdad"
+
+#: View/Metrics/view_students.ctp:13;52
+msgid "All Students"
+msgstr "Todos los estudiantes"
+
+#: View/Metrics/view_students.ctp:18
+#: View/Responses/view.ctp:70
+msgid "Group"
+msgstr "Grupo"
+
+#: View/Metrics/view_students.ctp:52
+msgid "Student Analysis:"
+msgstr "Análisis de los resultados:"
+
+#: View/Metrics/view_students.ctp:61
+msgid "Completion Level"
+msgstr "Nivel de completación"
+
+#: View/Metrics/view_students.ctp:62
+msgid "Average Quality Level"
+msgstr "Premedio de Nivel"
+
+#: View/Metrics/view_students.ctp:63
+msgid "Students Activity Level"
+msgstr "Nivel de Actividad"
+
+#: View/Metrics/view_students.ctp:180
+msgid "Run"
+msgstr "Ejecutar"
+
+#: View/Pages/home.ctp:50
+msgid "I'm an Instructor"
+msgstr ""
+
+#: View/Pages/home.ctp:53
+#, fuzzy
+msgid "I'm a Student"
+msgstr "Añadir un nuevo estudiante"
+
+#: View/Pages/home.ctp:56
+#, fuzzy
+msgid "I'm a Collaborator"
+msgstr "Invite a un colaborador:"
+
+#: View/Pages/home.ctp:69;137
+msgid "Beta-Test Key"
+msgstr ""
+
+#: View/Pages/home.ctp:73;109;141;192
+msgid "Preferred Email"
+msgstr "Correo preferido"
+
+#: View/Pages/home.ctp:77;113;145;196
+msgid "Choose a Password"
+msgstr "Elija una contraseña"
+
+#: View/Pages/home.ctp:81;117;149;200;242
+msgid "Confirm Password"
+msgstr "Confirme contraseña"
+
+#: View/Pages/home.ctp:93;129;161;224
+msgid "Log In"
+msgstr "Iniciar sesión"
+
+#: View/Pages/home.ctp:101
+#: View/Users/view_classes.ctp:209
+msgid "Class Token"
+msgstr "Código de la clase"
+
+#: View/Pages/home.ctp:105
+#, fuzzy
+msgid "Instructor's Email"
+msgstr "Comentarios"
+
+#: View/Pages/home.ctp:173
+msgid "I'm a new user"
+msgstr "Soy un nuevo usuario"
+
+#: View/Pages/home.ctp:176
+msgid "I already have an account"
+msgstr "Tengo una cuenta"
+
+#: View/Pages/home.ctp:205;247
+msgid "Save and Continue"
+msgstr "Guardar"
+
+#: View/Responses/view.ctp:7
+msgid "Feedback"
+msgstr ""
+
+#: View/Responses/view.ctp:64
+msgid "Summary Page"
+msgstr "Página de Resumen"
+
+#: View/Responses/view.ctp:64
+msgid "Instructor Feedback"
+msgstr "Comentarios"
+
+#: View/Responses/view.ctp:126
+msgid "Metrics"
+msgstr "Estadísticas"
+
+#: View/Responses/view.ctp:153;160
+msgid "Very High"
+msgstr "Muy Alta"
+
+#: View/Responses/view.ctp:153;161
+msgid "Good"
+msgstr "Buena"
+
+#: View/Responses/view.ctp:153;162
+msgid "Average"
+msgstr "Normal"
+
+#: View/Responses/view.ctp:153;163
+msgid "Below Average"
+msgstr "Necesita Mejorar la "
+
+#: View/Responses/view.ctp:153;164
+msgid "Poor"
+msgstr "Mala"
+
+#: View/Responses/view.ctp:155
+msgid "Average quality for this Question"
+msgstr "Promedio de nivel para esta pregunta"
+
+#: View/Responses/view.ctp:235
+msgid "Highlight a section of the text to add a comment."
+msgstr "Destaque una sección del texto y añada un comentario"
+
+#: View/Responses/view.ctp:265
+msgid "Top of Page"
+msgstr "Principio de la página"
+
+#: View/Responses/view.ctp:280
+msgid "Congratulations!"
+msgstr "¡Felicitaciones!"
+
+#: View/Responses/view.ctp:284
+msgid "You have completed all sections. You have until the next Due Date to edit any information you wish. Would you like to go to Home?"
+msgstr "Ha completado todas las secciones. Puede editar cualquier información hasta la próxima fecha límite. ¿Quiere ir a la página de inicio?"
+
+#: View/Responses/view.ctp:287
+msgid "Yes, Save and Go Home"
+msgstr "Guardar y Salir"
+
+#: View/Responses/view.ctp:288
+msgid "Save, but Continue to Edit Answers"
+msgstr "Gaurdar, pero continuar editando"
+
+#: View/Responses/view.ctp:303
+msgid "This user has not submitted responses"
+msgstr "Este usuario no ha enviado ninguna respuesta"
+
+#: View/Users/invite_collaborator.ctp:4
+msgid "Add a Collaborator to Puentes"
+msgstr "Agregar un Colaborador a Puentes"
+
+#: View/Users/session_logout.ctp:2;7
+msgid "Logged Out"
+msgstr "Cerró la sesión"
+
+#: View/Users/session_logout.ctp:11
+msgid "Your current Case Club session has ended."
+msgstr "La sesión de Puentes ha terminado."
+
+#: View/Users/session_logout.ctp:14
+msgid "Go to Homepage"
+msgstr "Ir a la página de inicio"
+
+#: View/Users/view.ctp:6;96
+#: View/Users/view_classes.ctp:6
+msgid "Classes"
+msgstr "Clases"
+
+#: View/Users/view.ctp:21
+msgid "Personal Info"
+msgstr "Datos personales"
+
+#: View/Users/view.ctp:26
+msgid "E-mail"
+msgstr "Correo electrónico"
+
+#: View/Users/view.ctp:28
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: View/Users/view.ctp:40
+msgid "Language"
+msgstr "Idioma"
+
+#: View/Users/view.ctp:42
+msgid "English"
+msgstr "English"
+
+#: View/Users/view.ctp:43
+msgid "Spanish"
+msgstr ""
+
+#: View/Users/view.ctp:48
+msgid "Change Password"
+msgstr "Cambiar contraseña"
+
+#: View/Users/view.ctp:50
+msgid "Type Password"
+msgstr "Escribir la contraseña"
+
+#: View/Users/view.ctp:51
+msgid "Re-type Password"
+msgstr "Reescribir la contraseña"
+
+#: View/Users/view.ctp:55
+msgid "Allow other Professors to search for my classes"
+msgstr "Permitir a otros instructors buscar mi clase"
+
+#: View/Users/view.ctp:59
+msgid "Terminate my Account"
+msgstr "Eliminar mi cuenta"
+
+#: View/Users/view.ctp:60
+msgid "Terminate"
+msgstr "Eliminar"
+
+#: View/Users/view.ctp:73
+#: View/Users/view_classes.ctp:103
+msgid "Saved!"
+msgstr "¡Guardado!"
+
+#: View/Users/view.ctp:86
+msgid "My Email Preferences"
+msgstr "Opciones de correo"
+
+#: View/Users/view.ctp:91
+msgid "Check your preferences:"
+msgstr "Comprobar preferencias:"
+
+#: View/Users/view.ctp:93
+msgid "Send me email"
+msgstr "Enviar un correo"
+
+#: View/Users/view.ctp:98
+msgid "Due Date Expiration"
+msgstr "Expiración de fecha límite"
+
+#: View/Users/view.ctp:102
+msgid "Never send me email"
+msgstr "No me envíe correos"
+
+#: View/Users/view.ctp:118
+msgid "You have clicked to Terminate your account. All data that has been stored will be permanently deleted. Are you sure you want to Terminate your account?"
+msgstr "Ha elegido eliminar su cuenta. Toda la información que haya almacendado se borrará permanentemente. ¿Está seguro de que quiere eliminar su cuenta?"
+
+#: View/Users/view.ctp:121
+msgid "If you are sure you want to permanently delete your account, please type TERMINATE into the box below."
+msgstr "Si está seguro de que quiere eliminar su cuenta por favor teclee TERMINATE en el siguiente cuadro."
+
+#: View/Users/view.ctp:126
+msgid "Terminate My Account"
+msgstr "Eliminar mi cuenta"
+
+#: View/Users/view_classes.ctp:18;136
+msgid "Create Class"
+msgstr "Crear una clase"
+
+#: View/Users/view_classes.ctp:19
+msgid "Join shared class"
+msgstr "Unirse a una clase"
+
+#: View/Users/view_classes.ctp:21
+msgid "Join class"
+msgstr "Unirse a una clase"
+
+#: View/Users/view_classes.ctp:27
+msgid "Edit Classes"
+msgstr "Editar las clases"
+
+#: View/Users/view_classes.ctp:65
+msgid "Share Class"
+msgstr "Comparir la clase"
+
+#: View/Users/view_classes.ctp:66
+msgid "View Token"
+msgstr "Ver el código"
+
+#: View/Users/view_classes.ctp:68
+msgid "Edit Students"
+msgstr "Editar los estudiantes"
+
+#: View/Users/view_classes.ctp:69
+msgid "Delete Class"
+msgstr "Borrar la clase"
+
+#: View/Users/view_classes.ctp:139
+msgid "Please enter the details below to create a new class:"
+msgstr "Por favor, escriba los detalles para crear una clase:"
+
+#: View/Users/view_classes.ctp:159
+msgid "Generate Token"
+msgstr "Generar un código"
+
+#: View/Users/view_classes.ctp:172
+msgid "Request to Join Shared Class(es)"
+msgstr "Petición para unirse a una clase"
+
+#: View/Users/view_classes.ctp:176
+#, fuzzy
+msgid "Please enter the Professor's email:"
+msgstr "Por favor, escriba el correo del instructor"
+
+#: View/Users/view_classes.ctp:186
+msgid "Continue"
+msgstr "Continuar"
+
+#: View/Users/view_classes.ctp:199
+msgid "Join Your Class"
+msgstr "Unirse a una clase"
+
+#: View/Users/view_classes.ctp:205
+msgid "Teacher Email"
+msgstr "Email de instructor"
+
+#: View/Users/view_classes.ctp:215
+msgid "Join"
+msgstr "Unirse"
+
+#: View/Users/view_classes.ctp:233;371;388
+msgid "Are you sure you want to delete?"
+msgstr "¿Está seguro de que desea borrar? "
+
+#: View/Users/view_classes.ctp:254
+msgid "Please Register"
+msgstr ""
+
+#: View/Users/view_classes.ctp:257
+msgid "You must be a subscribed Instructor in order to create a class."
+msgstr ""
+
+#: View/Users/view_classes.ctp:279
+msgid "Generate new"
+msgstr "Generar nuevo"
+
+#: View/Users/view_classes.ctp:283
+msgid "Token"
+msgstr "Código"
+
+#: View/Users/view_classes.ctp:304
+msgid "New Token"
+msgstr "Nuevo código"
+
+#: View/Users/view_classes.ctp:307
+msgid "Generating a new token will allow students to enter this class with the new token. Are you sure you want to generate a new token?"
+msgstr "Crear un nuevo código permitirá a los estudiantes acceder a esta clase con el nuevo código. ¿Está seguro de que quiere crear un nuevo código?"
+
+#: View/Users/view_classes.ctp:310
+msgid "Generate"
+msgstr "Ejecutar"
+
+#~ msgid "Case Name"
+#~ msgstr "Nombre del Puente"
+
+#~ msgid "Responses"
+#~ msgstr "Respuestas"

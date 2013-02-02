@@ -403,6 +403,16 @@ class UsersController extends AppController{
 		}
 	}
 	
+	function downgrade_tier($tier=NULL){
+		if($tier){
+			$u['User']['id'] = $_SESSION['User']['id'];
+			$u['User']['account_tier'] = $tier;
+			$this->User->save($u);
+			$_SESSION['User']['account_tier'] = $tier;
+		}
+		die();
+	}
+	
 	function process_payment(){
 		$user = $this->User->findById($_SESSION['User']['id']);
 		
