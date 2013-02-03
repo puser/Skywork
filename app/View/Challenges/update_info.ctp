@@ -32,7 +32,7 @@
 						<select name="answers_due_meridian" id="answers_due_meridian">
 							<option value=""> -- </option>
 							<option value="AM" <?php echo (@$challenge && substr($challenge['Challenge']['answers_due'],11,2) < 12 ? 'selected="selected"' : ''); ?>>AM</option>
-							<option value="PM" <?php echo (!@$challenge || substr($challenge['Challenge']['answers_due'],11,2) >= 12 ? 'selected="selected"' : ''); ?>>PM</option>
+							<option value="PM" <?php echo (@$challenge && substr($challenge['Challenge']['answers_due'],11,2) >= 12 ? 'selected="selected"' : ''); ?>>PM</option>
 						<select>
 						<span style="position:relative;top: 2px;left: 6px;">EST</span>
 					</div>
@@ -50,7 +50,7 @@
 						<select name="responses_due_meridian" id="responses_due_meridian">
 							<option value=""> -- </option>
 							<option value="AM" <?php echo (@$challenge && substr($challenge['Challenge']['responses_due'],11,2) < 12 ? 'selected="selected"' : ''); ?>>AM</option>
-							<option value="PM" <?php echo (!@$challenge || substr($challenge['Challenge']['responses_due'],11,2) >= 12 ? 'selected="selected"' : ''); ?>>PM</option>
+							<option value="PM" <?php echo (@$challenge && substr($challenge['Challenge']['responses_due'],11,2) >= 12 ? 'selected="selected"' : ''); ?>>PM</option>
 						<select>
 						<span style="position:relative;top: 2px;left: 6px;">EST</span>
 					</div>
@@ -61,7 +61,6 @@
 			<li id="add_document" style='padding-top:10px'>
 				<p class="label"><?php echo __('Upload the Assignment: Document') ?></p>
 				<!-- <a href="#" class="icon-add"> Add document</a> -->
-				
 				<div id="curCaseFile" style="font-size:12px;">
 					<?php if(@$challenge['Attachment'][0]['type'] == 'C'){ ?>
 						<?php echo __('Current Document:') ?> 
@@ -72,9 +71,11 @@
 					<?php } ?>
 				</div>
 				
-				<?php if(@$challenge['Attachment'][0]['type'] == 'C'){ ?><?php echo __('Replace current document:') ?> <?php } ?>
-				<input type="file" name="attachment[0]" />
-				<input type="hidden" name="attachment[0][type]" value="C" />
+				<?php if(@$challenge['Attachment'][0]['type'] == 'C'){ ?><?php echo __('Replace current document:') ?><br /> <?php } ?>
+				<iframe src="/attachments/update_frame/<?php echo @$challenge['Challenge']['id']; ?>" style="width:355px;height:35px;border:none;padding-top:10px;padding-left:5px;padding-bottom:10px;" border="0" />
+					
+				<input type="hidden" name="attachment[file_location]" id="attach_file_location" />
+				<input type="hidden" name="attachment[name]" id="attach_file_name" />
 				
 			</li>
 			<li id="add_youtube">
@@ -239,6 +240,14 @@ if($('#challenge_type').val() == 'VID'){
 if($('#collaboration_type').val() == 'NONE'){
 	$('#duedate2_input').remove();
 	$('.anonymous_input').remove();
+}
+
+function add_file(filename,orig_name){
+	// add markup for files uploaded in child frame
+	$('#attach_file_location').val(filename);
+	$('#attach_file_name').val(orig_name);
+	
+	$('#curCaseFile').html('<?php echo __('Current Document:') ?> <a href="/uploads/' + filename + '" target="_blank">' + orig_name + '</a>&nbsp;&nbsp;(<a href="#" onclick="$(\'#attach_file_name\').val(\'\');$(\'#attach_file_location\').val(\'\');$(\'#curCaseFile\').html(\'\');"><?php echo __('Remove Document') ?></a>)<br /><br />');
 }
 
 function validate_info(){

@@ -18,6 +18,24 @@ class AttachmentsController extends AppController{
 		$this->set('challenge',$this->Attachment->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id))));
 	}
 	
+	function update_frame($challenge_id=NULL){
+		$this->checkAuth();
+		$this->layout = 'ajax';
+		
+		if($challenge_id) $this->set('challenge',$this->Attachment->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id))));
+		if(@$_FILES['attachment']){
+			// upload file
+			$filename = md5(uniqid(rand())).strrchr($_FILES['attachment']['name'],'.');
+			if(!move_uploaded_file($_FILES['attachment']['tmp_name'],$_SERVER['DOCUMENT_ROOT'].'/uploads/'.$filename)){
+				die("<br>Upload error<br>");
+			}
+			
+			// render page w/ js to update parent frame (add hidden input pointing to file, removal link, etc)
+			$this->set('filename',$filename);
+			$this->set('orig_name',@$_FILES['attachment']['name']);
+		}
+	}
+	
 	function update($challenge_id=NULL){
 		$this->checkAuth(true);
 		$this->layout = 'ajax';
@@ -28,7 +46,6 @@ class AttachmentsController extends AppController{
 					if(!$_FILES['attachment']['tmp_name'][$k]) continue;
 					$filename = md5(uniqid(rand())).strrchr($n,'.');
 					if(!move_uploaded_file($_FILES['attachment']['tmp_name'][$k],$_SERVER['DOCUMENT_ROOT'].'/uploads/'.$filename)){
-						print_r($_FILES);
 						die("<br>Upload error<br>");
 					}
 					$attachments[] = array(	'challenge_id'	=> @$_REQUEST['attachment'][$k]['challenge_id'],

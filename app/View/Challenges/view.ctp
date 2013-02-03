@@ -4,7 +4,7 @@
 		<ul>
 			<?php if(@$challenge['Attachment'][0]['type']=='C'){ ?>
 				<?php if($challenge['Challenge']['challenge_type'] == 'OFFLINE'){ ?>
-					<li class="no-icon" onclick="save_response('/attachments/embedded_view/<?php echo $challenge['Challenge']['id']; ?>');return false;" href="#"><?php echo __('Assignment') ?></a></li>
+					<li><a class="no-icon" onclick="save_response('/attachments/embedded_view/<?php echo $challenge['Challenge']['id']; ?>');return false;" href="#"><?php echo __('Assignment') ?></a></li>
 				<?php }else{ ?>
 					<li><a class="no-icon" onclick="save_response('/attachments/embedded_view/<?php echo $challenge['Challenge']['id']; ?>');return false;" href="#"><?php echo __('Assignment') ?></a></li>
 				<?php }

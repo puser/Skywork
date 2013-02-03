@@ -25,7 +25,7 @@
 	<div class="actionmenu">
 		<ul>
 			<!-- <li class="action-save"><a href="#" onclick="save_response();return false;"><?php echo __('Save') ?></a></li> -->
-			<li class="action-exit"><a href="#modalExitChoices" class="show-overlay"><?php echo __('Exit') ?></a></li>
+			<li class="action-exit"><a href="/"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>
 	</div>
@@ -98,6 +98,6 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	setup_response_hashchange(<?php echo $challenge['Question'][0]['id']; ?>,<?php echo $challenge['Challenge']['id']; ?>);
+	//setup_response_hashchange(<?php echo $challenge['Question'][0]['id']; ?>,<?php echo $challenge['Challenge']['id']; ?>);
 });
 </script>
