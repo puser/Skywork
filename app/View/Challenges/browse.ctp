@@ -154,9 +154,47 @@
 					</ul>
 				</td></tr>
 				<?php }} ?>
+				
+				<?php
+				$k = @$k ? $k + 1 : 0;
+				if($page >= ceil($total/10) && $_SESSION['User']['user_type'] == 'P'){  ?>
+					<tr<?php if(!(($k)%2)){ ?> class="alternate"<?php } ?>>
+						<td><a href="/static_samples/student_attachment/">Example of an Assignment</a></td>
+						<td>In Use</td>
+						<td><?php echo date_format(date_create(),'m/d/Y g:ia'); ?></td>
+						<td>Your Instructor</td>
+						<td><?php echo date_format(date_create(),'m/d/Y'); ?></td>
+						<td></td>
+					</tr>
+				<?php }elseif($page >= ceil($total/10)){ ?>
+					<tr<?php if(!(($k)%2)){ ?> class="alternate"<?php } ?>>
+						<td><a href="/static_samples/instructor_evaluation/">Example of Grading an Assignment</a></td>
+						<td>Evaluate</td>
+						<td><?php echo date_format(date_create(),'m/d/Y g:ia'); ?></td>
+						<td>Instructor</td>
+						<td><?php echo date_format(date_create(),'m/d/Y'); ?></td>
+						<td></td>
+					</tr>
+					<tr<?php if(!(($k+1)%2)){ ?> class="alternate"<?php } ?>>
+						<td><a href="/static_samples/instructor_completed/">Example of Completed Assignment</a></td>
+						<td> </td>
+						<td><?php echo date_format(date_create(),'m/d/Y g:ia'); ?></td>
+						<td>Instructor</td>
+						<td><?php echo date_format(date_create(),'m/d/Y'); ?></td>
+						<td></td>
+					</tr>
+					<tr<?php if(!(($k+2)%2)){ ?> class="alternate"<?php } ?>>
+						<td><a href="/static_samples/student_attachment/">Example of Assignment a Student Receives</a></td>
+						<td>In Use</td>
+						<td><?php echo date_format(date_create(),'m/d/Y g:ia'); ?></td>
+						<td>Your Instructor</td>
+						<td><?php echo date_format(date_create(),'m/d/Y'); ?></td>
+						<td></td>
+					</tr>
+				<?php } ?>
 			</tbody>
 		</table>
-		<?php if(!$challenges){ ?><?php echo ($status ? __('No bridges match your search.') : __('You do not yet have access to any bridges.')); ?><?php } ?>
+		<?php if(!$challenges){ ?><?php echo ($status ? __('No bridges match your search.') : ''); ?><?php } ?>
 	</div>
 	
 	<div class="box-foot">
