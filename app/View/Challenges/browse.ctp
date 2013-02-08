@@ -37,7 +37,7 @@
 					<th class="col2" align='center'><a href="/dashboard/?sort=answer_date&dir=<?php echo (@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}
 					elseif(@$_REQUEST['sort']=='answer_date'&&@$_REQUEST['dir']=='d'){echo 'sortdown';}
-					else{echo '';} ?>" style="padding-right:30px;position:relative;"><?php echo __('Due Date') ?></th>
+					else{echo '';} ?>" style="padding-right:36px;position:relative;"><?php echo __('Due Date') ?></th>
 					<!--
 					<th class="col3" align='left'><a href="/dashboard/?sort=response_date&dir=<?php echo (@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort <?php 
 					if(@$_REQUEST['sort']=='response_date'&&@$_REQUEST['dir']=='a'){echo 'sortup';}

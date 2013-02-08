@@ -532,10 +532,9 @@ $(document).ready(function(){
 		$('#parentGototop').width(120)
 	}
 	
-	<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
+	<?php if($_SESSION['User']['user_type'] != 'P' && !$completed){ ?>
 		if(!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length){
 			$('#finishedEvalBtn').show().parent().width($('#finishedEvalBtn').parent().width() + 170);
-			
 		}
 	<?php }if(date_create($challenge[0]['Challenge']['responses_due']) > date_create() && $challenge[0]['Challenge']['collaboration_type'] != 'NONE' && !@$_REQUEST['notips'] && !@$complete_eval && $_SESSION['User']['user_type'] == 'L'){ ?>
 		$('#showPreEval').click();

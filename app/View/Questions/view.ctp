@@ -17,32 +17,38 @@
 						<?php echo stripslashes($question['Question']['question']); ?>
 					</span>
 				</p>
-				<textarea class="niceTextarea" name="response_body" rows="10" style="font-family:Helvetica, Arial, sans-serif;font-size: 12px;"><?php echo str_replace("\\",'',stripslashes(@$question['Response'][0]['response_body'])); ?></textarea>
+				<textarea class="niceTextarea" name="response_body" rows="10" style="font-family:Helvetica, Arial, sans-serif;font-size: 12px;width:735px;"><?php echo str_replace("\\",'',stripslashes(@$question['Response'][0]['response_body'])); ?></textarea>
 			</li>
 		</ul>
 	</form>
 </div>
 
 <script type="text/javascript">
+String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
+
 function limitText(limitField){
 	limitNum = <?php echo (@$question['Challenge']['max_response_length'] ? $question['Challenge']['max_response_length'] : '1000000'); ?>;
-	if(limitField.val() && limitField.val().match(/ /g).length + 1 > limitNum){
+	spaces = limitField.val().trim().match(/ /g);
+	if(limitField.val() && (spaces ? spaces.length : 0) + 1 > limitNum){
 		<?php if($question['Challenge']['max_response_length'] && $question['Challenge']['allow_exceeded_length'] != 1){ ?>
 			do{
 				limitField.val(limitField.val().substr(0,limitField.val().lastIndexOf(' ')));
-			}while(limitField.val().match(/ /g).length + 1 > limitNum);
+			}while((spaces ? spaces.length : 0) + 1 > limitNum);
 		<?php } ?>
 	}
 	
 	if(!limitField.val()) $('#currentWordCount').html('0');
-	else $('#currentWordCount').html(limitField.val().match(/ /g).length + 1);
+	else{
+		if(spaces) $('#currentWordCount').html(spaces.length + 1);
+		else $('#currentWordCount').html('1');
+	}
 }
 	
 $textAreaOrigHeight = 264;
 $("textarea.niceTextarea").keyup(function(){ 
 	expandtext(this); 
 
-	<?php if($question['Challenge']['max_response_length']){ ?>
+	<?php if($question['Challenge']['max_response_length'] || $question['Challenge']['min_response_length'] > 1){ ?>
 		limitText($(this));
 	<?php } ?>
 });

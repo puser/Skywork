@@ -54,7 +54,7 @@
 				<br />
 				<p><?php echo __('Institution Info') ?></p>
 				<ul class="fieldset2">	
-					<li><label><?php echo __('Name of Institution') ?></label> <input type="text" value="<?php echo $user['User']['institution']; ?>" size="60" name="institution" /></li>
+					<li><label><?php echo __('Name of Institution') ?></label> <input type="text" value="<?php echo $user['User']['institution']; ?>" size="60" autocomplete="off" name="institution" /></li>
 					<li>
 						<label><?php echo __('Type') ?></label>
 						<select name="institution_type">
@@ -83,8 +83,8 @@
 				<p><?php echo __('Password') ?></p>
 				<span id="show_change_password" style='float: left; width: 250px; margin-right: 10px; color: #567AA9; font-size: 13px;'><?php echo __('To change your password click ') ?><a onclick="$('#change_password').show('fast'); $('#cancel_changes').show('fast'); $('#show_change_password').hide();"><u>here</u></a></span>
 				<ul class="fieldset2" id="change_password" style='display:none'>	
-					<li><label><?php echo __('Type Password') ?></label> <input type="password" size="60" id="new_pass1" name="new_pass1" /></li>
-					<li><label><?php echo __('Re-type Password') ?></label> <input type="password" size="60" id="new_pass2" name="new_pass2" /></li>
+					<li><label><?php echo __('Type Password') ?></label> <input type="password" size="60" id="new_pass1" name="new_pass1" autocomplete="off" /></li>
+					<li><label><?php echo __('Re-type Password') ?></label> <input type="password" size="60" id="new_pass2" name="new_pass2" autocomplete="off" /></li>
 				</ul><br /><br />
 				
 				<!--

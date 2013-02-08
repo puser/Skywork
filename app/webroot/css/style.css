@@ -308,7 +308,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 #bridgetable {margin-bottom: 20px; }
 
 .box-foot {display: block; position: relative;}
-.pagination {display: block; padding: 10px 0; height: 14px; }
+.pagination {display: block; padding: 10px; height: 14px; }
 .pagination-prev {height: 14px; }
 .pagination-prev a {display: block; padding-left: 10px; background: url("/images/arrow-left-blue.png") no-repeat center left; color: #808080;}
 .pagination-next a {display: block; padding-right: 10px; background: url("/images/arrow-right-blue.png") no-repeat center right; color: #808080;}
