@@ -398,7 +398,15 @@ class ChallengesController extends AppController{
 		}
 	}
 	
+	function update_active_interstitial($id){
+		$this->checkAuth();
+		$this->set('cid',$id);
+		$this->layout = 'ajax';
+	}
+	
 	function launch_bridge($challenge_record){
+		$this->checkAuth();
+		
 		$invited = $this->Status->find('all',array('conditions'=>array('Status.challenge_id'=>$challenge_record['Challenge']['id'],'Status.status'=>'P')));
 		$sent_users = array($challenge_record['Challenge']['user_id'] => 1);
 		foreach($invited as $i){
@@ -420,6 +428,8 @@ class ChallengesController extends AppController{
 	}
 	
 	function split_groups($challenge_id,$group_count = NULL){
+		$this->checkAuth();
+		
 		$this->layout = 'ajax';
 		$challenge = $this->Challenge->find('first',array('conditions'=>"Challenge.id = ".$challenge_id,'recursive'=>2));
 		
@@ -438,6 +448,7 @@ class ChallengesController extends AppController{
 	}
 	
 	function save_groups($challenge_id){
+		$this->checkAuth();
 		$this->Group->save(array('challenge_id' => $challenge_id));
 		$group = array();
 		foreach($_REQUEST['user'] as $u) $this->UsersGroup->save(array('group_id'=>$this->Group->id,'user_id'=>$u));
@@ -445,6 +456,7 @@ class ChallengesController extends AppController{
 	}
 	
 	function clear_groups($challenge_id){
+		$this->checkAuth();
 		die($this->Group->deleteAll(array('Group.challenge_id' => $challenge_id)));
 	}
 	
