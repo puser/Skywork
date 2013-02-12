@@ -168,26 +168,26 @@
 					</tr>
 				<?php }elseif($page >= ceil($total/10)){ ?>
 					<tr<?php if(!(($k)%2)){ ?> class="alternate"<?php } ?>>
-						<td><a href="/static_samples/instructor_evaluation/">Example of Grading an Assignment</a></td>
-						<td>Evaluate</td>
+						<td><a href="/static_samples/student_attachment/">This is what an assignment looks like</a></td>
+						<td>In Use</td>
 						<td><?php echo date_format(date_create(),'m/d/Y g:ia'); ?></td>
-						<td>Instructor</td>
+						<td>The Instructor</td>
 						<td><?php echo date_format(date_create(),'m/d/Y'); ?></td>
 						<td></td>
 					</tr>
 					<tr<?php if(!(($k+1)%2)){ ?> class="alternate"<?php } ?>>
-						<td><a href="/static_samples/instructor_completed/">Example of Completed Assignment</a></td>
-						<td> </td>
+						<td><a href="/static_samples/instructor_evaluation/">This is what grading looks like</a></td>
+						<td>Evaluate</td>
 						<td><?php echo date_format(date_create(),'m/d/Y g:ia'); ?></td>
-						<td>Instructor</td>
+						<td>The Instructor</td>
 						<td><?php echo date_format(date_create(),'m/d/Y'); ?></td>
 						<td></td>
 					</tr>
 					<tr<?php if(!(($k+2)%2)){ ?> class="alternate"<?php } ?>>
-						<td><a href="/static_samples/student_attachment/">Example of Assignment a Student Receives</a></td>
-						<td>In Use</td>
+						<td><a href="/static_samples/instructor_completed/">This is what a completed assignment looks like</a></td>
+						<td>Complete</td>
 						<td><?php echo date_format(date_create(),'m/d/Y g:ia'); ?></td>
-						<td>Your Instructor</td>
+						<td>The Instructor</td>
 						<td><?php echo date_format(date_create(),'m/d/Y'); ?></td>
 						<td></td>
 					</tr>

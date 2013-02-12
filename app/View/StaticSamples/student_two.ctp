@@ -12,7 +12,7 @@
 
 <div id="maincolumn">
 	
-	<div class="alignleft page-toptitle">Example Assignment: Presidents of the United States of America</div>
+	<div class="alignleft page-toptitle">Assignment Example: Presidents of the United States of America</div>
 	
 	<div class="actionmenu">
 		<ul>
@@ -36,7 +36,7 @@
 						<li>
 							<p class="label-text ">
 								<span class="black6">
-									What are the themes and your reaction to those themes in this case?
+									What are the main issues addressed in the document?
 								</span>
 							</p>
 							<textarea class="niceTextarea" name="response_body" rows="10" style="font-family:Helvetica, Arial, sans-serif;font-size: 12px;"></textarea>

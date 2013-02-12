@@ -59,7 +59,7 @@
 </div>
 
 <div id="maincolumn">
-	<div class="alignleft page-toptitle">Example Assignment: Presidents of the United States of America</div>
+	<div class="alignleft page-toptitle">Assignment Example: Presidents of the United States of America</div>
 	
 	<div class="actionmenu">
 		<ul>
