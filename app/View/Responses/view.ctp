@@ -303,7 +303,7 @@
 		
 					<div style="margin:0 auto;width:150px;">
 						<div style="width:150px;float:left;margin-left: -62px;">
-							<a href="/responses/submit_evaluation/<?php echo $challenge[0]['Challenge']['id']; ?>/" class="btn2"><span><?php echo __('Send to Students') ?></span></a>
+							<a href="#modalProgress" onclick="window.location='/responses/submit_evaluation/<?php echo $challenge[0]['Challenge']['id']; ?>/';progressIndicator();" class="show-overlay btn2"><span><?php echo __('Send to Students') ?></span></a>
 						</div>
 					</div>
 					<a style="float:right;font-size:14px;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/"><?php echo __('Continue Evaluating Students') ?></a>
@@ -527,6 +527,10 @@
 <div class="clear"></div>
 
 <div style="display:none;">
+	<div id="modalProgress" style="width:200px;height:35px;text-align:center;font-size:16px;color:#00467F;line-height:35px;">
+		Working <span id="progress1" class="progressDot" style="display:none;">.</span> <span id="progress2" class="progressDot" style="display:none;">.</span> <span id="progress3" class="progressDot" style="display:none;">.</span>
+	</div>
+	
 	<div id="modalSaveChoices" style="height:220px;overflow:hidden;">
 		<div class="box-heading grey-line">
 			<span class="icon icon-star"></span>
@@ -811,6 +815,16 @@ function nextQuestion(){
 
 function firstStudent(){
 	window.location = $('.userNav').first().find('a').attr('href');
+}
+
+function progressIndicator(){
+	var currentDot = 0;
+	setInterval(function(){
+		if(currentDot == 3){
+			currentDot = 0;
+			$('.progressDot').hide();
+		}else $('#progress' + ++currentDot).show();
+	},500);
 }
 
 if($('#studentsummary').html() == 'Summary'){

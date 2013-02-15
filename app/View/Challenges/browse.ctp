@@ -2,8 +2,8 @@
 
 <?php if($_SESSION['User']['user_type'] == 'L'){ ?>
 	<div id="startbridge" class="rounded box-white">
-		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="alert('You have reached your monthly limit for new bridges. Please upgrade your account to continue.');return false;"<?php } ?> class="btn1"><span><?php echo __('Begin') ?></span></a>
-		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="alert('You have reached your monthly limit for new bridges. Please upgrade your account to continue.');return false;"<?php } ?> style="text-decoration:none !important;"><h2><?php echo __('Start an Assignment'); if($monthly_count !== false){ ?> <sup style="color:#ED1C24;font-size:12px;vertical-align:top;top:-6px;position:relative;" alt="Assignments left for this month" title="Assignments left for this month"><?php echo $monthly_count; ?></sup><?php } ?></h2></a> 
+		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="$('#maxbridge_warning_link').click();return false;"<?php } ?> class="btn1"><span><?php echo __('Begin') ?></span></a>
+		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="$('#maxbridge_warning_link').click();return false;"<?php } ?> style="text-decoration:none !important;"><h2><?php echo __('Start an Assignment'); if($monthly_count !== false){ ?> <sup style="color:#ED1C24;font-size:12px;vertical-align:top;top:-6px;position:relative;" alt="Assignments left for this month" title="Assignments left for this month"><?php echo $monthly_count; ?></sup><?php } ?></h2></a> 
 		<div class="clear"></div>
 	</div>
 <?php } ?>
@@ -235,6 +235,7 @@
 <div class="clear"></div>
 
 <div style="display:none;">
+	<a href="#modal-maxbridge" class="show-overlay" id="maxbridge_warning_link"> </a>
 	<a href="#modal-duedate-warning" class="show-overlay" id="duedate_warning_link"> </a>
 	<a href="#modal-skipcollab-warning" class="show-overlay" id="skipcollab_warning_link"> </a>
 	<a href="" class="show-overlay" id="challenge_accept_link"> </a>
@@ -274,6 +275,25 @@
 			<br />
 			<div class="clear"></div>
 			<div style="width: 100px; margin: 0 auto; ">
+				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Close') ?></span></a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modal-maxbridge" class="modal-wrapper" style="width: 600px;" >
+		<div class="modal-box-head">
+			<h2><?php echo __('Monthly Maximum Reached') ?></h2>
+		</div>
+		<div class="modal-box-content">
+			<div style="text-align:center;margin:20px;line-height:25px;">
+				<?php echo __('You have reached you monthly maximum number of assignments. Please click View Upgrades for more information.'); ?>
+			</div>
+			
+			<br />
+			<div class="clear"></div>
+			<div style="width: 230px; margin: 0 auto; ">
+				<a href="/users/view/payments" class="btn3" style="width: 110px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('View Upgrades') ?></span></a>
 				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Close') ?></span></a>
 				<div class="clear"></div>
 			</div>

@@ -131,10 +131,15 @@
 	<a href="#modalGroupWarning" class="btn2 btn-savecontinue aligncenter show-overlay"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
 <?php }else{ ?>
 	<a <?php if($challenge['ClassSet']){ ?>style="display:none;"<?php } ?> onclick="$('#fieldValidate').show();return false;" class="btn2 btn-savecontinue aligncenter" id="create-challenge-validate"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
-	<a onclick="save_challenge_final();" <?php if(!$challenge['ClassSet']){ ?>style="display:none;"<?php } ?> class="btn2 btn-savecontinue aligncenter" id="create-challenge-now"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
+		
+	<a href="#modalProgress" onclick="save_challenge_final();progressIndicator();" <?php if(!$challenge['ClassSet']){ ?>style="display:none;"<?php } ?> class="btn2 btn-savecontinue aligncenter show-overlay" id="create-challenge-now"><?php echo __('Send to Students') ?></span></a>
 <?php } ?>
 
 <div style="display:none;">
+	<div id="modalProgress" style="width:200px;height:35px;text-align:center;font-size:16px;color:#00467F;line-height:35px;">
+		Working <span id="progress1" class="progressDot" style="display:none;">.</span> <span id="progress2" class="progressDot" style="display:none;">.</span> <span id="progress3" class="progressDot" style="display:none;">.</span>
+	</div>
+	
 	<div id="modalGroupWarning" style="width:540px;height:260px;">
 		<div class="modal-box-head">
 			<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><?php echo __('Warning!') ?></h2>
@@ -165,4 +170,14 @@ $(".show-overlay").fancybox({
 	'showCloseButton' : false,
 	'centerOnScroll' : true
 });
+
+function progressIndicator(){
+	var currentDot = 0;
+	setInterval(function(){
+		if(currentDot == 3){
+			currentDot = 0;
+			$('.progressDot').hide();
+		}else $('#progress' + ++currentDot).show();
+	},500);
+}
 </script>
