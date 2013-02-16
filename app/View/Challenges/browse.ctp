@@ -281,19 +281,19 @@
 		</div>
 	</div>
 	
-	<div id="modal-maxbridge" class="modal-wrapper" style="width: 600px;" >
+	<div id="modal-maxbridge" class="modal-wrapper" style="width: 525px;" >
 		<div class="modal-box-head">
-			<h2><?php echo __('Monthly Maximum Reached') ?></h2>
+			<h2><span class="icon5 icon-confirm" style="margin-top:-6px;"></span><?php echo __('Monthly Maximum Reached') ?></h2>
 		</div>
 		<div class="modal-box-content">
 			<div style="text-align:center;margin:20px;line-height:25px;">
-				<?php echo __('You have reached you monthly maximum number of assignments. Please click View Upgrades for more information.'); ?>
+				<?php echo nl2br(__("You have reached you monthly maximum number of assignments.\n\nPlease click View Upgrades for more information.")); ?>
 			</div>
 			
 			<br />
 			<div class="clear"></div>
-			<div style="width: 230px; margin: 0 auto; ">
-				<a href="/users/view/payments" class="btn3" style="width: 110px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('View Upgrades') ?></span></a>
+			<div style="width: 250px; margin: 0 auto; ">
+				<a href="/users/view/payments" class="btn2" style="width: 125px; float: left;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('View Upgrades') ?></span></a>
 				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Close') ?></span></a>
 				<div class="clear"></div>
 			</div>

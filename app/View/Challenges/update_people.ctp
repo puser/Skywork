@@ -132,7 +132,7 @@
 <?php }else{ ?>
 	<a <?php if($challenge['ClassSet']){ ?>style="display:none;"<?php } ?> onclick="$('#fieldValidate').show();return false;" class="btn2 btn-savecontinue aligncenter" id="create-challenge-validate"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
 		
-	<a href="#modalProgress" onclick="save_challenge_final();progressIndicator();" <?php if(!$challenge['ClassSet']){ ?>style="display:none;"<?php } ?> class="btn2 btn-savecontinue aligncenter show-overlay" id="create-challenge-now"><?php echo __('Send to Students') ?></span></a>
+	<a href="#modalProgress" onclick="save_challenge_final();progressIndicator();" <?php if(!$challenge['ClassSet']){ ?>style="display:none;"<?php } ?> class="btn2 btn-savecontinue aligncenter show-overlay" id="create-challenge-now"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
 <?php } ?>
 
 <div style="display:none;">

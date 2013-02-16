@@ -149,9 +149,54 @@
 
 <div style="display: none;">
 	
+	<a href="#modal-newtoken" class="modal-link" id="showGenerateToken"> </a>
+	<a href="" class="modal-link" id="showImportUpload"> </a>
+	<a href="" class="modal-link" id="showAddManual"> </a>
+	<a href="#modal-success" class="modal-link" id="successLink"> </a>
+	<a href="#modal-partial-success" class="modal-link" id="uploadPartialLink"> </a>
+	<a href="#modal-failure" class="modal-link" id="uploadFailLink"> </a>
+	
+	<div id="modal-success" style="width:200px;height:35px;text-align:center;font-size:16px;color:#00467F;line-height:35px;">
+		Success!
+	</div>
+	
+	<div id="modal-partial-success" class="modal-wrapper" style="width: 600px;" >
+		<div class="modal-box-head">
+			<h2><span class="icon5 icon-confirm" style="margin-top:-6px;"></span><?php echo __('Warning') ?></h2>
+		</div>
+		<div class="modal-box-content">
+			<p><?php echo __('There was a problem processing the following rows in your spreadsheet:') ?></p>
+			<p style="text-align:center;font-weight:bold;" id="uploadPartialError"> </p>
+			<p><?php echo __('Click Continue &amp; Send to send automated emails to the rest of the students on the list. You can still add the other students manually by selecting Edit Students in Your Classes.') ?></p>
+			
+			<br />
+			<div class="clear"></div>
+			<div style="width: 400px; margin: 0 auto; ">
+				<a href="#" class="btn2" style="width: 180px; float: left;" id="uploadPartialSubmit"><span><?php echo __('Continue &amp; Send') ?></span></a>
+				<a href="#" class="btn3" style="width: 180px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel Entire Operation') ?></span></a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modal-failure" class="modal-wrapper" style="width: 600px;" >
+		<div class="modal-box-head">
+			<h2><span class="icon5 icon-confirm" style="margin-top:-6px;"></span><?php echo __('Warning') ?></h2>
+		</div>
+		<div class="modal-box-content">
+			<p><?php echo __('None of the emails on Column A have been detected. Click Go Back to review the instructions for a .csv upload.') ?></p>
+			<p><?php echo __('Please review your spreadsheet to make sure the columns have been inserted correctly.') ?></p>
+			<br />
+			<div class="clear"></div>
+			<div style="width: 250px; margin: 0 auto; ">
+				<a href="" class="btn2 modal-link" style="width: 150px; float: left;" id="uploadFailRetry"><span><?php echo __('Go Back') ?></span></a>
+				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false;"><span><?php echo __('Close') ?></span></a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	
 	<div id="modal-addclass">
-		<a href="#modal-newtoken" class="modal-link" id="showGenerateToken"> </a>
-		<a href="" class="modal-link" id="showAddManual"> </a>
 		<form id="create_class">
 			<input type="hidden" name="class[ClassSet][owner_id]" value="<?php echo $user['User']['id']; ?>" />
 			<input type="hidden" name="class[User][][user_id]" value="<?php echo $user['User']['id']; ?>" />
@@ -177,9 +222,14 @@
 							</div>
 							-->
 							<div style="clear:both;padding-top:12px;font-size:14px;">
+								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#uploadSheetBtn').show();$('#addManualBtn').hide();$('#genTokenBtn').hide(); }" />&nbsp;
+								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I have a spreadsheet with student emails. When I upload this sheet, Puentes will send all my students a temporary password.") ?></div>
+								<div class="clear"></div>
+								
 								<input type="radio" name="addStudentMethod" style="float:left;" checked="checked" onchange="if($(this).attr('checked')){ $('#genTokenBtn').show();$('#addManualBtn').hide(); }else{ $('#genTokenBtn').hide();$('#addManualBtn').show(); }" />&nbsp;
 								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I'll give them a code (a class token) and they'll sign themselves up through the homepage.") ?></div>
 								<div class="clear"></div>
+								
 								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#genTokenBtn').hide();$('#addManualBtn').show(); }else{ $('#genTokenBtn').show();$('#addManualBtn').hide(); }" />&nbsp;
 								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I'll add the students myself (you'll only be required to enter their email addresses).") ?></div>
 							</div>
@@ -192,7 +242,11 @@
 					<div class="clear"></div>
 					<div style="width: 250px; margin: 0 auto; ">
 						<a href="#" class="btn2" id="genTokenBtn" onclick="create_class();$('#tokenForNewClass').val('1');$(this).attr('onclick','');setTimeout(function(){ $(this).attr('onclick','create_class();$(\'#tokenForNewClass\').val(\'1\');'); },650);" class="btn2" style="width:120px;float:left;" ><span><?php echo __('Generate Token') ?></span></a>
+						
 						<a href="#" id="addManualBtn" onclick="create_class_manual();$(this).attr('onclick','');setTimeout(function(){ $(this).attr('onclick','create_class_manual();'); },650);" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Add My Class') ?></span></a>
+						
+						<a href="#" id="uploadSheetBtn" onclick="$(this).attr('onclick','');setTimeout(function(){ $(this).attr('onclick','create_class_manual();'); },650);" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Select') ?></span></a>
+						
 						<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 						<div class="clear"></div>
 					</div>
@@ -460,6 +514,28 @@ setTimeout('showSaveBtn()',2000);
 function showSaveBtn(){
 	$('#savedNotify').hide();
 	$('#saveGroupsBtn').css('display','block');
+}
+
+function upload_success(){
+	$('#successLink').click();
+	setTimeout(function(){
+		window.location = '/users/view/classes/';
+	},650);
+}
+
+function upload_partial(error,valid,cid){
+	$('#uploadPartialError').html(error);
+	$('#uploadPartialSubmit').click(function(){
+		$.ajax({url:'/users/invite_bulk/0/' + cid + '/?redirect=1',data:{'users':valid},success:function(){
+			upload_success();
+		}});
+	});
+	$('#uploadPartialLink').click();
+}
+
+function upload_failure(cid){
+	$('#uploadFailRetry').attr('href','/users/import_class/' + cid);
+	$('#uploadFailLink').click();
 }
 </script>
 <?php } ?>

@@ -103,8 +103,60 @@ class UsersController extends AppController{
 		$this->set('id',$id);
 	}
 	
+	function import_class($class_id=NULL,$frame=false){
+		$this->checkAuth();
+		$this->layout = 'ajax';
+		
+		if(@$_FILES['import']['name']){
+			// check for csv
+			if(!stristr($_FILES['import']['name'],'.csv')) die('Invalid file.');
+			// parse csv
+			$row = 1;
+			$errors = $users = array();
+			if(($handle = fopen($_FILES['import']['tmp_name'], "r")) !== FALSE){
+				while(($data = fgetcsv($handle, 1000, ",")) !== FALSE){
+					$row++;
+					$email = $data[0];
+					if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+						$errors[] = $row;
+						continue;
+					}
+					// check for names
+					$fname = @$data[1] ? $data[1] : NULL;
+					$lname = @$data[2] ? $data[2] : NULL;
+					
+					$users[] = array(	'fname'	=> $fname,
+														'lname'	=> $lname,
+														'email'	=> $email );
+				}
+				fclose($handle);
+			}
+			
+			if(!$users){
+				$this->set('result','none');
+			}elseif($errors){
+				$this->set('result',implode(',',$errors));
+				$this->set('pending',json_encode($users));
+			}else{
+				$this->invite_bulk($users,$class_id);
+				$this->set('result','success');
+			}
+		}
+		
+		$this->set('class_id',$class_id);
+		if($frame) $this->render('upload_csv');
+	}
+	
+	function invite_bulk($users,$class_id){
+		$this->checkAuth();
+		if(!$users) $users = json_decode($_REQUEST['users']);
+		foreach($users as $user) $this->invite($class_id,NULL,$user['fname'],$user['lname'],$user['email'],'P',NULL,true);
+		if(@$_REQUEST['redirect']) die(1);
+		return true;
+	}
+	
 	// send an email invitation
-	function invite($class_id,$user_id=NULL,$fname=NULL,$lname=NULL,$email=NULL,$type=NULL,$permissions=NULL){
+	function invite($class_id,$user_id=NULL,$fname=NULL,$lname=NULL,$email=NULL,$type=NULL,$permissions=NULL,$bulk=false){
 		$this->checkAuth();
 		$invite_token = $tmp_password = NULL;
 		$send_invite = true;
@@ -194,7 +246,8 @@ class UsersController extends AppController{
 			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",$subject,nl2br($message),$headers);
 		}
 		
-		die($this->User->id);
+		if(!$bulk) die($this->User->id);
+		else return $this->User->id;
 	}
 	
 	// accept an email invitation

@@ -273,9 +273,7 @@ function show_edit_existing(e,cid){
 	if(e.hasClass('opened')){
 		$('.pagination').show();
 		
-		e.next().slideUp('normal',function(){
-			e.removeClass('opened');
-		});
+		e.removeClass('opened');
 		
 		$('#home-leaderboard').animate({width:0},function(){ $('#home-leaderboard').hide(); });
 		$('#bridgelist').animate({width:954},function(){ $('.graphIcon').show();$('#bridgetable td,#bridgetable th').fadeIn(); });
@@ -460,7 +458,7 @@ function create_group(){
 function create_class(){
 	if($('#createClassName').val() == ''){
 		$('#warning').show();
-	} else{
+	}else{
 		$.ajax({url:'/classes/update/',data:$('#create_class').serialize(),type:'POST',success:function(r){
 			$('#newTokenClassID').val(r);
 			$('#tokenClassName').html($('#createClassName').val() + ' Token');
@@ -469,10 +467,20 @@ function create_class(){
 	}
 }
 
+function create_class_import(){
+	if($('#createClassName').val() == ''){
+		$('#warning').show();
+	}else{
+		$.ajax({url:'/classes/update/',data:$('#create_class').serialize(),type:'POST',success:function(r){
+			$('#showImportUpload').attr('href','/users/import_class/' + r).click();
+		}});
+	}
+}
+
 function create_class_manual(){
 	if($('#createClassName').val() == ''){
 		$('#warning').show();
-	} else{
+	}else{
 		$.ajax({url:'/classes/update/',data:$('#create_class').serialize(),type:'POST',success:function(r){
 			$('#showAddManual').attr('href','/classes/invite_member/' + r + '/student/');
 			$('#showAddManual').click();
