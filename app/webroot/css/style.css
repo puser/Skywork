@@ -98,6 +98,9 @@ a.read-more-arrow {display: block; width: 15px; height: 10px; background: url('/
 .btn4 img {margin-top: 5px; vertical-align: top;}
 .btn4:hover {background-position: bottom left; text-decoration: none;}
 .btn4:hover span {background-position: bottom right;}
+.btn5 {display: block; padding-left: 5px; height: 33px; background: url("/images/btn5-left.png") no-repeat;}
+.btn5 span {display: block; padding: 0 16px 0 10px ; line-height: 33px; height: 33px; background: url("/images/btn5-right.png") no-repeat right top; color: #ffffff; text-align: center; cursor: pointer; font-family: Helvetica, Arial, sans-serif; font-size: 13px; }
+
 
 
 .add-link {display: block; padding-left: 30px; line-height: 25px; background: url("/images/icon-plus-20.png") no-repeat center left;}

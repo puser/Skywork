@@ -18,7 +18,7 @@
 				<ul>
 					<?php if($_SESSION['User']['user_type'] != 'P'){
 						if(!$connections && $_SESSION['User']['user_type'] == 'L'){ ?>
-							<li><a class="icon4 icon4-plus modal-link" href="#<?php echo ($_SESSION['User']['user_type'] == 'C' ? 'modal-collab-access' : 'modal-addclass'); ?>"><?php echo __('Create Class') ?></a></li>
+							<li><a class="icon4 icon4-plus modal-link" href="#<?php echo ($_SESSION['User']['user_type'] == 'C' ? 'modal-collab-access' : 'modal-addclass'); ?>" id="createClassLink"><?php echo __('Create Class') ?></a></li>
 						<?php }else{ ?>
 							<li><a class="icon4 icon4-plus modal-link" href="#modal-joinsharedclass"><?php echo __('Find an instructor') ?></a></li>
 						<?php }
@@ -226,11 +226,11 @@
 								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I have a spreadsheet with student emails. When I upload this sheet, Puentes will send all my students a temporary password.") ?></div>
 								<div class="clear"></div>
 								
-								<input type="radio" name="addStudentMethod" style="float:left;" checked="checked" onchange="if($(this).attr('checked')){ $('#genTokenBtn').show();$('#addManualBtn').hide(); }else{ $('#genTokenBtn').hide();$('#addManualBtn').show(); }" />&nbsp;
+								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#uploadSheetBtn').hide();$('#genTokenBtn').show();$('#addManualBtn').hide(); }" />&nbsp;
 								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I'll give them a code (a class token) and they'll sign themselves up through the homepage.") ?></div>
 								<div class="clear"></div>
 								
-								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#genTokenBtn').hide();$('#addManualBtn').show(); }else{ $('#genTokenBtn').show();$('#addManualBtn').hide(); }" />&nbsp;
+								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#genTokenBtn').hide();$('#addManualBtn').show();$('#uploadSheetBtn').hide(); }" />&nbsp;
 								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I'll add the students myself (you'll only be required to enter their email addresses).") ?></div>
 							</div>
 							<div class="clear"></div>
@@ -241,11 +241,11 @@
 					<div class="clear"></div>
 					<div class="clear"></div>
 					<div style="width: 250px; margin: 0 auto; ">
-						<a href="#" class="btn2" id="genTokenBtn" onclick="create_class();$('#tokenForNewClass').val('1');$(this).attr('onclick','');setTimeout(function(){ $(this).attr('onclick','create_class();$(\'#tokenForNewClass\').val(\'1\');'); },650);" class="btn2" style="width:120px;float:left;" ><span><?php echo __('Generate Token') ?></span></a>
+						<a href="#" class="btn2" id="genTokenBtn" onclick="create_class();$('#tokenForNewClass').val('1');$(this).attr('onclick','');setTimeout(function(){ $(this).attr('onclick','create_class();$(\'#tokenForNewClass\').val(\'1\');'); },650);" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Generate Token') ?></span></a>
 						
 						<a href="#" id="addManualBtn" onclick="create_class_manual();$(this).attr('onclick','');setTimeout(function(){ $(this).attr('onclick','create_class_manual();'); },650);" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Add My Class') ?></span></a>
 						
-						<a href="#" id="uploadSheetBtn" onclick="$(this).attr('onclick','');setTimeout(function(){ $(this).attr('onclick','create_class_manual();'); },650);" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Select') ?></span></a>
+						<a href="#" id="uploadSheetBtn" onclick="create_class_import();" class="btn2" style="width:120px;float:left;display:none;" ><span><?php echo __('Select') ?></span></a>
 						
 						<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
 						<div class="clear"></div>
@@ -505,8 +505,8 @@
 
 </div>
 
-<?php if(@$saved){ ?>
 <script type="text/javascript">
+<?php if(@$saved){ ?>
 $('#savedNotify').show();
 $('#saveGroupsBtn').hide();
 setTimeout('showSaveBtn()',2000);
@@ -515,6 +515,7 @@ function showSaveBtn(){
 	$('#savedNotify').hide();
 	$('#saveGroupsBtn').css('display','block');
 }
+<?php } ?>
 
 function upload_success(){
 	$('#successLink').click();
@@ -538,4 +539,3 @@ function upload_failure(cid){
 	$('#uploadFailLink').click();
 }
 </script>
-<?php } ?>

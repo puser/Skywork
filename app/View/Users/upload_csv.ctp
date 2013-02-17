@@ -49,7 +49,7 @@
 		<script type="text/javascript">
 			<?php if($result == 'success'){ ?>
 				parent.upload_success();
-			<?php elseif($result == 'none'){ ?>
+			<?php }elseif($result == 'none'){ ?>
 				parent.upload_failure(<?php echo $class_id; ?>);
 			<?php }else{ ?>
 				parent.upload_partial('<?php echo $result; ?>','<?php echo $pending; ?>',<?php echo $class_id; ?>);
@@ -58,15 +58,29 @@
 		
 	<?php }else{ ?>
 		
-		<form method="POST" id="csvForm" action="/users/import_class/<?php echo $class_id; ?>" enctype="multipart/form-data">
-			<input type="file" name="import" /> &nbsp; <img src="/images/loadingWheel.gif" style="display:none;" />
+		<form method="POST" id="csvForm" action="/users/import_class/<?php echo $class_id; ?>/1/" enctype="multipart/form-data" style="text-align:center;">
+			<input type="file" name="import" style="width:210px;" onchange="allowSubmit();" /> &nbsp; <img src="/images/loadingWheel.gif" style="display:none;" />
 		</form>
+		
+		<?php if(@$fileError){ ?>
+			<p style="color:#C1272D;padding:12px;text-align:center;margin-bottom:-32px;">The spreadsheet must be a valid .csv file</p>
+		<?php } ?>
 	
-		<div style="width: 180px; margin: 0 auto;text-align:center; ">			
-			<a href="#" class="btn2" style="width: 160px;" onclick="$('#csvForm img').show();$('#csvForm').submit();"><span><?php echo __('Upload & Send') ?></span></a>
+		<div style="width: 180px; margin: 30px auto 0;text-align:center; ">			
+			<a href="#" id="submitBtn" class="btn5" style="width: 160px;"><span><?php echo __('Upload & Send') ?></span></a>
 			<div class="clear"></div>
 		</div>
 		
 	<?php } ?>
+	
+	<script type="text/javascript">
+	function allowSubmit(){
+		$('#submitBtn').attr('class','btn2');
+		$('#submitBtn').click(function(){
+			$('#csvForm img').show();
+			$('#csvForm').submit();
+		});
+	}
+	</script>
 </body>
 </html>

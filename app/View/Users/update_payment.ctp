@@ -69,7 +69,7 @@ function submit_payment_info(){
 	$('#processing_content').show();
 	$.ajax({url:'/users/update_payment/',data:$('#cardinfo_form').serialize(),type:'POST',success:function(r){
 		if(r == 'success'){
-			$('#processing_content').html('<br /><br />Your card details were accepted and the payment was processed successfully. This page will reload momentarily...<br /><br />');
+			$('#processing_content').html('<br /><br />Your card details were accepted. This page will reload momentarily...<br /><br />');
 			setTimeout(function(){
 				window.location = '/users/view/payments/';
 			},3200);

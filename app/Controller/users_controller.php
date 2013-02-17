@@ -109,37 +109,40 @@ class UsersController extends AppController{
 		
 		if(@$_FILES['import']['name']){
 			// check for csv
-			if(!stristr($_FILES['import']['name'],'.csv')) die('Invalid file.');
-			// parse csv
-			$row = 1;
-			$errors = $users = array();
-			if(($handle = fopen($_FILES['import']['tmp_name'], "r")) !== FALSE){
-				while(($data = fgetcsv($handle, 1000, ",")) !== FALSE){
-					$row++;
-					$email = $data[0];
-					if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-						$errors[] = $row;
-						continue;
-					}
-					// check for names
-					$fname = @$data[1] ? $data[1] : NULL;
-					$lname = @$data[2] ? $data[2] : NULL;
+			if(!stristr($_FILES['import']['name'],'.csv')) $this->set('fileError',true);
+			else{
+				// parse csv
+				$row = 0;
+				$errors = $users = array();
+				ini_set('auto_detect_line_endings', true);
+				if(($handle = fopen($_FILES['import']['tmp_name'], "r")) !== FALSE){
+					while(($data = fgetcsv($handle, 1000, ",")) !== FALSE){
+						$row++;
+						$email = $data[0];
+						if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+							$errors[] = $row;
+						}else{
+							// check for names
+							$fname = @$data[1] ? $data[1] : NULL;
+							$lname = @$data[2] ? $data[2] : NULL;
 					
-					$users[] = array(	'fname'	=> $fname,
-														'lname'	=> $lname,
-														'email'	=> $email );
+							$users[] = array(	'fname'	=> $fname,
+																'lname'	=> $lname,
+																'email'	=> $email );
+						}
+					}
+					fclose($handle);
 				}
-				fclose($handle);
-			}
 			
-			if(!$users){
-				$this->set('result','none');
-			}elseif($errors){
-				$this->set('result',implode(',',$errors));
-				$this->set('pending',json_encode($users));
-			}else{
-				$this->invite_bulk($users,$class_id);
-				$this->set('result','success');
+				if(!$users){
+					$this->set('result','none');
+				}elseif($errors){
+					$this->set('result',implode(',',$errors));
+					$this->set('pending',json_encode($users));
+				}else{
+					$this->invite_bulk($users,$class_id);
+					$this->set('result','success');
+				}
 			}
 		}
 		
@@ -149,8 +152,15 @@ class UsersController extends AppController{
 	
 	function invite_bulk($users,$class_id){
 		$this->checkAuth();
-		if(!$users) $users = json_decode($_REQUEST['users']);
-		foreach($users as $user) $this->invite($class_id,NULL,$user['fname'],$user['lname'],$user['email'],'P',NULL,true);
+		if(!$users){
+			$users = json_decode($_REQUEST['users']);
+			foreach($users as $user){
+				$this->invite($class_id,NULL,$user->fname,$user->lname,$user->email,'P',NULL,true);
+				echo '!!';
+			}
+		}else{
+			foreach($users as $user) $this->invite($class_id,NULL,$user['fname'],$user['lname'],$user['email'],'P',NULL,true);
+		}
 		if(@$_REQUEST['redirect']) die(1);
 		return true;
 	}
@@ -441,6 +451,7 @@ class UsersController extends AppController{
 	}
 	
 	function update_payment($tier=null){
+		$this->checkAuth();
 		if(@$_POST['card_num']){
 			// save tier & payment day
 			$u['User']['id'] = $_SESSION['User']['id'];
@@ -449,7 +460,7 @@ class UsersController extends AppController{
 			$this->User->save($u);
 			$_SESSION['User']['account_tier'] = $_REQUEST['account_tier'];
 			
-			$this->process_payment();
+			$this->process_payment(0.01);
 		}else{
 			$this->layout = 'ajax';
 			$this->set('tier',$tier);
@@ -457,6 +468,7 @@ class UsersController extends AppController{
 	}
 	
 	function downgrade_tier($tier=NULL){
+		$this->checkAuth();
 		if($tier){
 			$u['User']['id'] = $_SESSION['User']['id'];
 			$u['User']['account_tier'] = $tier;
@@ -466,7 +478,8 @@ class UsersController extends AppController{
 		die();
 	}
 	
-	function process_payment(){
+	function process_payment($amount_override=NULL){
+		$this->checkAuth();
 		$user = $this->User->findById($_SESSION['User']['id']);
 		
 		// if we have a card token, use this for the transaction; otherwise, use the card number and save the returned token
@@ -488,7 +501,7 @@ class UsersController extends AppController{
 			  "CardHoldersName"=>$user['User']['card_name'],
 				"TransarmorToken"=>$user['User']['card_token'],
 				"CardType"=>$user['User']['card_type'],
-			  "DollarAmount"=> (@$user['User']['account_tier'] == 'PLATINUM' ? 19.99 : 9.99));
+			  "DollarAmount"=> ($amount_override ? $amount_override : (@$user['User']['account_tier'] == 'PLATINUM' ? 19.99 : 9.99)));
 		}else{
 			$trxnProperties = array(
 				/* PRODUCTION */

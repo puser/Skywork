@@ -152,8 +152,8 @@
 			</div>
 			<div class="modal-box-content" style="text-align:center;color:#999;line-height:26px;">
 				You have selected to upgrade your purchanse plan. Click <br />
-				Upgrade to charge your card $10.00 immediately, and $19.99 <br />
-				on every monthly billing cycle thereafter. <br /><br />
+				Upgrade to charge your card $19.99 on every future <br />
+				monthly billing cycle. <br /><br />
 				<span style="color:#00467F;">Would you like to upgrade your account?</span><br /><br /><br />
 				<div style="width: 270px; margin: 0 auto; ">
 					<a class="btn2" style="width: 104px;float:left;" href="#" id="upgradeBtn"><span><?php echo __('Upgrade') ?></span></a>
