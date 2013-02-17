@@ -1,3 +1,59 @@
+<script type="text/javascript" src="/js/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript">
+tinyMCE.init({
+    mode: "textareas",
+    content_css: "/css/custom_theme_content.css",
+    language: false, // Prevents language packs from loading
+
+    theme: function(editor, target) {
+        // Generate UI
+        var editorContainer = $(target).after(
+            '<div class="ui-widget ui-corner-all">' +
+                '<div class="ui-widget-header ui-helper-clearfix" style="padding: 2px">' +
+                    '<input type="checkbox" id="bold" data-mce-command="bold" /><label for="bold">B</label>' +
+                    '<input type="checkbox" id="italic" data-mce-command="italic" /><label for="italic">I</label>' +
+                    '<button data-mce-command="mceInsertContent" data-mce-value="Hello">Insert Hello</button>' +
+                '</div>' +
+                '<div class="ui-widget-content ui-corner-bottom"></div>' +
+            '</div>'
+        ).next();
+
+        // Bind events for each button
+        $("button,input", editorContainer).button().click(function(e) {
+            e.preventDefault();
+
+            // Execute editor command based on data parameters
+            editor.execCommand(
+                $(this).attr('data-mce-command'),
+                false,
+                $(this).attr('data-mce-value')
+            );
+        });
+
+        // Register state change listeners
+        editor.onInit.add(function() {
+            $("input", editorContainer).each(function(i, button) {
+                editor.formatter.formatChanged($(button).attr('data-mce-command'), function(state) {
+                    $(button).attr('checked', state).button('refresh');
+                });
+            });
+        });
+
+        // Set editor container with to target width
+        editorContainer.css('width', $(target).width());
+
+        // Return editor and iframe containers
+        return {
+            editorContainer: editorContainer[0],
+            iframeContainer: editorContainer.children().eq(-1),
+
+            // Calculate iframe height: target height - toolbar height
+            iframeHeight: $(target).height() - editorContainer.first().outerHeight()
+        };
+    }
+});
+</script>
+
 <div class="box-head">
 	<span class="icon2 icon2-listcountgreen"><?php echo $q_num; ?></span>
 	<h2 ><?php echo ($question['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . $q_num); //stripslashes($question['Question']['section']); ?></h2>
