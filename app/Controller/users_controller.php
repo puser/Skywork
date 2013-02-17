@@ -550,7 +550,7 @@ class UsersController extends AppController{
 				$u['User']['card_token'] = $trxnResult->TransarmorToken;
 			}
 			
-			$u['User']['last_payment'] = DboSource::expression('NOW()');
+			if(!$amount_override) $u['User']['last_payment'] = DboSource::expression('NOW()');
 			$this->User->save($u);
 
 			// send success email

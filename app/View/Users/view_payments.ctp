@@ -183,10 +183,27 @@
 			</div>
 		</div>
 	</div>
+	
+	<div id="downgradeError">
+		<div class="modal-wrapper" style="width:600px;">
+			<div class="modal-box-head">
+				<h2 class="page-subtitle label-text" style="line-height:24px;color:#c95248;"><span class="icon5 icon5-close" style="margin:0;height:24px;"></span><?php echo __('Downgrade') ?></h2>
+			</div>
+
+			<div class="modal-box-content">
+				<div style="text-align:center;margin:20px;"><?php echo nl2br(__("You may downgrade after your first billing cycle.\n\nYour first billing cycle will be at the end of this month.")); ?></div>	
+				<br />
+				<div style="width: 100px; margin: 0 auto; ">
+					<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Close') ?></span></a>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <a href="#upgradeWarning" class="show-overlay" style="display:none;" id="upgradeWarningLink"> </a>
-<a href="#downgradeWarning" class="show-overlay" style="display:none;" id="downgradeWarningLink"> </a>
+<a href="#downgrade<?php echo ($user['User']['last_payment'] ? 'Warning' : 'Error'); ?>" class="show-overlay" style="display:none;" id="downgradeWarningLink"> </a>
 
 <script type="text/javascript">
 $('.accordion-trigger a').click(function(){
