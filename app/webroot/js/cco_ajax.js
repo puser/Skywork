@@ -189,12 +189,14 @@ function show_question_responses(q_id){
 }
 
 function save_response(redirect){
+	$('#response_body').val(tinyMCE.get('response_body').getContent());
+	
 	if($('.attachmentType').length){
 		$('#responseData').submit();
 		return false;
 	}
 	
-	if(!redirect.search('attachments') && !$('.niceTextarea:first').val()){
+	if(redirect != 'auto' && !redirect.search('attachments') && !$('.niceTextarea:first').val()){
 		$('#fieldValidate').show();
 		return false;
 	}
@@ -204,7 +206,7 @@ function save_response(redirect){
 			if($('#next_id').val() == 'attachments') add_attachments($('#challenge_id').val());
 			else if($('#next_id').val() == 'dashboard') window.location = '/dashboard/';
 			else window.location = '#' + $('#next_id').val();
-		}else if(redirect) window.location = redirect;
+		}else if(redirect && redirect != 'auto') window.location = redirect;
 		else{ /* */ }
 	}});
 }

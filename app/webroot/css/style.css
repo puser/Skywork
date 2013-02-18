@@ -561,7 +561,6 @@ a.add-class {font-size: 12px; }
 
 .box-answer-questions .textvalue {font-size: 12px; color: #000000; line-height: 1.5em; position: relative; }
 
-
 /**
  * Page: Instructor Feedback
  */
@@ -1018,3 +1017,38 @@ a.studentwork-more:hover span {display: inline; }
 	color:red;
 }
 .grey-line { border-bottom: 1px solid #E6E6E6; }
+
+
+.control_container label {
+	width: 27px !important;
+	height:21px !important;
+	text-align: center !important;
+	padding:2px 0 !important;
+	float:right !important;
+	margin-right:4px !important;
+}
+.control_container label img {
+	padding-top:4px;
+}
+.control_container label.sizeLabel {
+	background: url(/images/mce_controls/fontsize-sm.png) 0 4px no-repeat;
+	padding-right:6px;
+}
+.control_container label.underlineLabel img {
+	padding:2px 0 !important;
+}
+.control_container label.active {
+	background:#e6e6e6;
+}
+.control_container label.sizeLabel.active {
+	background:url(/images/mce_controls/fontsize-lg.png) 0 4px no-repeat;
+}
+#saveNotify {
+	position:absolute;
+	font-size:14px;
+	color:#ccc;
+	top:13px;
+	left:190px;
+}
+
+.textvalue p { margin:0; padding:0; }

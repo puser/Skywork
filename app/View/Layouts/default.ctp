@@ -2,17 +2,17 @@
 <html>
 <head>
 	<title>Puentes</title>
-	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox.css" media="screen" />
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
 	<link rel="stylesheet" media="all" href="/js/mcs/jquery.mCustomScrollbar.css" />
 	<?php echo $this->Html->meta('favicon.ico',    '/favicon.ico',    array('type' => 'icon'));?> 
 	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css?v=6" />
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js" type="text/javascript"></script>
 
 	<script type="text/javascript" src="/js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-	<script type="text/javascript" src="/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript" src="/js/fancybox/jquery.fancybox.pack.js"></script>
 	<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
 	<script type="text/javascript" src="/js/jquery.mousewheel.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.flip.min.js"></script>

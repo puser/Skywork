@@ -1,26 +1,32 @@
 <script type="text/javascript" src="/js/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript">
 tinyMCE.init({
-    mode: "textareas",
-    content_css: "/css/custom_theme_content.css",
+    mode: "exact",
+		elements: "response_body",
+		theme_advanced_fonts : "Arial=arial,helvetica,sans-serif;",
+    content_css: "/css/mce_content.css",
     language: false, // Prevents language packs from loading
 
     theme: function(editor, target) {
         // Generate UI
         var editorContainer = $(target).after(
-            '<div class="ui-widget ui-corner-all">' +
-                '<div class="ui-widget-header ui-helper-clearfix" style="padding: 2px">' +
-                    '<input type="checkbox" id="bold" data-mce-command="bold" /><label for="bold">B</label>' +
-                    '<input type="checkbox" id="italic" data-mce-command="italic" /><label for="italic">I</label>' +
-                    '<button data-mce-command="mceInsertContent" data-mce-value="Hello">Insert Hello</button>' +
+            '<div>' +
+                '<div style="padding: 2px;position: absolute;width: 735px;top: 8px;" class="control_container">' +
+                    '<input type="checkbox" id="italic" data-mce-command="italic" /><label for="italic"><img src="/images/mce_controls/italic.png" /></label>' +
+										'<input type="checkbox" id="bold" data-mce-command="bold" /><label for="bold"><img src="/images/mce_controls/bold.png" /></label>' +
+										'<input type="checkbox" id="underline" data-mce-command="underline" /><label for="underline" class="underlineLabel"><img src="/images/mce_controls/underline.png" /></label>' +
+										'<input type="checkbox" id="fontsize" data-mce-command="fontsize" data-mce-value="16px" /><label for="fontsize" class="sizeLabel"></label>' +
                 '</div>' +
-                '<div class="ui-widget-content ui-corner-bottom"></div>' +
+                '<div></div>' +
             '</div>'
         ).next();
 
         // Bind events for each button
-        $("button,input", editorContainer).button().click(function(e) {
+				$("input[type=checkbox]", editorContainer).hide();
+        $("button,input", editorContainer).click(function(e) {
             e.preventDefault();
+
+						$(this).next().toggleClass('active');
 
             // Execute editor command based on data parameters
             editor.execCommand(
@@ -34,13 +40,16 @@ tinyMCE.init({
         editor.onInit.add(function() {
             $("input", editorContainer).each(function(i, button) {
                 editor.formatter.formatChanged($(button).attr('data-mce-command'), function(state) {
-                    $(button).attr('checked', state).button('refresh');
+                    $(button).attr('checked', state);//.button('refresh');
+
+										if($(button).attr('checked')) $(button).next().addClass('active');
+										else $(button).next().removeClass('active');
                 });
             });
         });
 
         // Set editor container with to target width
-        editorContainer.css('width', $(target).width());
+        editorContainer.css('width', '735px');
 
         // Return editor and iframe containers
         return {
@@ -52,7 +61,12 @@ tinyMCE.init({
         };
     }
 });
+
+tinyMCE.DOM.setStyle(tinyMCE.DOM.get("response_body" + '_ifr'), 'height', '264px');
+tinyMCE.DOM.setStyle(tinyMCE.DOM.get("response_body" + '_ifr'), 'width', '735px');
 </script>
+
+<span id="saveNotify"></span>
 
 <div class="box-head">
 	<span class="icon2 icon2-listcountgreen"><?php echo $q_num; ?></span>
@@ -73,7 +87,7 @@ tinyMCE.init({
 						<?php echo stripslashes($question['Question']['question']); ?>
 					</span>
 				</p>
-				<textarea class="niceTextarea" name="response_body" rows="10" style="font-family:Helvetica, Arial, sans-serif;font-size: 12px;width:735px;"><?php echo str_replace("\\",'',stripslashes(@$question['Response'][0]['response_body'])); ?></textarea>
+				<textarea class="niceTextarea" id="response_body" name="response_body" rows="10" style="font-family:Helvetica, Arial, sans-serif;font-size: 12px;width:735px;"><?php echo str_replace("\\",'',stripslashes(@$question['Response'][0]['response_body'])); ?></textarea>
 			</li>
 		</ul>
 	</form>
@@ -116,4 +130,15 @@ $("textarea.niceTextarea").keyup(function(){
 <?php } ?>
 
 limitText($('textarea.niceTextarea'));
+
+setInterval(function(){
+	$('#saveNotify').html('(Saving...)').show();
+	save_response('auto');
+	setTimeout(function(){
+		$('#saveNotify').html('Saved');
+		setTimeout(function(){
+			$('#saveNotify').hide();
+		},2000);
+	},2000);
+},30000);
 </script>

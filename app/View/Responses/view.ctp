@@ -427,7 +427,7 @@
 											$mod_response = substr_replace($mod_response,'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 										}
 								
-										echo ($completed ? nl2br($mod_response) : nl2br($q['Response'][0]['response_body']));
+										echo ($completed ? $mod_response : $q['Response'][0]['response_body']);
 										$start_offset += substr_count($q['Response'][0]['response_body'],' ');
 										?>
 									</p>

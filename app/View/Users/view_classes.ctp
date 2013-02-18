@@ -61,9 +61,9 @@
 					<tr<?php if(!($idx%2)){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.deleteChallenge').show();" onmouseout="$(this).find('.deleteChallenge').hide();">
 						<td>
 							<?php if(array_search($g['ClassSet']['id'],$requested_groups) !== false){ ?>
-							<a href="/classes/view_request/<?php echo $g['ClassSet']['id']; ?>" class="show-overlay" id="viewGroupLink<?php echo $g['ClassSet']['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['ClassSet']['id']; ?>);">
+							<a href="/classes/view_request/<?php echo $g['ClassSet']['id']; ?>" class="show-overlay.ajax" id="viewGroupLink<?php echo $g['ClassSet']['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['ClassSet']['id']; ?>);">
 							<?php }else{ ?>
-							<a <?php if($_SESSION['User']['id']==$g['Owner']['id']){ ?>href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="show-overlay" <?php }else echo 'href="#"'; ?> id="viewGroupLink<?php echo $g['ClassSet']['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['ClassSet']['id']; ?>);">
+							<a <?php if($_SESSION['User']['id']==$g['Owner']['id']){ ?>href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="show-overlay.ajax" <?php }else echo 'href="#"'; ?> id="viewGroupLink<?php echo $g['ClassSet']['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['ClassSet']['id']; ?>);">
 							<?php } ?>
 								<?php echo (array_search($g['ClassSet']['id'],$requested_groups) !== false || array_search($g['ClassSet']['id'],$pending_groups) !== false ? '<span class="red">*</span> ' : '') . $g['ClassSet']['group_name']; ?>
 							</a>
@@ -77,10 +77,10 @@
 									<a href="#" class="item-actions-icon"></a>
 									<div class="item-actions-popup rounded2">
 										<ul>
-											<li><a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_sharing" class="icon3 icon3-plus modal-link"><?php echo __('Share Class') ?></a></li>
+											<li><a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_sharing" class="icon3 icon3-plus modal-link.ajax"><?php echo __('Share Class') ?></a></li>
 											<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['ClassSet']['id']; ?>,'<?php echo $g['ClassSet']['group_name']; ?>','<?php echo ($g['ClassSet']['auth_token'] ? $g['ClassSet']['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link"><?php echo __('View Token') ?></a></li>
-											<li><a href="/classes/update/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen modal-link"><?php echo __('Edit Class') ?></a></li>
-											<li><a id="edit_student_<?php echo $g['ClassSet']['id']; ?>" href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-sm_green modal-link"><?php echo __('Edit Students') ?></a></li>
+											<li><a href="/classes/update/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen modal-link.ajax"><?php echo __('Edit Class') ?></a></li>
+											<li><a id="edit_student_<?php echo $g['ClassSet']['id']; ?>" href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-sm_green modal-link.ajax"><?php echo __('Edit Students') ?></a></li>
 											<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/classes/delete/<?php echo $g['ClassSet']['id']; ?>/');" class="icon3 icon3-close modal-link"><?php echo __('Delete Class') ?></a></li>
 										</ul>
 									</div>
@@ -103,7 +103,7 @@
 							?>
 							<tr<?php if(!(($k+$idx)%2)){ ?> class="alternate"<?php } ?>>
 								<td>
-									<a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_invite" class="show-overlay">
+									<a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_invite" class="show-overlay.ajax">
 										<?php echo '<span class="red">*</span> ' . $g['ClassSet']['group_name']; ?>
 									</a>
 								</td>
@@ -150,8 +150,8 @@
 <div style="display: none;">
 	
 	<a href="#modal-newtoken" class="modal-link" id="showGenerateToken"> </a>
-	<a href="" class="modal-link" id="showImportUpload"> </a>
-	<a href="" class="modal-link" id="showAddManual"> </a>
+	<a href="" class="modal-link.ajax" id="showImportUpload"> </a>
+	<a href="" class="modal-link.ajax" id="showAddManual"> </a>
 	<a href="#modal-success" class="modal-link" id="successLink"> </a>
 	<a href="#modal-partial-success" class="modal-link" id="uploadPartialLink"> </a>
 	<a href="#modal-failure" class="modal-link" id="uploadFailLink"> </a>
