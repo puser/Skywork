@@ -57,14 +57,14 @@
 				</div>
 			<?php } ?>
 			<div style="width: 80px; float: right; padding-top:7px;">
-				<a href="#" onclick="jQuery.fancybox.close(); return false; "><?php echo __('Cancel') ?></a>
+				<a href="#modal-customize" class="cancelChangesBtn"><?php echo __('Cancel') ?></a>
 			</div>
 			<div class="clear"></div>
 		</div>
 </div>
 
 <script type="text/javascript"> 
-$('.addWordBtn,.editWordBtn').fancybox({
+$('.addWordBtn,.editWordBtn,.cancelChangesBtn').fancybox({
 	'hideOnOverlayClick' : false,
 	'showCloseButton' : false,
 	'centerOnScroll' : true

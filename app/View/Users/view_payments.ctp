@@ -299,5 +299,6 @@ $(".accordion-trigger").click(function(){
 	$('#payment_summary').show();
 <?php }else{ ?>
 	$(".accordion-trigger p").first().click();
+	$('#standard_select').click();
 <?php } ?>
 </script>

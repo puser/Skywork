@@ -538,4 +538,8 @@ function upload_failure(cid){
 	$('#uploadFailRetry').attr('href','/users/import_class/' + cid);
 	$('#uploadFailLink').click();
 }
+
+<?php if(@$_REQUEST['create']){ ?>
+	setTimeout(function(){ $('#createClassLink').click(); },250);
+<?php } ?>
 </script>

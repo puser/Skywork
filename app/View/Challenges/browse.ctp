@@ -157,7 +157,7 @@
 				<?php }} ?>
 				
 				<?php
-				$k = @$k ? $k + 1 : 0;
+				$k = @$k ? $k + 1 : ($challenges ? 1 : 0);
 				if($page >= ceil($total/10) && $_SESSION['User']['user_type'] == 'P'){  ?>
 					<tr<?php if(!(($k)%2)){ ?> class="alternate"<?php } ?>>
 						<td><a href="/static_samples/student_attachment/">Example of an Assignment</a></td>

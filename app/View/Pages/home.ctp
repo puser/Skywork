@@ -87,8 +87,8 @@
 				<img src="/slides/slide-1.png" />
 				
 				<div class="slide-info">
-					<h2>Students learn more, you work less.</h2>
-					<p>The easiest way to create, distribute &amp; evaluate your assignments. All online.</p>
+					<h2>Students learn more, You work less.</h2>
+					<p>The best way for Instructors to create, distribute, and evaluate all their writing assignments&mdash; online.</p>
 					<a href="#joinModalInit" class="show-overlay btn1 btn1-v2" style=""><span class="inner">Sign up! It's Free</span></a>
 				</div>
 			</div>
@@ -98,31 +98,26 @@
 	<div id="body">
 		
 		<div class="contentmain">
+			<!--
 			<div class="homequote">
 				<p>Any other assignment is just an assignment.</p>
 			</div>
-			
+			-->
 			<h4>Quick Explanation</h4>
-			<p><img class="icon" src="/images/corp/icons/icon-bubble.png" /> Puentes takes the pain out of paper assignments. Rather than giving out assignments and receiving reams of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade and store all assignments through one easy-to-use portal.</p>
+			<p><img class="icon" src="/images/corp/icons/icon-bubble.png" /> <strong>Puentes takes the pain out of paper assignments.</strong> Rather than handing out assignments and receiving piles of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade, and store all assignments online through our easy-to-use platform.</p>
 			<p>&nbsp;</p>
 			
 			<h4>Puentes Bridge</h4>
-			<p><img class="icon" src="/images/corp/icons/icon-globe.png" /> Don't just create assignments. Create Bridges. Puentes (Bridges in Spanish), allows you to connect with other instructors through like-minded assignments. Bring students together by subject matter to make their assignments relevant, actionable and memorable. Connect students in the same town, city, or in another country. Whether in Rome, GA or Rome, Italy, Paris, TX or Paris, France. Puentes makes learning relevant. No matter where you are.</p>
-			<p>The process is the same, however, once students complete their assignment, they collaborate on answers. Connect your sections that are learning the same material and would have never spoken otherwise, or simply have your students work with other students in other cities in the world.</p>
+			<p><img class="icon" src="/images/corp/icons/icon-globe.png" /> <strong>Don't just create assignments. Create bridges.</strong> Puentes ("bridges" in Spanish), allows you to connect with other instructors through like-minded assignments everywhere. Whether in Rome, Georgia or Rome, Italy; in Paris, Texas or Paris, France, Puentes makes learning relevant and accessible.</p>
 			<p>&nbsp;</p>
 			
 			<h4>Reasons to Join Puentes</h4>
 			<ul>
-				<li><strong>10.</strong> It's <span class="red">built specifically for Instructors</span>.</li>
-				<li><strong>9.</strong> It's simple.</li>
-				<li><strong>8.</strong> It's fun.</li>
-				<li><strong>7.</strong> Students will never again say "My dog ate my homework."</li>
-				<li><strong>6.</strong> <span class="red">Less expensive</span> than other applications.</li>
-				<li><strong>5.</strong> It's green!</li>
-				<li><strong>4.</strong> Your students take part in a <span class="red">cross-cultural</span> experience.</li>
-				<li><strong>3.</strong> Align your assignments with Common Core standards.</li>
-				<li><strong>2.</strong> The grading process simpler, more <span class="red">organized</span> and easy to store.</li>
-				<li><strong>1.</strong> Assignments on Puentes are so much <span class="red">easier than paper</span>!</li>
+				<li><strong>1.</strong> It's built for Instructors.</li>
+				<li><strong>2.</strong> It's practical &amp; easy.</li>
+				<li><strong>3.</strong> It's cross-cultural.</li>
+				<li><strong>4.</strong> It's green.</li>
+				<li><strong>5.</strong> It's free.</li>
 			</ul>
 		</div>
 		
@@ -249,8 +244,8 @@
 			
 		</div>
 		
-		<div id="modalStudentStep2" class="joinModal joinModalStep2">
-			
+		<div id="modalStudentStep2" class="joinModal joinModalStep2" style="height:200px;">
+			<!-- 
 			<div class="box-heading joinTabs">
 
 				<div class="puentes-tabs">
@@ -269,18 +264,18 @@
 				
 				<div class="clear"></div>
 			</div><br />
-			
+			-->
 			<h4>Step 2 of 2: Check Your Email</h4>
-			<div style="display: block; height: 190px;">
-				<p style="font-size: 16px; line-height: 2em; ">Please check your email, where you will receive a confirmation email. Click on the link provided and continue to the website.</p>
+			<div style="display: block; height: 90px;">
+				<p style="font-size: 16px; line-height: 2em; ">Thank you for creating a Puentes account! We have sent you a confirmation email. Please click on login to continue.</p>
 			</div>
 			<div class="modalActionButtons">
-				<a href="/users/view" id="Instructor_Form_Done" class="btn-arrow modalActionButton modalActionButtonSave" onclick="jQuery.fancybox.close(); return false; "><span class="inner">Done</span></a>
+				<a href="/users/view/" id="Instructor_Form_Done" class="btn-arrow modalActionButton modalActionButtonSave" onclick="jQuery.fancybox.close();"><span class="inner">Login</span></a>
 			</div>
 		</div>
 		
-		<div id="modalInstructorStep2" class="joinModal joinModalStep2">
-			
+		<div id="modalInstructorStep2" class="joinModal joinModalStep2" style="height:200px;">
+			<!--
 			<div class="box-heading joinTabs">
 
 				<div class="puentes-tabs">
@@ -299,13 +294,13 @@
 				
 				<div class="clear"></div>
 			</div><br />
-			
+			-->
 			<h4>Step 2 of 2: Check Your Email</h4>
-			<div style="display: block; height: 190px;">
-				<p style="font-size: 16px; line-height: 2em; ">Please check your email, where you will receive a confirmation email. Click on the link provided and continue to the website.</p>
+			<div style="display: block; height: 90px;">
+				<p style="font-size: 16px; line-height: 2em; ">Thank you for creating a Puentes account! We have sent you a confirmation email. Please click on login to continue.</p>
 			</div>
 			<div class="modalActionButtons">
-				<a href="/users/view" id="Instructor_Form_Done" class="btn-arrow modalActionButton modalActionButtonSave" onclick="jQuery.fancybox.close(); return false; "><span class="inner">Done</span></a>
+				<a href="/users/view/" id="Instructor_Form_Done" class="btn-arrow modalActionButton modalActionButtonSave" onclick="jQuery.fancybox.close();"><span class="inner">Login</span></a>
 			</div>
 		</div>
 		
