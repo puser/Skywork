@@ -151,7 +151,7 @@
 			<span id="max_length_input" style="display:none;">
 				<input type="text" name="challenge[Challenge][max_response_length]" style="width:40px;" value="<?php echo @$challenge['Challenge']['max_response_length']; ?>" />&nbsp;
 				<strong>Maximum</strong> words allowed for each question.<br />
-				<input type="checkbox" style="margin-left:30px;" <?php if(@$challenge['Challenge']['allow_exceeded_length']) echo ' checked="checked"'; ?> onchange="$('#maxLengthHidden').val($(this).attr('checked') ? '1' : '0');" />
+				<input type="checkbox" style="margin-left:30px;" <?php if(@$challenge['Challenge']['allow_exceeded_length']) echo ' checked="checked"'; ?> onchange="$('#maxLengthHidden').val($(this).is(':checked') ? '1' : '0');" />
 				<span style="display:inline-block;width:15px;height:13px;background:url(/images/icons/icon-flag-15x30.png) top left no-repeat;padding-right:3px;vertical-align:middle;"> </span>
 				Allow students to pass maximum; create a flag when they do.
 			</span>
@@ -176,7 +176,7 @@
 			<br />
 			<p class="label" style="font-size:13px;"><?php echo __('Quality Scales') ?></p>
 			<p class="input">
-				<input type="checkbox" onchange="if(!$(this).attr('checked')){ $('.scaleCustom').attr('checked',''); }else{ $('.scaleCustom').attr('checked','checked'); }" />
+				<input type="checkbox" onchange="if(!$(this).is(':checked')){ $('.scaleCustom').attr('checked',''); }else{ $('.scaleCustom').attr('checked','checked'); }" />
 				<?php echo __('Use Quality Scales (Rate the quality of your students\' work on a scale from High Quality to Poor Quality during Due Date 2.)') ?>
 				<span style="font-size:9px;">&nbsp;Note: this is recommended if used over multiple bridges</span>
 				<div class="clear"></div>
@@ -267,7 +267,7 @@ function validate_info(){
 }
 
 function check_max_length(){
-	if($('#max_length').attr('checked')){
+	if($('#max_length').is(':checked')){
 		$('#max_length_input').show();
 		$('#max_length_disabled').hide();
 	}else{
@@ -278,7 +278,7 @@ function check_max_length(){
 }
 
 function check_min_length(){
-		if($('#min_length').attr('checked')){
+		if($('#min_length').is(':checked')){
 			$('#min_length_input').show();
 			$('#min_length_disabled').hide();
 		}else{

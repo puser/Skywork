@@ -42,7 +42,7 @@ tinyMCE.init({
                 editor.formatter.formatChanged($(button).attr('data-mce-command'), function(state) {
                     $(button).attr('checked', state);//.button('refresh');
 
-										if($(button).attr('checked')) $(button).next().addClass('active');
+										if($(button).is(':checked')) $(button).next().addClass('active');
 										else $(button).next().removeClass('active');
                 });
             });
@@ -66,7 +66,7 @@ tinyMCE.DOM.setStyle(tinyMCE.DOM.get("response_body" + '_ifr'), 'height', '264px
 tinyMCE.DOM.setStyle(tinyMCE.DOM.get("response_body" + '_ifr'), 'width', '735px');
 </script>
 
-<span id="saveNotify"></span>
+<span id="saveNotify"<?php if($question['Challenge']['response_types'] == 'E'){ ?> style="left:145px;"<?php } ?>></span>
 
 <div class="box-head">
 	<span class="icon2 icon2-listcountgreen"><?php echo $q_num; ?></span>
@@ -136,9 +136,6 @@ setInterval(function(){
 	save_response('auto');
 	setTimeout(function(){
 		$('#saveNotify').html('Saved');
-		setTimeout(function(){
-			$('#saveNotify').hide();
-		},2000);
 	},2000);
 },30000);
 </script>

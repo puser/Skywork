@@ -48,7 +48,7 @@ function save_offline(){
 	$.bbq.pushState({view:'assignment',state:{type:'challenge',val:'OFFLINE'}});
 }
 
-$("#offline_challenge").live("keypress",function(e)
+$("#offline_challenge").on("keypress",function(e)
 {	
    if(e.which == 13){
 		$('#next_step' ).click();		

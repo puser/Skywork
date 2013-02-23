@@ -545,7 +545,7 @@ function load_search_results(){
 }
 
 function group_invite_user(){
-	var uType = $('#inviteUserU').attr('checked') ? 'P' : 'L';
+	var uType = $('#inviteUserU').is(':checked') ? 'P' : 'L';
 	show_group_delayed();
 	$.ajax({url:'/users/invite/'+$('#inviteUserGroup').val()+'/0/'+$('#inviteUserFirst').val()+'/'+$('#inviteUserLast').val()+'/'+$('#inviteUserEmail').val()+'/'+uType,success:function(){
 		$('.inviteField').val('');
@@ -687,10 +687,10 @@ function enable_user_email(){
 }
 
 function set_email_prefs(){
-	$('input[name="notify_groups"]').val($('#notify_groups').attr('checked') ? 1 : 0);
-	$('input[name="notify_challenges"]').val($('#notify_challenges').attr('checked') ? 1 : 0);
-	$('input[name="notify_expiration"]').val($('#notify_expiration').attr('checked') ? 1 : 0);
-	$('input[name="notify_responses"]').val($('#notify_responses').attr('checked') ? 1 : 0);
+	$('input[name="notify_groups"]').val($('#notify_groups').is(':checked') ? 1 : 0);
+	$('input[name="notify_challenges"]').val($('#notify_challenges').is(':checked') ? 1 : 0);
+	$('input[name="notify_expiration"]').val($('#notify_expiration').is(':checked') ? 1 : 0);
+	$('input[name="notify_responses"]').val($('#notify_responses').is(':checked') ? 1 : 0);
 }
 
 function show_group_delayed(){
@@ -707,7 +707,7 @@ function save_group_name(){
 
 
 function invite_collaborator(c_id){
-	var uType = $('#inviteUserU').attr('checked') ? 'P' : 'L';
+	var uType = $('#inviteUserU').is(':checked') ? 'P' : 'L';
 	$.ajax({url:'/challenges/queue_invite/'+c_id+'/0/0/'+$('#firstName').val()+'/'+$('#lastName').val()+'/'+$('#emailAddr').val()+'/C',success:function(r){
 		jQuery.fancybox.close();
 		// window.location = '/challenges/update/' + c_id + '/update_people/';

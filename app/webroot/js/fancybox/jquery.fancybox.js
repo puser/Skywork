@@ -58,12 +58,12 @@
 			width     : 800,
 			height    : 600,
 			minWidth  : 100,
-			minHeight : 100,
+			minHeight : 50,
 			maxWidth  : 9999,
 			maxHeight : 9999,
 
 			autoSize   : true,
-			autoHeight : false,
+			autoHeight : true,
 			autoWidth  : false,
 
 			autoResize  : true,
@@ -77,7 +77,7 @@
 			wrapCSS   : '',
 
 			arrows     : true,
-			closeBtn   : true,
+			closeBtn   : false,
 			closeClick : false,
 			nextClick  : false,
 			mouseWheel : true,
