@@ -104,7 +104,7 @@
 			</div>
 			-->
 			<h4>Quick Explanation</h4>
-			<p><img class="icon" src="/images/corp/icons/icon-bubble.png" /> <strong>Puentes takes the pain out of paper assignments.</strong> Rather than handing out assignments and receiving piles of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade, and store all assignments online through our easy-to-use platform.</p>
+			<p><img class="icon" src="/images/corp/icons/icon-bubble.png" /> <strong>Puentes takes the pain out of paper assignments.</strong> Rather than handing out assignments and receiving piles of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade, and store all your writing assignments online through our easy-to-use platform.</p>
 			<p>&nbsp;</p>
 			
 			<h4>Puentes Bridge</h4>

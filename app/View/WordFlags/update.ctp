@@ -57,7 +57,7 @@
 				</div>
 			<?php } ?>
 			<div style="width: 80px; float: right; padding-top:7px;">
-				<a href="#modal-customize" class="cancelChangesBtn"><?php echo __('Cancel') ?></a>
+				<a href="/word_flags/view/<?php echo ($type == 'EXPL' ? 'EXPL' : ''); ?>" class="cancelChangesBtn"><?php echo __('Cancel') ?></a>
 			</div>
 			<div class="clear"></div>
 		</div>

@@ -29,6 +29,14 @@
 	<script type="text/javascript" src="/js/custom_corp.js" ></script>
 	<script type="text/javascript" src="/js/cco_ajax.js?v=7" ></script>
 	
+	<style type="text/css">
+	@-moz-document url-prefix() {
+	    #body {
+	        margin-top:-115px !important;
+	    }
+	}
+	</style>
+	
 </head>
 <body class="site page page-index">
 <div id="wrapper">
@@ -75,7 +83,7 @@
 		</div>
 	</div><!-- #header -->
 	
-	<div id="body">
+	<div id="body" style="margin-top:-35px;">
 		
 		<div class="contentmain">
 			
@@ -84,28 +92,26 @@
 				
 				<div id="product-compare">
 					
-					<div id="product-problem" class="product-overview-box">
-						<h4>The Problem</h4>
+					<div id="product-problem" class="product-overview-box" style="width:385px;">
+						<h4>The Instructors' Dilemma</h4>
 						
 						<img src="/images/corp/product-the-problem.png" />
 					
 					</div>
 					
-					<div id="product-solution" class="product-overview-box">
+					<div id="product-solution" class="product-overview-box" style="width:385px;">
 						<h4 style = "margin-right: 38px;">The Puentes Solution</h4>
 						
 						<ul>
-							<li><span class="icon icon-123"></span> Create an assignment</li>
-							<li><span class="icon icon-preview"></span> Students complete</li>
-							<li><span class="icon icon-connect"></span> Students give feedback</li>
-							<li><span class="icon icon-instructor-analytics"></span> Instructor evaluates</li>
+							<li><span class="icon icon-123"></span> You create an assignment.</li>
+							<li><span class="icon icon-preview"></span> Students complete the assignment.</li>
+							<li><span class="icon icon-connect"></span> Peer-to-peer evaluation.</li>
+							<li><span class="icon icon-instructor-analytics"></span> You evaluates.</li>
 						</ul>
 						
 					</div>
 					
 					<div class="clear"></div>
-					
-					<p>Puentes takes the pain out of paper assignments. Rather than giving out assignments and receiving reams of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade and store all assignments through one easy-to-use portal. </p>
 					
 				</div>
 			
@@ -118,11 +124,12 @@
 				<div class="more-info-special">
 					<div class="alignleft polaroid-wrap" style="height:323px;"><img src="/images/corp/puentes_ss1.png" width="520" /></div>
 					<div class="alignright more-info-special-content">
-						<p class="more-info-special-title">Create an Assignment</p>
+						<p class="more-info-special-title">Instructors</p>
 						<ul>
-							<li>Select the kind of assignment you'd like to create, fill out some information, send to your class.</li>
-							<li>Upload a document, YouTube video, or assign an offline assignment from a textbook. </li>
-							<li>Add multiple class sections to the same assignment</li>
+							<li>Sign up with Puentes.</li>
+							<li>Select the assignment you'd like to create; send it to your class.</li>
+							<li>Upload a document or video to accompany the assignment.</li>
+							<li>Add multiple class sections to the same assignment.</li>
 						</ul>
 					</div>
 					<div class="clear"></div>
@@ -131,11 +138,11 @@
 				<div class="more-info-special">
 					<div class="alignright polaroid-wrap" style="height:332px;"><img src="/images/corp/puentes_ss2.png" width="520" /></div>
 					<div class="alignleft more-info-special-content">
-						<p class="more-info-special-title">Students Complete</p>
-						<p>Students complete their assignment by:</p>
+						<p class="more-info-special-title">Students</p>
 						<ul>
-							<li>Logging on to Puentes, Viewing your document or video, Answering your questions, Submitting by the Due Date</li>
-							<li>Everything is done in the same place!</li>
+							<li>Students log in to Puentes</li>
+							<li>View the uploaded document or video; answer assigned questions; submit by the due date</li>
+							<li>Have a chance to collaborate with other students through feedback</li>
 						</ul>
 					</div>
 					<div class="clear"></div>
@@ -144,11 +151,9 @@
 				<div class="more-info-special">
 					<div class="alignleft polaroid-wrap" style="height:257px;"><img src="/images/corp/puentes_ss3.png" width="520" /></div>
 					<div class="alignright more-info-special-content">
-						<p class="more-info-special-title">Instructor Evaluates</p>
-						<p>Grading with paper is old news - we have developed a way to make grading online really simple.</p>
+						<p class="more-info-special-title">Instructors</p>
 						<ul>
-							<li>Get a snapshot of each student before jumping into comments and corrections</li>
-							<li>Grade the assignment.</li>
+							<li>Grade the assignment using proprietary tools for comments and corrections.</li>
 							<li>Store grades and archive assignments for future use.</li>
 						</ul>
 					</div>

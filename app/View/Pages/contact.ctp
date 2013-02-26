@@ -131,7 +131,7 @@
 					<li>
 						<a href="#" class="toggle">Is my class information private?</a>
 						<div class="toggle-content">
-							<p>Yes, absolutely. Your privacy is of absolute importance to the company. Please visit our Privacy Policy for more information. Please send us a note using our Contact Us form if you have any other questions.</p>
+							<p>Yes, absolutely. Your privacy is of absolute importance to Puentes. Please visit our Privacy Policy for more information. If you have any other questions, shoot us an email via the "Contact Us" form.</p>
 						</div>
 					</li>
 					<li>
@@ -143,19 +143,19 @@
 					<li>
 						<a href="#" class="toggle">Why am I not getting Puentes emails?</a>
 						<div class="toggle-content">
-							<p>There may be a chance that your emails are going to your spam folder. To avoid this, add info@puentesonline to your safe list.</p>
+							<p>There may be a chance that your emails are going to your spam folder. To avoid this, add info@puentesonline to your safe list. If you are still experiencing problems, please feel free to reach out to us at info@puentesonline.com</p>
 						</div>
 					</li>
 					<li>
 						<a href="#" class="toggle">What is typical troubleshooting for Puentes?</a>
 						<div class="toggle-content">
-							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple methods of troubleshooting:</p>
+							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple troubleshooting methods:</p>
 							<ol class="list-arabic">
-								<li>Try refreshing the page (make sure you save any unfinished work first)</li>
-								<li>Try updating your browser to the latest version (Puentes will probably not work its best on Internet Explorer 2004)</li>
-								<li>Try quitting the browser and restarting (this is worst case scenario, but it sometimes works)</li>
+								<li>Refresh the page (make sure you save any unfinished work first)</li>
+								<li>Update your Internet browser to the latest version</li>
+								<li>Quit the browser and restart (this is worst case scenario, but it sometimes works)</li>
 							</ol>
-							<p>If none of these methods work, please feel free to reach out to us at <a href="mailto:info@puentesonline.com">info@puentesonline.com</a> and we will get back to you asap.</p>
+							<p>If none of these methods work, let us know and we will get back to you ASAP.</p>
 						</div>
 					</li>
 					<li>
@@ -167,13 +167,13 @@
 					<li>
 						<a href="#" class="toggle">How do I connect with other Instructors?</a>
 						<div class="toggle-content">
-							<p>Go to the Classes section found on the top of the application. Then navigate to the Connections section. There you will find a button labeled “Find an Instructor.” Simply add their email address and search for them.</p>
+							<p>Go to the "classes" section found on the top of the application. Then navigate to the "connections" section. There you will find a button labeled "Find an Instructor." Simply add their email address and begin searching.</p>
 						</div>
 					</li>
 					<li>
 						<a href="#" class="toggle">How often do you update the application?</a>
 						<div class="toggle-content">
-							<p>There is constant updating and improvements, big and small. Therefore, it is important to receive feedback from you, our users. We want to continue providing the best quality product we possibly can.</p>
+							<p>We are constantly updating the application to make it better. Therefore, it is important to receive feedback from you, our users. We want to continue providing the best quality product we possibly can.</p>
 						</div>
 					</li>
 					<li>
@@ -185,7 +185,7 @@
 					<li>
 						<a href="#" class="toggle">How do I unsubscribe?</a>
 						<div class="toggle-content">
-							<p>First off, we would be sad to see you go. But if necessary, send us an email to info@puentesonline.com with UNSUBSCRIBE in the subject of the email. Please include your username, and feel free to add an explanation with your reason for leaving us.</p>
+							<p>First off, we would be sad to see you go. But if you must, please send us an email at <a href="mailto:info@puentesonline.com">info@puentesonline.com</a> with UNSUBSCRIBE in the subject. Be sure to include your username, and feel free to add an explanation with why you are leaving us.</p>
 						</div>
 					</li>
 				</ul>
