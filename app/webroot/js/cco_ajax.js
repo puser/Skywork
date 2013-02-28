@@ -795,21 +795,21 @@ function set_stat_session(v){
 }
 
 function show_comment(rid,pid,cid,color,e){
-	$('#responseBody' + rid + '_' + pid).parent().find('p').first().hide();
+	$('#responseBody' + rid + '_' + pid).parent().find('.responseBodys').first().hide();
 	$('#responseBody' + rid + '_' + pid).show();
 	$('.comment_detail_' + pid).show().removeClass('activeDetail');
 	$('#commentDetail_' + cid).addClass('activeDetail');
 	
 	$('.commentHighlight').css('background-color','#ccc');
-	$('#commentHighlight_' + cid).css('background-color',color);
+	$('.commentHighlight_' + cid).css('background-color',color);
 	if(e) $(e).parent().hide();
 	
 	setTimeout(function(){ $(document).click(function(){ hide_all_comments();$(document).unbind('click'); }); },15);
 }
 
 function hide_all_comments(){
-	$('.textvalue p').hide();
-	$('.textvalue p:first-child').show();
+	$('.textvalue .responseBodys').hide();
+	$('.textvalue .responseBodys:first-child').show();
 	$('.question-comments').hide();
 }
 
