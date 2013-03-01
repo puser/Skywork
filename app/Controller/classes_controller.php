@@ -48,7 +48,8 @@ class ClassesController extends AppController{
 	function search_shared($query){
 		$this->checkAuth();
 		$this->layout = 'ajax';
-		$this->User->hasAndBelongsToMany['ClassSet']['conditions'] = 'ClassSet.public = 1';
+		// DEPRECIATED 2/28
+		// $this->User->hasAndBelongsToMany['ClassSet']['conditions'] = 'ClassSet.public = 1';
 		$this->set('user',$this->User->findByEmail($query));
 	}
 	

@@ -34,7 +34,7 @@
 	<div id="puentes-answer-questions" class="box-startbridge box-answer-questions box-white rounded">
 		<div id="questionContent"> </div>
 		<?php if($challenge['Challenge']['min_response_length'] > 1 || $challenge['Challenge']['max_response_length']){ ?>
-			<div style="text-align:right;">
+			<div id="counter_container" style="text-align:right;">
 				<?php if($challenge['Challenge']['min_response_length'] > 1){ ?>
 					<span style="color:#ccc;padding-right:10px;"><?php echo __('Miniumum') ?>: <?php echo $challenge['Challenge']['min_response_length']; ?></span>
 				<?php }if($challenge['Challenge']['max_response_length']){ ?>

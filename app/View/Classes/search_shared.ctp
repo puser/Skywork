@@ -17,5 +17,5 @@
 <br /><br />
 <div class="clear"></div>
 <?php }else{ ?><div style="text-align:center;margin:20px;"><?php echo __('Instructor not found') ?></div>
-<?php } }elseif(!@$user){ ?><div style="text-align:center;margin:20px;"><?php echo __('Instructor not found') ?></div>
-<?php }else{ ?><div style="text-align:center;margin:20px;"><?php echo __('This instructor has restricted access to their classes') ?></div><?php } ?>
+<?php }}elseif(!@$user){ ?><div style="text-align:center;margin:20px;"><?php echo __('Instructor not found') ?></div>
+<?php }else{ ?><div style="text-align:center;margin:20px;"><?php echo __('No classes found for this instructor') ?></div><?php } ?>

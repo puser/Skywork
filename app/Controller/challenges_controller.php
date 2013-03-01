@@ -253,7 +253,7 @@ class ChallengesController extends AppController{
 		$this->checkAuth();
 		
 		$monthly_count = $this->Challenge->find('count',array('conditions'=>array('Challenge.user_id'=>$_SESSION['User']['id'],'Challenge.date_modified BETWEEN DATE_SUB(NOW(),INTERVAL 1 MONTH) AND NOW()')));
-		if(($_SESSION['User']['account_tier'] == 'STANDARD' && $monthly_count >= 2) || ($_SESSION['User']['account_tier'] == 'PREMIUM' && $monthly_count >= 6)) $this->redirect('/');
+		if(($_SESSION['User']['account_tier'] == 'STANDARD' && $monthly_count >= 3) || ($_SESSION['User']['account_tier'] == 'PREMIUM' && $monthly_count >= 7)) $this->redirect('/');
 		elseif($_SESSION['User']['account_tier'] == 'STANDARD') $monthly_count = 2 - $monthly_count;
 		elseif($_SESSION['User']['account_tier'] == 'PREMIUM') $monthly_count = 6 - $monthly_count;
 		elseif($_SESSION['User']['account_tier'] == 'PLATINUM') $monthly_count = false;

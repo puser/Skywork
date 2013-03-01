@@ -99,7 +99,7 @@
 								elseif(($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) < $now) && $_SESSION['User']['user_type'] == 'P' && !$challenge['Challenge']['eval_complete']) echo __('Feedback');
 								elseif(($a_date > $now || ($challenge['Challenge']['collaboration_type'] != 'NONE' && date_create($challenge['Challenge']['responses_due']) > $now)) && !$challenge['Challenge']['eval_complete']) echo __('In Use');
 								elseif(!$challenge['Challenge']['eval_complete']) echo ($_SESSION['User']['user_type']=='L' ? __('Evaluate') : __('Complete'));
-								elseif(!@$challenge['Status'] || @$challenge['Status'][0]['status']=='N') echo __('New');
+								elseif(@$challenge['Status'][0]['status']=='N') echo __('New');
 							} ?>
 						</span>
 						<span class="feedback_status" style="display:none;">Feedback</span>

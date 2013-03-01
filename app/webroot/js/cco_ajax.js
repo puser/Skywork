@@ -636,8 +636,11 @@ function challenge_select_group(gid,name){
 function setup_response_hashchange(ini_id,challenge_id){
 	$(window).bind('hashchange',function(e){
 		var qid = $.param.fragment();
-		if(qid == 'attachments') add_attachments(challenge_id);
-		else if(qid) show_question(qid);
+		$('#counter_container').show();
+		if(qid == 'attachments'){
+			add_attachments(challenge_id);
+			$('#counter_container').hide();
+		}else if(qid) show_question(qid);
 		else show_question(ini_id);
 	});
 	$(window).trigger('hashchange');

@@ -13,6 +13,8 @@
 			</li>
 			<?php } ?>
 			<li style="padding-bottom:15px;">
+				<input type="hidden" id="next_id" value="dashboard" />
+				
 				<input type="hidden" name="attachment[0][type]" value="R" class="attachmentType" />
 				<input type="hidden" name="attachment[0][challenge_id]" value="<?php echo $challenge_id; ?>" />
 				<p><input type="text" value="Explanation" class="inputtext fullwidth" onclick="if($(this).val()=='Explanation') $(this).val('');" name="attachment[0][name]" /></p>
