@@ -341,7 +341,7 @@
 				// if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id && !$completed) continue;
 				if(@$q['Response'][0]){
 					if(!$completed) $challenge[0]['Question'][$k]['Response'][0]['response_body'] = str_replace("\n"," ",str_replace("\r"," ",$challenge[0]['Question'][$k]['Response'][0]['response_body']));
-					else $challenge[0]['Question'][$k]['Response'][0]['response_body'] = $q['Response'][0]['response_body'] = str_replace("\n","  ",str_replace("\r","  ",$challenge[0]['Question'][$k]['Response'][0]['response_body']));
+					else $challenge[0]['Question'][$k]['Response'][0]['response_body'] = $q['Response'][0]['response_body'] = str_replace("  <p>&nbsp;</p>  ","<br />",str_replace("\n"," ",str_replace("\r"," ",$challenge[0]['Question'][$k]['Response'][0]['response_body'])));
 					$responseCount++; ?>
 				<div class="question-item"<?php if(!$completed){ ?> style="overflow:hidden;"<?php } ?>>
 					<div class="box-head">
@@ -380,7 +380,7 @@
 										<?php
 										$q['Response'][0]['response_body'] = stripslashes($q['Response'][0]['response_body']);
 										$mod_response = $q['Response'][0]['response_body'];
-										foreach(@$q['Response'][0]['Comment'] as $i=>$c){
+										foreach(@$q['Response'][0]['Comment'] as $i=>$c){ 
 											if(!@$user_colors[$c['user_id']]) $user_colors[$c['user_id']] = array_pop($all_colors);
 											if(!$all_colors) $all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
 											
@@ -420,6 +420,8 @@
 												}elseif($mod_response[$i] == '&'){
 													$in_char = true;
 													continue;
+												}elseif($mod_response[$i] == ' ' && ($mod_response[$i - 1] == ' ' || substr($mod_response,$i-6,6) == '&nbsp;')){
+													$tag_offset++;
 												}
 												
 												if($c['segment_start'] == $i - $tag_offset){
@@ -431,11 +433,11 @@
 											}
 									
 											if(!$completed){
-												
-												$alt_response = str_replace('  ',' ',str_replace("\n",' ',str_replace("\n\n","\n",strip_tags($q['Response'][0]['response_body']))));
+											
+												$alt_response = preg_replace("/\s+/"," ",str_replace("'","\\'",str_replace("\n",' ',str_replace("\n\n","\n",str_replace("\r","\n",str_replace("\xA0",' ',html_entity_decode(strip_tags($q['Response'][0]['response_body']))))))));
 												//$alt_response = utf8_decode($alt_response);
 												
-												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $k + 1),
+												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $k),
 																										'formValues'	=> array(	array(	'name'	=> 'comment',
 																										 																'value'	=> $c['comment'] ),
 																																						array(	'name'	=> 'type',
@@ -443,7 +445,7 @@
 																																						array(	'name'	=> 'id',
 																																										'value'	=> $c['id'] )));
 																																							
-												for($j = 2;$j <= substr_count($alt_response,' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($alt_response) - $c['segment_start']);$j++){
+												for($j = 1;$j <= substr_count($alt_response,' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($alt_response) - $c['segment_start']);$j++){
 													$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $j + $k),
 																											'formValues'	=> array(	array(	'name'	=> 'comment',
 																											 																'value'	=> $c['comment'] ),
@@ -508,6 +510,8 @@
 												}elseif($mod_response[$c['user_id']][$i] == '&'){
 													$in_char = true;
 													continue;
+												}elseif($mod_response[$c['user_id']][$i] == ' ' && ($mod_response[$c['user_id']][$i - 1] == ' ' || substr($mod_response[$c['user_id']],$i-7,6) == '&nbsp;')){
+													$tag_offset++;
 												}
 												
 												if($c['segment_start'] == $i - $tag_offset){
@@ -516,7 +520,9 @@
 													$mod_response[$c['user_id']] = substr($mod_response[$c['user_id']],0,$i) . $span_str . substr($mod_response[$c['user_id']],$i);
 													$i += strlen($span_str);
 													$tag_offset += strlen($span_str);
-												}elseif($c['segment_start'] + $c['segment_length'] == $i - $tag_offset || $in_comment){
+												}
+												
+												if($c['segment_start'] + $c['segment_length'] == $i - $tag_offset || $in_comment){
 													$span_str = '<span class="commentHighlight commentHighlight_'.$c['id'].'">';
 													$mod_response[$c['user_id']] = substr($mod_response[$c['user_id']],0,$i) . $span_str . $mod_response[$c['user_id']][$i] . '</span>' . substr($mod_response[$c['user_id']],$i + 1);
 													if($c['segment_start'] + $c['segment_length'] == $i - $tag_offset) break;
@@ -724,7 +730,7 @@ $(document).ready(function(){
 	<?php if($responseCount){
 		foreach($challenge[0]['Question'] as $k=>$q){
 			// if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id) continue; ?>
-			responses.push({text:'<?php echo str_replace("'","\\'",str_replace('  ',' ',str_replace("\n",' ',str_replace("\n\n","\n",str_replace("\r","\n",strip_tags($q['Response'][0]['response_body'])))))); ?>'.trim(),id:<?php echo $q['Response'][0]['id']; ?>});
+			responses.push({text:'<?php echo preg_replace("/\s+/"," ",str_replace("'","\\'",str_replace("\n",' ',str_replace("\n\n","\n",str_replace("\r","\n",str_replace("\xA0",' ',html_entity_decode(strip_tags($q['Response'][0]['response_body'])))))))); ?>'.trim(),id:<?php echo $q['Response'][0]['id']; ?>});
 		<?php }
 	} ?>
 
