@@ -158,7 +158,7 @@
 				
 				<?php
 				$k = @$k ? $k + 1 : ($challenges ? 1 : 0);
-				if($page >= ceil($total/10) && $_SESSION['User']['user_type'] == 'P'){  ?>
+				if($page >= ceil($total/10) && $_SESSION['User']['user_type'] == 'P' && $k < 10){  ?>
 					<tr<?php if(!(($k)%2)){ ?> class="alternate"<?php } ?>>
 						<td><a href="/static_samples/student_attachment/">Example of an Assignment</a></td>
 						<td>In Use</td>
@@ -167,7 +167,7 @@
 						<td><?php echo date_format(date_create(),'m/d/Y'); ?></td>
 						<td></td>
 					</tr>
-				<?php }elseif($page >= ceil($total/10)){ ?>
+				<?php }elseif($page >= ceil($total/10) && $k < 8){ ?>
 					<tr<?php if(!(($k)%2)){ ?> class="alternate"<?php } ?>>
 						<td><a href="/static_samples/student_attachment/">This is what an assignment looks like</a></td>
 						<td>In Use</td>
@@ -195,7 +195,7 @@
 				<?php } ?>
 			</tbody>
 		</table>
-		<?php if(!$challenges){ ?><?php echo ($status ? __('No bridges match your search.') : ''); ?><?php } ?>
+		<!-- <?php if(!$challenges){ ?><?php echo ($status ? __('No bridges match your search.') : ''); ?><?php } ?> -->
 	</div>
 	
 	<div class="box-foot">
@@ -205,7 +205,7 @@
 					<div class="alignleft pagination-prev">
 						<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($page-1); ?>'"><?php echo __('Previous') ?></a>
 					</div>
-				<?php }if($page < ceil($total/10)){ ?>
+				<?php }if($page < ceil(($total + ($_SESSION['User']['user_type'] == 'P' ? 1 : 3))/10)){ ?>
 					<div class="alignright pagination-next">
 						<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($page+1); ?>'"><?php echo __('Next') ?></a>
 					</div>
@@ -213,7 +213,7 @@
 
 				<div class="aligncenter pagination-pages">
 					<ul>
-						<?php for($i=0;$i<($total/10);$i++){ ?>
+						<?php for($i=0;$i<(($total + ($_SESSION['User']['user_type'] == 'P' ? 1 : 3))/10);$i++){ ?>
 						<li<?php if(($i + 1) == $page){ ?> class="active"<?php } ?>>
 							<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($i+1); ?>'"><?php echo ($i+1); ?></a>
 						</li>

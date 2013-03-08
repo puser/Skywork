@@ -18,7 +18,7 @@
 
 	<div class="actionmenu">
 		<ul>
-			<!-- <li class="action-save"><a onclick="save_challenge('quiet');"><?php echo __('Save') ?></a></li> -->
+			<li class="action-video"><a href="/pages/tutorial/?vid=create_assignment" class="iframe" id="tutorialVideo" style="padding:0 0 0 25px;" data-fancybox-type="iframe"><?php echo __('Video') ?></a></li>
 			<li class="action-exit"><a href="#modalExitChoices" class="show-overlay"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>
@@ -63,5 +63,13 @@ $(function(){
 	setup_challenge_hashchange();
 	if(!$.bbq.getState('view')) $.bbq.pushState({view:'<?php echo (@$ini_view ? $ini_view : 'challenge'); ?>'});
 	else $(window).trigger('hashchange');
+});
+
+$('#tutorialVideo').fancybox({
+	'hideOnOverlayClick' : true,
+	'showCloseButton' : true,
+	'centerOnScroll' : true,
+	'width' : 660,
+	'height' : 505
 });
 </script>

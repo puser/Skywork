@@ -63,7 +63,7 @@ class AttachmentsController extends AppController{
 				foreach($_REQUEST['remove_attachment'] as $aid) $this->Attachment->delete($aid);
 			}
 		
-			$this->redirect('/challenges/view/'.$_REQUEST['challenge_id']);
+			$this->redirect('/dashboard/');
 			return true;
 			
 		}

@@ -63,6 +63,7 @@
 	
 	<div class="actionmenu">
 		<ul>
+			<li class="action-video"><a href="/pages/tutorial/?vid=completed_assignment" class="iframe" id="tutorialVideo" style="padding:0 0 0 25px;" data-fancybox-type="iframe"><?php echo __('Video') ?></a></li>
 			<li class="action-exit"><a href="/"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>
@@ -150,5 +151,13 @@ $(document).ready(function(){
 	$('#groupNav a').click();
 	
 	$('#body').css('min-height','650px');
+});
+
+$('#tutorialVideo').fancybox({
+	'hideOnOverlayClick' : true,
+	'showCloseButton' : true,
+	'centerOnScroll' : true,
+	'width' : 660,
+	'height' : 505
 });
 </script>

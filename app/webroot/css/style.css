@@ -384,6 +384,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .actionmenu li a {float: left; height: 17px; line-height: 17px;  margin: 0 15px 0 0 ; padding: 0 0 0 20px; color: #00467f; }
 .actionmenu .action-notes {background: url("/images/icons/icon-notes-15x16.png") no-repeat center left;}
 .actionmenu .action-save {background: url("/images/icons/icon-save-15x14.png") no-repeat center left;}
+.actionmenu .action-video {background: url("/images/icons/icon-video.png") no-repeat center left;}
 .actionmenu .action-exit {background: url("/images/icons/icon-close-15x15.png") no-repeat center left;}
 .actionmenu .action-preview {background: url("/images/icon-magnifier.png") no-repeat center left;}
 .actionmenu .action-graph {background: url("/images/icons/icon-graph-15x14.png") no-repeat center left;}

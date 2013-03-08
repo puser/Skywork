@@ -77,7 +77,7 @@ class PagesController extends AppController {
 			$title_for_layout = Inflector::humanize($path[$count - 1]);
 		}
 		
-		if($page == 'home' || $page == 'about' || $page == 'contact' || $page == 'privacy' || $page == 'terms') $this->layout = '';
+		if($page == 'home' || $page == 'about' || $page == 'contact' || $page == 'privacy' || $page == 'terms' || $page == 'tutorial') $this->layout = '';
 		
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
 		$this->render(implode('/', $path));

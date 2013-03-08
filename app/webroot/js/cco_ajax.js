@@ -201,8 +201,10 @@ function save_response(redirect){
 	
 	$.ajax({url:'/responses/update/',data:$('#responseData').serialize(),type:'POST',success:function(r){
 		if(redirect == 'ajax'){
-			if($('#next_id').val() == 'attachments') add_attachments($('#challenge_id').val());
-			else if($('#next_id').val() == 'dashboard') window.location = '/dashboard/';
+			if($('#next_id').val() == 'attachments'){
+				$('#counter_container').hide();
+				add_attachments($('#challenge_id').val());
+			}else if($('#next_id').val() == 'dashboard') window.location = '/dashboard/';
 			else window.location = '#' + $('#next_id').val();
 		}else if(redirect) window.location = redirect;
 		else{ /* */ }

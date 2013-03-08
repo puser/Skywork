@@ -16,6 +16,7 @@
 	
 	<div class="actionmenu">
 		<ul>
+			<li class="action-video"><a href="/pages/tutorial/?vid=answer_questions" class="iframe" id="tutorialVideo" style="padding:0 0 0 25px;" data-fancybox-type="iframe"><?php echo __('Video') ?></a></li>
 			<li class="action-exit"><a href="/"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>
@@ -77,4 +78,14 @@ $("textarea.niceTextarea").keyup(function(){
 });
 
 limitText($('textarea.niceTextarea'));
+</script>
+
+<script type="text/javascript">
+$('#tutorialVideo').fancybox({
+	'hideOnOverlayClick' : true,
+	'showCloseButton' : true,
+	'centerOnScroll' : true,
+	'width' : 660,
+	'height' : 505
+});
 </script>

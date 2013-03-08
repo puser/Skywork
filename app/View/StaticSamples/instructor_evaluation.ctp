@@ -68,6 +68,7 @@
 	
 	<div class="actionmenu">
 		<ul>
+			<li class="action-video"><a href="/pages/tutorial/?vid=evaluate_assignment" class="iframe" id="tutorialVideo" style="padding:0 0 0 25px;" data-fancybox-type="iframe"><?php echo __('Video') ?></a></li>
 			<li class="action-exit"><a href="/"><?php echo __('Exit') ?></a></li>
 		</ul>
 		<div class="clear"></div>
@@ -233,4 +234,12 @@ function saveAnnotation(){
 
 	jQuery(cssSelector).textAnnotate('addAnnotations', [[{"elementId":"textAnnotate_78","formValues":[{"name":"comment","value":"To leave comments and corrections, simply highlight by clicking and dragging the cursor along the desired area."},{"name":"type","value":"2"},{"name":"id","value":""}]},{"elementId":"textAnnotate_79","formValues":[{"name":"comment","value":"To leave comments and corrections, simply highlight by clicking and dragging the cursor along the desired area."},{"name":"type","value":"2"},{"name":"id","value":""}]},{"elementId":"textAnnotate_80","formValues":[{"name":"comment","value":"To leave comments and corrections, simply highlight by clicking and dragging the cursor along the desired area."},{"name":"type","value":"2"},{"name":"id","value":""}]},{"elementId":"textAnnotate_81","formValues":[{"name":"comment","value":"To leave comments and corrections, simply highlight by clicking and dragging the cursor along the desired area."},{"name":"type","value":"2"},{"name":"id","value":""}]},{"elementId":"textAnnotate_82","formValues":[{"name":"comment","value":"To leave comments and corrections, simply highlight by clicking and dragging the cursor along the desired area."},{"name":"type","value":"2"},{"name":"id","value":""}]},{"elementId":"textAnnotate_83","formValues":[{"name":"comment","value":"To leave comments and corrections, simply highlight by clicking and dragging the cursor along the desired area."},{"name":"type","value":"2"},{"name":"id","value":""}]}]]);
 }
+
+$('#tutorialVideo').fancybox({
+	'hideOnOverlayClick' : true,
+	'showCloseButton' : true,
+	'centerOnScroll' : true,
+	'width' : 660,
+	'height' : 505
+});
 </script>
