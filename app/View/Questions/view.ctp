@@ -97,6 +97,7 @@ tinyMCE.DOM.setStyle(tinyMCE.DOM.get("response_body" + '_ifr'), 'width', '735px'
 String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
 
 function limitText(limitField){
+	$('#response_body').val(tinyMCE.get('response_body').getContent());
 	limitNum = <?php echo (@$question['Challenge']['max_response_length'] ? $question['Challenge']['max_response_length'] : '1000000'); ?>;
 	spaces = limitField.val().trim().match(/ /g);
 	if(limitField.val() && (spaces ? spaces.length : 0) + 1 > limitNum){
@@ -117,11 +118,13 @@ function limitText(limitField){
 $textAreaOrigHeight = 264;
 $("textarea.niceTextarea").keyup(function(){ 
 	expandtext(this); 
-
-	<?php if($question['Challenge']['max_response_length'] || $question['Challenge']['min_response_length'] > 1){ ?>
-		limitText($(this));
-	<?php } ?>
 });
+
+<?php if($question['Challenge']['max_response_length'] || $question['Challenge']['min_response_length'] > 1){ ?>
+	setInterval(function(){
+		limitText($("textarea.niceTextarea"));
+	},100);
+<?php } ?>
 
 <?php if($question['Challenge']['max_response_length']){ ?>
 	$("textarea.niceTextarea").keydown(function(){
