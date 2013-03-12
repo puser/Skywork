@@ -334,14 +334,14 @@
 		
 			$user_colors = array();
 			$all_colors = array('#F75D59','#736AFF','#C68E17','#3EA99F','#F88017');
-		
+					
 			$js_comments = array();
 			$responseCount = $start_offset = $commentCount = 0;
 			foreach($challenge[0]['Question'] as $k=>$q){
 				// if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id && !$completed) continue;
 				if(@$q['Response'][0]){
 					if(!$completed) $challenge[0]['Question'][$k]['Response'][0]['response_body'] = str_replace("\n"," ",str_replace("\r"," ",$challenge[0]['Question'][$k]['Response'][0]['response_body']));
-					else $challenge[0]['Question'][$k]['Response'][0]['response_body'] = $q['Response'][0]['response_body'] = str_replace("  <p>&nbsp;</p>  ","<br />",str_replace("\n"," ",str_replace("\r"," ",$challenge[0]['Question'][$k]['Response'][0]['response_body'])));
+					else $challenge[0]['Question'][$k]['Response'][0]['response_body'] = $q['Response'][0]['response_body'] = preg_replace("/\s+/"," ",str_replace("  <p>&nbsp;</p>  ","<br />",str_replace("\n"," ",str_replace("\r"," ",$challenge[0]['Question'][$k]['Response'][0]['response_body']))));
 					$responseCount++; ?>
 				<div class="question-item"<?php if(!$completed){ ?> style="overflow:hidden;"<?php } ?>>
 					<div class="box-head">
@@ -730,7 +730,7 @@ $(document).ready(function(){
 	<?php if($responseCount){
 		foreach($challenge[0]['Question'] as $k=>$q){
 			// if($_SESSION['User']['user_type'] == 'P' && $q['id'] != $question_id) continue; ?>
-			responses.push({text:'<?php echo preg_replace("/\s+/"," ",str_replace("'","\\'",str_replace("\n",' ',str_replace("\n\n","\n",str_replace("\r","\n",str_replace("\xA0",' ',html_entity_decode(strip_tags($q['Response'][0]['response_body'])))))))); ?>'.trim(),id:<?php echo $q['Response'][0]['id']; ?>});
+			responses.push({text:'<?php echo preg_replace("/\s+/"," ",str_replace("'","\\'",str_replace("\n",' ',str_replace("\n\n","\n",str_replace("\r","\n",str_replace("\xA0",' ',html_entity_decode(strip_tags(str_replace("</"," </",$q['Response'][0]['response_body']))))))))); ?>'.trim(),id:<?php echo $q['Response'][0]['id']; ?>});
 		<?php }
 	} ?>
 

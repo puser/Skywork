@@ -134,5 +134,6 @@ function expandtext(textArea){
 		h = textArea.offsetHeight;
 		textArea.rows++;
 	}
+	
 	$(window).scrollTop(curScroll);
 }

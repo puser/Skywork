@@ -5,6 +5,7 @@ tinyMCE.init({
 		elements: "response_body",
 		theme_advanced_fonts : "Arial=arial,helvetica,sans-serif;",
     content_css: "/css/mce_content.css",
+		plugins : "autoresize",
     language: false, // Prevents language packs from loading
 
     theme: function(editor, target) {
@@ -97,7 +98,6 @@ tinyMCE.DOM.setStyle(tinyMCE.DOM.get("response_body" + '_ifr'), 'width', '735px'
 String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
 
 function limitText(limitField){
-	$('#response_body').val(tinyMCE.get('response_body').getContent());
 	limitNum = <?php echo (@$question['Challenge']['max_response_length'] ? $question['Challenge']['max_response_length'] : '1000000'); ?>;
 	spaces = limitField.val().trim().match(/ /g);
 	if(limitField.val() && (spaces ? spaces.length : 0) + 1 > limitNum){
@@ -114,17 +114,14 @@ function limitText(limitField){
 		else $('#currentWordCount').html('1');
 	}
 }
-	
-$textAreaOrigHeight = 264;
-$("textarea.niceTextarea").keyup(function(){ 
-	expandtext(this); 
-});
 
-<?php if($question['Challenge']['max_response_length'] || $question['Challenge']['min_response_length'] > 1){ ?>
-	setInterval(function(){
+setInterval(function(){
+	$('#response_body').val(tinyMCE.get('response_body').getContent());
+	
+	<?php if($question['Challenge']['max_response_length'] || $question['Challenge']['min_response_length'] > 1){ ?>
 		limitText($("textarea.niceTextarea"));
-	},100);
-<?php } ?>
+	<?php } ?>	
+},100);
 
 <?php if($question['Challenge']['max_response_length']){ ?>
 	$("textarea.niceTextarea").keydown(function(){
