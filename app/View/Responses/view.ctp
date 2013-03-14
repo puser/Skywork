@@ -585,7 +585,7 @@
 				<div class="box-foot">
 					<div class="pagination">
 						<div class="alignleft pagination-prev">
-							<select style="width:75px;">
+							<select style="width:75px;" onchange="render_pagination(currentPage,currentQuestion);">
 								<option value="30">30 lines</option>
 								<option value="60">60 lines</option>
 								<option value="90">90 lines</option>
@@ -603,7 +603,7 @@
 								<?php foreach($challenge[0]['Question'] as $k=>$q){ ?>
 									<li id="qnav_<?php echo $k; ?>">
 										<a href="#" onclick="render_pagination(0,<?php echo $k; ?>);return false;"><?php echo ($k + 1); ?></a>
-										<ul class="qnav_sub"> </ul>
+										<ul class="qnav_sub" style="display:inline;font-size:75%;"> </ul>
 									</li>
 								<?php } ?>
 							</ul>
@@ -622,55 +622,75 @@
 					if(!$('.pagination-prev select').val()){
 						// show everything
 						$('.textvalueWrapper').show();
-						$('.textvalueWrapper .textvalue').css('height','auto');
+						$('.question-item').show();
+						$('.textvalueWrapper,.textvalueWrapper .textvalue').css('height','auto');
 						$('.box-foot').hide();
 					}else{
-						// show current response
 						currentResponse = $('#textvalueWrapper_' + currentQuestion);
-						$('.textvalueWrapper').hide();
-						currentResponse.show();
-
+						
+						$('.question-item').hide();
+						currentResponse.parents('.question-item').show();
+						currentResponse.height('auto');
+						
 						// count lines in response
+						currentResponse.find('.textvalue').css('height','auto');
 						currentResponse.find('.textvalue').css('line-height','40px');
 						lineCount = Math.round((currentResponse.find('.textvalue').height() - 40) / 40);
 						currentResponse.find('.textvalue').css('line-height','18px');
+						
+						// show current response
+						pageHeight = lineCount - ($('.pagination select').val() * (currentPage + 1)) >= 0 ? 18 * $('.pagination select').val() : 18 * (lineCount - ($('.pagination select').val() * currentPage));
+						currentResponse.height(pageHeight);
 
 						// set height based on display selection
 						currentResponse.find('.textvalue').height(($('.pagination select').val() * 18) + 40);
-						currentResponse.find('.textvalue').css('margin-top',-(currentPage * 18));
+						currentResponse.find('.textvalue').css('margin-top',-(currentPage * 18 * $('.pagination select').val()));
 
-						// set pagination links
+						// set up pagination links
 						pageCount = Math.ceil(lineCount / $('.pagination select').val());
-						if((currentPage + 1) < pageCount && currentQuestion < <?php echo count($challenge[0]['Question']); ?>) $('.pagination-next').show();
+						if((currentPage + 1) < pageCount || (currentQuestion + 1) < <?php echo count($challenge[0]['Question']); ?>){
+							$('.pagination-next').show();
+							$('.pagination-next a').click(function(){
+								nextLink = $('.pagination li.current').last().next().find('a').length ? $('.pagination li.current').last().next().find('a').first() : $('.pagination li.current').parents('li').next().find('a').first();
+								nextLink.click();
+							});
+						}
 						else $('.pagination-next').hide();
 
 						if(!currentPage && !currentQuestion){
 							$('.pagination-prev a').hide();
-							if(pageCount > 1) $('.pagination-prev select').show();
-							else $('.pagination-prev select').hide();
+							$('.pagination-prev select').show();
 						}else{
 							$('.pagination-prev a').show();
+							$('.pagination-prev a').click(function(){
+								prevLink = $('.pagination li.current').last().prev().find('a').length ? $('.pagination li.current').last().prev().find('a').last() : $('.pagination li.current').parents('li').prev().find('a').last();
+								prevLnk.click();
+							});
+							
 							$('.pagination-prev select').hide();
 						}
 
 						$('.pagination-pages li').removeClass('current');
 						$('.qnav_sub').hide();
+						$('.qnav_sub li').remove();
 						$('#qnav_' + currentQuestion).addClass('current');
 
 						if(pageCount > 1){
 							$('#qnav_' + currentQuestion + ' .qnav_sub').show();
 
 							for(i = 0;i < pageCount;i++){
-								$('#qnav_' + currentQuestion + ' .qnav_sub').append('<li' + (currentPage == i ? ' class="current"' : '') + '><a href="#">' + (i + 1) + '</a></li>');
-								$('#qnav_' + currentQuestion + ' .qnav_sub li').last().click(function(){
-									render_pagination(i,question);
-									return false;
-								});
+								$('#qnav_' + currentQuestion + ' .qnav_sub').append('<li' + (currentPage == i ? ' class="current"' : '') + '><a onclick="render_pagination(' + i + ',' + question + ');return false;" href="#">' + (i + 1) + '</a></li>');
 							}
 						}
 
 						$('.box-foot').show();
 					}
+					
+					$('#puentes-answer-questions,.question-item').css('height','auto');
+					$('.question-item').each(function(){
+						$(this).height($(this).height());
+					});
+					$('#puentes-answer-questions').height($('#puentes-answer-questions').height());
 				}
 
 				render_pagination(0,0);
