@@ -375,186 +375,188 @@
 										<?php echo stripslashes($q['question']); ?>
 									</span>
 								</p>
-								<div class="textvalue">
-									<<?php echo ($completed ? 'div' : 'p'); ?> class="responseBodys" id="responseBody<?php echo $k; ?>">
-										<?php
-										$q['Response'][0]['response_body'] = stripslashes($q['Response'][0]['response_body']);
-										$mod_response = $q['Response'][0]['response_body'];
-										foreach(@$q['Response'][0]['Comment'] as $i=>$c){ 
-											if(!@$user_colors[$c['user_id']]) $user_colors[$c['user_id']] = array_pop($all_colors);
-											if(!$all_colors) $all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
+								<div class="textvalueWrapper" id="textvalueWrapper_<?php echo $k; ?>" style="overflow:hidden;">
+									<div class="textvalue">
+										<<?php echo ($completed ? 'div' : 'p'); ?> class="responseBodys" id="responseBody<?php echo $k; ?>">
+											<?php
+											$q['Response'][0]['response_body'] = stripslashes($q['Response'][0]['response_body']);
+											$mod_response = $q['Response'][0]['response_body'];
+											foreach(@$q['Response'][0]['Comment'] as $i=>$c){ 
+												if(!@$user_colors[$c['user_id']]) $user_colors[$c['user_id']] = array_pop($all_colors);
+												if(!$all_colors) $all_colors = array('#ACD3E7','#FF9999','#96E8BF','#FFFF99','#85A6E6','#FFD175','#CCFFCC','#C2C2A3','#E9E9E9','#9B9BCC');
 											
-											$rbody_decoded = utf8_decode($q['Response'][0]['response_body']);
-											$br_offset = @substr_count($rbody_decoded,"\n\n",0,$c['segment_start']);
-											$br_offset += @substr_count(str_replace("\n\n","\n",$rbody_decoded),"\n",$c['segment_start'] + $br_offset,5);
-											$br_offset += @substr_count(str_replace("\n",' ',str_replace("\n\n","\n",$rbody_decoded)),"  ",0,$c['segment_start'] + $br_offset);
+												$rbody_decoded = utf8_decode($q['Response'][0]['response_body']);
+												$br_offset = @substr_count($rbody_decoded,"\n\n",0,$c['segment_start']);
+												$br_offset += @substr_count(str_replace("\n\n","\n",$rbody_decoded),"\n",$c['segment_start'] + $br_offset,5);
+												$br_offset += @substr_count(str_replace("\n",' ',str_replace("\n\n","\n",$rbody_decoded)),"  ",0,$c['segment_start'] + $br_offset);
 											
-											$rbody_tmp = substr($q['Response'][0]['response_body'],0,$c['segment_start']);
-											$rbody_tmp_decode = utf8_decode($rbody_tmp);
-											$c['segment_start'] += strlen($rbody_tmp) - strlen($rbody_tmp_decode);
+												$rbody_tmp = substr($q['Response'][0]['response_body'],0,$c['segment_start']);
+												$rbody_tmp_decode = utf8_decode($rbody_tmp);
+												$c['segment_start'] += strlen($rbody_tmp) - strlen($rbody_tmp_decode);
 											
-											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
+												if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue;
 											
-											// new highlight logic to accommodate RTE
-											$tag_offset = 0;
-											$in_tag = $in_char = $in_comment = false;
-											for($i = 0;$i < strlen($mod_response);$i++){
-												if($in_tag && $mod_response[$i] == '>'){
-													$in_tag = false;
-													$tag_offset++;
-													continue;
-												}elseif($in_tag){
-													$tag_offset++;
-													continue;
-												}elseif($mod_response[$i] == '<'){
-													$in_tag = true;
-													$tag_offset++;
-													continue;
-												}elseif($in_char && $mod_response[$i] == ';'){
-													$in_char = false;
-													$tag_offset++;
-													continue;
-												}elseif($in_char){
-													$tag_offset++;
-													continue;
-												}elseif($mod_response[$i] == '&'){
-													$in_char = true;
-													continue;
-												}elseif($mod_response[$i] == ' ' && ($mod_response[$i - 1] == ' ' || substr($mod_response,$i-6,6) == '&nbsp;')){
-													$tag_offset++;
-												}
+												// new highlight logic to accommodate RTE
+												$tag_offset = 0;
+												$in_tag = $in_char = $in_comment = false;
+												for($i = 0;$i < strlen($mod_response);$i++){
+													if($in_tag && $mod_response[$i] == '>'){
+														$in_tag = false;
+														$tag_offset++;
+														continue;
+													}elseif($in_tag){
+														$tag_offset++;
+														continue;
+													}elseif($mod_response[$i] == '<'){
+														$in_tag = true;
+														$tag_offset++;
+														continue;
+													}elseif($in_char && $mod_response[$i] == ';'){
+														$in_char = false;
+														$tag_offset++;
+														continue;
+													}elseif($in_char){
+														$tag_offset++;
+														continue;
+													}elseif($mod_response[$i] == '&'){
+														$in_char = true;
+														continue;
+													}elseif($mod_response[$i] == ' ' && ($mod_response[$i - 1] == ' ' || substr($mod_response,$i-6,6) == '&nbsp;')){
+														$tag_offset++;
+													}
 												
-												if($c['segment_start'] == $i - $tag_offset){
-													$in_comment = true;
-													$span_str = '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>';
-													$mod_response = substr($mod_response,0,$i) . $span_str . substr($mod_response,$i);
-													break;
+													if($c['segment_start'] == $i - $tag_offset){
+														$in_comment = true;
+														$span_str = '<span class="markerContainer"><span style="background-color:'.$user_colors[$c['user_id']].' !important;" onmouseover="$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'activeMarker\');$(this).parent().parent().find(\'.inactiveMarker\').hide();" onmouseout="$(this).parent().parent().find(\'.inactiveMarker\').show();$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').addClass(\'inactiveMarker\');$(\'.commentMarker'.$k.'_'.$c['user_id'].'\').removeClass(\'activeMarker\');" onclick="setTimeout(function(){ show_comment('.$k.',\''.$c['user_id'].'_'.$k.'\',\''.$c['id'].'\',\''.$user_colors[$c['user_id']].'\',$(this).parent()); },15);" name="Click" title="Click" class="inactiveMarker commentMarker'.$k.'_'.$c['user_id'].'" id="commentMarker_'.$c['id'].'">&nbsp;</span></span>';
+														$mod_response = substr($mod_response,0,$i) . $span_str . substr($mod_response,$i);
+														break;
+													}
 												}
-											}
 									
-											if(!$completed){
+												if(!$completed){
 											
-												$alt_response = preg_replace("/\s+/"," ",str_replace("'","\\'",str_replace("\n",' ',str_replace("\n\n","\n",str_replace("\r","\n",str_replace("\xA0",' ',html_entity_decode(strip_tags($q['Response'][0]['response_body']))))))));
-												//$alt_response = utf8_decode($alt_response);
+													$alt_response = preg_replace("/\s+/"," ",str_replace("'","\\'",str_replace("\n",' ',str_replace("\n\n","\n",str_replace("\r","\n",str_replace("\xA0",' ',html_entity_decode(strip_tags($q['Response'][0]['response_body']))))))));
+													//$alt_response = utf8_decode($alt_response);
 												
-												$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $k),
-																										'formValues'	=> array(	array(	'name'	=> 'comment',
-																										 																'value'	=> $c['comment'] ),
-																																						array(	'name'	=> 'type',
-																																										'value'	=> $c['type'] ),
-																																						array(	'name'	=> 'id',
-																																										'value'	=> $c['id'] )));
-																																							
-												for($j = 1;$j <= substr_count($alt_response,' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($alt_response) - $c['segment_start']);$j++){
-													$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $j + $k),
+													$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $k),
 																											'formValues'	=> array(	array(	'name'	=> 'comment',
 																											 																'value'	=> $c['comment'] ),
 																																							array(	'name'	=> 'type',
 																																											'value'	=> $c['type'] ),
 																																							array(	'name'	=> 'id',
 																																											'value'	=> $c['id'] )));
-												}
-												$commentCount++;
-											}
-										}
-								
-										if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
-											$wordpos = 0;
-											for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos(strtoupper($mod_response),strtoupper($_REQUEST['highlight']),$wordpos + 1);
-											$mod_response = substr_replace($mod_response,'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
-										}
-								
-										echo ($completed ? $mod_response : $q['Response'][0]['response_body']);
-										$start_offset += substr_count($q['Response'][0]['response_body'],' ');
-										?>
-									</<?php echo ($completed ? 'div' : 'p'); ?>>
-									<?php 
-									if($completed){
-										$mod_response = array();
-										$rbody_decoded = utf8_decode($q['Response'][0]['response_body']);
-										foreach(@$q['Response'][0]['Comment'] as $c){
-											
-											$br_offset = @substr_count($rbody_decoded,"\n\n",0,$c['segment_start']);
-											$br_offset += @substr_count(str_replace("\n\n","\n",$rbody_decoded),"\n",$c['segment_start'] + $br_offset,5);
-											$br_offset += @substr_count(str_replace("\n",' ',str_replace("\n\n","\n",$rbody_decoded)),"  ",0,$c['segment_start'] + $br_offset);
-											
-											$rbody_tmp = substr($q['Response'][0]['response_body'],0,$c['segment_start']);
-											$rbody_tmp_decode = utf8_decode($rbody_tmp);
-											$c['segment_start'] += strlen($rbody_tmp) - strlen($rbody_tmp_decode);
-																					
-											if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue; 
-											if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
-											
-											// new highlight logic to accommodate RTE
-											$tag_offset = 0;
-											$in_tag = $in_char = $in_comment = false;
-											for($i = 0;$i < strlen($mod_response[$c['user_id']]);$i++){
-												if($in_tag && $mod_response[$c['user_id']][$i] == '>'){
-													$in_tag = false;
-													$tag_offset++;
-													continue;
-												}elseif($in_tag){
-													$tag_offset++;
-													continue;
-												}elseif($mod_response[$c['user_id']][$i] == '<'){
-													$in_tag = true;
-													$tag_offset++;
-													continue;
-												}elseif($in_char && $mod_response[$c['user_id']][$i] == ';'){
-													$in_char = false;
-													$tag_offset++;
-													continue;
-												}elseif($in_char){
-													$tag_offset++;
-													continue;
-												}elseif($mod_response[$c['user_id']][$i] == '&'){
-													$in_char = true;
-													continue;
-												}elseif($mod_response[$c['user_id']][$i] == ' ' && ($mod_response[$c['user_id']][$i - 1] == ' ' || substr($mod_response[$c['user_id']],$i-7,6) == '&nbsp;')){
-													$tag_offset++;
-												}
-												
-												if($c['segment_start'] == $i - $tag_offset){
-													$in_comment = true;
-													$span_str = '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>';
-													$mod_response[$c['user_id']] = substr($mod_response[$c['user_id']],0,$i) . $span_str . substr($mod_response[$c['user_id']],$i);
-													$i += strlen($span_str);
-													$tag_offset += strlen($span_str);
-												}
-												
-												if($c['segment_start'] + $c['segment_length'] == $i - $tag_offset || $in_comment){
-													$span_str = '<span class="commentHighlight commentHighlight_'.$c['id'].'">';
-													$mod_response[$c['user_id']] = substr($mod_response[$c['user_id']],0,$i) . $span_str . $mod_response[$c['user_id']][$i] . '</span>' . substr($mod_response[$c['user_id']],$i + 1);
-													if($c['segment_start'] + $c['segment_length'] == $i - $tag_offset) break;
-													$i += strlen($span_str) + 7;
-													$tag_offset += strlen($span_str) + 7;
+																																							
+													for($j = 1;$j <= substr_count($alt_response,' ',$c['segment_start'],$c['segment_length'] > 0 ? $c['segment_length'] - 1 : strlen($alt_response) - $c['segment_start']);$j++){
+														$js_comments[$commentCount][] = array(	'elementId' 	=> 'textAnnotate_' . (($c['segment_start'] > 0 ? substr_count($alt_response,' ',0,$c['segment_start']) : 0) + $start_offset + $j + $k),
+																												'formValues'	=> array(	array(	'name'	=> 'comment',
+																												 																'value'	=> $c['comment'] ),
+																																								array(	'name'	=> 'type',
+																																												'value'	=> $c['type'] ),
+																																								array(	'name'	=> 'id',
+																																												'value'	=> $c['id'] )));
+													}
+													$commentCount++;
 												}
 											}
-									/*
-											// old highlight logic
-											$mod_response[$c['user_id']] = $c['segment_start'] + $c['segment_length'] > strlen($mod_response[$c['user_id']]) || $c['segment_length'] < 0 ? ($mod_response[$c['user_id']] . '</span>') : (substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length'] + $br_offset) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length'] + $br_offset));
-											$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start'] + $br_offset) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start'] + $br_offset);
-											$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start'] + $br_offset) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start'] + $br_offset); 
-								*/
+								
 											if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
 												$wordpos = 0;
-												for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos(strtoupper($mod_response[$c['user_id']]),strtoupper($_REQUEST['highlight']),$wordpos + 1);
-												$mod_response[$c['user_id']] = substr_replace($mod_response[$c['user_id']],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
+												for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos(strtoupper($mod_response),strtoupper($_REQUEST['highlight']),$wordpos + 1);
+												$mod_response = substr_replace($mod_response,'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 											}
+								
+											echo ($completed ? $mod_response : $q['Response'][0]['response_body']);
+											$start_offset += substr_count($q['Response'][0]['response_body'],' ');
+											?>
+										</<?php echo ($completed ? 'div' : 'p'); ?>>
+										<?php 
+										if($completed){
+											$mod_response = array();
+											$rbody_decoded = utf8_decode($q['Response'][0]['response_body']);
+											foreach(@$q['Response'][0]['Comment'] as $c){
+											
+												$br_offset = @substr_count($rbody_decoded,"\n\n",0,$c['segment_start']);
+												$br_offset += @substr_count(str_replace("\n\n","\n",$rbody_decoded),"\n",$c['segment_start'] + $br_offset,5);
+												$br_offset += @substr_count(str_replace("\n",' ',str_replace("\n\n","\n",$rbody_decoded)),"  ",0,$c['segment_start'] + $br_offset);
+											
+												$rbody_tmp = substr($q['Response'][0]['response_body'],0,$c['segment_start']);
+												$rbody_tmp_decode = utf8_decode($rbody_tmp);
+												$c['segment_start'] += strlen($rbody_tmp) - strlen($rbody_tmp_decode);
+																					
+												if(($_SESSION['User']['user_type'] == 'P' && $_SESSION['User']['id'] != $q['Response'][0]['user_id'] && $_SESSION['User']['id'] != $c['user_id']) || (@$_REQUEST['instructor_comments'] && $c['user_id'] != $challenge[0]['Challenge']['user_id']) || (@$_REQUEST['collaborator_comments'] && !in_array($c['user_id'],$collab_ids))) continue; 
+												if(!@$mod_response[$c['user_id']]) $mod_response[$c['user_id']] = $q['Response'][0]['response_body'];
+											
+												// new highlight logic to accommodate RTE
+												$tag_offset = 0;
+												$in_tag = $in_char = $in_comment = false;
+												for($i = 0;$i < strlen($mod_response[$c['user_id']]);$i++){
+													if($in_tag && $mod_response[$c['user_id']][$i] == '>'){
+														$in_tag = false;
+														$tag_offset++;
+														continue;
+													}elseif($in_tag){
+														$tag_offset++;
+														continue;
+													}elseif($mod_response[$c['user_id']][$i] == '<'){
+														$in_tag = true;
+														$tag_offset++;
+														continue;
+													}elseif($in_char && $mod_response[$c['user_id']][$i] == ';'){
+														$in_char = false;
+														$tag_offset++;
+														continue;
+													}elseif($in_char){
+														$tag_offset++;
+														continue;
+													}elseif($mod_response[$c['user_id']][$i] == '&'){
+														$in_char = true;
+														continue;
+													}elseif($mod_response[$c['user_id']][$i] == ' ' && ($mod_response[$c['user_id']][$i - 1] == ' ' || substr($mod_response[$c['user_id']],$i-7,6) == '&nbsp;')){
+														$tag_offset++;
+													}
+												
+													if($c['segment_start'] == $i - $tag_offset){
+														$in_comment = true;
+														$span_str = '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>';
+														$mod_response[$c['user_id']] = substr($mod_response[$c['user_id']],0,$i) . $span_str . substr($mod_response[$c['user_id']],$i);
+														$i += strlen($span_str);
+														$tag_offset += strlen($span_str);
+													}
+												
+													if($c['segment_start'] + $c['segment_length'] == $i - $tag_offset || $in_comment){
+														$span_str = '<span class="commentHighlight commentHighlight_'.$c['id'].'">';
+														$mod_response[$c['user_id']] = substr($mod_response[$c['user_id']],0,$i) . $span_str . $mod_response[$c['user_id']][$i] . '</span>' . substr($mod_response[$c['user_id']],$i + 1);
+														if($c['segment_start'] + $c['segment_length'] == $i - $tag_offset) break;
+														$i += strlen($span_str) + 7;
+														$tag_offset += strlen($span_str) + 7;
+													}
+												}
+										/*
+												// old highlight logic
+												$mod_response[$c['user_id']] = $c['segment_start'] + $c['segment_length'] > strlen($mod_response[$c['user_id']]) || $c['segment_length'] < 0 ? ($mod_response[$c['user_id']] . '</span>') : (substr($mod_response[$c['user_id']],0,$c['segment_start']+$c['segment_length'] + $br_offset) . '</span>' . substr($mod_response[$c['user_id']],$c['segment_start']+$c['segment_length'] + $br_offset));
+												$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start'] + $br_offset) . '<span class="commentHighlight" id="commentHighlight_'.$c['id'].'">' . substr($mod_response[$c['user_id']],$c['segment_start'] + $br_offset);
+												$mod_response[$c['user_id']] = substr($q['Response'][0]['response_body'],0,$c['segment_start'] + $br_offset) . '<span style="background-color:'.$user_colors[$c['user_id']].' !important;">&nbsp;</span>' . substr($mod_response[$c['user_id']],$c['segment_start'] + $br_offset); 
+									*/
+												if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
+													$wordpos = 0;
+													for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos(strtoupper($mod_response[$c['user_id']]),strtoupper($_REQUEST['highlight']),$wordpos + 1);
+													$mod_response[$c['user_id']] = substr_replace($mod_response[$c['user_id']],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
+												}
 									
-										}foreach($mod_response as $kmr=>$mr){ ?>
-											<div id="responseBody<?php echo $k; ?>_<?php echo $kmr.'_'.$k; ?>" class="responseBodys" style="display:none;">
-												<?php echo nl2br($mr); ?>
-											</div>
-										<?php }
-									}
+											}foreach($mod_response as $kmr=>$mr){ ?>
+												<div id="responseBody<?php echo $k; ?>_<?php echo $kmr.'_'.$k; ?>" class="responseBodys" style="display:none;">
+													<?php echo nl2br($mr); ?>
+												</div>
+											<?php }
+										}
 							
-									if(!$completed){ ?>
-										<div style="display:none;" class="notice-for-edit">
-											<?php echo __('Highlight a section of the text to add a comment.') ?>
-										</div>
-										<div style="background-image:none;" class="notice-for-edit spacer"> </div>
-									<?php } ?>
+										if(!$completed){ ?>
+											<div style="display:none;" class="notice-for-edit">
+												<?php echo __('Highlight a section of the text to add a comment.') ?>
+											</div>
+											<div style="background-image:none;" class="notice-for-edit spacer"> </div>
+										<?php } ?>
+									</div>
 								</div>
 							</li>
 						</ul>
@@ -578,7 +580,105 @@
 				</div>
 				<?php }
 			} ?>
+			
+			<?php if(count($challenge[0]['Question']) > 1){ ?>
+				<div class="box-foot">
+					<div class="pagination">
+						<div class="alignleft pagination-prev">
+							<select style="width:75px;">
+								<option value="30">30 lines</option>
+								<option value="60">60 lines</option>
+								<option value="90">90 lines</option>
+								<option value="">Everything</option>
+							</select>
+
+							<a href="#"><?php echo __('Previous') ?></a>
+						</div>
+						<div class="alignright pagination-next">
+							<a href="#"><?php echo __('Next') ?></a>
+						</div>
+
+						<div class="aligncenter pagination-pages">
+							<ul>
+								<?php foreach($challenge[0]['Question'] as $k=>$q){ ?>
+									<li id="qnav_<?php echo $k; ?>">
+										<a href="#" onclick="render_pagination(0,<?php echo $k; ?>);return false;"><?php echo ($k + 1); ?></a>
+										<ul class="qnav_sub"> </ul>
+									</li>
+								<?php } ?>
+							</ul>
+						</div>
+
+						<div class="clear"></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+				var currentPage = 0;
+				var currentQuestion = 0;
+				function render_pagination(page,question){
+					currentPage = page;
+					currentQuestion = question;
+
+					if(!$('.pagination-prev select').val()){
+						// show everything
+						$('.textvalueWrapper').show();
+						$('.textvalueWrapper .textvalue').css('height','auto');
+						$('.box-foot').hide();
+					}else{
+						// show current response
+						currentResponse = $('#textvalueWrapper_' + currentQuestion);
+						$('.textvalueWrapper').hide();
+						currentResponse.show();
+
+						// count lines in response
+						currentResponse.find('.textvalue').css('line-height','40px');
+						lineCount = Math.round((currentResponse.find('.textvalue').height() - 40) / 40);
+						currentResponse.find('.textvalue').css('line-height','18px');
+
+						// set height based on display selection
+						currentResponse.find('.textvalue').height(($('.pagination select').val() * 18) + 40);
+						currentResponse.find('.textvalue').css('margin-top',-(currentPage * 18));
+
+						// set pagination links
+						pageCount = Math.ceil(lineCount / $('.pagination select').val());
+						if((currentPage + 1) < pageCount && currentQuestion < <?php echo count($challenge[0]['Question']); ?>) $('.pagination-next').show();
+						else $('.pagination-next').hide();
+
+						if(!currentPage && !currentQuestion){
+							$('.pagination-prev a').hide();
+							if(pageCount > 1) $('.pagination-prev select').show();
+							else $('.pagination-prev select').hide();
+						}else{
+							$('.pagination-prev a').show();
+							$('.pagination-prev select').hide();
+						}
+
+						$('.pagination-pages li').removeClass('current');
+						$('.qnav_sub').hide();
+						$('#qnav_' + currentQuestion).addClass('current');
+
+						if(pageCount > 1){
+							$('#qnav_' + currentQuestion + ' .qnav_sub').show();
+
+							for(i = 0;i < pageCount;i++){
+								$('#qnav_' + currentQuestion + ' .qnav_sub').append('<li' + (currentPage == i ? ' class="current"' : '') + '><a href="#">' + (i + 1) + '</a></li>');
+								$('#qnav_' + currentQuestion + ' .qnav_sub li').last().click(function(){
+									render_pagination(i,question);
+									return false;
+								});
+							}
+						}
+
+						$('.box-foot').show();
+					}
+				}
+
+				render_pagination(0,0);
+				</script>
+			<?php } ?>
+			
 		</div>
+		
 	<?php } ?>
 	
 	<div class="clear"></div>
