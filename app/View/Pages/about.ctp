@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>About | Puentes</title>
+	<title>About | Skywork</title>
 	
 	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="./favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
@@ -100,7 +100,7 @@
 					</div>
 					
 					<div id="product-solution" class="product-overview-box" style="width:385px;">
-						<h4 style = "margin-right: 38px;">The Puentes Solution</h4>
+						<h4 style = "margin-right: 38px;">The Skywork Solution</h4>
 						
 						<ul>
 							<li><span class="icon icon-123"></span> You create an assignment.</li>
@@ -126,7 +126,7 @@
 					<div class="alignright more-info-special-content">
 						<p class="more-info-special-title">Instructors</p>
 						<ul>
-							<li>Sign up with Puentes.</li>
+							<li>Sign up with Skywork.</li>
 							<li>Select the assignment you'd like to create; send it to your class.</li>
 							<li>Upload a document or video to accompany the assignment.</li>
 							<li>Add multiple class sections to the same assignment.</li>
@@ -140,7 +140,7 @@
 					<div class="alignleft more-info-special-content">
 						<p class="more-info-special-title">Students</p>
 						<ul>
-							<li>Students log in to Puentes</li>
+							<li>Students log in to Skywork</li>
 							<li>View the uploaded document or video; answer assigned questions; submit by the due date</li>
 							<li>Have a chance to collaborate with other students through feedback</li>
 						</ul>

@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: Controller/challenges_controller.php:515
-msgid "Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited you to collaborate with their classroom on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n\nYou will be able to provide feedback to {firstname_2}'s students between the dates of:\n\n{duedate_1} and {duedate_2}.\n\nLastly, Puentes is currently in invite-only beta, so you will need a Beta-Test Key. It is: BETATEST\n\nClick here to check it out\n{invite_link}\n\nSincerely,\nThe Puentes Team"
+msgid "Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited you to collaborate with their classroom on Skywork Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n\nYou will be able to provide feedback to {firstname_2}'s students between the dates of:\n\n{duedate_1} and {duedate_2}.\n\nLastly, Skywork is currently in invite-only beta, so you will need a Beta-Test Key. It is: BETATEST\n\nClick here to check it out\n{invite_link}\n\nSincerely,\nThe Skywork Team"
 msgstr ""
 
 #: Controller/challenges_controller.php:523;539;564
@@ -23,7 +23,7 @@ msgid "Invitation from {first_name} {last_name}"
 msgstr ""
 
 #: Controller/challenges_controller.php:531
-msgid "Hi {firstname_1}!\n\nYour Instructor, {firstname_2} {lastname_2}, has sent you an invitation to join a Bridge on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n\nYou will have until:\n\n{duedate_1} to complete a series of questions.\n\n{duedate_2} to give feedback to other students.\n\nClick here to check it out:\n{bridge_link}\n\nSincerely,\nThe Puentes Team"
+msgid "Hi {firstname_1}!\n\nYour Instructor, {firstname_2} {lastname_2}, has sent you an invitation to join a Bridge on Skywork Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n\nYou will have until:\n\n{duedate_1} to complete a series of questions.\n\n{duedate_2} to give feedback to other students.\n\nClick here to check it out:\n{bridge_link}\n\nSincerely,\nThe Skywork Team"
 msgstr ""
 
 #: Controller/challenges_controller.php:556
@@ -31,27 +31,27 @@ msgid "Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited your class(es
 msgstr ""
 
 #: Controller/challenges_controller.php:614
-msgid "Hi {firstname_1}!\n\n{firstname_2} has accepted your request to join {bridge_name} on Puentes.\n\nSincerely,\nThe Puentes Team"
+msgid "Hi {firstname_1}!\n\n{firstname_2} has accepted your request to join {bridge_name} on Skywork.\n\nSincerely,\nThe Skywork Team"
 msgstr ""
 
 #: Controller/challenges_controller.php:626
-msgid "Hi {firstname_1}!\n\nSorry, {firstname_2} has declined the request to join {bridge_name} on Puentes.\n\n\"{rejection_text}\"\n\nPerhaps some other time!\n\nSincerely,\nThe Puentes Team"
+msgid "Hi {firstname_1}!\n\nSorry, {firstname_2} has declined the request to join {bridge_name} on Skywork.\n\n\"{rejection_text}\"\n\nPerhaps some other time!\n\nSincerely,\nThe Skywork Team"
 msgstr ""
 
 #: Controller/challenges_controller.php:664
-msgid "Hi {firstname}!\n\nThe Bridge {bridge_name} is set to expire today at {expiration_time}.\n\nClick here make any final edits!\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team"
+msgid "Hi {firstname}!\n\nThe Bridge {bridge_name} is set to expire today at {expiration_time}.\n\nClick here make any final edits!\nhttp://puentesonline.com/\n\nSincerely,\nThe Skywork Team"
 msgstr ""
 
 #: Controller/responses_controller.php:131
-msgid "{firstname},\n\nYour instructor has completed evaluation of your assignment, {bridge_name}, and it is ready for your viewing!\n\nClick here to check it out:\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team"
+msgid "{firstname},\n\nYour instructor has completed evaluation of your assignment, {bridge_name}, and it is ready for your viewing!\n\nClick here to check it out:\nhttp://puentesonline.com/\n\nSincerely,\nThe Skywork Team"
 msgstr ""
 
 #: Controller/users_controller.php:173
-msgid "Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team"
+msgid "Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Skywork Online - the world's first feedback learning system.\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Skywork Team"
 msgstr ""
 
 #: Controller/users_controller.php:174
-msgid "Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n\nYour username is your email: <b>{user_email}</b>\nYour temporary password is: <b>{password}</b>\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team"
+msgid "Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Skywork Online - the world's first feedback learning system.\n\nYour username is your email: <b>{user_email}</b>\nYour temporary password is: <b>{password}</b>\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Skywork Team"
 msgstr ""
 
 #: Controller/users_controller.php:185
@@ -59,7 +59,7 @@ msgid "{first_name} {last_name} wants you to join their Class"
 msgstr ""
 
 #: Controller/users_controller.php:218
-msgid "{first_name},\n\nSomeone (probably you), forgot the password on Puentes Online. Click on the link below to create a new password.\n\n{link}\n\nSincerely,\nThe Puentes Team"
+msgid "{first_name},\n\nSomeone (probably you), forgot the password on Skywork Online. Click on the link below to create a new password.\n\n{link}\n\nSincerely,\nThe Skywork Team"
 msgstr ""
 
 #: Controller/users_controller.php:222
@@ -767,7 +767,7 @@ msgid "Email"
 msgstr ""
 
 #: View/Challenges/update_people.ctp:96
-msgid "Already in Puentes?"
+msgid "Already in Skywork?"
 msgstr ""
 
 #: View/Challenges/update_people.ctp:106
@@ -877,7 +877,7 @@ msgid "Register Student(s)"
 msgstr ""
 
 #: View/Classes/create_student.ctp:7
-msgid "Register your student(s) manually here. Add your students and send an automated email notification by clicking ‘Add.’ If they’re new to Puentes, that email will contain a temporary password."
+msgid "Register your student(s) manually here. Add your students and send an automated email notification by clicking ‘Add.’ If they’re new to Skywork, that email will contain a temporary password."
 msgstr ""
 
 #: View/Classes/create_student.ctp:19
@@ -983,7 +983,7 @@ msgid "Logout"
 msgstr ""
 
 #: View/Layouts/default.ctp:67
-msgid "Puentes Online is currently in private beta."
+msgid "Skywork Online is currently in private beta."
 msgstr ""
 
 #: View/Layouts/default.ctp:68
@@ -1324,7 +1324,7 @@ msgid "This user has not submitted responses"
 msgstr ""
 
 #: View/Users/invite_collaborator.ctp:4
-msgid "Add a Collaborator to Puentes"
+msgid "Add a Collaborator to Skywork"
 msgstr ""
 
 #: View/Users/invite_collaborator.ctp:24
@@ -1336,7 +1336,7 @@ msgid "Logged Out"
 msgstr ""
 
 #: View/Users/session_logout.ctp:11
-msgid "Your current Puentes session has ended."
+msgid "Your current Skywork session has ended."
 msgstr ""
 
 #: View/Users/session_logout.ctp:14

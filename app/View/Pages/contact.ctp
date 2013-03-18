@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Contact Us - Frequently Asked Questions | Puentes</title>
+	<title>Contact Us - Frequently Asked Questions | Skywork</title>
 	
 	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="./favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
@@ -131,25 +131,25 @@
 					<li>
 						<a href="#" class="toggle">Is my class information private?</a>
 						<div class="toggle-content">
-							<p>Yes, absolutely. Your privacy is of absolute importance to Puentes. Please visit our Privacy Policy for more information. If you have any other questions, shoot us an email via the "Contact Us" form.</p>
+							<p>Yes, absolutely. Your privacy is of absolute importance to Skywork. Please visit our Privacy Policy for more information. If you have any other questions, shoot us an email via the "Contact Us" form.</p>
 						</div>
 					</li>
 					<li>
-						<a href="#" class="toggle">Can I use Puentes if our school/institution uses applications like Blackboard and/or others?</a>
+						<a href="#" class="toggle">Can I use Skywork if our school/institution uses applications like Blackboard and/or others?</a>
 						<div class="toggle-content">
-							<p>There are lots of free services that are used by Instructors all over the country. Unless your school or college licenses with us, Puentes is an independent service from your institution, and signing up is extremely easy.</p>
+							<p>There are lots of free services that are used by Instructors all over the country. Unless your school or college licenses with us, Skywork is an independent service from your institution, and signing up is extremely easy.</p>
 						</div>
 					</li>
 					<li>
-						<a href="#" class="toggle">Why am I not getting Puentes emails?</a>
+						<a href="#" class="toggle">Why am I not getting Skywork emails?</a>
 						<div class="toggle-content">
 							<p>There may be a chance that your emails are going to your spam folder. To avoid this, add info@puentesonline to your safe list. If you are still experiencing problems, please feel free to reach out to us at info@puentesonline.com</p>
 						</div>
 					</li>
 					<li>
-						<a href="#" class="toggle">What is typical troubleshooting for Puentes?</a>
+						<a href="#" class="toggle">What is typical troubleshooting for Skywork?</a>
 						<div class="toggle-content">
-							<p>If you or one of your students experiences some inexplicable issue with Puentes, try these simple troubleshooting methods:</p>
+							<p>If you or one of your students experiences some inexplicable issue with Skywork, try these simple troubleshooting methods:</p>
 							<ol class="list-arabic">
 								<li>Refresh the page (make sure you save any unfinished work first)</li>
 								<li>Update your Internet browser to the latest version</li>
@@ -177,9 +177,9 @@
 						</div>
 					</li>
 					<li>
-						<a href="#" class="toggle">Who created Puentes?</a>
+						<a href="#" class="toggle">Who created Skywork?</a>
 						<div class="toggle-content">
-							<p>Puentes was originally created by Sean Daly. The first commercially viable product was created in collaboration with Benjamin Rawn and Wifredo Fernandez.</p>
+							<p>Skywork was originally created by Sean Daly. The first commercially viable product was created in collaboration with Benjamin Rawn and Wifredo Fernandez.</p>
 						</div>
 					</li>
 					<li>

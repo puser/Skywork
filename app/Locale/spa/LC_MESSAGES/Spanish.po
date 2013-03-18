@@ -7,7 +7,7 @@ msgstr ""
 "POT-Creation-Date: 2013-01-14 13:10-0500\n"
 "PO-Revision-Date: 2013-01-23 19:34-0400\n"
 "Last-Translator: Sean Daly <seand567@hotmail.com>\n"
-"Language-Team: Puentes\n"
+"Language-Team: Skywork\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,19 +19,19 @@ msgstr ""
 msgid ""
 "Hi {firstname_1}!\n"
 "\n"
-"{firstname_2} {lastname_2} has invited you to collaborate with their classroom on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n"
+"{firstname_2} {lastname_2} has invited you to collaborate with their classroom on Skywork Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n"
 "\n"
 "You will be able to provide feedback to {firstname_2}'s students between the dates of:\n"
 "\n"
 "{duedate_1} and {duedate_2}.\n"
 "\n"
-"Lastly, Puentes is currently in invite-only beta, so you will need a Beta-Test Key. It is: BETATEST\n"
+"Lastly, Skywork is currently in invite-only beta, so you will need a Beta-Test Key. It is: BETATEST\n"
 "\n"
 "Click here to check it out\n"
 "{invite_link}\n"
 "\n"
 "Sincerely,\n"
-"The Puentes Team"
+"The Skywork Team"
 msgstr ""
 
 #: Controller/challenges_controller.php:523;539;564
@@ -42,7 +42,7 @@ msgstr ""
 msgid ""
 "Hi {firstname_1}!\n"
 "\n"
-"Your Instructor, {firstname_2} {lastname_2}, has sent you an invitation to join a Bridge on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n"
+"Your Instructor, {firstname_2} {lastname_2}, has sent you an invitation to join a Bridge on Skywork Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n"
 "\n"
 "You will have until:\n"
 "\n"
@@ -54,7 +54,7 @@ msgid ""
 "{bridge_link}\n"
 "\n"
 "Sincerely,\n"
-"The Puentes Team"
+"The Skywork Team"
 msgstr ""
 
 #: Controller/challenges_controller.php:556
@@ -68,24 +68,24 @@ msgstr ""
 msgid ""
 "Hi {firstname_1}!\n"
 "\n"
-"{firstname_2} has accepted your request to join {bridge_name} on Puentes.\n"
+"{firstname_2} has accepted your request to join {bridge_name} on Skywork.\n"
 "\n"
 "Sincerely,\n"
-"The Puentes Team"
+"The Skywork Team"
 msgstr ""
 
 #: Controller/challenges_controller.php:626
 msgid ""
 "Hi {firstname_1}!\n"
 "\n"
-"Sorry, {firstname_2} has declined the request to join {bridge_name} on Puentes.\n"
+"Sorry, {firstname_2} has declined the request to join {bridge_name} on Skywork.\n"
 "\n"
 "\"{rejection_text}\"\n"
 "\n"
 "Perhaps some other time!\n"
 "\n"
 "Sincerely,\n"
-"The Puentes Team"
+"The Skywork Team"
 msgstr ""
 
 #: Controller/challenges_controller.php:664
@@ -98,7 +98,7 @@ msgid ""
 "http://puentesonline.com/\n"
 "\n"
 "Sincerely,\n"
-"The Puentes Team"
+"The Skywork Team"
 msgstr ""
 
 #: Controller/responses_controller.php:131
@@ -111,7 +111,7 @@ msgid ""
 "http://puentesonline.com/\n"
 "\n"
 "Sincerely,\n"
-"The Puentes Team"
+"The Skywork Team"
 msgstr ""
 
 #: Controller/users_controller.php:173
@@ -119,30 +119,30 @@ msgstr ""
 msgid ""
 "Hi {first_name_1}!\n"
 "\n"
-" Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n"
+" Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Skywork Online - the world's first feedback learning system.\n"
 "\n"
 "{begin_link}Sign in now!{end_link}\n"
 "\n"
 "Sincerely,\n"
 "\n"
-"The Puentes Team"
+"The Skywork Team"
 msgstr ""
 "{first_name_1},\n"
 "\n"
-"{first_name_2} le invita a que participe en Puentes Online - el primer sistema de feedback del mundo. Quiere que se unan las clases, {classname}. \n"
+"{first_name_2} le invita a que participe en Skywork Online - el primer sistema de feedback del mundo. Quiere que se unan las clases, {classname}. \n"
 "\n"
 "{begin_link}¡Haga clic aquí para empezar!{end_link}\n"
 "\n"
 "Saludos,\n"
 "\n"
-"El equipo de Puentes"
+"El equipo de Skywork"
 
 #: Controller/users_controller.php:174
 #, fuzzy
 msgid ""
 "Hi {first_name_1}!\n"
 "\n"
-" Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n"
+" Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Skywork Online - the world's first feedback learning system.\n"
 "\n"
 "Your username is your email: <b>{user_email}</b>\n"
 "Your temporary password is: <b>{password}</b>\n"
@@ -151,17 +151,17 @@ msgid ""
 "\n"
 "Sincerely,\n"
 "\n"
-"The Puentes Team"
+"The Skywork Team"
 msgstr ""
 "{first_name_1},\n"
 "\n"
-"{first_name_2} le invita a que participe en Puentes Online - el primer sistema de feedback del mundo. Quiere que se unan las clases, {classname}. \n"
+"{first_name_2} le invita a que participe en Skywork Online - el primer sistema de feedback del mundo. Quiere que se unan las clases, {classname}. \n"
 "\n"
 "{begin_link}¡Haga clic aquí para empezar!{end_link}\n"
 "\n"
 "Saludos,\n"
 "\n"
-"El equipo de Puentes"
+"El equipo de Skywork"
 
 #: Controller/users_controller.php:185
 msgid "{first_name} {last_name} wants you to join their Class"
@@ -171,21 +171,21 @@ msgstr "{first_name} {last_name} quiere compartir su clase."
 msgid ""
 "{first_name},\n"
 "\n"
-"Someone (probably you), forgot the password on Puentes Online. Click on the link below to create a new password.\n"
+"Someone (probably you), forgot the password on Skywork Online. Click on the link below to create a new password.\n"
 "\n"
 "{link}\n"
 "\n"
 "Sincerely,\n"
-"The Puentes Team"
+"The Skywork Team"
 msgstr ""
 "{first_name},\n"
 "\n"
-"Probablemente se ha olvidado su contraseña en Puentes Online. Haga clic aquí para crear una nueva contraseña.\n"
+"Probablemente se ha olvidado su contraseña en Skywork Online. Haga clic aquí para crear una nueva contraseña.\n"
 "\n"
 "{link}\n"
 "\n"
 "Saludos,\n"
-"El Equipo de Puentes"
+"El Equipo de Skywork"
 
 #: Controller/users_controller.php:222
 #: View/Pages/about.ctp:415;421
@@ -648,7 +648,7 @@ msgstr "Ayuda"
 #: View/Challenges/update_info.ctp:83
 #, fuzzy
 msgid "Offline Challenge"
-msgstr "Desafío fuera de Puentes"
+msgstr "Desafío fuera de Skywork"
 
 #: View/Challenges/update_active.ctp:121
 #: View/Challenges/update_info.ctp:91
@@ -732,12 +732,12 @@ msgstr "En este desafío, el instructor asigna video a los estudiantes. En la se
 
 #: View/Challenges/update_challenge.ctp:36
 msgid "Is your challenge offline?"
-msgstr "¿El desafío está fuera de Puentes?"
+msgstr "¿El desafío está fuera de Skywork?"
 
 #: View/Challenges/update_challenge.ctp:37
 msgid "I'm assigning my challenge offline (e.g. the reading is in a textbook)"
 msgstr ""
-"La activadad está fuera de Puentes (ej una lectura en un libro de texto)"
+"La activadad está fuera de Skywork (ej una lectura en un libro de texto)"
 
 #: View/Challenges/update_collaboration.ctp:4
 msgid "Students Collaborate"
@@ -936,7 +936,7 @@ msgid "Email"
 msgstr "Correo electrónico"
 
 #: View/Challenges/update_people.ctp:96
-msgid "Already in Puentes?"
+msgid "Already in Skywork?"
 msgstr "¿Usuario existente?"
 
 #: View/Challenges/update_people.ctp:106
@@ -1059,10 +1059,10 @@ msgid "Register Student(s)"
 msgstr "Registrar estudiantes"
 
 #: View/Classes/create_student.ctp:7
-msgid "Register your student(s) manually here. Add your students and send an automated email notification by clicking ‘Add.’ If they’re new to Puentes, that email will contain a temporary password."
+msgid "Register your student(s) manually here. Add your students and send an automated email notification by clicking ‘Add.’ If they’re new to Skywork, that email will contain a temporary password."
 msgstr ""
 "Registre los estudiantes de forma manual. Añade sus estudiantes y envíe una "
-"notificación automática al hacer clic en 'Añade.' Si son nuevos en Puentes, "
+"notificación automática al hacer clic en 'Añade.' Si son nuevos en Skywork, "
 "esa notificación contendrá una contraseña temporal. "
 
 #: View/Classes/create_student.ctp:19
@@ -1171,8 +1171,8 @@ msgid "Logout"
 msgstr "Salir"
 
 #: View/Layouts/default.ctp:67
-msgid "Puentes Online is currently in private beta."
-msgstr "Puentes Online está actualmente en beta privado."
+msgid "Skywork Online is currently in private beta."
+msgstr "Skywork Online está actualmente en beta privado."
 
 #: View/Layouts/default.ctp:68
 msgid "Login"
@@ -1524,8 +1524,8 @@ msgid "This user has not submitted responses"
 msgstr "Este usuario no ha enviado ninguna respuesta"
 
 #: View/Users/invite_collaborator.ctp:4
-msgid "Add a Collaborator to Puentes"
-msgstr "Agregar un Colaborador a Puentes"
+msgid "Add a Collaborator to Skywork"
+msgstr "Agregar un Colaborador a Skywork"
 
 #: View/Users/invite_collaborator.ctp:24
 msgid "Add"
@@ -1537,8 +1537,8 @@ msgstr "Cerró la sesión"
 
 #: View/Users/session_logout.ctp:11
 #, fuzzy
-msgid "Your current Puentes session has ended."
-msgstr "La sesión de Puentes ha terminado."
+msgid "Your current Skywork session has ended."
+msgstr "La sesión de Skywork ha terminado."
 
 #: View/Users/session_logout.ctp:14
 msgid "Go to Homepage"
@@ -1882,7 +1882,7 @@ msgstr "Cuenta Estándar (¡Gratis!)"
 
 #: View/Users/view_payments.ctp:30
 msgid "Create and/or participate in up to two assignments per month."
-msgstr "Crear y/o participar en dos Puentes por mes."
+msgstr "Crear y/o participar en dos Skywork por mes."
 
 #: View/Users/view_payments.ctp:31
 msgid "You and your students get up to 200MB of total storage per month."
@@ -1898,7 +1898,7 @@ msgstr "Cuenta de pago - $9.99/mes"
 
 #: View/Users/view_payments.ctp:45
 msgid "Create and/or participate in up to six assignments per month."
-msgstr "Crear y/o participar en hasta seis Puentes por mes."
+msgstr "Crear y/o participar en hasta seis Skywork por mes."
 
 #: View/Users/view_payments.ctp:46
 msgid "You and your students get up to 2 GB of storage in total storage."
@@ -1991,8 +1991,8 @@ msgstr "Eliminar palabra de la lista"
 #~ msgid "Document"
 #~ msgstr "Documento"
 
-#~ msgid "Add a User to Puentes"
-#~ msgstr "Añada un usuario a Puentes"
+#~ msgid "Add a User to Skywork"
+#~ msgstr "Añada un usuario a Skywork"
 
 #~ msgid "Make this class searchable"
 #~ msgstr "Permita que esta clase pueda buscarse"

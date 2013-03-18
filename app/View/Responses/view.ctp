@@ -276,7 +276,7 @@
 					You may, however, make as many changes and resend to your students.
 					<br /><br />
 					Click Send to Students:<br />
-					1. Puentes will send an automated email notifying your students<br />
+					1. Skywork will send an automated email notifying your students<br />
 					2. Your students will be able to see your comments and corrections
 					<br /><br />
 					Click Continue Evaluating Student Work:<br />
@@ -293,7 +293,7 @@
 					You have clicked to finish evaluating your student’s work. You may: 
 					<br /><br />
 					Click Send to Students:<br />
-					1. Puentes will send an automated email notifying your students<br />
+					1. Skywork will send an automated email notifying your students<br />
 					2. Your students will be able to see your comments and corrections
 					<br /><br />
 					Click Continue Evaluating Student Work:<br />

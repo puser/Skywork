@@ -4,7 +4,7 @@
 		<h2><?php echo __('Register Student(s)') ?></h2>
 	</div>
 	<div class="modal-box-content">
-		<div style="line-height:25px;color:#567AA9;"><?php echo __('Register your student(s) manually here. Add your students and send an automated email notification by clicking ‘Add.’ If they’re new to Puentes, that email will contain a temporary password.') ?></div>
+		<div style="line-height:25px;color:#567AA9;"><?php echo __('Register your student(s) manually here. Add your students and send an automated email notification by clicking ‘Add.’ If they’re new to Skywork, that email will contain a temporary password.') ?></div>
 		<br />
 		
 		<ul class="fieldset2">

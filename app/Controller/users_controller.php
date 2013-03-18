@@ -232,8 +232,8 @@ class UsersController extends AppController{
 		$invite_url = 'http://puentesonline.com/users/accept_invitation/0/'.$class_id.'/'.$this->User->id.'/'.$invite_token;
 		
 		if($send_invite){
-			if(!$tmp_password) $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Puentes Online - the world's first feedback learning system.\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team");
-			else $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to the class {classname} on Puentes - Assignments. On Demand!\n\nYour username is your email: <b>{user_email}</b>\nYour temporary password is: <b>{password}</b>\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Puentes Team");
+			if(!$tmp_password) $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to {classname} on Skywork Online - the world's first feedback learning system.\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Skywork Team");
+			else $message = __("Hi {first_name_1}!\n\n Your instructor, {first_name_2} {last_name_2}, has added you to the class {classname} on Skywork - Assignments. On Demand!\n\nYour username is your email: <b>{user_email}</b>\nYour temporary password is: <b>{password}</b>\n\n{begin_link}Sign in now!{end_link}\n\nSincerely,\n\nThe Skywork Team");
 			$message = str_replace('{first_name_1}',$user['User']['firstname'],$message);
 			$message = str_replace('{first_name_2}',$class['Owner']['firstname'],$message);
 			$message = str_replace('{last_name_2}',$class['Owner']['lastname'],$message);
@@ -250,7 +250,7 @@ class UsersController extends AppController{
 		
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
+			$headers .= 'From: Skywork <noreply@puentesonline.com>' . "\r\n";
 	
 			// send invite email
 			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",$subject,nl2br($message),$headers);
@@ -278,11 +278,11 @@ class UsersController extends AppController{
 		if($user){
 			$reminder_token = sha1(time().$this->salt);
 			
-			$message = __("{first_name},\n\nSomeone (probably you), forgot the password on Puentes Online. Click on the link below to create a new password.\n\n{link}\n\nSincerely,\nThe Puentes Team");
+			$message = __("{first_name},\n\nSomeone (probably you), forgot the password on Skywork Online. Click on the link below to create a new password.\n\n{link}\n\nSincerely,\nThe Skywork Team");
 			$message = str_replace('{first_name}',$user['User']['firstname'],$message);
 			$message = str_replace('{link}',"http://puentesonline.com/users/password_reset/".$reminder_token,$message);
 			
-			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",__("New Password"),$message,'From: Puentes <noreply@puentesonline.com>');
+			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",__("New Password"),$message,'From: Skywork <noreply@puentesonline.com>');
 			
 			$this->User->id = $user['User']['id'];
 			$this->User->saveField('invite_token',$reminder_token);
@@ -341,8 +341,8 @@ class UsersController extends AppController{
 			$this->WordFlag->save(array('flag_type'=>'WORD','word'=>'you know','count'=>2,'user_id'=>$user['User']['id']));
 			
 			// send confirmation email
-			$message = __("Welcome to Puentes Online! Your account has been created successfully. Click on the link below to sign in.\n\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team");
-			mail("{$user['User']['email']}",__("Welcome to Puentes Online"),$message,'From: Puentes <noreply@puentesonline.com>');
+			$message = __("Welcome to Skywork Online! Your account has been created successfully. Click on the link below to sign in.\n\nhttp://puentesonline.com/\n\nSincerely,\nThe Skywork Team");
+			mail("{$user['User']['email']}",__("Welcome to Skywork Online"),$message,'From: Skywork <noreply@puentesonline.com>');
 			
 			$this->redirect('/users/view/');
 		}elseif(@$_REQUEST['betakey'] && ((@$_REQUEST['betakey'] != 'BETATEST' && @$_REQUEST['user_type'] == 'L') || (@$_REQUEST['betakey'] != 'BETACOLLAB' && @$_REQUEST['user_type'] == 'C'))){
@@ -369,8 +369,8 @@ class UsersController extends AppController{
 			else die('There was an error processing your request.');
 			
 			// send confirmation email
-			$message = __("Welcome to Puentes Online! Your account has been created successfully. Click on the link below to sign in.\n\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team");
-			mail("{$user['User']['email']}",__("Welcome to Puentes Online"),$message,'From: Puentes <noreply@puentesonline.com>');
+			$message = __("Welcome to Skywork Online! Your account has been created successfully. Click on the link below to sign in.\n\nhttp://puentesonline.com/\n\nSincerely,\nThe Skywork Team");
+			mail("{$user['User']['email']}",__("Welcome to Skywork Online"),$message,'From: Skywork <noreply@puentesonline.com>');
 			
 			$user_update['ClassSet'] = array($class['ClassSet']['id']);
 			$this->User->save($user_update);

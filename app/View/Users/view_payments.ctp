@@ -132,9 +132,9 @@
 					<p>To</p>
 					<input type="text" style="width:585px;padding:5px;" value="Enter emails here separated by a comma" /><br /><br />
 					<p>Subject</p>
-					<input type="text" style="width:585px;padding:5px;" value="Puentes - Assignments. On Demand." /><br /><br />
+					<input type="text" style="width:585px;padding:5px;" value="Skywork - Assignments. On Demand." /><br /><br />
 					<p>Email Body</p>
-					<textarea style="width:585px;padding:5px;height:150px;">I'd like to send my recommendation for Puentes - Assignments. On Demand. I've been using it lately and it's really useful!</textarea>
+					<textarea style="width:585px;padding:5px;height:150px;">I'd like to send my recommendation for Skywork - Assignments. On Demand. I've been using it lately and it's really useful!</textarea>
 				</form>
 				<div class="clear"></div>
 				<div style="width: 140px; margin: 0 auto; ">

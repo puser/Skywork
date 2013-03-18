@@ -8,7 +8,7 @@
 			</div>
 
 			<br />
-			<p class="caseclubFont18 blue textAlignCenter" style="width:490px; text-align: center;"><?php echo __('Your current Puentes session has ended.') ?></p>
+			<p class="caseclubFont18 blue textAlignCenter" style="width:490px; text-align: center;"><?php echo __('Your current Skywork session has ended.') ?></p>
 			<br /><br /><br />
 			<div class="exitSaveOptions">
 				<a href="/" class="btn2 btn-savecontinue aligncenter background: url('/images/btn2-right.png') no-repeat right top;"><span class="inner"><?php echo __('Go to Homepage') ?></span></a>

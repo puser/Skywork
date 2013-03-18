@@ -8,7 +8,7 @@
 	<div class="modal-box-content">
 		<p style="color:#567AA9;"><?php echo __('Please read these instructions before uploading your excel spreadsheet:') ?></p>
 		<p style="line-height:28px;font-size:14px;">
-			<?php echo __('Before uploading an excel spreadsheet, make sure all emails are in Column A*. Emails must have an @ symbol and an ending: .com, .org, .edu, .net, etc. Once you have browsed and attached the .csv file, click on Upload & Send. Puentes will generate an automated email to your students. That email will contain a temporary password. Your students will then sign into Puentes using that password.') ?>
+			<?php echo __('Before uploading an excel spreadsheet, make sure all emails are in Column A*. Emails must have an @ symbol and an ending: .com, .org, .edu, .net, etc. Once you have browsed and attached the .csv file, click on Upload & Send. Skywork will generate an automated email to your students. That email will contain a temporary password. Your students will then sign into Skywork using that password.') ?>
 		</p>
 		<p style="font-size:11px;"><?php echo __('*Note: You may put their First Names in Column B and Last Names in Column C, but this is not required.') ?></p>
 		<br />
