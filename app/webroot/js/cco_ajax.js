@@ -322,6 +322,61 @@ function show_edit_existing(e,cid){
 	}
 }
 
+function show_feedback(e,cid){
+	e = e.parents('tr');
+	var prevOpen = $('tr.opened').length;
+	$('.viewAllRequests').hide();
+	
+	if(e.hasClass('opened')){
+		$('.pagination').show();
+		
+		e.removeClass('opened');
+		
+		$('#home-leaderboard').animate({width:0},function(){ $('#home-leaderboard').hide(); });
+		$('#bridgelist').animate({width:954},function(){ $('.graphIcon').show();$('#bridgetable td,#bridgetable th').fadeIn(); });
+		
+		$('#bridgetable .col1').animate({width:390},'fast');
+		$('#thinListBorder').hide();
+	}else{
+		$('.pagination').hide();
+		
+		$('tr.opened').next().children('div.alignleft').removeClass('colgroup');
+		$('tr.opened').removeClass('opened').next().slideUp();
+		
+		e.addClass('opened');
+		
+		$('#bridgetable .col1').animate({width:465},'fast');
+		$('#thinListBorder').show();
+		$('#bridgetable td:not(:first-child),#bridgetable th:not(".col1")').hide();
+		
+		e.find('.viewAllRequests').show();
+		
+		$.ajax({url:'/challenges/evaluation_interstitial/'+cid,success:function(r){
+			$('#bridgelist').css({'float':'left'});
+			$('#bridgelist').animate({width:450});
+			if(prevOpen){
+				$("#home-leaderboard .box-content").fadeOut('slow',function(){
+					$('#home-leaderboard').html(r).find('.box-content').hide();
+					$('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});
+					//$("#home-leaderboard .content").hide();
+					$("#home-leaderboard .box-content").fadeIn('slow');
+					$('#home-studentwork').width(470);
+				});
+			}else{
+				$('#home-leaderboard').html(r);
+				$('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});
+				$('#home-leaderboard').show();
+				$('#home-studentwork').width(470);
+				$('#home-leaderboard').animate({width:475});
+			}
+		
+			setTimeout(function(){
+				$('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});
+			},500);
+		}});
+	}
+}
+
 function show_user_list(e,cid,view,metrics){
 	e = e.parents('tr');
 	var prevOpen = $('tr.opened').length;

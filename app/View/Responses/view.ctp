@@ -581,123 +581,135 @@
 				<?php }
 			} ?>
 			
-			<?php if(count($challenge[0]['Question']) > 1){ ?>
-				<div class="box-foot">
-					<div class="pagination">
-						<div class="alignleft pagination-prev">
-							<select style="width:75px;" onchange="render_pagination(currentPage,currentQuestion);">
-								<option value="30">30 lines</option>
-								<option value="60">60 lines</option>
-								<option value="90">90 lines</option>
-								<option value="">Everything</option>
-							</select>
+			<div class="box-foot">
+				<div class="pagination">
+					<div class="alignleft pagination-prev">
+						<select style="width:75px;" onchange="render_pagination(currentPage,currentQuestion);">
+							<option value="30">30 lines</option>
+							<option value="60">60 lines</option>
+							<option value="90">90 lines</option>
+							<option value="">Everything</option>
+						</select>
 
-							<a href="#"><?php echo __('Previous') ?></a>
-						</div>
-						<div class="alignright pagination-next">
-							<a href="#"><?php echo __('Next') ?></a>
-						</div>
-
-						<div class="aligncenter pagination-pages">
-							<ul>
-								<?php foreach($challenge[0]['Question'] as $k=>$q){ ?>
-									<li id="qnav_<?php echo $k; ?>">
-										<a href="#" onclick="render_pagination(0,<?php echo $k; ?>);return false;"><?php echo ($k + 1); ?></a>
-										<ul class="qnav_sub" style="display:inline;font-size:75%;"> </ul>
-									</li>
-								<?php } ?>
-							</ul>
-						</div>
-
-						<div class="clear"></div>
+						<a href="#"><?php echo __('Previous') ?></a>
 					</div>
+					<div class="alignright pagination-next">
+						<a href="#"><?php echo __('Next') ?></a>
+					</div>
+
+					<div class="aligncenter pagination-pages">
+						<ul>
+							<?php foreach($challenge[0]['Question'] as $k=>$q){ ?>
+								<li id="qnav_<?php echo $k; ?>">
+									<a href="#" onclick="render_pagination(0,<?php echo $k; ?>);return false;"><?php echo ($k + 1); ?></a>
+									<ul class="qnav_sub" style="display:inline;font-size:75%;"> </ul>
+								</li>
+							<?php } ?>
+						</ul>
+					</div>
+
+					<div class="clear"></div>
 				</div>
-				<script type="text/javascript">
-				var currentPage = 0;
-				var currentQuestion = 0;
-				function render_pagination(page,question){
-					currentPage = page;
-					currentQuestion = question;
-
-					if(!$('.pagination-prev select').val()){
-						// show everything
-						$('.textvalueWrapper').show();
-						$('.question-item').show();
-						$('.textvalueWrapper,.textvalueWrapper .textvalue').css('height','auto');
-						$('.box-foot').hide();
-					}else{
-						currentResponse = $('#textvalueWrapper_' + currentQuestion);
-						
-						$('.question-item').hide();
-						currentResponse.parents('.question-item').show();
-						currentResponse.height('auto');
-						
-						// count lines in response
-						currentResponse.find('.textvalue').css('height','auto');
-						currentResponse.find('.textvalue').css('line-height','40px');
-						lineCount = Math.round((currentResponse.find('.textvalue').height() - 40) / 40);
-						currentResponse.find('.textvalue').css('line-height','18px');
-						
-						// show current response
-						pageHeight = lineCount - ($('.pagination select').val() * (currentPage + 1)) >= 0 ? 18 * $('.pagination select').val() : 18 * (lineCount - ($('.pagination select').val() * currentPage));
-						currentResponse.height(pageHeight);
-
-						// set height based on display selection
-						currentResponse.find('.textvalue').height(($('.pagination select').val() * 18) + 40);
-						currentResponse.find('.textvalue').css('margin-top',-(currentPage * 18 * $('.pagination select').val()));
-
-						// set up pagination links
-						pageCount = Math.ceil(lineCount / $('.pagination select').val());
-						if((currentPage + 1) < pageCount || (currentQuestion + 1) < <?php echo count($challenge[0]['Question']); ?>){
-							$('.pagination-next').show();
-							$('.pagination-next a').click(function(){
-								nextLink = $('.pagination li.current').last().next().find('a').length ? $('.pagination li.current').last().next().find('a').first() : $('.pagination li.current').parents('li').next().find('a').first();
-								nextLink.click();
-							});
-						}
-						else $('.pagination-next').hide();
-
-						if(!currentPage && !currentQuestion){
-							$('.pagination-prev a').hide();
-							$('.pagination-prev select').show();
-						}else{
-							$('.pagination-prev a').show();
-							$('.pagination-prev a').click(function(){
-								prevLink = $('.pagination li.current').last().prev().find('a').length ? $('.pagination li.current').last().prev().find('a').last() : $('.pagination li.current').parents('li').prev().find('a').last();
-								prevLnk.click();
-							});
-							
-							$('.pagination-prev select').hide();
-						}
-
-						$('.pagination-pages li').removeClass('current');
-						$('.qnav_sub').hide();
-						$('.qnav_sub li').remove();
-						$('#qnav_' + currentQuestion).addClass('current');
-
-						if(pageCount > 1){
-							$('#qnav_' + currentQuestion + ' .qnav_sub').show();
-
-							for(i = 0;i < pageCount;i++){
-								$('#qnav_' + currentQuestion + ' .qnav_sub').append('<li' + (currentPage == i ? ' class="current"' : '') + '><a onclick="render_pagination(' + i + ',' + question + ');return false;" href="#">' + (i + 1) + '</a></li>');
-							}
-						}
-
-						$('.box-foot').show();
-					}
-					
-					$('#puentes-answer-questions,.question-item').css('height','auto');
-					$('.question-item').each(function(){
-						$(this).height($(this).height());
-					});
-					$('#puentes-answer-questions').height($('#puentes-answer-questions').height());
-				}
-
-				render_pagination(0,0);
-				</script>
-			<?php } ?>
+			</div>
 			
 		</div>
+		
+			<div style="color:#999;" id="wordLineCounts">
+			Total lines: <span id="lineCount" style="color:#000;padding-right:10px;"> </span>
+			Total words:
+			<?php foreach($challenge[0]['Question'] as $k=>$q){ ?><span id="wordCount_<?php echo $k; ?>" class="wordCounts" style="color:#000;"><?php echo str_word_count($q['Response'][0]['response_body']); ?></span><?php } ?>
+		</div>
+		
+		<script type="text/javascript">
+		var currentPage = 0;
+		var currentQuestion = 0;
+		function render_pagination(page,question){
+			currentPage = page;
+			currentQuestion = question;
+
+			if(!$('.pagination-prev select').val()){
+				// show everything
+				$('.textvalueWrapper').show();
+				$('.question-item').show();
+				$('.textvalueWrapper,.textvalueWrapper .textvalue').css('height','auto');
+				$('.box-foot').hide();
+			}else{
+				currentResponse = $('#textvalueWrapper_' + currentQuestion);
+				
+				$('.question-item').hide();
+				currentResponse.parents('.question-item').show();
+				currentResponse.height('auto');
+				
+				// count lines in response
+				currentResponse.find('.textvalue').css('height','auto');
+				currentResponse.find('.textvalue').css('line-height','40px');
+				lineCount = Math.round((currentResponse.find('.textvalue').height() - 40) / 40);
+				currentResponse.find('.textvalue').css('line-height','18px');
+				
+				if(lineCount < 0) $('#wordLineCounts').hide();
+				else{
+					$('#lineCount').html(lineCount);
+					$('.wordCounts').hide();
+					$('#wordCount_' + currentQuestion).show();
+				}
+				
+				// show current response
+				pageHeight = lineCount - ($('.pagination select').val() * (currentPage + 1)) >= 0 ? 18 * $('.pagination select').val() : 18 * (lineCount - ($('.pagination select').val() * currentPage));
+				currentResponse.height(pageHeight);
+
+				// set height based on display selection
+				currentResponse.find('.textvalue').height(($('.pagination select').val() * 18) + 40);
+				currentResponse.find('.textvalue').css('margin-top',-(currentPage * 18 * $('.pagination select').val()));
+
+				// set up pagination links
+				pageCount = Math.ceil(lineCount / $('.pagination select').val());
+				if((currentPage + 1) < pageCount || (currentQuestion + 1) < <?php echo count($challenge[0]['Question']); ?>){
+					$('.pagination-next').show();
+					$('.pagination-next a').click(function(){
+						nextLink = $('.pagination li.current').last().next().find('a').length ? $('.pagination li.current').last().next().find('a').first() : $('.pagination li.current').parents('li').next().find('a').first();
+						nextLink.click();
+					});
+				}
+				else $('.pagination-next').hide();
+
+				if(!currentPage && !currentQuestion){
+					$('.pagination-prev a').hide();
+					$('.pagination-prev select').show();
+				}else{
+					$('.pagination-prev a').show();
+					$('.pagination-prev a').click(function(){
+						prevLink = $('.pagination li.current').last().prev().find('a').length ? $('.pagination li.current').last().prev().find('a').last() : $('.pagination li.current').parents('li').prev().find('a').last();
+						prevLink.click();
+					});
+					
+					$('.pagination-prev select').hide();
+				}
+
+				$('.pagination-pages li').removeClass('current');
+				$('.qnav_sub').hide();
+				$('.qnav_sub li').remove();
+				$('#qnav_' + currentQuestion).addClass('current');
+
+				if(pageCount > 1){
+					$('#qnav_' + currentQuestion + ' .qnav_sub').show();
+
+					for(i = 0;i < pageCount;i++){
+						$('#qnav_' + currentQuestion + ' .qnav_sub').append('<li' + (currentPage == i ? ' class="current"' : '') + '><a onclick="render_pagination(' + i + ',' + question + ');return false;" href="#">' + (i + 1) + '</a></li>');
+					}
+				}
+
+				$('.box-foot').show();
+			}
+			
+			$('#puentes-answer-questions,.question-item').css('height','auto');
+			$('.question-item').each(function(){
+				$(this).height($(this).height());
+			});
+			$('#puentes-answer-questions').height($('#puentes-answer-questions').height());
+		}
+
+		render_pagination(0,0);
+		</script>
 		
 	<?php } ?>
 	

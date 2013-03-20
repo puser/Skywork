@@ -404,6 +404,12 @@ class ChallengesController extends AppController{
 		$this->layout = 'ajax';
 	}
 	
+	function evaluation_interstitial($id){
+		$this->checkAuth();
+		$this->set('cid',$id);
+		$this->layout = 'ajax';
+	}
+	
 	function launch_bridge($challenge_record){
 		$this->checkAuth();
 		
