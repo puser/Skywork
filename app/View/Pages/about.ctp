@@ -106,7 +106,7 @@
 							<li><span class="icon icon-123"></span> You create an assignment.</li>
 							<li><span class="icon icon-preview"></span> Students complete the assignment.</li>
 							<li><span class="icon icon-connect"></span> Peer-to-peer evaluation.</li>
-							<li><span class="icon icon-instructor-analytics"></span> You evaluates.</li>
+							<li><span class="icon icon-instructor-analytics"></span> You evaluate.</li>
 						</ul>
 						
 					</div>

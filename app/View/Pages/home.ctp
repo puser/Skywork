@@ -108,7 +108,7 @@
 			<p>&nbsp;</p>
 			
 			<h4>Skywork Bridge</h4>
-			<p><img class="icon" src="/images/corp/icons/icon-globe.png" /> <strong>Don't just create assignments. Create bridges.</strong> Skywork ("bridges" in Spanish), allows you to connect with other instructors through like-minded assignments everywhere. Whether in Rome, Georgia or Rome, Italy; in Paris, Texas or Paris, France, Skywork makes learning relevant and accessible.</p>
+			<p><img class="icon" src="/images/corp/icons/icon-globe.png" /> <strong>Don't just create assignments. Create bridges.</strong> Skywork allows you to connect with other instructors through like-minded assignments everywhere. Whether in Rome, Georgia or Rome, Italy; in Paris, Texas or Paris, France, Skywork makes learning relevant and accessible.</p>
 			<p>&nbsp;</p>
 			
 			<h4>Reasons to Join Skywork</h4>
