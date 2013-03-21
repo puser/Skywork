@@ -1,7 +1,7 @@
 <div id="modal-adduser-box" class="modal-wrapper" style="width: 600px;" >
 	<div class="modal-box-head">
 		<span class="icon icon5-people-blue"></span>
-		<h2><?php echo __('Add a Collaborator to Puentes') ?></h2>
+		<h2><?php echo __('Add a Collaborator to Skywork') ?></h2>
 	</div>
 	<div class="modal-box-content">
 		<ul class="fieldset2">

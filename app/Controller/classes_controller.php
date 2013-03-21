@@ -80,13 +80,13 @@ class ClassesController extends AppController{
 			
 			if($group['Owner']['notify_groups']){
 				// notify group leader
-				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your class {$group['ClassSet']['group_name']}, on Puentes Online - the world's first feedback learning system.";
+				$message = "{$group['Owner']['firstname']},\n\n{$_SESSION['User']['firstname']} requested to join your class {$group['ClassSet']['group_name']}, on Skywork Online - the world's first feedback learning system.";
 				$message .= "\n\n<a href='http://puentesonline.com/users/view/groups/'>Click here to Accept or Decline</a>";
-				$message .= "\n\nSincerely,\n\nThe Puentes Team";
+				$message .= "\n\nSincerely,\n\nThe Skywork Team";
 		
 				$headers  = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-				$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
+				$headers .= 'From: Skywork <noreply@puentesonline.com>' . "\r\n";
 		
 				// send invite email
 				mail("{$group['Owner']['firstname']} {$group['Owner']['lastname']} <{$group['Owner']['email']}>","{$_SESSION['User']['firstname']} {$_SESSION['User']['lastname']} requested to join your class",nl2br($message),$headers);

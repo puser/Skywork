@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Home | Puentes</title>
+	<title>Home | Skywork</title>
 	
 	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="./favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
@@ -104,14 +104,14 @@
 			</div>
 			-->
 			<h4>Quick Explanation</h4>
-			<p><img class="icon" src="/images/corp/icons/icon-bubble.png" /> <strong>Puentes takes the pain out of paper assignments.</strong> Rather than handing out assignments and receiving piles of paper back from students, Puentes takes the assignment process digital. Now, you can easily create, assign, receive, grade, and store all your writing assignments online through our easy-to-use platform.</p>
+			<p><img class="icon" src="/images/corp/icons/icon-bubble.png" /> <strong>Skywork takes the pain out of paper assignments.</strong> Rather than handing out assignments and receiving piles of paper back from students, Skywork takes the assignment process digital. Now, you can easily create, assign, receive, grade, and store all your writing assignments online through our easy-to-use platform.</p>
 			<p>&nbsp;</p>
 			
-			<h4>Puentes Bridge</h4>
-			<p><img class="icon" src="/images/corp/icons/icon-globe.png" /> <strong>Don't just create assignments. Create bridges.</strong> Puentes ("bridges" in Spanish), allows you to connect with other instructors through like-minded assignments everywhere. Whether in Rome, Georgia or Rome, Italy; in Paris, Texas or Paris, France, Puentes makes learning relevant and accessible.</p>
+			<h4>Skywork Bridge</h4>
+			<p><img class="icon" src="/images/corp/icons/icon-globe.png" /> <strong>Don't just create assignments. Create bridges.</strong> Skywork ("bridges" in Spanish), allows you to connect with other instructors through like-minded assignments everywhere. Whether in Rome, Georgia or Rome, Italy; in Paris, Texas or Paris, France, Skywork makes learning relevant and accessible.</p>
 			<p>&nbsp;</p>
 			
-			<h4>Reasons to Join Puentes</h4>
+			<h4>Reasons to Join Skywork</h4>
 			<ul>
 				<li><strong>1.</strong> It's built for Instructors.</li>
 				<li><strong>2.</strong> It's practical &amp; easy.</li>
@@ -267,7 +267,7 @@
 			-->
 			<h4>Step 2 of 2: Check Your Email</h4>
 			<div style="display: block; height: 90px;">
-				<p style="font-size: 16px; line-height: 2em; ">Thank you for creating a Puentes account! We have sent you a confirmation email. Please click on login to continue.</p>
+				<p style="font-size: 16px; line-height: 2em; ">Thank you for creating a Skywork account! We have sent you a confirmation email. Please click on login to continue.</p>
 			</div>
 			<div class="modalActionButtons">
 				<a href="/users/view/" id="Instructor_Form_Done" class="btn-arrow modalActionButton modalActionButtonSave" onclick="jQuery.fancybox.close();"><span class="inner">Login</span></a>
@@ -297,7 +297,7 @@
 			-->
 			<h4>Step 2 of 2: Check Your Email</h4>
 			<div style="display: block; height: 90px;">
-				<p style="font-size: 16px; line-height: 2em; ">Thank you for creating a Puentes account! We have sent you a confirmation email. Please click on login to continue.</p>
+				<p style="font-size: 16px; line-height: 2em; ">Thank you for creating a Skywork account! We have sent you a confirmation email. Please click on login to continue.</p>
 			</div>
 			<div class="modalActionButtons">
 				<a href="/users/view/" id="Instructor_Form_Done" class="btn-arrow modalActionButton modalActionButtonSave" onclick="jQuery.fancybox.close();"><span class="inner">Login</span></a>

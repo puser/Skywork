@@ -7,7 +7,7 @@ msgstr ""
 "POT-Creation-Date: 2012-08-12 15:12-0500\n"
 "PO-Revision-Date: 2012-08-14 07:24-0400\n"
 "Last-Translator: Sean Daly <seand567@hotmail.com>\n"
-"Language-Team: Puentes\n"
+"Language-Team: Skywork\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -16,16 +16,16 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 
 #: Controller/users_controller.php:135
-msgid "{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Puentes Online - the world’s first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Puentes Team"
-msgstr "{first_name_1},\n\n{first_name_2} le invita a que participe en Puentes Online - el primer sistema de feedback del mundo. Quiere que se unan las clases, {classname}. \n\n{begin_link}¡Haga clic aquí para empezar!{end_link}\n\nSaludos,\n\nEl equipo de Puentes"
+msgid "{first_name_1},\n\n{first_name_2} requested for you to join the class {classname} on Skywork Online - the world’s first feedback learning system.\n\n{begin_link}Click here to join this class!{end_link}\n\nSincerely,\n\nThe Skywork Team"
+msgstr "{first_name_1},\n\n{first_name_2} le invita a que participe en Skywork Online - el primer sistema de feedback del mundo. Quiere que se unan las clases, {classname}. \n\n{begin_link}¡Haga clic aquí para empezar!{end_link}\n\nSaludos,\n\nEl equipo de Skywork"
 
 #: Controller/users_controller.php:142
 msgid "{first_name} {last_name} wants you to join their Class"
 msgstr "{first_name} {last_name} quiere compartir su clase."
 
 #: Controller/users_controller.php:175
-msgid "{first_name},\n\nSomeone (probably you), forgot the password on Puentes Online. Click on the link below to create a new password.\n\n{link}\n\nSincerely,\nThe Puentes Team"
-msgstr "{first_name},\n\nProbablemente se ha olvidado su contraseña en Puentes Online. Haga clic aquí para crear una nueva contraseña.\n\n{link}\n\nSaludos,\nEl Equipo de Puentes"
+msgid "{first_name},\n\nSomeone (probably you), forgot the password on Skywork Online. Click on the link below to create a new password.\n\n{link}\n\nSincerely,\nThe Skywork Team"
+msgstr "{first_name},\n\nProbablemente se ha olvidado su contraseña en Skywork Online. Haga clic aquí para crear una nueva contraseña.\n\n{link}\n\nSaludos,\nEl Equipo de Skywork"
 
 #: Controller/users_controller.php:179
 #: View/Pages/home.ctp:89;95
@@ -517,7 +517,7 @@ msgid "Email"
 msgstr "Correo electrónico"
 
 #: View/Challenges/update_people.ctp:71
-msgid "Already in Puentes?"
+msgid "Already in Skywork?"
 msgstr "¿Usuario existente?"
 
 #: View/Challenges/update_people.ctp:81
@@ -577,7 +577,7 @@ msgid "Send Notification"
 msgstr ""
 
 #: View/Classes/create_student.ctp:4
-msgid "Add a User to Puentes"
+msgid "Add a User to Skywork"
 msgstr ""
 
 #: View/Classes/create_student.ctp:24
@@ -704,8 +704,8 @@ msgid "Logout"
 msgstr "Salir"
 
 #: View/Layouts/default.ctp:63
-msgid "Puentes Online is currently in private beta."
-msgstr "Puentes Online actualmente está en beta privado."
+msgid "Skywork Online is currently in private beta."
+msgstr "Skywork Online actualmente está en beta privado."
 
 #: View/Layouts/default.ctp:64
 msgid "Login"
@@ -926,7 +926,7 @@ msgid "This user has not submitted responses"
 msgstr ""
 
 #: View/Users/invite_collaborator.ctp:4
-msgid "Add a Collaborator to Puentes"
+msgid "Add a Collaborator to Skywork"
 msgstr ""
 
 #: View/Users/session_logout.ctp:2;7

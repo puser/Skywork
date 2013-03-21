@@ -137,13 +137,13 @@ class ResponsesController extends AppController{
 				if(@$sent_users[$u['id']] || $u['user_type'] != 'P') continue;
 				else $sent_users[$u['id']] = 1;
 			
-				$message = __("{firstname},\n\nYour instructor has completed evaluation of your assignment, {bridge_name}, and it is ready for your viewing!\n\nClick here to check it out:\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team");
+				$message = __("{firstname},\n\nYour instructor has completed evaluation of your assignment, {bridge_name}, and it is ready for your viewing!\n\nClick here to check it out:\nhttp://puentesonline.com/\n\nSincerely,\nThe Skywork Team");
 				$message = str_replace('{firstname}',$u['firstname'],$message);
 				$message = str_replace('{bridge_name}',$challenge['Challenge']['name'],$message);
 
 				$headers  = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-				$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
+				$headers .= 'From: Skywork <noreply@puentesonline.com>' . "\r\n";
 				
 				mail("{$u['firstname']} {$u['lastname']} <{$u['email']}>",'Your Assignment is Ready for Viewing',nl2br($message),$headers);
 			}

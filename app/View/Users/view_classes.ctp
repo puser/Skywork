@@ -223,7 +223,7 @@
 							-->
 							<div style="clear:both;padding-top:12px;font-size:14px;">
 								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#uploadSheetBtn').show();$('#addManualBtn').hide();$('#genTokenBtn').hide(); }" />&nbsp;
-								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I have a spreadsheet with student emails. When I upload this sheet, Puentes will send all my students a temporary password.") ?></div>
+								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I have a spreadsheet with student emails. When I upload this sheet, Skywork will send all my students a temporary password.") ?></div>
 								<div class="clear"></div>
 								
 								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#uploadSheetBtn').hide();$('#genTokenBtn').show();$('#addManualBtn').hide(); }" />&nbsp;

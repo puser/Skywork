@@ -94,7 +94,7 @@
 							<th width="20%"><?php echo __('First Name') ?></th>
 							<th width="20%"><?php echo __('Last Name') ?></th>
 							<th width="30%"><?php echo __('Email') ?></th>
-							<th width="20%"><?php echo __('Already in Puentes?') ?></th>
+							<th width="20%"><?php echo __('Already in Skywork?') ?></th>
 							<th> </th>
 						</tr>
 					</thead>

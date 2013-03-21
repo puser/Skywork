@@ -540,7 +540,7 @@ class ChallengesController extends AppController{
 		
 		// build invite url & message body
 		if($user['User']['invite_token']){
-			$message = __("Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited you to collaborate with their classroom on Puentes Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n\nYou will be able to provide feedback to {firstname_2}'s students between the dates of:\n\n{duedate_1} and {duedate_2}.\n\nLastly, Puentes is currently in invite-only beta, so you will need a Beta-Test Key. It is: BETATEST\n\nClick here to check it out\n{invite_link}\n\nSincerely,\nThe Puentes Team");
+			$message = __("Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited you to collaborate with their classroom on Skywork Online - the world's first feedback learning system. Once you click through the link provided, fill out a preferred email and password. This will be used to sign into puentesonline.com from then on.\n\nYou will be able to provide feedback to {firstname_2}'s students between the dates of:\n\n{duedate_1} and {duedate_2}.\n\nLastly, Skywork is currently in invite-only beta, so you will need a Beta-Test Key. It is: BETATEST\n\nClick here to check it out\n{invite_link}\n\nSincerely,\nThe Skywork Team");
 			$message = str_replace('{firstname_1}',$user['User']['firstname'],$message);
 			$message = str_replace('{firstname_2}',$challenge['User']['firstname'],$message);
 			$message = str_replace('{lastname_2}',$challenge['User']['lastname'],$message);
@@ -554,11 +554,11 @@ class ChallengesController extends AppController{
 			
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
+			$headers .= 'From: Skywork <noreply@puentesonline.com>' . "\r\n";
 		}else{
-			$message = __("Hi {firstname_1}!\n\nYour Instructor, {firstname_2} {lastname_2}, would like you to do your assignment online using Puentes - Assignments. On Demand!\n\nYou will have until:\n\n{duedate_1} to complete a series of questions.\n\n");
+			$message = __("Hi {firstname_1}!\n\nYour Instructor, {firstname_2} {lastname_2}, would like you to do your assignment online using Skywork - Assignments. On Demand!\n\nYou will have until:\n\n{duedate_1} to complete a series of questions.\n\n");
 			if($challenge['Challenge']['responses_due'] && $challenge['Challenge']['responses_due'] != '0000-00-00 00:00:00') $message .= __("{duedate_2} to give feedback to other students.\n\n");
-			$message .= __("Login here:\n{bridge_link}\n\nSincerely,\nThe Puentes Team");
+			$message .= __("Login here:\n{bridge_link}\n\nSincerely,\nThe Skywork Team");
 			
 			$message = str_replace('{firstname_1}',$user['User']['firstname'],$message);
 			$message = str_replace('{firstname_2}',$challenge['User']['firstname'],$message);
@@ -573,7 +573,7 @@ class ChallengesController extends AppController{
 			
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
+			$headers .= 'From: Skywork <noreply@puentesonline.com>' . "\r\n";
 		}
 		
 		// send invite email
@@ -584,7 +584,7 @@ class ChallengesController extends AppController{
 		$classes = $this->ClassSet->find('first',array('conditions'=>'ClassSet.id IN('.implode(',',$class_id).')','fields'=>'group_concat(distinct group_name separator ", ") as group_names,Owner.*','group'=>'ClassSet.owner_id'));
 		$challenge = $this->Challenge->findById($challenge_id);
 		
-		$message = __("Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited your class(es) ".$classes[0]['group_names']." to an assignment on Puentes - Assignments. On Demand!\n\nYour students will have until {duedate_1} to complete Due Date 1 and until {duedate_2} to complete Due Date 2.\n\Login to Accept or Reject this bridge:\n{link_1}\n\nSincerely,\nThe Puentes Team");
+		$message = __("Hi {firstname_1}!\n\n{firstname_2} {lastname_2} has invited your class(es) ".$classes[0]['group_names']." to an assignment on Skywork - Assignments. On Demand!\n\nYour students will have until {duedate_1} to complete Due Date 1 and until {duedate_2} to complete Due Date 2.\n\Login to Accept or Reject this bridge:\n{link_1}\n\nSincerely,\nThe Skywork Team");
 		$message = str_replace('{firstname_1}',$classes['Owner']['firstname'],$message);
 		$message = str_replace('{firstname_2}',$_SESSION['User']['firstname'],$message);
 		$message = str_replace('{lastname_2}',$_SESSION['User']['lastname'],$message);
@@ -598,7 +598,7 @@ class ChallengesController extends AppController{
 		
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";	
+		$headers .= 'From: Skywork <noreply@puentesonline.com>' . "\r\n";	
 		
 		mail("{$classes['Owner']['firstname']} {$classes['Owner']['lastname']} <{$classes['Owner']['email']}>",$subject,nl2br($message),$headers);
 		
@@ -635,14 +635,14 @@ class ChallengesController extends AppController{
 		
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
+			$headers .= 'From: Skywork <noreply@puentesonline.com>' . "\r\n";
 		
 			if($status == 'C'){
 				// if user accepted, send notification
 				foreach($challenge['Status'] as $s){
 					if($s['status'] != 'C') continue;
 				
-					$message = __("Hi {firstname_1}!\n\n{firstname_2} has accepted your request to join {bridge_name} on Puentes.\n\nSincerely,\nThe Puentes Team");
+					$message = __("Hi {firstname_1}!\n\n{firstname_2} has accepted your request to join {bridge_name} on Skywork.\n\nSincerely,\nThe Skywork Team");
 					$message = str_replace('{firstname_1}',$s['User']['firstname'],$message);
 					$message = str_replace('{firstname_2}',$status_record['User']['firstname'],$message);
 					$message = str_replace('{bridge_name}',$challenge['Challenge']['name'],$message);
@@ -654,7 +654,7 @@ class ChallengesController extends AppController{
 				foreach($challenge['Status'] as $s){
 					if($s['status'] != 'C') continue;
 				
-					$message = __("Hi {firstname_1}!\n\nSorry, {firstname_2} has declined the request to join {bridge_name} on Puentes.\n\n\"{rejection_text}\"\n\nPerhaps some other time!\n\nSincerely,\nThe Puentes Team");
+					$message = __("Hi {firstname_1}!\n\nSorry, {firstname_2} has declined the request to join {bridge_name} on Skywork.\n\n\"{rejection_text}\"\n\nPerhaps some other time!\n\nSincerely,\nThe Skywork Team");
 					$message = str_replace('{firstname_1}',$s['User']['firstname'],$message);
 					$message = str_replace('{firstname_2}',$status_record['User']['firstname'],$message);
 					$message = str_replace('{bridge_name}',$challenge['Challenge']['name'],$message);
@@ -692,14 +692,14 @@ class ChallengesController extends AppController{
 				
 					if($u['notify_expiration']){
 						
-						$message = __("Hi {firstname}!\n\nThe Bridge {bridge_name} is set to expire today at {expiration_time}.\n\nClick here make any final edits!\nhttp://puentesonline.com/\n\nSincerely,\nThe Puentes Team");
+						$message = __("Hi {firstname}!\n\nThe Bridge {bridge_name} is set to expire today at {expiration_time}.\n\nClick here make any final edits!\nhttp://puentesonline.com/\n\nSincerely,\nThe Skywork Team");
 						$message = str_replace('{firstname}',$u['firstname'],$message);
 						$message = str_replace('{bridge_name}',$c['Challenge']['name'],$message);
 						$message = str_replace('{expiration_time}',date_format(date_create($c['Challenge']['answers_due']),'g:ia'),$message);
 
 						$headers  = 'MIME-Version: 1.0' . "\r\n";
 						$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-						$headers .= 'From: Puentes <noreply@puentesonline.com>' . "\r\n";
+						$headers .= 'From: Skywork <noreply@puentesonline.com>' . "\r\n";
 						
 						mail("{$u['firstname']} {$u['lastname']} <{$u['email']}>",'Bridge Expiration Notice',nl2br($message),$headers);
 					}

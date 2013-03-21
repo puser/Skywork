@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Puentes</title>
+	<title>Skywork</title>
 	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
 	<link rel="stylesheet" media="all" href="/js/mcs/jquery.mCustomScrollbar.css" />
@@ -64,7 +64,7 @@
 				<span class="user-logout" style="padding-right:5px;"><img src="/images/icon-logout.png" style="padding-left:15px;vertical-align:middle;padding-bottom:3px;cursor:pointer;" onmouseover="$(this).next().show();" /><a style="display:none;" href="#logoutModal" class="show-overlay" onmouseout="$(this).hide();"><?php echo __('Logout') ?></a></span>
 			</div><!-- #topmenu -->
 			<?php }else{ ?>
-			<div id="subtitle"><?php echo __('Puentes Online is currently in private beta.') ?></div>
+			<div id="subtitle"><?php echo __('Skywork Online is currently in private beta.') ?></div>
 			<a href="#" id="overlayLoginLink" ><?php echo __('Login') ?></a>
 			<div id="overlayLoginForm" class="rounded">
 				<ul class="fieldset2">
