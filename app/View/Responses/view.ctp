@@ -581,6 +581,15 @@
 				<?php }
 			} ?>
 			
+			<div class="question-item" style="display:none;" id="grading_wrapper">
+				<div class="box-head">
+					<h2><?php echo "{$user['User']['firstname']} {$user['User']['lastname']}" ?></h2>
+				</div>
+				<div class="box-content">
+					
+				</div>
+			</div>
+			
 			<div class="box-foot">
 				<div class="pagination">
 					<div class="alignleft pagination-prev">
