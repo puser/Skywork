@@ -15,11 +15,15 @@
 		</thead>
 		<tbody>
 			<?php foreach($grades as $k=>$grade){ ?>
-				<tr <?php if($idx % 2){ ?>class="alternate"<?php } ?>>
+				<tr <?php if($k % 2){ ?>class="alternate"<?php } ?> onmouseover="$(this).find('.studentwork-more,.remove-class').show();" onmouseout="$(this).find('.studentwork-more').hide();if(!$(this).find('.remove-class').hasClass('open')){ $(this).find('.remove-class').hide(); }">
 					<td class="col1"><?php echo "{$grade['User']['firstname']} {$grade['User']['lastname']}"; ?></td>
 					<td class="col2"><?php echo $comment_count[$grade['User']['id']]; ?></td>
 					<td class="col3"><?php echo $grade['Grade']['grade']; ?></td>
-					<td> </td>
+					<td class="col5">
+						<a href="/responses/view/<?php echo $challenge_id; ?>/<?php echo $grade['User']['id']; ?>?notips=1" class="studentwork-more userLevelLink" id="students-highest-quality-more" style="display:none;margin-left:0;">
+							<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;"><?php echo __('View'); ?></span>
+						</a>
+					</td>
 				</tr>
 			<?php } ?>
 		</tbody>

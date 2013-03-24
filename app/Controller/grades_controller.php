@@ -22,7 +22,7 @@ class GradesController extends AppController{
 		}
 	}
 	
-	function challenge_summary($challenge_id,$completed = false){
+	function summary($challenge_id,$completed = false){
 		$this->checkAuth();
 		$this->layout = 'ajax';
 		
@@ -38,6 +38,7 @@ class GradesController extends AppController{
 		
 		$this->set('comment_count',$comment_count);
 		$this->set('grades',$this->Grade->find('all',array('conditions' => 'Challenge.id = '.$challenge_id)));
+		$this->set('challenge_id',$challenge_id);
 	}
 	
 	function completed_summary($challenge_id,$user_id){

@@ -2,12 +2,24 @@
 	<p><?php echo __('Comments and Corrections') ?></p>
 	
 	<table>
-		<?php foreach(){ ?>
-			<tr>
-				<td> </td>
-				<td> </td>
-			</tr>
-		<?php } ?>
+		<?php
+		$k = 0;
+		foreach($challenge['Question'] as $q){
+			foreach($q['Response'] as $r){
+				foreach($r['Comment'] as $c){ ?>
+				<tr <?php if($k % 2){ ?>class="alternate"<?php } ?>>
+					<td width="80%" align="left"><?php echo substr($c['comment'],0,25); ?>...</td>
+					<td width="20%" class="col5">
+						<a href="/responses/view/<?php echo $challenge_id; ?>/<?php echo $grade['User']['id']; ?>?notips=1" class="studentwork-more userLevelLink" id="students-highest-quality-more" style="display:none;margin-left:0;">
+							<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;"><?php echo __('View'); ?></span>
+						</a>
+					</td>
+				</tr>
+				<?php
+				$k++;
+				}
+			}
+		} ?>
 	</table>
 </div>
 <div style="float:right;">

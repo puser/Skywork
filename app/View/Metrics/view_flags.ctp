@@ -78,7 +78,7 @@
 							<td></td>
 							<td class="col5">
 								<a href="<?php echo $u['id']; ?>" onclick="userflag('/word_flags/browse/<?php echo $u['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>',$(this).index('.userLevelLink'));return false;" class="studentwork-more userLevelLink" id="students-highest-quality-more" style="display:none;margin-left:0;">
-									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
+									<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;"><?php echo __('View'); ?></span>
 								</a>
 							</td>
 						</tr>
@@ -91,7 +91,7 @@
 										<td class="col3"><?php echo ($f == 'EXPL' ? substr($word,0,1) . str_repeat('*',strlen($word) - 1) : $word); ?></td>
 										<td class="col5">
 											<a href="/word_flags/browse/<?php echo $u['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>/<?php echo $f; ?>/<?php echo $word; ?>" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-												<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
+												<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;"><?php echo __('View'); ?></span>
 											</a>
 										</td>
 									</tr>
@@ -102,7 +102,7 @@
 								<td class="col3"><?php echo $maxwords_flag[$u['id']]['words']; ?> over maximum allowed</td>
 								<td class="col5">
 									<a href="/word_flags/browse/<?php echo $u['id']; ?>/<?php echo $challenge['Challenge']['id']; ?>/MAX" class="studentwork-more" id="students-highest-quality-more" style="display:none;margin-left:0;">
-										<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;">View</span>
+										<img src="/images/arrow-right-red.png"> <span style="display:inline;color:#cd5257;"><?php echo __('View'); ?></span>
 									</a>
 								</td>
 							</tr>
