@@ -169,13 +169,18 @@
 					</ul>-->
 				<?php } ?>
 				<ul>
-					<li id="instructor_comment_nav" <?php if(@$_REQUEST['instructor_comments'] || $challenge[0]['Challenge']['collaboration_type'] == 'NONE'){ ?>class="active"<?php } ?>>
+					<li id="view_grades_nav" <?php if(@$_REQUEST['view_grades']){ ?>class="active"<?php } ?>>
+						<a style="font-size:13px;padding-left:30px;width:136px;background-image:url();background-position:4px 8px;background-repeat:no-repeat;" href="#" onclick="show_student_grade();$(this).parent().addClass('active');">Your Grade</a>
+					</li>
+					<li id="instructor_comment_nav" <?php if(@$_REQUEST['instructor_comments']){ ?>class="active"<?php } ?>>
 						<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/paper.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $_SESSION['User']['id']; ?>?notips=1&instructor_comments=1">Instructor Comments</a>
 					</li>
 					<?php if($challenge[0]['Collaborator']){ ?>
 						<li id="collab_comment_nav" <?php if(@$_REQUEST['collaborator_comments']){ ?>class="active"<?php } ?>>
 							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/person.png);background-position:4px 8px;background-repeat:no-repeat;" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $_SESSION['User']['id']; ?>?notips=1&collaborator_comments=1">Collaborator Comments</a>
 						</li>
+					<?php }if(!@$_REQUEST['instructor_comments'] && !@$_REQUEST['collaborator_comments']){ ?>
+						<script type="text/javascript"> $(document).ready(function(){	$('#view_grades_nav a').click(); }); </script>
 					<?php } ?>
 				</ul>
 			</div>
@@ -235,12 +240,12 @@
 						<?php }
 					} ?>
 				</ul>
+				<ul>
+					<li>
+						<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/grades_menu.png);background-position:4px 8px;background-repeat:no-repeat;" href="#" onclick="show_grading(true);$(this).addClass('active');$(this).attr('style','font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/grades_menu.png);background-position:4px 8px;background-repeat:no-repeat;display: block; padding: 13px 10px 13px 60px; margin: 0 0 0 0; font-size: 14px; font-weight: normal; font-family: Helvetica, Arial, serif; background-position: 15px center; background-repeat: no-repeat; width: 110px; color: #666666; text-decoration: none;border-left: 4px solid #f5866c;background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 56px;');return false;"><?php echo __('Grades') ?></a>
+					</li>
+				</ul>
 				<?php if(!$completed){ ?>
-					<ul>
-						<li>
-							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/grades_menu.png);background-position:4px 8px;background-repeat:no-repeat;" href="#" onclick="show_grading(true);$(this).addClass('active');$(this).attr('style','font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/grades_menu.png);background-position:4px 8px;background-repeat:no-repeat;display: block; padding: 13px 10px 13px 60px; margin: 0 0 0 0; font-size: 14px; font-weight: normal; font-family: Helvetica, Arial, serif; background-position: 15px center; background-repeat: no-repeat; width: 110px; color: #666666; text-decoration: none;border-left: 4px solid #f5866c;background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 56px;');return false;"><?php echo __('Grades') ?></a>
-						</li>
-					</ul>
 					<ul>
 						<li<?php if(@$complete_eval){ ?> class="active"<?php } ?>>
 							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/greencheck_menu_16.png);background-position:4px 8px;background-repeat:no-repeat;<?php if(@$complete_eval){ ?>display: block; padding: 13px 10px 13px 60px; margin: 0 0 0 0; font-size: 14px; font-weight: normal; font-family: Helvetica, Arial, serif; background-position: 15px center; background-repeat: no-repeat; width: 110px; color: #666666; text-decoration: none;border-left: 4px solid #f5866c;background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 56px;<?php } ?>" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/"><?php echo __('I\'m Done!') ?></a>
@@ -620,10 +625,11 @@
 									<a href="#" onclick="render_pagination(0,<?php echo $k; ?>);return false;"><?php echo ($k + 1); ?></a>
 									<ul class="qnav_sub" style="display:inline;font-size:75%;"> </ul>
 								</li>
-							<?php } ?>
+							<?php }if(@$_SESSION['User']['user_type'] == 'L'){ ?>
 							<li id="qnav_grading">
 								<a href="#" onclick="show_grading();return false;">G</a>
 							</li>
+							<?php } ?>
 						</ul>
 					</div>
 
@@ -642,6 +648,20 @@
 		<script type="text/javascript">
 		var currentPage = 0;
 		var currentQuestion = 0;
+		function show_student_grade(){
+			$('.question-item').hide();
+			$('#grading_wrapper').show();
+			$('#grading_wrapper').height('auto');
+			$('#puentes-answer-questions').height('auto');
+			$('.pagination-pages li').removeClass('current');
+			$('.qnav_grading li').addClass('current');
+			
+			$('.pagination').hide();
+			$('#wordLineCounts').hide();
+			
+			$('#grading_wrapper .box-content').load('/grades/completed_summary/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $_SESSION['User']['id']; ?>');
+		}
+		
 		function show_grading(summary){
 			$('.question-item').hide();
 			$('#grading_wrapper').show();

@@ -45,8 +45,10 @@ class GradesController extends AppController{
 		$this->checkAuth();
 		$this->layout = 'ajax';
 		
+		$this->Challenge->Behaviors->attach('Containable');
 		$contains = array(	'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . $user_id,
 																																	'Comment'			=> array( 'conditions'	=> 'Comment.user_id = ' . $this->Challenge->field('user_id',array('Challenge.id' => $challenge_id)) ))));
+
 		$this->set('challenge',$this->Challenge->find('first',array('conditions'=>"Challenge.id = $challenge_id",'contain'=>$contains)));
 		$this->set('grade',$this->Grade->find('first',array('conditions' => array('Grade.user_id' => $user_id,'Grade.challenge_id' => $challenge_id))));
 		$this->set('user',$this->User->findById($user_id));
