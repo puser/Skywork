@@ -33,6 +33,8 @@ class ResponsesController extends AppController{
 				}
 			}
 		// }
+		
+		$this->set('user',$this->User->findById($user_id));
 				
 		if($_SESSION['User']['user_type'] == 'P'){
 			foreach($challenge[0]['Group'] as $k=>$g){
@@ -46,7 +48,6 @@ class ResponsesController extends AppController{
 				if(!$user_group) unset($challenge[0]['Group'][$k]);
 			}
 			
-			$this->set('user',$this->User->findById($user_id));
 			$this->set('question_id',$question_id ? $question_id : @$challenge[0]['Question'][0]['id']);
 		}elseif(!$user_id){
 			if(@$challenge[0]['Group'][0]['User'][0]['id']) $redirect_user = $challenge[0]['Group'][0]['User'][0]['id'];

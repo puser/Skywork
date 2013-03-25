@@ -3,7 +3,7 @@
 	<div class="clear"></div>
 </div>
 <div class="clear"></div>
-<div class="box-content" style="font-size:12pt;margin-left: 120px;">
+<div class="box-content" style="font-size:12px;">
 	<table id="feedback_summary" class="table-type-1">
 		<thead>
 			<tr>
@@ -15,7 +15,7 @@
 		</thead>
 		<tbody>
 			<?php foreach($grades as $k=>$grade){ ?>
-				<tr <?php if($k % 2){ ?>class="alternate"<?php } ?> onmouseover="$(this).find('.studentwork-more,.remove-class').show();" onmouseout="$(this).find('.studentwork-more').hide();if(!$(this).find('.remove-class').hasClass('open')){ $(this).find('.remove-class').hide(); }">
+				<tr <?php if(!($k % 2)){ ?>class="alternate"<?php } ?> onmouseover="$(this).find('.studentwork-more,.remove-class').show();" onmouseout="$(this).find('.studentwork-more').hide();if(!$(this).find('.remove-class').hasClass('open')){ $(this).find('.remove-class').hide(); }">
 					<td class="col1"><?php echo "{$grade['User']['firstname']} {$grade['User']['lastname']}"; ?></td>
 					<td class="col2"><?php echo $comment_count[$grade['User']['id']]; ?></td>
 					<td class="col3"><?php echo $grade['Grade']['grade']; ?></td>

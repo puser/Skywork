@@ -237,6 +237,11 @@
 				</ul>
 				<?php if(!$completed){ ?>
 					<ul>
+						<li>
+							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/grades_menu.png);background-position:4px 8px;background-repeat:no-repeat;" href="#" onclick="show_grading(true);$(this).addClass('active');$(this).attr('style','font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/grades_menu.png);background-position:4px 8px;background-repeat:no-repeat;display: block; padding: 13px 10px 13px 60px; margin: 0 0 0 0; font-size: 14px; font-weight: normal; font-family: Helvetica, Arial, serif; background-position: 15px center; background-repeat: no-repeat; width: 110px; color: #666666; text-decoration: none;border-left: 4px solid #f5866c;background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 56px;');return false;"><?php echo __('Grades') ?></a>
+						</li>
+					</ul>
+					<ul>
 						<li<?php if(@$complete_eval){ ?> class="active"<?php } ?>>
 							<a style="font-size:13px;padding-left:30px;width:136px;background-image:url(/images/icons/greencheck_menu_16.png);background-position:4px 8px;background-repeat:no-repeat;<?php if(@$complete_eval){ ?>display: block; padding: 13px 10px 13px 60px; margin: 0 0 0 0; font-size: 14px; font-weight: normal; font-family: Helvetica, Arial, serif; background-position: 15px center; background-repeat: no-repeat; width: 110px; color: #666666; text-decoration: none;border-left: 4px solid #f5866c;background-color: #ffffff; color: #f5866c; background-position: 11px center; padding-left: 56px;<?php } ?>" href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/complete_eval/"><?php echo __('I\'m Done!') ?></a>
 						</li>
@@ -584,10 +589,12 @@
 			<div class="question-item" style="display:none;" id="grading_wrapper">
 				<div class="box-head">
 					<h2><?php echo "{$user['User']['firstname']} {$user['User']['lastname']}" ?></h2>
+					<div class="clear"></div>
 				</div>
 				<div class="box-content">
 					
 				</div>
+				<div class="clear"></div>
 			</div>
 			
 			<div class="box-foot">
@@ -614,6 +621,9 @@
 									<ul class="qnav_sub" style="display:inline;font-size:75%;"> </ul>
 								</li>
 							<?php } ?>
+							<li id="qnav_grading">
+								<a href="#" onclick="show_grading();return false;">G</a>
+							</li>
 						</ul>
 					</div>
 
@@ -623,7 +633,7 @@
 			
 		</div>
 		
-			<div style="color:#999;" id="wordLineCounts">
+		<div style="color:#999;" id="wordLineCounts">
 			Total lines: <span id="lineCount" style="color:#000;padding-right:10px;"> </span>
 			Total words:
 			<?php foreach($challenge[0]['Question'] as $k=>$q){ ?><span id="wordCount_<?php echo $k; ?>" class="wordCounts" style="color:#000;"><?php echo str_word_count($q['Response'][0]['response_body']); ?></span><?php } ?>
@@ -632,6 +642,21 @@
 		<script type="text/javascript">
 		var currentPage = 0;
 		var currentQuestion = 0;
+		function show_grading(summary){
+			$('.question-item').hide();
+			$('#grading_wrapper').show();
+			$('#grading_wrapper').height('auto');
+			$('#puentes-answer-questions').height('auto');
+			$('.pagination-pages li').removeClass('current');
+			$('.qnav_grading li').addClass('current');
+			
+			if(summary){
+				$('#grading_wrapper').load('/grades/summary/<?php echo $challenge[0]['Challenge']['id']; ?>/');
+				$('.pagination').hide();
+				$('#wordLineCounts').hide();
+			}else $('#grading_wrapper .box-content').load('/grades/update/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $user['User']['id']; ?>');
+		}
+		
 		function render_pagination(page,question){
 			currentPage = page;
 			currentQuestion = question;

@@ -7,13 +7,13 @@ class GradesController extends AppController{
 		$this->checkAuth();
 		$this->layout = 'ajax';
 		
-		if(@$_POST['grade']){
+		if(@$_REQUEST['grade']){
 			$this->Grade->save($_REQUEST['grade']);
 			die();
 		}else{
 			$this->Challenge->Behaviors->attach('Containable');
 			$contains = array(	'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . $user_id,
-																																		'Comment'			=> array( 'conditions'	=> 'Comment.user_id = Challenge.user_id' ))));
+																																		'Comment'			=> array( 'conditions'	=> 'Comment.user_id = ' . $this->Challenge->field('user_id',array('Challenge.id' => $challenge_id)) ))));
 			$this->set('challenge',$this->Challenge->find('first',array('conditions'=>"Challenge.id = $challenge_id",'contain'=>$contains)));
 			$this->set('grade',$this->Grade->find('first',array('conditions' => array('Grade.user_id' => $user_id,'Grade.challenge_id' => $challenge_id))));
 			$this->set('user',$this->User->findById($user_id));
@@ -27,12 +27,12 @@ class GradesController extends AppController{
 		$this->layout = 'ajax';
 		
 		$this->Challenge->Behaviors->attach('Containable');
-		$contains = array(	'Question' 	=> array('Response'	=> array(	'Comment'	=> array( 'conditions'	=> 'Comment.user_id = Challenge.user_id' ))));
+		$contains = array(	'Question' 	=> array('Response'	=> array(	'Comment'	=> array( 'conditions'	=> 'Comment.user_id = ' . $this->Challenge->field('user_id',array('Challenge.id' => $challenge_id)) ))));
 		$challenge = $this->Challenge->find('first',array('conditions'=>"Challenge.id = $challenge_id",'contain'=>$contains));
 		$comment_count = array();
 		foreach($challenge['Question'] as $q){
 			foreach($q['Response'] as $r){
-				$comment_count[$r['user_id']] = count($r['Comment']);
+				@$comment_count[$r['user_id']] += count($r['Comment']);
 			}
 		}
 		
@@ -46,7 +46,7 @@ class GradesController extends AppController{
 		$this->layout = 'ajax';
 		
 		$contains = array(	'Question' 	=> array('Response'	=> array(	'conditions'	=> "Response.user_id = " . $user_id,
-																																	'Comment'			=> array( 'conditions'	=> 'Comment.user_id = Challenge.user_id' ))));
+																																	'Comment'			=> array( 'conditions'	=> 'Comment.user_id = ' . $this->Challenge->field('user_id',array('Challenge.id' => $challenge_id)) ))));
 		$this->set('challenge',$this->Challenge->find('first',array('conditions'=>"Challenge.id = $challenge_id",'contain'=>$contains)));
 		$this->set('grade',$this->Grade->find('first',array('conditions' => array('Grade.user_id' => $user_id,'Grade.challenge_id' => $challenge_id))));
 		$this->set('user',$this->User->findById($user_id));
