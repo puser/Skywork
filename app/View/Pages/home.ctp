@@ -87,9 +87,9 @@
 				<img src="/slides/slide-1.png" />
 				
 				<div class="slide-info">
-					<h2>Students learn more, You work less.</h2>
-					<p>The best way for Instructors to create, distribute, and evaluate all their writing assignments&mdash; online.</p>
-					<a href="#joinModalInit" class="show-overlay btn1 btn1-v2" style=""><span class="inner">Sign up! It's Free</span></a>
+					<h2>With online learning, the sky has no limit.</h2>
+					<p>Skywork is the best way for instructors to facilitate their online classroom.</p>
+					<a href="#joinModalInit" class="show-overlay btn1 btn1-v2" style=""><span class="inner">Sign up!</span></a>
 				</div>
 			</div>
 		</div>
@@ -98,26 +98,22 @@
 	<div id="body">
 		
 		<div class="contentmain">
-			<!--
-			<div class="homequote">
-				<p>Any other assignment is just an assignment.</p>
-			</div>
-			-->
-			<h4>Quick Explanation</h4>
-			<p><img class="icon" src="/images/corp/icons/icon-bubble.png" /> <strong>Skywork takes the pain out of paper assignments.</strong> Rather than handing out assignments and receiving piles of paper back from students, Skywork takes the assignment process digital. Now, you can easily create, assign, receive, grade, and store all your writing assignments online through our easy-to-use platform.</p>
+			<p><img class="icon" src="/images/corp/icons/icon-bubble.png" /> <strong>Skywork functions specifically for online education.</strong> Unlike an LMS, which requires uploading, downloading, and then printing assignments individually, Skywork takes the entire process digital. Now, instructors can easily create, assign, receive, grade, and store assignments online through Skywork’s easy-to-use platform. No more Microsoft Word, no more redlining – no more traditional classroom tools for the online classroom.</p>
 			<p>&nbsp;</p>
 			
-			<h4>Skywork Bridge</h4>
-			<p><img class="icon" src="/images/corp/icons/icon-globe.png" /> <strong>Don't just create assignments. Create bridges.</strong> Skywork allows you to connect with other instructors through like-minded assignments everywhere. Whether in Rome, Georgia or Rome, Italy; in Paris, Texas or Paris, France, Skywork makes learning relevant and accessible.</p>
+			<p><img class="icon" src="/images/corp/icons/icon-graph.png" /> <strong>Skywork provides data metrics from assignments.</strong> Skywork has developed a methodology to measure qualitative work, like essays and short answers. Instructors can now see where students faltered, and the quality compared to previous assignments, so that students can learn from each assignment. We also offer multiple-choice sheet, true and false, and lots of other great features so instructors can stay on top of performance.</p>
+			<p>&nbsp;</p>
+			
+			<p><img class="icon" src="/images/corp/icons/icon-globe.png" /> <strong>Skywork and peer-to-peer collaboration.</strong> Skywork has an innovative peer-to-peer evaluation module that creates the ideal collaborative environment for students. Whether in Rome, Georgia or Rome, Italy, Paris, Texas or Paris, France, Skywork peer-to-peer evaluation is designed for large interactions, making learning relevant and accessible.</p>
 			<p>&nbsp;</p>
 			
 			<h4>Reasons to Join Skywork</h4>
 			<ul>
-				<li><strong>1.</strong> It's built for Instructors.</li>
-				<li><strong>2.</strong> It's practical &amp; easy.</li>
+				<li><strong>1.</strong> It's built specifically for online education.</li>
+				<li><strong>2.</strong> It's practical & functional.</li>
 				<li><strong>3.</strong> It's cross-cultural.</li>
 				<li><strong>4.</strong> It's green.</li>
-				<li><strong>5.</strong> It's free.</li>
+				<li><strong>5.</strong> It's great.</li>
 			</ul>
 		</div>
 		
