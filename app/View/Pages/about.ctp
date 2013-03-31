@@ -174,8 +174,9 @@
 			
 		</div>
 		
+		<?php echo $this->element('footer'); ?><br /><br />
+		
 	</div>
-	
 
 <div style="display:none;">
 	

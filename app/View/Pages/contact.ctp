@@ -195,6 +195,8 @@
 			
 		</div>
 		
+		<?php echo $this->element('footer'); ?><br /><br />
+		
 	</div>
 	
 	<script type="text/javascript">

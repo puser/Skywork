@@ -119,6 +119,8 @@
 		
 	</div>
 	
+	<?php echo $this->element('footer'); ?><br /><br />
+	
 	<?php if(@$user){ ?>
 	<style type="text/css">
 	#fancybox-content div { overflow:hidden !important; }
