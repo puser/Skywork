@@ -91,7 +91,7 @@
 		(<span id="currentFlag">1</span> of <?php echo count($flag_redirects); ?>)
 		<?php echo $username; ?>,
 		<span id="currentFlagType"></span>
-		<a id="flagMetricsBtn" href="/metrics/view/flags/"> </a>
+		<a id="flagMetricsBtn" href="<?php echo (@$_SESSION['flag_redirect'] ? '/responses/view/'.$challenge_id.'/'.$_SESSION['flag_redirect'] : '/metrics/view/flags/'); ?>"> </a>
 		<a id="flagFwdBtn" href="#" onclick="current_flag++;show_flag(flag_redirects[current_flag]);"> </a>
 		<a id="flagFastFwdBtn" href="<?php echo $next_user; ?>" style="display:none;"> </a>
 		<a id="flagCloseBtn" onclick="close_nav();" href="#"><strong>x</strong></a>
@@ -114,7 +114,7 @@ $(document).ready(function(){
 });
 
 function show_flag(url){
-	if(current_flag > <?php echo (count($flag_redirects) - 1); ?>) window.location = '/metrics/view_flags/<?php echo $challenge_id; ?>';
+	if(current_flag > <?php echo (count($flag_redirects) - 1); ?>) window.location = '<?php echo (@$_SESSION['flag_redirect'] ? '/responses/view/'.$challenge_id.'/'.$_SESSION['flag_redirect'] : '/metrics/view_flags/'.$challenge_id); ?>';
 	else{
 		$('#inlineFlagIcon').hide();
 		$('#wrapper').css('margin-top',0);

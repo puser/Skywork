@@ -374,6 +374,11 @@
 									<li class="scale5<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 5) echo ' selected'; ?>"><span><?php echo __('Poor') ?> <?php echo __('Quality') ?></span></li>
 								</ul>
 							</div>
+						<?php }if($_SESSION['User']['user_type'] != 'P'){ ?>
+							<div style="float:right;background:url(/images/icons/icon-flag-24x21.png) top right no-repeat;width:24px;height:21px;overflow:visible;" onmouseover="$('.flag_display').show();$('#flag_base').height($('#flag_display').height());" onmouseout="$('.flag_display').hide();">
+								<div style="display:none;width: 350px;padding: 15px 15px 10px;margin-left: -350px;margin-top: 25px;" id="flag_base" class="flag_display"> </div>
+								<div style="display:none;width: 350px; background-color:#fff; padding: 15px 15px 10px; margin-left: -350px; margin-top: 25px; border: 1px solid #ccc; z-index: 1000; position: absolute;top:0px;" id="flag_contents" class="flag_display"> </div>
+							</div>
 						<?php } ?>
 						<div class="clear"></div>
 					</div>
@@ -844,10 +849,12 @@
 $(document).ready(function(){
 	if($(window).height() >= $(document).height()) {
 		$('#topOfPage').hide();
-		$('#parentGototop').width(120)
+		$('#parentGototop').width(120);
 	}
 	
-	<?php if($_SESSION['User']['user_type'] != 'P' && !$completed){ ?>
+	<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
+		$('#flag_contents').load('/metrics/view_flags/<?php echo $challenge[0]['Challenge']['id'].'/'.$user['User']['id']; ?>');
+	<?php }if($_SESSION['User']['user_type'] != 'P' && !$completed){ ?>
 		if(!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length){
 			$('#finishedEvalBtn').show().parent().width($('#finishedEvalBtn').parent().width() + 170);
 		}

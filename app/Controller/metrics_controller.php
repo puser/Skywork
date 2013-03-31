@@ -165,7 +165,7 @@ class MetricsController extends AppController{
 		$this->set('max_comments',$max_comments);
 	}
 	
-	function view_flags($challenge_id){
+	function view_flags($challenge_id,$user_id=NULL){
 		$this->checkAuth();
 		
 		$challenge = $this->Challenge->find('first',array('conditions'=>array('Challenge.id'=>$challenge_id),'recursive'=>2));
@@ -178,6 +178,8 @@ class MetricsController extends AppController{
 		$checked_responses = array();
 		foreach($challenge['Question'] as $q){
 			foreach($q['Response'] as $r){
+				if($user_id && $r['user_id'] != $user_id) continue;
+				
 				if(@$checked_responses[$r['user_id'].'_'.$q['id']]) continue;
 				else $checked_responses[$r['user_id'].'_'.$q['id']] = 1;
 				
@@ -208,6 +210,11 @@ class MetricsController extends AppController{
 		$this->set('user_flags',$user_flags);
 		$this->set('maxwords_flag',$maxwords_flag);
 		$this->set('challenge',$challenge);
+		
+		if($user_id){
+			$this->set('user_id',$user_id);
+			$this->render('view_flags_summary','ajax');
+		}
 	}
 	
 	function set_detail_session($v=0){
