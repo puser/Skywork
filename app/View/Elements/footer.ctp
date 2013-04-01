@@ -1,6 +1,6 @@
 <style>
 #footer { margin-bottom: 0px; }
-.footer-inner { width:100%; height: 90px; line-height: 20px; padding: 20px; background-color: #F2F2F2; -moz-border-radius: 10px; -webkit-border-radius: 10px; -khtml-border-radius: 10px; border-radius: 10px;}
+.footer-inner { width:100%; height: 90px; line-height: 20px; padding: 5px 20px; background-color: #F2F2F2; -moz-border-radius: 10px; -webkit-border-radius: 10px; -khtml-border-radius: 10px; border-radius: 10px;}
 .footer-area1 { float: left; margin-top: 20px; margin-left: 20px; }
 .footer-area2 { float: left; margin-left: 20px; margin-top: 20px }
 .footer-area3 { float: right; text-align: right; }
