@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox.css" media="screen" />
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
 	<link rel="stylesheet" media="all" href="/js/mcs/jquery.mCustomScrollbar.css" />
+	<link rel="stylesheet" href="/js/annotator/annotator.min.css">
 	<?php echo $this->Html->meta('favicon.ico',    '/favicon.ico',    array('type' => 'icon'));?> 
 	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css?v=6" />
 
@@ -18,7 +19,11 @@
 	<script type="text/javascript" src="/js/jquery.flip.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.ba-bbq.min.js"></script>
 	<script type="text/javascript" src="/js/mcs/jquery.mCustomScrollbar.js"></script>
-	<script type="text/javascript" src="/js/textAnnotater.js?v=2"></script>
+	
+	<!-- <script type="text/javascript" src="/js/textAnnotater.js?v=2"></script> -->
+	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+	<script src="/js/annotator/annotator-full.min.js"></script>
+	
 	<script type="text/javascript" src="/js/jquery.tablesorter.min.js"></script>
 
 	<script type="text/javascript" src="/js/custom.js" ></script>

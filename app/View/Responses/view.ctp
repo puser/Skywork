@@ -880,7 +880,11 @@ $(document).ready(function(){
 		if(!$('.question-item').length) $('#puentes-answer-questions').html('<?php echo __('This user has not submitted responses') ?>');
 	
 		<?php if(!$completed){ ?>
-			annotaterInit(".textvalue p");
+		
+		//	annotaterInit(".textvalue p");
+		$(".textvalue p").annotator();
+		
+		
 			$('.question-item').each(function(){
 				$(this).height($(this).height());
 			});
