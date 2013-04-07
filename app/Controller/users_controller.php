@@ -280,9 +280,13 @@ class UsersController extends AppController{
 			
 			$message = __("{first_name},\n\nSomeone (probably you), forgot the password on Skywork Online. Click on the link below to create a new password.\n\n{link}\n\nSincerely,\nThe Skywork Team");
 			$message = str_replace('{first_name}',$user['User']['firstname'],$message);
-			$message = str_replace('{link}',"http://puentesonline.com/users/password_reset/".$reminder_token,$message);
+			$message = str_replace('{link}',"http://doskywork.com/users/password_reset/".$reminder_token,$message);
 			
-			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",__("New Password"),$message,'From: Skywork <noreply@puentesonline.com>');
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From: Skywork <noreply@puentesonline.com>' . "\r\n";
+			
+			mail("{$user['User']['firstname']} {$user['User']['lastname']} <{$user['User']['email']}>",__("New Password"),nl2br($message),$headers,"-f noreply@puentesonline.com");
 			
 			$this->User->id = $user['User']['id'];
 			$this->User->saveField('invite_token',$reminder_token);
