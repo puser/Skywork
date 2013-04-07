@@ -611,13 +611,22 @@
 				<div class="pagination">
 					<div class="alignleft pagination-prev">
 						<select style="width:75px;" onchange="render_pagination(currentPage,currentQuestion);">
+							<option value="10">10 lines</option>
 							<option value="30">30 lines</option>
 							<option value="60">60 lines</option>
 							<option value="90">90 lines</option>
 							<option value="">Everything</option>
 						</select>
+						
+						<span style="color:#999;" id="wordLineCounts">&nbsp;&nbsp;
+							Total lines: <span id="lineCount" style="color:#000;padding-right:10px;"> </span>
+							<!--
+							Total words:
+							<?php foreach($challenge[0]['Question'] as $k=>$q){ ?><span id="wordCount_<?php echo $k; ?>" class="wordCounts" style="color:#000;"><?php echo str_word_count($q['Response'][0]['response_body']); ?></span><?php } ?>
+							-->&nbsp;&nbsp;
+						</span>
 
-						<a href="#"><?php echo __('Previous') ?></a>
+						<a href="#" style="display:inline-block;"><?php echo __('Previous') ?></a>
 					</div>
 					<div class="alignright pagination-next">
 						<a href="#"><?php echo __('Next') ?></a>
@@ -644,12 +653,6 @@
 			
 		</div>
 		
-		<div style="color:#999;" id="wordLineCounts">
-			Total lines: <span id="lineCount" style="color:#000;padding-right:10px;"> </span>
-			Total words:
-			<?php foreach($challenge[0]['Question'] as $k=>$q){ ?><span id="wordCount_<?php echo $k; ?>" class="wordCounts" style="color:#000;"><?php echo str_word_count($q['Response'][0]['response_body']); ?></span><?php } ?>
-		</div>
-		
 		<script type="text/javascript">
 		var currentPage = 0;
 		var currentQuestion = 0;
@@ -659,7 +662,7 @@
 			$('#grading_wrapper').height('auto');
 			$('#puentes-answer-questions').height('auto');
 			$('.pagination-pages li').removeClass('current');
-			$('.qnav_grading li').addClass('current');
+			$('#qnav_grading').addClass('current');
 			
 			$('.pagination').hide();
 			$('#wordLineCounts').hide();
@@ -673,7 +676,8 @@
 			$('#grading_wrapper').height('auto');
 			$('#puentes-answer-questions').height('auto');
 			$('.pagination-pages li').removeClass('current');
-			$('.qnav_grading li').addClass('current');
+			$('#qnav_grading').addClass('current');
+			$('.pagination-next').hide();
 			
 			if(summary){
 				$('#grading_wrapper').load('/grades/summary/<?php echo $challenge[0]['Challenge']['id']; ?>/');
@@ -708,8 +712,8 @@
 				if(lineCount < 0) $('#wordLineCounts').hide();
 				else{
 					$('#lineCount').html(lineCount);
-					$('.wordCounts').hide();
-					$('#wordCount_' + currentQuestion).show();
+					// $('.wordCounts').hide();
+					// $('#wordCount_' + currentQuestion).show();
 				}
 				
 				// show current response
@@ -728,8 +732,7 @@
 						nextLink = $('.pagination li.current').last().next().find('a').length ? $('.pagination li.current').last().next().find('a').first() : $('.pagination li.current').parents('li').next().find('a').first();
 						nextLink.click();
 					});
-				}
-				else $('.pagination-next').hide();
+				}//else $('.pagination-next').hide();
 
 				if(!currentPage && !currentQuestion){
 					$('.pagination-prev a').hide();
@@ -781,7 +784,7 @@
 					<span><?php echo __('I\'m Done Evaluating') ?></span>
 				</a>
 			</div>
- 			<div style="width: 120px; float: left;" id="nextStudentBtn">
+ 			<div style="width: 120px; float: left;display:none;" id="nextStudentBtn">
 				<a href="#" onclick="nextStudent();return false;" class="btn2">
 					<span><?php echo ($_SESSION['User']['user_type'] == 'P' ? 'Continue' : 'Next Student'); ?></span>
 				</a>
