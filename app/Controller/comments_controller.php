@@ -3,6 +3,7 @@ class CommentsController extends AppController{
 	var $name = 'Comments';
 	
 	function save(){
+		die(print_r($_REQUEST));
 		$this->checkAuth(@$_REQUEST['ajax'] ? true : false);
 		
 		$_REQUEST['comment']['user_id'] = $_SESSION['User']['id'];

@@ -882,7 +882,14 @@ $(document).ready(function(){
 		<?php if(!$completed){ ?>
 		
 		//	annotaterInit(".textvalue p");
-		$(".textvalue p").annotator();
+		var response_cs = $(".textvalue p").annotator();
+		response_cs.annotator('addPlugin', 'Store', {
+		      prefix: '/comments/save',
+
+		      annotationData: {
+		        'response_id': '' // TBD
+		      }
+		    });
 		
 		
 			$('.question-item').each(function(){
