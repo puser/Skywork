@@ -32,6 +32,10 @@
 .commentHover {
 	background-color:#eee !important;
 }
+
+.annotator-notice-error {
+	display:none !important;
+}
 </style>
 
 <div id="assignmentDialog" style="display:none;text-align:center;"> </div>
@@ -392,8 +396,7 @@
 								</p>
 								<div class="textvalueWrapper" id="textvalueWrapper_<?php echo $k; ?>" style="overflow:hidden;">
 									<div class="textvalue">
-										<<?php echo ($completed ? 'div' : 'p'); ?> class="responseBodys" id="responseBody<?php echo $k; ?>">
-											<?php
+										<<?php echo ($completed ? 'div' : 'p'); ?> class="responseBodys" id="responseBody<?php echo $k; ?>"><?php
 											$q['Response'][0]['response_body'] = stripslashes($q['Response'][0]['response_body']);
 											$mod_response = $q['Response'][0]['response_body'];
 											foreach(@$q['Response'][0]['Comment'] as $i=>$c){ 
@@ -882,6 +885,37 @@ $(document).ready(function(){
 		<?php if(!$completed){ ?>
 		
 		//	annotaterInit(".textvalue p");
+		
+		Annotator.Plugin.LikeDislike = function (element, options) {
+		  this.element = element;
+			this.options = options;
+		};
+
+		jQuery.extend(Annotator.Plugin.LikeDislike.prototype, new Annotator.Plugin(), {
+		  events: {},
+		  options: {},
+		  pluginInit: function (){
+			
+				console.log("Initialized with annotator: ", this.annotator);
+				
+				$(this.annotator.editor.element).removeClass('annotator-editor');
+				$(this.annotator.editor.element).find('.annotator-cancel').before('<div class="vote"><ul><li class="voteneutral"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(2);return false;">General</a></li><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;">Like</a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;">Dislike</a></li></ul></div><input type="hidden" name="type" class="comment-type" value="2" id="commentTypeVal" /><div class="callout-corner"></div>');
+				$(this.annotator.editor.element).find('form').attr('class','answer-comment-box');
+				$(this.annotator.editor.element).find('.annotator-resize').hide();
+				$(this.annotator.editor.element).find('.annotator-cancel').addClass('close');
+				$(this.annotator.editor.element).find('.annotator-save').css({'width':'90px','float':'right'}).addClass('btn1').html('<span>Comment</span>');
+				$(this.annotator.editor.element).find('.annotator-listing').css('margin','0');
+				
+				this.annotator.subscribe("annotationEditorShown", function(editor,annotation){
+					editor.fields.push($('#commentTypeVal'));
+				});
+				
+				this.annotator.subscribe("annotationEditorSubmit", function(editor,annotation){
+					annotation.type = $('#commentTypeVal').val();
+				});
+		  }
+		});
+		
 		var response_cs = $(".textvalue p").annotator();
 		response_cs.annotator('addPlugin', 'Store', {
 		      prefix: '/comments/save',
@@ -890,7 +924,7 @@ $(document).ready(function(){
 		        'response_id': '' // TBD
 		      }
 		    });
-		
+		response_cs.annotator('addPlugin', 'LikeDislike');
 		
 			$('.question-item').each(function(){
 				$(this).height($(this).height());
