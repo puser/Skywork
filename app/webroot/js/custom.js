@@ -18,6 +18,24 @@ jQuery(function($) {
 		'centerOnScroll' : true
 	});
 	
+	$(".show-overlay").each(function(){
+		if($(this).attr('href').search('#') >= 0){
+			$(this).fancybox({
+				'hideOnOverlayClick' : false,
+				'showCloseButton' : false,
+				'centerOnScroll' : true
+			});
+		}else{
+			$(this).addClass('fancybox.ajax');
+			$(this).fancybox({
+				'hideOnOverlayClick' : false,
+				'showCloseButton' : false,
+				'centerOnScroll' : true,
+				'type'			: 'ajax'
+			});
+		}
+	});
+	
 	
 	/**
 	 * Modal: Exit
@@ -116,5 +134,6 @@ function expandtext(textArea){
 		h = textArea.offsetHeight;
 		textArea.rows++;
 	}
+	
 	$(window).scrollTop(curScroll);
 }

@@ -222,15 +222,15 @@
 							</div>
 							-->
 							<div style="clear:both;padding-top:12px;font-size:14px;">
-								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#uploadSheetBtn').show();$('#addManualBtn').hide();$('#genTokenBtn').hide(); }" />&nbsp;
-								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I have a spreadsheet with student emails. When I upload this sheet, Skywork will send all my students a temporary password.") ?></div>
+								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).is(':checked')){ $('#uploadSheetBtn').show();$('#addManualBtn').hide();$('#genTokenBtn').hide(); }" />&nbsp;
+								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I have a spreadsheet with student emails. When I upload this sheet, Puentes will send all my students a temporary password.") ?></div>
 								<div class="clear"></div>
 								
-								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#uploadSheetBtn').hide();$('#genTokenBtn').show();$('#addManualBtn').hide(); }" />&nbsp;
+								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).is(':checked')){ $('#uploadSheetBtn').hide();$('#genTokenBtn').show();$('#addManualBtn').hide(); }" />&nbsp;
 								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I'll give them a code (a class token) and they'll sign themselves up through the homepage.") ?></div>
 								<div class="clear"></div>
 								
-								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).attr('checked')){ $('#genTokenBtn').hide();$('#addManualBtn').show();$('#uploadSheetBtn').hide(); }" />&nbsp;
+								<input type="radio" name="addStudentMethod" style="float:left;" onchange="if($(this).is(':checked')){ $('#genTokenBtn').hide();$('#addManualBtn').show();$('#uploadSheetBtn').hide(); }" />&nbsp;
 								<div style="float:left;width:500px;padding-left:5px;"><?php echo __("I'll add the students myself (you'll only be required to enter their email addresses).") ?></div>
 							</div>
 							<div class="clear"></div>

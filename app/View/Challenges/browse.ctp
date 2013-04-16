@@ -74,8 +74,9 @@
 						$challenge_click = "$('#skipcollab_warning_link').click();return false;";
 					}elseif(@$challenge['Users']){
 						if((!$challenge['Challenge']['eval_complete']) || ($_SESSION['User']['user_type'] == 'P' && $r_date < $now) || ($challenge['Challenge']['collaboration_type'] == 'NONE' && !$challenge['Challenge']['eval_complete'])){
-							if($_SESSION['User']['user_type'] == 'P') $challenge_click = "if($(this).parents('tr').first().next().find('li').length > 1){ window.location = $($(this).parents('tr').first().next().find('li')[1]).find('a').attr('href'); }else{ alert('None of this challenge\'s other participants have met the response deadline.'); }";
-							else $challenge_click = "window.location = '/responses/view/{$challenge['Challenge']['id']}';";
+							if($_SESSION['User']['user_type'] == 'P') $challenge_click = "if($(this).parents('tr').first().next().find('li').length > 1){ window.location = $($(this).parents('tr').first().next().find('li')[1]).find('a').attr('href'); }else{ show_feedback($(this).parent(),{$challenge['Challenge']['id']});return false; }";
+							//else $challenge_click = "window.location = '/responses/view/{$challenge['Challenge']['id']}';";
+							else $challenge_click = "show_feedback($(this).parent(),{$challenge['Challenge']['id']});return false;";
 						}else{
 							$challenge_click = "show_user_list($(this).parent(),{$challenge['Challenge']['id']}," . ($_SESSION['User']['user_type'] == 'L' ? '1' : '0') . "," . ($r_date < $now ? '1' : '0') . ");";
 						}

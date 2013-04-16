@@ -45,6 +45,8 @@ class WordFlagsController extends AppController {
 		$flag_redirects = array();
 		$flag_types = array();
 		
+		if(@$_REQUEST['redirect']) $_SESSION['flag_redirect'] = $_REQUEST['redirect'];
+		
 		// find all matches for flags of specified type(s); prepare redirect schedule
 		if($type == 'WORD' || $type == 'PHRASE' || $type == 'EXPL' || $type == 'all'){
 			$conditions = 'WordFlag.user_id = '.$_SESSION['User']['id'];

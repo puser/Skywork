@@ -189,12 +189,14 @@ function show_question_responses(q_id){
 }
 
 function save_response(redirect){
+	$('#response_body').val(tinyMCE.get('response_body').getContent());
+	
 	if($('.attachmentType').length){
 		$('#responseData').submit();
 		return false;
 	}
 	
-	if(!redirect.search('attachments') && !$('.niceTextarea:first').val()){
+	if(redirect != 'auto' && !redirect.search('attachments') && !$('.niceTextarea:first').val()){
 		$('#fieldValidate').show();
 		return false;
 	}
@@ -206,7 +208,7 @@ function save_response(redirect){
 				add_attachments($('#challenge_id').val());
 			}else if($('#next_id').val() == 'dashboard') window.location = '/dashboard/';
 			else window.location = '#' + $('#next_id').val();
-		}else if(redirect) window.location = redirect;
+		}else if(redirect && redirect != 'auto') window.location = redirect;
 		else{ /* */ }
 	}});
 }
@@ -297,6 +299,61 @@ function show_edit_existing(e,cid){
 		e.find('.viewAllRequests').show();
 		
 		$.ajax({url:'/challenges/update_active_interstitial/'+cid,success:function(r){
+			$('#bridgelist').css({'float':'left'});
+			$('#bridgelist').animate({width:450});
+			if(prevOpen){
+				$("#home-leaderboard .box-content").fadeOut('slow',function(){
+					$('#home-leaderboard').html(r).find('.box-content').hide();
+					$('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});
+					//$("#home-leaderboard .content").hide();
+					$("#home-leaderboard .box-content").fadeIn('slow');
+					$('#home-studentwork').width(470);
+				});
+			}else{
+				$('#home-leaderboard').html(r);
+				$('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});
+				$('#home-leaderboard').show();
+				$('#home-studentwork').width(470);
+				$('#home-leaderboard').animate({width:475});
+			}
+		
+			setTimeout(function(){
+				$('#home-studentwork').css({height:$('#bridgelist').height(),minHeight:$('#bridgelist').height()});
+			},500);
+		}});
+	}
+}
+
+function show_feedback(e,cid){
+	e = e.parents('tr');
+	var prevOpen = $('tr.opened').length;
+	$('.viewAllRequests').hide();
+	
+	if(e.hasClass('opened')){
+		$('.pagination').show();
+		
+		e.removeClass('opened');
+		
+		$('#home-leaderboard').animate({width:0},function(){ $('#home-leaderboard').hide(); });
+		$('#bridgelist').animate({width:954},function(){ $('.graphIcon').show();$('#bridgetable td,#bridgetable th').fadeIn(); });
+		
+		$('#bridgetable .col1').animate({width:390},'fast');
+		$('#thinListBorder').hide();
+	}else{
+		$('.pagination').hide();
+		
+		$('tr.opened').next().children('div.alignleft').removeClass('colgroup');
+		$('tr.opened').removeClass('opened').next().slideUp();
+		
+		e.addClass('opened');
+		
+		$('#bridgetable .col1').animate({width:465},'fast');
+		$('#thinListBorder').show();
+		$('#bridgetable td:not(:first-child),#bridgetable th:not(".col1")').hide();
+		
+		e.find('.viewAllRequests').show();
+		
+		$.ajax({url:'/challenges/evaluation_interstitial/'+cid,success:function(r){
 			$('#bridgelist').css({'float':'left'});
 			$('#bridgelist').animate({width:450});
 			if(prevOpen){
@@ -545,7 +602,7 @@ function load_search_results(){
 }
 
 function group_invite_user(){
-	var uType = $('#inviteUserU').attr('checked') ? 'P' : 'L';
+	var uType = $('#inviteUserU').is(':checked') ? 'P' : 'L';
 	show_group_delayed();
 	$.ajax({url:'/users/invite/'+$('#inviteUserGroup').val()+'/0/'+$('#inviteUserFirst').val()+'/'+$('#inviteUserLast').val()+'/'+$('#inviteUserEmail').val()+'/'+uType,success:function(){
 		$('.inviteField').val('');
@@ -690,10 +747,10 @@ function enable_user_email(){
 }
 
 function set_email_prefs(){
-	$('input[name="notify_groups"]').val($('#notify_groups').attr('checked') ? 1 : 0);
-	$('input[name="notify_challenges"]').val($('#notify_challenges').attr('checked') ? 1 : 0);
-	$('input[name="notify_expiration"]').val($('#notify_expiration').attr('checked') ? 1 : 0);
-	$('input[name="notify_responses"]').val($('#notify_responses').attr('checked') ? 1 : 0);
+	$('input[name="notify_groups"]').val($('#notify_groups').is(':checked') ? 1 : 0);
+	$('input[name="notify_challenges"]').val($('#notify_challenges').is(':checked') ? 1 : 0);
+	$('input[name="notify_expiration"]').val($('#notify_expiration').is(':checked') ? 1 : 0);
+	$('input[name="notify_responses"]').val($('#notify_responses').is(':checked') ? 1 : 0);
 }
 
 function show_group_delayed(){
@@ -710,7 +767,7 @@ function save_group_name(){
 
 
 function invite_collaborator(c_id){
-	var uType = $('#inviteUserU').attr('checked') ? 'P' : 'L';
+	var uType = $('#inviteUserU').is(':checked') ? 'P' : 'L';
 	$.ajax({url:'/challenges/queue_invite/'+c_id+'/0/0/'+$('#firstName').val()+'/'+$('#lastName').val()+'/'+$('#emailAddr').val()+'/C',success:function(r){
 		jQuery.fancybox.close();
 		// window.location = '/challenges/update/' + c_id + '/update_people/';
@@ -798,21 +855,21 @@ function set_stat_session(v){
 }
 
 function show_comment(rid,pid,cid,color,e){
-	$('#responseBody' + rid + '_' + pid).parent().find('p').first().hide();
+	$('#responseBody' + rid + '_' + pid).parent().find('.responseBodys').first().hide();
 	$('#responseBody' + rid + '_' + pid).show();
 	$('.comment_detail_' + pid).show().removeClass('activeDetail');
 	$('#commentDetail_' + cid).addClass('activeDetail');
 	
 	$('.commentHighlight').css('background-color','#ccc');
-	$('#commentHighlight_' + cid).css('background-color',color);
+	$('.commentHighlight_' + cid).css('background-color',color);
 	if(e) $(e).parent().hide();
 	
 	setTimeout(function(){ $(document).click(function(){ hide_all_comments();$(document).unbind('click'); }); },15);
 }
 
 function hide_all_comments(){
-	$('.textvalue p').hide();
-	$('.textvalue p:first-child').show();
+	$('.textvalue .responseBodys').hide();
+	$('.textvalue .responseBodys:first-child').show();
 	$('.question-comments').hide();
 }
 
