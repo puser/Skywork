@@ -10,8 +10,9 @@
 </style>
 
 <div class="footer-inner">
-	<div class="footer-area1"><img src="/images/corp/icons/icon-lock.png"/></div>
-	<div class="footer-area2">Your date is safe! Your data is <br/>encrypted with SSL security <br/>(Secure Socket Layer).</div>
+	<div class="footer-area2">
+		<span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=PWTxJe4ZNlWlKlFkyKVHp7SdX0N4R35nZSyPdHGIvEuALrfg1H71"></script></span>
+	</div>
 	<div class="footer-area3">
 		<div class="footer-links"><a href="/pages/about/">Product</a> | <a href="http://blog.puentesonline.com/">Blog</a> | <a href="/pages/contact/">Contact & Info</a></div>
 		<div class="footer-copyright">Copyright @ 2012 - 2013. Puentes Company, LLC. All Rights Reverved.</div>
