@@ -117,6 +117,18 @@ class WordFlagsController extends AppController {
 			}
 		}
 		
+		if($type == 'MIN' || $type == 'all'){
+			foreach($challenge['Question'] as $q){
+				if(!@$q['Response'][0]) continue;
+				
+				$r = $q['Response'][0];
+				if(str_word_count($r['response_body']) < $challenge['Challenge']['min_response_length'] && $challenge['Challenge']['min_response_length'] > 1){
+					$flag_redirects[] = '/responses/view/'.$challenge['Challenge']['id'].'/'.$user_id.'?ajax=1';
+					$flag_types[] = 'Assignment Minimum';
+				}
+			}
+		}
+		
 		$this->set('challenge_id',$challenge_id);
 		$this->set('flag_types',$flag_types);
 		$this->set('flag_redirects',$flag_redirects);

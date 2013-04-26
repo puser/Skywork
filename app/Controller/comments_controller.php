@@ -20,7 +20,6 @@ class CommentsController extends AppController{
 																										'endOffset'		=> $c['Comment']['length_offset'] )));
 			}
 			
-			//die('[{"id": "39fc339cf058bd22176771b3e3187329","text":"tet","type":"2","ranges":[{"start":"/div[1]/div[1]/p[1]","startOffset":704,"end":"/div[1]/div[1]/p[1]","endOffset":967}],"response_id":"841"}]');
 			die(str_replace("\/","/",json_encode($json)));
 		}elseif(@$_SERVER['REQUEST_METHOD'] == 'DELETE'){
 			// delete comment

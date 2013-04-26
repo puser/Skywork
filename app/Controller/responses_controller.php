@@ -156,5 +156,11 @@ class ResponsesController extends AppController{
 		
 		$this->redirect('/dashboard/');
 	}
+	
+	function set_row_session($v=10){
+		$this->checkAuth();
+		$this->Session->write('row_count',$v);
+		die();
+	}
 }
 ?>

@@ -344,7 +344,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 #sidemenu li.active li a.active {color:black}
 #sidemenu li.active ul {display: block;}
 #sidemenu li.active li a:hover{text-decoration: underline; color:black}
-#sidemenu2 {display: block; width: 180px; }
+#sidemenu2 {display: block; width: 185px; }
 #sidemenu2 li {list-style: none; font-size: 14px; color: #666666; display: block; }
 #sidemenu2 li a {color: #666666; padding: 4px 10px; display: block; }
 #sidemenu2 li a:hover {color: #000000; }

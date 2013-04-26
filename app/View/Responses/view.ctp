@@ -39,6 +39,13 @@
 	display:none !important;
 }
 
+.qnav_sub a {
+	color:#808080 !important;
+}
+.qnav_sub li.active a {
+	color:#0071bc !important;
+}
+
 <?php if(!$completed){ ?>
 	.annotateArea ::selection {
 		background-color:#fcf300;
@@ -211,6 +218,7 @@
 										if($u['id'] == $_SESSION['User']['id']) continue; ?>
 										<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
 											<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1" <?php if(!@$user_responses[$u['id']]){ ?>style="color:#c95248;"<?php } ?>>
+												<?php if($u['id'] == $user_id){ ?><img src="/images/arrow-right-black.png" border="0" /><?php } ?>
 												<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
 												<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
 											</a>
@@ -235,6 +243,7 @@
 										if($u['id'] == $_SESSION['User']['id']) continue; ?>
 										<li class="userNav" id="userNav<?php echo $u['id']; ?>" onmouseout="$(this).find('.shortname').show();$(this).find('.fullname').hide();" onmouseover="$(this).find('.shortname').hide();$(this).find('.fullname').show();">
 											<a<?php if($u['id'] == $user_id){ ?> class="active"<?php } ?> href="/responses/view/<?php echo $challenge[0]['Challenge']['id']; ?>/<?php echo $u['id']; ?>?notips=1" <?php if(!@$user_responses[$u['id']]){ ?>style="color:#c95248;"<?php } ?>>
+												<?php if($u['id'] == $user_id){ ?><img src="/images/arrow-right-black.png" border="0" /><?php } ?>
 												<span class="shortname"><?php echo substr($u['firstname'].' '.$u['lastname'],0,20) . (strlen($u['firstname'].' '.$u['lastname']) > 20 ? '...' : ''); ?></span>
 												<span class="fullname" style="display:none;"><?php echo $u['firstname'].' '.$u['lastname']; ?></span>
 											</a>
@@ -385,10 +394,11 @@
 									<li class="scale5<?php if(@$q['Response'][0]['Responses'][0]['response_body'] == 5) echo ' selected'; ?>"><span><?php echo __('Poor') ?> <?php echo __('Quality') ?></span></li>
 								</ul>
 							</div>
-						<?php }if($_SESSION['User']['user_type'] != 'P'){ ?>
-							<div style="float:right;background:url(/images/icons/icon-flag-24x21.png) top right no-repeat;width:24px;height:21px;overflow:visible;" onmouseover="$('.flag_display').show();$('#flag_base').height($('#flag_display').height());" onmouseout="$('.flag_display').hide();">
+						<?php }if($_SESSION['User']['user_type'] != 'P' && !@$ajax){ ?>
+							<div style="float:right;width:24px;height:21px;overflow:visible;margin-top:10px;" onmouseover="$('.flag_display').show();$('#flag_base').height($('#flag_display').height());$('.flag_icon').css({'border':'1px solid #ccc','border-bottom':'1px solid #fff'});" onmouseout="$('.flag_icon').css({'box-shadow':'none','border':'1px solid #fff'});$('.flag_display').hide();">
+								<div style="background:#fff url(/images/icons/icon-flag-24x21.png) center no-repeat;width:28px;height:25px;z-index:1001;position: absolute; border: 1px solid #fff;" class="flag_icon"> </div>
 								<div style="display:none;width: 350px;padding: 15px 15px 10px;margin-left: -350px;margin-top: 25px;" id="flag_base" class="flag_display"> </div>
-								<div style="display:none;width: 350px; background-color:#fff; padding: 15px 15px 10px; margin-left: -350px; margin-top: 25px; border: 1px solid #ccc; z-index: 1000; position: absolute;top:0px;" id="flag_contents" class="flag_display"> </div>
+								<div style="display:none;width: 350px; background-color:#fff; padding: 15px 15px 10px; margin-left: -352px; margin-top: 25px; border: 1px solid #ccc; z-index: 1000; position: absolute;top:14px;box-shadow:0px 0px 18px #ccc;" id="flag_contents" class="flag_display"> </div>
 							</div>
 						<?php } ?>
 						<div class="clear"></div>
@@ -402,6 +412,13 @@
 									</span>
 								</p>
 								<div class="annotateArea" id="aArea_<?php echo $q['Response'][0]['id']; ?>"><div class="textvalueWrapper" id="textvalueWrapper_<?php echo $k; ?>" style="overflow:hidden;"><div class="textvalue"><p class="responseBodys" id="responseBody<?php echo $k; ?>"><?php
+								
+											if(@$_REQUEST['highlight'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
+												$wordpos = 0;
+												for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos(strtoupper($q['Response'][0]['response_body']),strtoupper($_REQUEST['highlight']),$wordpos + 1);
+												$q['Response'][0]['response_body'] = substr_replace($q['Response'][0]['response_body'],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
+											}
+								
 											echo stripslashes($q['Response'][0]['response_body']);
 										?></p>
 										<?php if(!$completed){ ?>
@@ -459,11 +476,11 @@
 			<div class="box-foot">
 				<div class="pagination">
 					<div class="alignleft pagination-prev">
-						<select style="width:75px;" onchange="render_pagination(currentPage,currentQuestion);">
-							<option value="10">10 lines</option>
-							<option value="30">30 lines</option>
-							<option value="60">60 lines</option>
-							<option value="90">90 lines</option>
+						<select style="width:75px;" onchange="update_row_pref();render_pagination(currentPage,currentQuestion);">
+							<option value="10"<?php if(@$_SESSION['row_count'] == 10){ ?> selected="selected"<?php } ?>>10 lines</option>
+							<option value="30"<?php if(@$_SESSION['row_count'] == 30){ ?> selected="selected"<?php } ?>>30 lines</option>
+							<option value="60"<?php if(@$_SESSION['row_count'] == 60){ ?> selected="selected"<?php } ?>>60 lines</option>
+							<option value="90"<?php if(@$_SESSION['row_count'] == 90){ ?> selected="selected"<?php } ?>>90 lines</option>
 							<option value="">Everything</option>
 						</select>
 						
@@ -490,7 +507,7 @@
 								</li>
 							<?php }if(@$_SESSION['User']['user_type'] == 'L'){ ?>
 							<li id="qnav_grading">
-								<a href="#" onclick="show_grading();return false;">G</a>
+								<a href="#" onclick="show_grading();return false;">Grade</a>
 							</li>
 							<?php } ?>
 						</ul>
@@ -510,8 +527,8 @@
 			$('#grading_wrapper').show();
 			$('#grading_wrapper').height('auto');
 			$('#puentes-answer-questions').height('auto');
-			$('.pagination-pages li').removeClass('current');
-			$('#qnav_grading').addClass('current');
+			$('.pagination-pages li').removeClass('active');
+			$('#qnav_grading').addClass('active');
 			
 			$('.pagination').hide();
 			$('#wordLineCounts').hide();
@@ -524,8 +541,8 @@
 			$('#grading_wrapper').show();
 			$('#grading_wrapper').height('auto');
 			$('#puentes-answer-questions').height('auto');
-			$('.pagination-pages li').removeClass('current');
-			$('#qnav_grading').addClass('current');
+			$('.pagination-pages li').removeClass('active');
+			$('#qnav_grading').addClass('active');
 			$('.pagination-next').hide();
 			
 			if(summary){
@@ -541,10 +558,21 @@
 
 			if(!$('.pagination-prev select').val()){
 				// show everything
+				show_grading();
 				$('.textvalueWrapper').show();
-				$('.question-item').show();
-				$('.textvalueWrapper,.textvalueWrapper .textvalue').css('height','auto');
-				$('.box-foot').hide();
+				$('.question-item').show();$('.box-foot').hide();
+				
+				setTimeout(function(){
+					$('.textvalueWrapper,.textvalueWrapper .textvalue').css('height','auto');
+					$('#grading_wrapper').height('auto');
+					$('#puentes-answer-questions').height('auto');
+					
+					$('#puentes-answer-questions,.question-item').css('height','auto');
+					$('.question-item').each(function(){
+						$(this).height($(this).height());
+					});
+					$('#puentes-answer-questions').height($('#puentes-answer-questions').height());
+				},600);
 			}else{
 				currentResponse = $('#textvalueWrapper_' + currentQuestion);
 				
@@ -578,7 +606,7 @@
 				if((currentPage + 1) < pageCount || (currentQuestion + 1) < <?php echo count($challenge[0]['Question']); ?>){
 					$('.pagination-next').show();
 					$('.pagination-next a').click(function(){
-						nextLink = $('.pagination li.current').last().next().find('a').length ? $('.pagination li.current').last().next().find('a').first() : $('.pagination li.current').parents('li').next().find('a').first();
+						nextLink = $('.pagination li.active').last().next().find('a').length ? $('.pagination li.active').last().next().find('a').first() : $('.pagination li.active').parents('li').next().find('a').first();
 						nextLink.click();
 					});
 				}//else $('.pagination-next').hide();
@@ -589,23 +617,23 @@
 				}else{
 					$('.pagination-prev a').show();
 					$('.pagination-prev a').click(function(){
-						prevLink = $('.pagination li.current').last().prev().find('a').length ? $('.pagination li.current').last().prev().find('a').last() : $('.pagination li.current').parents('li').prev().find('a').last();
+						prevLink = $('.pagination li.active').last().prev().find('a').length ? $('.pagination li.active').last().prev().find('a').last() : $('.pagination li.active').parents('li').prev().find('a').last();
 						prevLink.click();
 					});
 					
 					$('.pagination-prev select').hide();
 				}
 
-				$('.pagination-pages li').removeClass('current');
+				$('.pagination-pages li').removeClass('active');
 				$('.qnav_sub').hide();
 				$('.qnav_sub li').remove();
-				$('#qnav_' + currentQuestion).addClass('current');
+				$('#qnav_' + currentQuestion).addClass('active');
 
 				if(pageCount > 1){
 					$('#qnav_' + currentQuestion + ' .qnav_sub').show();
 
 					for(i = 0;i < pageCount;i++){
-						$('#qnav_' + currentQuestion + ' .qnav_sub').append('<li' + (currentPage == i ? ' class="current"' : '') + '><a onclick="render_pagination(' + i + ',' + question + ');return false;" href="#">' + (i + 1) + '</a></li>');
+						$('#qnav_' + currentQuestion + ' .qnav_sub').append('<li' + (currentPage == i ? ' class="active"' : '') + '><a onclick="render_pagination(' + i + ',' + question + ');return false;" href="#">&bull;</a></li>');
 					}
 				}
 
@@ -617,6 +645,10 @@
 				$(this).height($(this).height());
 			});
 			$('#puentes-answer-questions').height($('#puentes-answer-questions').height());
+		}
+		
+		function update_row_pref(){
+			if($('.pagination select').val()) $.ajax({url:'/responses/set_row_session/' + $('.pagination select').val()});
 		}
 
 		render_pagination(0,0);
@@ -707,6 +739,10 @@ $(document).ready(function(){
 	
 	<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
 		$('#flag_contents').load('/metrics/view_flags/<?php echo $challenge[0]['Challenge']['id'].'/'.$user['User']['id']; ?>');
+	<?php }elseif(@$_REQUEST['instructor_comments']){ ?>
+		$('.pagination select').val('');
+		render_pagination(currentPage,currentQuestion);
+		$('#grading_wrapper').hide();
 	<?php }if($_SESSION['User']['user_type'] != 'P' && !$completed){ ?>
 		if(!$('.userNav .active').parent().next().find('a').length && !$('.userNav .active').parents('ul').first().parent().next().find('.userNav').first().length){
 			$('#finishedEvalBtn').show().parent().width($('#finishedEvalBtn').parent().width() + 170);

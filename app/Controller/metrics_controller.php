@@ -175,6 +175,7 @@ class MetricsController extends AppController{
 		$user_text = array();
 		$user_flags = array();
 		$maxwords_flag = array();
+		$minwords_flag = array();
 		$checked_responses = array();
 		foreach($challenge['Question'] as $q){
 			foreach($q['Response'] as $r){
@@ -190,6 +191,14 @@ class MetricsController extends AppController{
 						$maxwords_flag[$r['user_id']]['flags']++;
 						$maxwords_flag[$r['user_id']]['words'] += str_word_count($r['response_body']) - $challenge['Challenge']['max_response_length'];
 					}else $maxwords_flag[$r['user_id']] = array('words' => str_word_count($r['response_body']) - $challenge['Challenge']['max_response_length'],'flags' => 1);
+				}
+				
+				if(str_word_count($r['response_body']) < $challenge['Challenge']['min_response_length'] && $challenge['Challenge']['min_response_length'] > 1){
+					@$user_flag_total[$r['user_id']]++;
+					if(@$minwords_flag[$r['user_id']]){
+						$minwords_flag[$r['user_id']]['flags']++;
+						$minwords_flag[$r['user_id']]['words'] += $challenge['Challenge']['min_response_length'] - str_word_count($r['response_body']);
+					}else $minwords_flag[$r['user_id']] = array('words' => $challenge['Challenge']['min_response_length'] - str_word_count($r['response_body']),'flags' => 1);
 				}
 				
 				$comments = $this->Comment->find('all',array('conditions'=>array('Comment.response_id'=>$r['id'])));
@@ -209,6 +218,7 @@ class MetricsController extends AppController{
 		$this->set('user_flag_total',$user_flag_total);
 		$this->set('user_flags',$user_flags);
 		$this->set('maxwords_flag',$maxwords_flag);
+		$this->set('minwords_flag',$minwords_flag);
 		$this->set('challenge',$challenge);
 		
 		if($user_id){
