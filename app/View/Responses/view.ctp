@@ -51,6 +51,13 @@
 		background-color:#fcf300;
 	}
 <?php } ?>
+
+.ui-autocomplete.ui-front.ui-menu.ui-widget.ui-widget-content {
+	width: 192px;opacity: .8;font-size: 11px;font-family: Helvetica, Arial, sans-serif;
+}
+.ui-autocomplete.ui-front.ui-menu.ui-widget.ui-widget-content li {
+	border-bottom:1px solid #ccc;
+}
 </style>
 
 <div id="assignmentDialog" style="display:none;text-align:center;"> </div>
@@ -377,7 +384,7 @@
 					<div class="box-head">
 						<span class="icon2 icon2-listcountgreen"><?php echo ($k+1); ?></span><a name="<?php echo $q['id']; ?>" href="#"> </a>
 						<h2><?php echo ($challenge[0]['Challenge']['response_types'] == 'E' ? 'Essay' : 'Question ' . ($k+1));//$q['section']; ?></h2>
-						<?php if($completed && $_SESSION['User']['user_type'] != 'P' && ($challenge[0]['Challenge']['instructor_ratings'] || $challenge[0]['Challenge']['student_ratings']) && $q['response_total']){ ?>
+						<?php if($completed && $_SESSION['User']['user_type'] != 'P' && ($challenge[0]['Challenge']['instructor_ratings'] || $challenge[0]['Challenge']['student_ratings']) && @$q['response_total']){ ?>
 							<div class="summary-quality">
 								<span class="<?php echo ($q['response_total'] == 1 ? 'great' : ($q['response_total'] == 2 ? 'good' : ($q['response_total'] == 3 ? 'average' : ($q['response_total'] == 4 ? 'poor' : 'poor')))); ?>">
 									<?php echo ($q['response_total'] == 1 ? __('Very High') : ($q['response_total'] == 2 ? __('Good') : ($q['response_total'] == 3 ? __('Average') : ($q['response_total'] == 4 ? __('Below Average') : __('Poor'))))); ?> <?php echo __('Quality') ?>
@@ -769,6 +776,15 @@ $(document).ready(function(){
 		if(!$('.question-item').length) $('#puentes-answer-questions').html('<?php echo __('This user has not submitted responses') ?>');
 	
 		<?php if(!$completed){ ?>
+			
+			$.ui.autocomplete.prototype._renderItem = function( ul, item) {
+			  var re = new RegExp("\\b" + this.term, "i") ;
+			  var t = item.label.replace(re,"<strong>" + this.term + "</strong>");
+			  return $( "<li></li>" )
+			      .data( "item.autocomplete", item )
+			      .append( "<a>" + t + "</a>" )
+			      .appendTo( ul );
+			};
 		
 			Annotator.Plugin.LikeDislike = function (element, options) {
 			  this.element = element;
@@ -789,6 +805,24 @@ $(document).ready(function(){
 					$(this.annotator.editor.element).find('.annotator-cancel').addClass('close').css('text-indent','-10000px');
 					$(this.annotator.editor.element).find('.annotator-save').css({'width':'90px','float':'right'}).addClass('btn1').html('<span>Comment</span>');
 					$(this.annotator.editor.element).find('.annotator-listing').css('margin','0');
+					
+					$('#annotator-field-0').autocomplete({
+						source: function(request,response){
+							$.ajax({url:'/comments/search/' + request.term,success:function(data){
+								data = JSON.parse(data);
+								response($.map(data,function(i){
+									return {
+										label: i,
+										value: i
+									}
+								}));
+							}});
+						}, 
+						open: function(){
+							$('.ui-autocomplete.ui-front.ui-menu.ui-widget.ui-widget-content').css('z-index',parseInt($('.annotator-outer').css('z-index')) + 10);
+						},
+						minLength: 2
+					});
 				
 					this.annotator.subscribe("annotationEditorShown", function(editor,annotation){
 						editor.fields.push($('#commentTypeVal'));
@@ -864,6 +898,18 @@ $(document).ready(function(){
 				
 				$('.annotator-adder').remove();
 				$('.annotator-outer').remove();
+				
+				// step through each annotation in reverse; move matching comment div to top
+				$($('.userComment').get().reverse()).each(function(){
+					$.each($(this).attr('class').split(' '),function(i,e){
+						if(e.search('userCommentID') >= 0){
+							el = $('#commentDetail_' + e.replace('userCommentID',''));
+							el.parent().find('.question-comments').first().before($("<div />").append(el.clone()).html());
+							el.remove();
+							return false;
+						}
+					});
+				});
 			}});
 		});
 		
