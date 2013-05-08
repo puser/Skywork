@@ -56,8 +56,8 @@ class CommentsController extends AppController{
 		foreach($query as $k=>$q){
 			$conditions .= ' AND Comment.comment LIKE "%' . $q . '%"';
 		}
-		$comments = $this->Comment->find('all',array('conditions'=>$conditions));
-		
+		$comments = $this->Comment->find('all',array('fields'=>'DISTINCT(Comment.comment) AS comment','conditions'=>$conditions));
+			
 		$json = array();
 		foreach($comments as $c) $json[] = $c['Comment']['comment'];
 		die(str_replace("\/","/",json_encode($json)));

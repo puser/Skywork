@@ -812,8 +812,8 @@ $(document).ready(function(){
 								data = JSON.parse(data);
 								response($.map(data,function(i){
 									return {
-										label: i,
-										value: i
+										label: i.replace("\\'","'").replace("\\\"",'"'),
+										value: i.replace("\\'","'").replace("\\\"",'"')
 									}
 								}));
 							}});
