@@ -77,11 +77,11 @@
 									<a href="#" class="item-actions-icon"></a>
 									<div class="item-actions-popup rounded2">
 										<ul>
-											<li><a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_sharing" class="icon3 icon3-plus modal-link"><?php echo __('Share Class') ?></a></li>
+											<li><a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_sharing" class="icon3 icon3-plus show-overlay"><?php echo __('Share Class') ?></a></li>
 											<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['ClassSet']['id']; ?>,'<?php echo $g['ClassSet']['group_name']; ?>','<?php echo ($g['ClassSet']['auth_token'] ? $g['ClassSet']['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link"><?php echo __('View Token') ?></a></li>
-											<li><a href="/classes/update/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen modal-link"><?php echo __('Edit Class') ?></a></li>
-											<li><a id="edit_student_<?php echo $g['ClassSet']['id']; ?>" href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-sm_green modal-link"><?php echo __('Edit Students') ?></a></li>
-											<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/classes/delete/<?php echo $g['ClassSet']['id']; ?>/');" class="icon3 icon3-close modal-link"><?php echo __('Delete Class') ?></a></li>
+											<li><a href="/classes/update/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen show-overlay"><?php echo __('Edit Class') ?></a></li>
+											<li><a id="edit_student_<?php echo $g['ClassSet']['id']; ?>" href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-sm_green show-overlay"><?php echo __('Edit Students') ?></a></li>
+											<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/classes/delete/<?php echo $g['ClassSet']['id']; ?>/');" class="icon3 icon3-close show-overlay"><?php echo __('Delete Class') ?></a></li>
 										</ul>
 									</div>
 								</div>
@@ -90,7 +90,7 @@
 									<a href="#" class="item-actions-icon"></a>
 									<div class="item-actions-popup rounded2">
 										<ul>
-											<li><a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $g['ClassSet']['id'].",".$_SESSION['User']['id']; ?>);jQuery.fancybox.close();$('#deleteMemberLink').unbind(); });return false;" class="icon3 icon3-close modal-link"><?php echo __('Delete') ?></a></li>
+											<li><a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $g['ClassSet']['id'].",".$_SESSION['User']['id']; ?>);jQuery.fancybox.close();$('#deleteMemberLink').unbind(); });return false;" class="icon3 icon3-close show-overlay"><?php echo __('Delete') ?></a></li>
 										</ul>
 									</div>
 								</div>
@@ -150,8 +150,8 @@
 <div style="display: none;">
 	
 	<a href="#modal-newtoken" class="modal-link" id="showGenerateToken"> </a>
-	<a href="" class="modal-link" id="showImportUpload"> </a>
-	<a href="" class="modal-link" id="showAddManual"> </a>
+	<a href="" class="show-overlay" id="showImportUpload"> </a>
+	<a href="" class="show-overlay" id="showAddManual"> </a>
 	<a href="#modal-success" class="modal-link" id="successLink"> </a>
 	<a href="#modal-partial-success" class="modal-link" id="uploadPartialLink"> </a>
 	<a href="#modal-failure" class="modal-link" id="uploadFailLink"> </a>
@@ -189,7 +189,7 @@
 			<br />
 			<div class="clear"></div>
 			<div style="width: 250px; margin: 0 auto; ">
-				<a href="" class="btn2 modal-link" style="width: 150px; float: left;" id="uploadFailRetry"><span><?php echo __('Go Back') ?></span></a>
+				<a href="" class="btn2 show-overlay" style="width: 150px; float: left;" id="uploadFailRetry"><span><?php echo __('Go Back') ?></span></a>
 				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false;"><span><?php echo __('Close') ?></span></a>
 				<div class="clear"></div>
 			</div>

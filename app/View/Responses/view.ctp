@@ -826,11 +826,16 @@ $(document).ready(function(){
 				
 					this.annotator.subscribe("annotationEditorShown", function(editor,annotation){
 						editor.fields.push($('#commentTypeVal'));
+						$('.annotator-viewer').hide();
 						
 						$('#commentTypeVal').val(annotation.type);
 						if(annotation.type == 0) $('.votedown a').click();
 						else if(annotation.type == 1) $('.voteup a').click();
 						else $('.voteneutral a').click();
+					});
+					
+					this.annotator.subscribe("annotationEditorHidden", function(editor,annotation){
+						$('.annotator-viewer').show();
 					});
 				
 					this.annotator.subscribe("annotationEditorSubmit", function(editor,annotation){
