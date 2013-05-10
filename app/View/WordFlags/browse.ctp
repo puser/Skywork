@@ -121,6 +121,11 @@ function show_flag(url){
 		$('#summaryContent').html('');
 		$('#summaryContent').load(url,function(){
 			setTimeout(function(){
+				$('.pagination select').val('');
+				update_row_pref();
+				render_pagination(currentPage,currentQuestion);
+				$('#grading_wrapper').remove();
+				
 				new_height = $(window).height()-(-$('#activeFlag').offset().top + 150);
 				$('#wrapper').css('margin-top',-$('#activeFlag').offset().top + 150);
 				$('#wrapper').height(new_height);

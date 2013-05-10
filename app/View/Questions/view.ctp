@@ -104,6 +104,8 @@ function limitText(limitField){
 		<?php if($question['Challenge']['max_response_length'] && $question['Challenge']['allow_exceeded_length'] != 1){ ?>
 			do{
 				limitField.val(limitField.val().substr(0,limitField.val().lastIndexOf(' ')));
+				tinyMCE.get('response_body').setContent(limitField.val());
+				spaces = limitField.val().trim().match(/ /g);
 			}while((spaces ? spaces.length : 0) + 1 > limitNum);
 		<?php } ?>
 	}

@@ -53,7 +53,7 @@
 <?php } ?>
 
 .ui-autocomplete.ui-front.ui-menu.ui-widget.ui-widget-content {
-	width: 192px;opacity: .8;font-size: 11px;font-family: Helvetica, Arial, sans-serif;
+	width: 192px;font-size: 11px;font-family: Helvetica, Arial, sans-serif;
 }
 .ui-autocomplete.ui-front.ui-menu.ui-widget.ui-widget-content li {
 	border-bottom:1px solid #ccc;
@@ -799,7 +799,7 @@ $(document).ready(function(){
 					console.log("Initialized with annotator: ", this.annotator);
 				
 					$(this.annotator.editor.element).removeClass('annotator-editor');
-					$(this.annotator.editor.element).find('.annotator-cancel').before('<div class="vote"><ul><li class="voteneutral"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(2);return false;">General</a></li><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;">Like</a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;">Dislike</a></li></ul></div><input type="hidden" name="type" class="comment-type" value="2" id="commentTypeVal" /><div class="callout-corner"></div>');
+					$(this.annotator.editor.element).find('.annotator-cancel').before('<div class="vote"><ul><li class="voteneutral"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(2);return false;">General</a></li><li class="voteup"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(1);return false;">Like</a></li><li class="votedown"><a href="#" onclick="$(this).parent().removeClass(\'inactive\');$(this).parent().siblings().addClass(\'inactive\');$(\'.comment-type\').val(0);return false;">Dislike</a></li></ul></div><input type="hidden" name="type" class="comment-type" value="" id="commentTypeVal" /><div class="callout-corner"></div>');
 					$(this.annotator.editor.element).find('form').attr('class','answer-comment-box');
 					$(this.annotator.editor.element).find('.annotator-resize').hide();
 					$(this.annotator.editor.element).find('.annotator-cancel').addClass('close').css('text-indent','-10000px');
@@ -826,6 +826,11 @@ $(document).ready(function(){
 				
 					this.annotator.subscribe("annotationEditorShown", function(editor,annotation){
 						editor.fields.push($('#commentTypeVal'));
+						
+						$('#commentTypeVal').val(annotation.type);
+						if(annotation.type == 0) $('.votedown a').click();
+						else if(annotation.type == 1) $('.voteup a').click();
+						else $('.voteneutral a').click();
 					});
 				
 					this.annotator.subscribe("annotationEditorSubmit", function(editor,annotation){

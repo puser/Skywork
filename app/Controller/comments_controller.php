@@ -14,6 +14,7 @@ class CommentsController extends AppController{
 				$json[] = array(	'id'			=> $c['Comment']['id'],
 													'text'		=> $c['Comment']['comment'],
 													'user_id'	=> $c['User']['id'],
+													'type'		=> $c['Comment']['type'],
 													'ranges'	=> array(array(	'start'				=> $c['Comment']['segment_start'],
 																										'startOffset'	=> $c['Comment']['start_offset'],
 																										'end'					=> $c['Comment']['segment_length'],
@@ -31,6 +32,7 @@ class CommentsController extends AppController{
 			$comment = json_decode(file_get_contents('php://input'));
 			
 			$c = array();
+			if(@$comment->id) $c['id'] = $comment->id;
 			$c['comment'] = $comment->text;
 			$c['segment_start'] = $comment->ranges[0]->start;
 			$c['start_offset'] = $comment->ranges[0]->startOffset;
