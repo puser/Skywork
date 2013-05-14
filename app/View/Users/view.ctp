@@ -3,7 +3,10 @@
 	<div id="sidemenu">
 		<ul>
 			<li class="active"><a class="icon icon-calendar" href="#"><?php echo __('My Account') ?></a></li>
-			<?php if($_SESSION['User']['user_type'] == 'L'){ ?><li><a class="icon icon-pay" href="/users/view/payments/"><?php echo __('Pay Plan') ?></a></li><?php } ?>
+			<?php if($_SESSION['User']['user_type'] == 'L'){ ?>
+				<li><a class="icon icon-pay" href="/users/view/payments/"><?php echo __('Pay Plan') ?></a></li>
+				<li><a class="icon icon-question" href="/comment_libraries/browse/"><?php echo __('Comments') ?></a></li>
+			<?php } ?>
 		</ul>
 	</div>
 </div>

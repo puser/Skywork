@@ -416,6 +416,8 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 #sidemenu li a.icon-calendar {background-image: url('/images/icons/icon-calendar-23x21-bw.png'); background-position: 21px center; }
 #sidemenu li a.icon-pay {background-image: url('/images/icons/icon-pay-31x24-bw.png'); background-position: 16px center; }
 #sidemenu li.active a.icon-pay {background-image: url('/images/icons/icon-pay-31x24.png'); background-position: 12px center; }
+#sidemenu li a.icon-question {background-image: url('/images/icons/icon-question-31-bw.png'); background-position: 16px center; }
+#sidemenu li.active a.icon-question {background-image: url('/images/icons/icon-question-31.png'); background-position: 16px center; }
 .icon-class {background-image: url('/images/icons/icon-class-35x20-bw.png');}
 .icon-connection {background-image: url('/images/icons/icon-connection-27x24-bw.png');}
 .icon-token {background-image: url('/images/icons/icon-token-32x33.png'); }
@@ -462,6 +464,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon3-token {background-image: url('/images/icons/icon-token-12x13.png'); }
 .icon3-sm_green {background-image: url('/images/icons/icon-people-green-13x13.png'); }
 .icon3-pen {background-image: url('/images/icons/icon-pen-12x12.png'); }
+.icon3-customize {background-image: url('/images/icons/icon-customize-13x14.png'); }
 .icon3-close {background-image: url('/images/icons/icon-close-13x13.png'); }
 .icon3-resend {background-position:10px center !important;background-image: url('/images/resend.png'); }
 

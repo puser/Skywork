@@ -4,6 +4,7 @@
 		<ul>
 			<li><a class="icon icon-calendar" href="/users/view/"><?php echo __('My Account') ?></a></li>
 			<li class="active"><a class="icon icon-pay" href="/users/view/payments/"><?php echo __('Pay Plan') ?></a></li>
+			<li><a class="icon icon-question" href="/comment_libraries/browse/"><?php echo __('Comments') ?></a></li>
 		</ul>
 	</div>
 </div>

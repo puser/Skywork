@@ -1,6 +1,7 @@
 <?php
 class CommentsController extends AppController{
 	var $name = 'Comments';
+	var $uses = array('Comment','User');
 	
 	function save($r_id = NULL,$all = false){
 		$this->checkAuth(@$_REQUEST['ajax'] ? true : false);
@@ -53,15 +54,28 @@ class CommentsController extends AppController{
 	}
 	
 	function search($query){
+		$this->checkAuth();
+		
 		$query = explode(' ',$query);
-		$conditions = 'Comment.user_id = ' . $_SESSION['User']['id'];
+		$conditions = '';
 		foreach($query as $k=>$q){
-			$conditions .= ' AND Comment.comment LIKE "%' . $q . '%"';
+			$conditions .= ($conditions ? ' AND ' : '') . 'Comment.comment LIKE "%' . $q . '%"';
 		}
-		$comments = $this->Comment->find('all',array('fields'=>'DISTINCT(Comment.comment) AS comment','conditions'=>$conditions));
-			
+		
+		$this->User->Behaviors->attach('Containable');
+		$user = $this->User->find('first',array('contain'=>array('CommentLibrary'=>array('LibUser','Comment'=>array('conditions'=>$conditions))),'conditions'=>'User.id = ' . $_SESSION['User']['id']));
 		$json = array();
-		foreach($comments as $c) $json[] = $c['Comment']['comment'];
+		foreach($user['CommentLibrary'] as $k=>$l){
+			foreach($l['LibUser'] as $u){
+				if($u['CommentLibrariesUser']['active'] && $u['CommentLibrariesUser']['user_id'] == $_SESSION['User']['id']){
+					foreach($l['Comment'] as $c) if(!in_array($c['comment'],$json)) $json[] = $c['comment'];
+				}
+			}
+		}
+		
+		// $comments = $this->Comment->find('all',array('fields'=>'DISTINCT(Comment.comment) AS comment','conditions'=>$conditions));
+		//foreach($comments as $c) $json[] = $c['Comment']['comment'];
+		
 		die(str_replace("\/","/",json_encode($json)));
 	}
 	

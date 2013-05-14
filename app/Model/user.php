@@ -41,6 +41,12 @@ class User extends AppModel{
 																						'joinTable'	=> 'challenges_collaborators',
 																						'foreignKey'=> 'user_id',
 																						'associationForeignKey' => 'challenge_id',
+																						'unique'		=> true ),
+																		'CommentLibrary' =>
+																		array(	'className'	=> 'CommentLibrary',
+																						'joinTable'	=> 'comment_libraries_users',
+																						'foreignKey'=> 'user_id',
+																						'associationForeignKey' => 'library_id',
 																						'unique'		=> true ));
 																						
 	public function afterFind($results, $primary = false){
