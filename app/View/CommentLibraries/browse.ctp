@@ -49,9 +49,9 @@
 									<a href="#" class="item-actions-icon"></a>
 									<div class="item-actions-popup rounded2">
 										<ul>
-											<li><a href="/comment_libraries/clone_lib/<?php echo $l['id']; ?>" class="icon3 icon3-customize"><?php echo __('Clone') ?></a></li>
-											<li><a href="/comment_libraries/update/<?php echo $l['id']; ?>" class="icon3 icon3-pen show-overlay"><?php echo __('Edit') ?></a></li>
-											<li><a href="#deleteLib" onclick="$('#deleteLink').attr('href','/comment_libraries/delete/<?php echo $l['id']; ?>');" class="icon3 icon3-close show-overlay"><?php echo __('Remove') ?></a></li>
+											<li><a href="/comment_libraries/clone_lib/<?php echo $l['id']; ?>" class="icon3 icon3-customize" style="width:58px;"><?php echo __('Clone') ?></a></li>
+											<li><a href="/comment_libraries/update/<?php echo $l['id']; ?>" class="icon3 icon3-pen show-overlay" style="width:58px;"><?php echo __('Edit') ?></a></li>
+											<li><a href="#deleteLib" onclick="$('#deleteLink').attr('href','/comment_libraries/delete/<?php echo $l['id']; ?>');" class="icon3 icon3-close show-overlay" style="width:58px;"><?php echo __('Remove') ?></a></li>
 										</ul>
 									</div>
 								</div>
@@ -76,14 +76,17 @@
 			<div id="modal-addclass-box" class="modal-joinsharedclass-box modal-wrapper" style="width: 600px;" >
 				<div class="modal-box-head">
 					<span class="icon icon-plus"></span>
-					<h2 style="float:left;"><?php echo __('Create a Library') ?></h2>
-					<input style="float:right;width:175px;" name="library[CommentLibrary][name]" value="Name of Library" id="libName" onfocus="if($(this).val()=='Name of Library'){ $(this).val(''); }" />
+					<h2 style="float:left;padding-top:8px;"><?php echo __('Create a Library') ?></h2>
+					<input style="float:right;width:175px;margin-top:7px;" name="library[CommentLibrary][name]" value="Name of Library" id="libName" onfocus="if($(this).val()=='Name of Library'){ $(this).val(''); }" />
 					<div class="clear"></div>
 				</div>
 				<div class="modal-box-content">
 					<p><?php echo __('Write your comments') ?></p>
 					<?php for($i=0;$i<8;$i++){ ?>
-						<input style="width:98%;margin:4px 0;" name="library[LibraryComment][][comment]" <?php if($i == 7){ ?>onfocus="$(this).before($('<div />').append($(this).clone().attr('onfocus','')).html());"<?php } ?> />
+						<div onmouseover="$('.remove-class-link',this).show();" onmouseout="$('.remove-class-link',this).hide();">
+							<input style="width:95%;margin:4px 0;" name="library[LibraryComment][][comment]" <?php if($i == 7){ ?>onfocus="$(this).parent().before($('<div />').append($(this).parent().clone().html()));$(this).parent().prev().find('input').attr('onfocus','');$(this).parent().prev().find('input').focus();"<?php } ?> />
+							<?php if($i != 7){ ?><a href="#" onclick="$(this).parent().remove();return false;" class="remove-class-link icon3-close" style="width:13px;height:13px;display:inline-block;float:right;margin-top:8px;display:none;"> </a><?php } ?>
+						</div>
 					<?php } ?>
 					
 					<br />

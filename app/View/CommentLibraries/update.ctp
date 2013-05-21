@@ -21,7 +21,7 @@
 	<div id="modal-addclass-box" class="modal-joinsharedclass-box modal-wrapper" style="width: 550px;" >
 		<div class="modal-box-head">
 			<span class="icon icon-pen"></span>
-			<h2><?php echo __('Edit') ?></h2>
+			<h2 style="padding-top:9px;margin-bottom:5px;"><?php echo __('Edit') ?></h2>
 		</div>
 		<div class="modal-box-content" id="updateMeta">
 			<h3><?php echo __('Library Name') ?></h3>
@@ -66,12 +66,17 @@
 		<div class="modal-box-content" id="updateComments" style="display:none;">
 			<p><?php echo __('Write your comments') ?></p>
 			<?php foreach($library['Comment'] as $k=>$c){ ?>
-				<input style="width:98%;margin:4px 0;" name="library[LibraryComment][][comment]" value="<?php echo $c['comment']; ?>" />
+				<div onmouseover="$('.remove-class-link',this).show();" onmouseout="$('.remove-class-link',this).hide();">
+					<input style="width:95%;margin:4px 0;" name="library[LibraryComment][][comment]" value="<?php echo $c['comment']; ?>" />
+					<a href="#" onclick="$(this).parent().remove();return false;" class="remove-class-link icon3-close" style="width:13px;height:13px;display:inline-block;float:right;margin-top:8px;display:none;"> </a>
+				</div>
 			<?php } ?>
-			<input style="width:98%;margin:4px 0;" name="library[LibraryComment][][comment]" onfocus="$(this).before($('<div />').append($(this).clone().attr('onfocus','')).html());" />
+			<div>
+				<input style="width:95%;margin:4px 0;" name="library[LibraryComment][][comment]" onfocus="$(this).before($('<div />').append($(this).clone().attr('onfocus','')).html());$(this).prev().focus();" />
+			</div>
 			
 			<div class="clear"></div>
-			<div style="width: 370px; margin: 15px auto 20px auto; ">
+			<div style="width: 160px; margin: 15px auto 20px auto; ">
 				<div style="width: 135px; float: left; margin-right:15px;	">
 					<a href="#" class="btn2" style="width: 100%" onclick="$('#updateLibForm').submit();return false;">
 						<span><?php echo __('Save and Finish') ?></span>
@@ -79,7 +84,7 @@
 				</div>
 			</div>	
 			<div style="width: 120px; float: right; padding-top:7px;font-size:14px;">
-				<a href="#" onclick="$('#updateComments').hide();$('#updateMeta').show();"><?php echo __('Go Back') ?> &gt;</a>
+				<a href="#" onclick="$('#updateComments').hide();$('#updateMeta').show();"><?php echo __('Go Back') ?></a>
 			</div>
 			<div class="clear"></div>
 		</div>
