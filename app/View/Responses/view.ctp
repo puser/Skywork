@@ -776,7 +776,7 @@ $(document).ready(function(){
 		if(!$('.question-item').length) $('#puentes-answer-questions').html('<?php echo __('This user has not submitted responses') ?>');
 	
 		<?php if(!$completed){ ?>
-			
+			// annotator
 			$.ui.autocomplete.prototype._renderItem = function( ul, item) {
 			  var re = new RegExp("\\b" + this.term, "i") ;
 			  var t = item.label.replace(re,"<strong>" + this.term + "</strong>");
@@ -855,6 +855,26 @@ $(document).ready(function(){
 				ra.annotator('addPlugin', 'LikeDislike');
 				response_cs.push(ra);
 			});
+			
+			// grammar check
+			$.ajax({url:'/atd_proxy.php?url=/checkGrammar',data:{key:( new Date() ).getMinutes(),data:$('.annotator-wrapper').text()},type:'POST',success:function(d){
+				$('error',d).each(function(){
+					if($('type',this).text() == 'grammar' || $('type',this).text() == 'suggestion'){
+						
+						var match = $(".annotator-wrapper *:contains('" + $('string',this).text() + "')").last()[0];
+						var xp = getXPath(match,$('.annotator-wrapper')[0]);
+						var start = $(match).text().search($('string',this).text());
+						var end = start + $('string',this).text().length;
+						var text = ($('suggestions option',this).length ? $('suggestions option:first',this).text() : '') + ' (' + $('description',this).text() + ')';
+						
+						var a = {"text":text,"quote":$('string',this).text(),"user_id":<?php echo $_SESSION['User']['id']; ?>,"type":"2","ranges":[{"start":xp,"startOffset":start,"end":xp,"endOffset":end}]};
+						
+						// [{"id":"375","text":"test annotation","user_id":"19","type":"2","ranges":[{"start":"/div[1]/div[1]/p[5]","startOffset":"9","end":"/div[1]/div[1]/p[5]","endOffset":"37"}]}]
+						
+						$(".annotateArea").first().annotator('loadAnnotations',[a]);
+					}
+				});
+			}});
 		
 			$('.question-item').each(function(){
 				$(this).height($(this).height());
@@ -989,6 +1009,20 @@ function progressIndicator(){
 			$('.progressDot').hide();
 		}else $('#progress' + ++currentDot).show();
 	},500);
+}
+
+function getXPath( element,parent )
+{
+		var xpath =  '';
+
+    for ( ; element && element.nodeType == 1; element = element.parentNode )
+    {
+				if(element == parent ) break;
+        var id = $(element.parentNode).children(element.tagName).index(element) + 1;
+        id = id > 1 ? ('[' + id + ']') : '[1]';
+        xpath = '/' + element.tagName.toLowerCase() + id + xpath;
+    }
+    return xpath;
 }
 
 if($('#studentsummary').html() == 'Summary'){

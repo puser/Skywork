@@ -18,6 +18,9 @@
 	<script type="text/javascript" src="/js/jquery.mousewheel.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.flip.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.ba-bbq.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.atd.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/atd.css" />
+	<script type="text/javascript" src="/js/csshttprequest.js"></script>
 	<script type="text/javascript" src="/js/mcs/jquery.mCustomScrollbar.js"></script>
 	
 	<!-- <script type="text/javascript" src="/js/textAnnotater.js?v=2"></script> -->
