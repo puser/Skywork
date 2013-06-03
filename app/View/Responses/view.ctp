@@ -58,6 +58,7 @@
 .ui-autocomplete.ui-front.ui-menu.ui-widget.ui-widget-content li {
 	border-bottom:1px solid #ccc;
 }
+.errorCheck { background:rgba(255,0,0,0.3); }
 </style>
 
 <div id="assignmentDialog" style="display:none;text-align:center;"> </div>
@@ -857,24 +858,30 @@ $(document).ready(function(){
 			});
 			
 			// grammar check
-			$.ajax({url:'/atd_proxy.php?url=/checkGrammar',data:{key:( new Date() ).getMinutes(),data:$('.annotator-wrapper').text()},type:'POST',success:function(d){
-				$('error',d).each(function(){
-					if($('type',this).text() == 'grammar' || $('type',this).text() == 'suggestion'){
+			<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
+				$.ajax({url:'/atd_proxy.php?url=/checkGrammar',data:{key:( new Date() ).getMinutes(),data:$('.annotator-wrapper').text()},type:'POST',success:function(d){
+					var quotes = new Array;
+					$('error',d).each(function(){
+						if($('type',this).text() == 'grammar' || $('type',this).text() == 'suggestion'){
 						
-						var match = $(".annotator-wrapper *:contains('" + $('string',this).text() + "')").last()[0];
-						var xp = getXPath(match,$('.annotator-wrapper')[0]);
-						var start = $(match).text().search($('string',this).text());
-						var end = start + $('string',this).text().length;
-						var text = ($('suggestions option',this).length ? $('suggestions option:first',this).text() : '') + ' (' + $('description',this).text() + ')';
+							if($.inArray($('string',this).text(),quotes) > -1) return true;
+							else quotes.push($('string',this).text());
 						
-						var a = {"text":text,"quote":$('string',this).text(),"user_id":<?php echo $_SESSION['User']['id']; ?>,"type":"2","ranges":[{"start":xp,"startOffset":start,"end":xp,"endOffset":end}]};
+							var match = $(".annotator-wrapper *:contains('" + $('string',this).text() + "')").last()[0];
+							var xp = getXPath(match,$('.annotator-wrapper')[0]);
+							var start = $(match).text().search($('string',this).text());
+							var end = start + $('string',this).text().length;
+							var text = '(' + $('description',this).text() + ') ' + ($('suggestions option',this).length ? $('suggestions option:first',this).text() : '');
 						
-						// [{"id":"375","text":"test annotation","user_id":"19","type":"2","ranges":[{"start":"/div[1]/div[1]/p[5]","startOffset":"9","end":"/div[1]/div[1]/p[5]","endOffset":"37"}]}]
+							var a = {"error":true,"text":text,"quote":$('string',this).text(),"user_id":<?php echo $_SESSION['User']['id']; ?>,"type":"2","ranges":[{"start":xp,"startOffset":start,"end":xp,"endOffset":end}]};
 						
-						$(".annotateArea").first().annotator('loadAnnotations',[a]);
-					}
-				});
-			}});
+							// [{"id":"375","text":"test annotation","user_id":"19","type":"2","ranges":[{"start":"/div[1]/div[1]/p[5]","startOffset":"9","end":"/div[1]/div[1]/p[5]","endOffset":"37"}]}]
+						
+							$(".annotateArea").first().annotator('loadAnnotations',[a]);
+						}
+					});
+				}});
+			<?php } ?>
 		
 			$('.question-item').each(function(){
 				$(this).height($(this).height());
