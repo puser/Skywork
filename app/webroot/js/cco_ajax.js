@@ -3,10 +3,12 @@ function check_login(){
 		if(r == 1){
 			$('#loginBoxForm').submit();
 			//window.location = '/dashboard/';
+			$('#loginPass').next().hide();
 		}else{
-			$('#loginError').html('Email and password combination do not match!');
-			$('.errorNotification').show();
-			$('#overlayLoginForm').height('164px');
+			//$('#loginError').html('Email and password combination do not match!');
+			//$('.errorNotification').show();
+			//$('#overlayLoginForm').height('164px');
+			$('#loginPass').next().show();
 			return false;
 		}
 	}});
@@ -14,20 +16,24 @@ function check_login(){
 
 function send_password_reset(){
 	if(!$('#loginUser').val()){
-		$('#loginError').html('Please specify your email address in the field above.');
+		//$('#loginError').html('Please specify your email address in the field above.');
+		$('#loginUser').next().show();
 		$('.errorNotification').show();
 		$('#overlayLoginForm').height('164px');
 		return false;
 	}
 	$.ajax({url:'/users/send_password_reset/'+$('#loginUser').val(),type:'POST',success:function(r){
 		if(r == 1){
-			$('#loginError').html('<span style="text-decoration:underline;">Email sent to inbox for new password!</span>');
+			$('.forgot-password').hide();
+			$('#loginError').html('<span class="forgot-password">Email sent to inbox<br />for new password!</span>');
 			$('.errorNotification').show();
-			$('#overlayLoginForm').height('164px');
+			$('#loginUser').next().hide();
+			//$('#overlayLoginForm').height('164px');
 		}else{
-			$('#loginError').html('<span style="text-decoration:underline;">Email not recognized in records!</span>');
-			$('.errorNotification').show();
-			$('#overlayLoginForm').height('164px');
+			//$('#loginError').html('<span style="text-decoration:underline;">Email not recognized in records!</span>');
+			//$('.errorNotification').show();
+			//$('#overlayLoginForm').height('164px');
+			$('#loginUser').next().show();
 		}
 	}});
 }

@@ -353,8 +353,9 @@ class UsersController extends AppController{
 			$this->redirect('/login/?signup_error=key&signup_type='.$_REQUEST['user_type']);
 		}elseif(@$_REQUEST['classtoken']){
 			$class = $this->ClassSet->findByAuthToken($_REQUEST['classtoken']);
-			$instructor = $this->User->findByEmail(@$_REQUEST['instructor_email']);
-			if(!@$class['ClassSet']['id'] || @$class['ClassSet']['owner_id'] != $instructor['User']['id']) die('bad_token');
+			// instructor validation depreciated for doskywork corp site
+			//$instructor = $this->User->findByEmail(@$_REQUEST['instructor_email']);
+			if(!@$class['ClassSet']['id']) die('bad_token');
 			// password verification depreciated for instructors with v1.3 corp site
 			// elseif(!@$_REQUEST['password'] || @$_REQUEST['password'] != @$_REQUEST['password_confirm']) $this->redirect('/login/?signup_error=pass&signup_type='.$_REQUEST['user_type']);
 			elseif(!@$_REQUEST['login'] || $this->User->findByEmail(strtolower($_REQUEST['login']))) die('duplicate');

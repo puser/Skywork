@@ -1,0 +1,104 @@
+ 
+/**
+ * Layouts and backgrounds
+ */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0;padding:0;border:0;outline: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
+body {line-height: 1;}
+ol, ul {list-style: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after,q:before, q:after {content: '';content: none;}
+:focus {outline: 0;}
+ins {text-decoration: none;}
+del {text-decoration: line-through;}
+table {border-collapse: collapse;border-spacing: 0;}
+
+html,body { margin: 0; padding: 0; width: 100%; height: 100%;}
+.alignleft {float: left;}
+.alignright {float: right;}
+.aligncenter {margin: 0 auto;}
+.clear {clear: both;}
+
+a { color: #666666; font-weight: normal; }
+img {border: none;}
+img.alignleft {float: left; margin: 0 10px 10px 0;}
+img.alignright {float: right; margin: 0 0 10px 10px;}
+
+ul, ol, dl, p, h1, h2, h3, h4, h5, h6 { margin: 0 0 10px 0; }
+
+
+
+/** 
+ * Typography
+ */
+body {font-family: Helvetica, Arial, sans-serif; font-size: } 
+
+h1 {font-weight: normal; font-family: "Swiss 721 BT Bold", Helvetica Bold, Arial Bold, sans-serif;}
+h2 {font-size: 46px; font-family: "Swiss 721 BT Bold", Helvetica Bold, Arial Bold, sans-serif; font-weight: normal; }
+h3 {font-weight: normal; font-family: "Swiss 721 BT Bold", Helvetica Bold, Arial Bold, sans-serif;}
+
+
+/**
+ * Highlight
+ */
+.highlight-purple {color: #9b699e; }
+
+
+/**
+ * Wrapper
+ */
+.inner {display: block; width: 1000px; margin: 0 auto; position: relative; }
+
+
+/**
+ * Section Title
+ */
+.section-title {margin-bottom: 100px; }
+.section-title h2 {display: block; width: 400px; font-size: 40px; line-height: 70px; text-align: center; margin: 0 auto; border: 7px solid #8bc4d5; color: #8bc4d5; }
+
+
+/**
+ * Form
+ */
+
+.flatform  {background: #fff; width: 390px; border-right: 1px solid #e2e2e2; border-bottom: 1px solid #e2e2e2; margin-bottom: 5px; }
+.flatform ul {margin: 0;  padding: 0; }
+.flatform li {display: block; width: 390px; background: transparent; margin: 0; padding: 0; border: 1px solid #e2e2e2; border-right: 0; border-bottom: 0; min-height: 70px; position: relative; }
+.flatform  .contact-type {padding-top: 20px; }
+.flatform  .contact-type li {float: left; border: 0; width: auto; padding: 5px 13px; min-height: 10px; }
+.flatform  .contact-type li  a {font-family: "Swiss 721 BT Medium", Helvetica, Arial, sans-serif; font-size: 15px; text-decoration: none; color: #D9D9D9; }
+.flatform  .contact-type li  a:hover, .flatform  .contact-type li.active   a {color: #9C699F; }
+.flatform li input, .flatform li textarea {font-family: "Swiss 721 BT Bold", Helvetica Bold, Arial Bold, sans-serif; font-size: 22px; border: 0; background: none; width: 360px; height: 40px; padding: 15px; color: #000; }
+.flatform li textarea {min-height: 100px; resize: none; }
+.flatform li.submit {background: #d9d9d9; }
+.flatform li input[type=submit] {color: #fff; box-sizing: content-box !important; }
+
+.flatform .notif {display: none; width: 70px; height: 70px; background: #f6e25d; position: absolute; right: 0; top: 0; }
+.flatform .notif.warning {background: #f6e25d url(/images/skywork/warning.png) no-repeat center center; }
+/*.flatform li:hover .notif {display: block; }*/
+
+
+.flatform  .contact-type li.active .complaint-contact,.flatform  .contact-type .complaint-contact:hover { color:#C16B57; }
+.flatform  .contact-type li.active .feedback-contact,.flatform  .contact-type .feedback-contact:hover { color:#8FC1A9; }
+.flatform  .contact-type li.active .comment-contact,.flatform  .contact-type .comment-contact:hover { color:#B6D6D8; }
+
+
+/**
+ * Tabs
+ */
+.tabs {display: block; position: relative; top: 1px; z-index: 100; }
+.tabs ul {margin: 0; }
+.tabs  li {float: left; }
+.tabs  li a {font-family: "Swiss 721 BT Bold", Helvetica Bold, Arial Bold, sans-serif; font-size: 12px; color: #A9AB9D; background: #fff; border: 1px solid #e2e2e2; text-decoration: none; display: block; line-height: 28px;  padding: 0 6px ; border-left: 0; }
+.tabs  li:first-child a {border-left: 1px solid #e2e2e2; }
+.tabs li.active a {color: #9C699F; border-bottom: 1px solid #fff; }
+
+
+/**
+ * Split Background
+ */
+.splitbg {display: block; width: 100%; height: 100%; position: relative; }
+.splitbg .leftpane {display: block; width: 50%; height: 100%; background: #9C699F; position: absolute; left: 0; top: 0;  }
+.splitbg .rightpane {display: block; width: 50%; height: 100%; background: url(/images/skywork/dot-gray.png) repeat; position: absolute; right: 0; top: 0; }
+
+.floatingcontent {position: absolute; margin: 0 auto; display: inline-block; top: 50%; left: 50%; margin-left: -200px; margin-top: -150px; }
+

@@ -1,0 +1,203 @@
+/**
+ * Author: Wen Cano
+ */
+
+@import url("fonts/stylesheet.css"); 
+@import url("commons.css"); 
+
+
+
+/**
+ * Header
+ */
+#header {display: block; width: 100%; height: 100px; background: #fff; }
+
+
+/**
+ * Logo
+ */
+#logo {position: absolute; left: 0; top: 30px; }
+#logo a {display: block; width: 160px; height: 41px; background: url(/images/skywork/logo.png); }
+
+
+/**
+ * Main menu
+ */
+nav li {float: left; margin-left: 70px; }
+nav li:first-child {margin-left: 0; }
+nav li a {font-size: 15px; font-weight: bold; font-family: "Swiss 721 BT", Helvetica, Arial, sans-serif; color: #000; text-decoration: none; }
+nav li a:hover {color: #9b699e; }
+#mainmenu {position: absolute; right: 0; top: 40px; }
+#mainmenu li {}
+
+
+/**
+ * Slider
+ */
+#slider {display: block; height: 1236px; width: 100%; position: relative; }
+#slider .slide {display: block; height: 1236px; width: 100%; text-align: center; position: relative; }
+#slider .slide .bg {display: block; width: 100%; height: 1236px; background: url(/images/skywork/slidebg-purple.png) repeat-x; position: absolute; }
+#slider .slide .text {font-size: 64px; line-height: 1.2em; font-family: "Swiss 721 BT Medium", Arial; font-weight: normal; color: #fff; position: relative; top: 100px; }
+#slider .slide .img {position: relative; top: 225px; }
+
+#slider .slider-menu {position: absolute; left: 50%; margin-left: -150px;  text-align: center; bottom: 30px; z-index: 1000; width: 300px; }
+#slider .slider-menu li {display: inline-block; width: 8px; height: 8px; border-radius: 8px; background: #a8aa9c; cursor: pointer; margin: 0 3px; }
+#slider .slider-menu li.activemenu {background: #612e65; }
+
+
+/**
+ * Our Product
+ */
+#ourproduct { padding: 60px 0;  }
+
+.products {}
+.product {margin-bottom: 50px; }
+.product-thumbnail {float: left; width: 500px; }
+.product-thumbnail img {display: block; width: 500px; }
+.product-details {float: right; width: 420px; font-size: 22px; font-family: "Swiss 721 BT Light", Helvetica, Arial, sans-serif; line-height: 1.5em; }
+.product-details p.product-name {padding-left: 20px; background: url(/images/skywork/arrow-right-blue.png) no-repeat left 7px; font-family: "Swiss 721 BT Bold", Helvetica Bold, Arial Bold, sans-serif; margin-bottom: 30px; font-size: 26px; color: #8bc4d5; margin-left: -20px; }
+
+
+
+/**
+ * Hometext
+ */
+#hometext {display: block; width: 100%; padding: 100px 0; text-align: center; background: #8bc4d5; color: #fff; font-size: 28px; font-family: "Swiss 721 BT Medium", Helvetica, Arial, sans-serif; line-height: 2em; }
+
+
+/**
+ * Ourteam
+ */
+#ourteam {display: block; width: 100%; padding: 100px 0 55px 0; background: #fff url(/images/skywork/triangle-lightblue.png) repeat; }
+#ourteam .section-title h2 {background: #fff; border: 7px solid #8dc0a8; color: #8dc0a8; }
+
+#ourteam .team {display: block; width: 100%; height: 580px; background: transparent; position: relative; text-align: center; }
+#ourteam .team  > ul {display: block; width: auto; margin: 0 auto; padding: 30px; }
+#ourteam .team  > ul > li {display: inline-block; position: relative; margin: 0 0 40px 0px; cursor: pointer; min-width: 320px; }
+#ourteam .team  > ul > li.active {z-index: 100; }
+#ourteam .team  > ul > li:first-child {margin-left: 0; }
+#ourteam .team  > ul > li:last-child {margin-right: 0px; }
+
+#ourteam .hasactive {transition-duration: 1s; }
+
+#ourteam .team-thumbnail {display: block; width: 320px; height: 175px; position: relative; margin: 0 auto 15px auto; }
+#ourteam .team-name {}
+#ourteam .team-name p {margin: 0; }
+#ourteam .team-name .name {font-family: "Swiss 721 BT Bold", Helvetica Bold, Arial Bold, sans-serif; font-size: 28px; line-height: 28px; margin-bottom: 5px; }
+#ourteam .team-name .designation {font-family: "Swiss 721 BT Medium", Helvetica, Arial, sans-serif; font-weight: normal; font-size: 22px; line-height: 22px; }
+
+#ourteam .social-links {position: absolute; left: -40px; top: 70px; }
+#ourteam .social-links li {position: absolute; z-index: 1000; }
+#ourteam .social-links li:nth-child(1) {top: 0; left: 70px; }
+#ourteam .social-links li:nth-child(2) {top: -42px; left: 75px; }
+#ourteam .social-links li:nth-child(3) {top: -77px; left: 100px; }
+#ourteam .social-links li a {display: block; width: 33px; height: 33px; }
+#ourteam .social-links li a.icon-twitter {background: url(/images/skywork/icons/icon-twitter-33x33.png); }
+#ourteam .social-links li a.icon-linkedin {background: url(/images/skywork/icons/icon-linkedin-33x33.png); }
+#ourteam .social-links li a.icon-facebook {background: url(/images/skywork/icons/icon-facebook-33x33.png); }
+#ourteam .social-links li a.icon-googleplus {background: url(/images/skywork/icons/icon-googleplus-33x33.png); }
+#ourteam .team .social-links {display: none; }
+#ourteam .team li.active .social-links {display: block; transition-duration: 1s; }
+
+
+#ourteam .team-modal-bg {display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: #eaebeb; opacity: 0; }
+#ourteam .team.hasactive .team-modal-bg {display: block; opacity: 0.9; transition-duration: 3s; }
+
+#ourteam .team-text {display: none; width: 800px; height: auto;  position: absolute; top: 0; left: 0; font-size: 60px; font-family: "Swiss 721 BT Bold", Arial Bold, sans-serif; text-align: left; line-height: 1.5em; }
+#ourteam .team li.sean .team-text {left: 260px; top: 200px; }
+#ourteam .team li.alex .team-text {left: -250px; top: 300px; }
+#ourteam .team li.ben .team-text {left: -550px; top: 300px; }
+#ourteam .team li.wilfredo .team-text {left: -100px; top: -220px; width: 900px; }
+#ourteam .team li.anna .team-text {left: -450px; top: -220px; width: 900px; }
+#ourteam .team li.active .team-text {display: block; }
+
+
+
+/**
+ * TrySkywork
+ */ 
+#tryskywork {display: block; width: 100%; padding: 150px 0; background: url(/images/skywork/dot-gray.png) repeat; }
+.tryskywork-content {display: block; width: 620px; height: 80px; padding: 15px; border-radius: 8px; background: #eeda5d; box-shadow: #ccc 3px 3px 12px; margin: 0 auto; color: #fff; text-align: center; overflow: hidden; }
+.tryskywork-content a {color: #fff; text-decoration: none; }
+.tryskywork-content-inner {}
+
+.tryskywork-content a.tryskywork-link {display: block; width: 620px; height: 80px; line-height: 80px; font-size: 28px; font-family: "Swiss 721 BT Medium", Helvetica, Arial, sans-serif; color: #fff; text-decoration: none; }
+
+.tryskywork-form {padding: 14px 0; display: block; width: 620px; height: 80px; }
+.tryskywork-form li {float: left; margin-left: 10px; }
+.tryskywork-form li input {display: block; width: 240px; height: 29px; background: #e0ba00; line-height: 29px; padding: 3px 15px; border: 0; color: #ffffff !important; font-size: 22px; }
+.tryskywork-form li input.submit {display: block; width: 35px; height: 35px; padding: 0; background-image: url(/images/skywork/check-white.png); background-position: center center; background-repeat: no-repeat; cursor: pointer; }
+
+.tryskywork-content:hover a.tryskywork-link {}
+.tryskywork-content:hover .tryskywork-form {}
+
+.trythankyou {display: none; width: 620px; height: 80px; font-size: 28px; font-family: "Swiss 721 BT Medium", Helvetica, Arial, sans-serif; color: #fff; text-decoration: none; }
+.trythankyou p.line1  {padding-top: 8px; font-size: 28px; font-family: "Swiss 721 BT Bold", Helvetica Bold, Arial Bold, sans-serif; }
+.trythankyou p.line2 {font-size: 22px; font-family: "Swiss 721 BT Medium", Helvetica, Arial, sans-serif; }
+
+
+.tryskywork-content .tryskywork-content-inner {
+    position: relative;
+    top: 0;
+    -webkit-transition: top 0.4s cubic-bezier(0, 0.8, 0.7, 1.5);
+    -moz-transition: top 0.4s cubic-bezier(0, 0.8, 0.7, 1.5);
+    -ms-transition: top 0.4s cubic-bezier(0, 0.8, 0.7, 1.5);
+    -o-transition: top 0.4s cubic-bezier(0, 0.8, 0.7, 1.5);
+    transition: top 0.4s cubic-bezier(0, 0.8, 0.7, 1.5); }
+.tryskywork-content:hover:not(:disabled) .tryskywork-content-inner , .tryskywork-content:focus .tryskywork-content-inner  {
+top: -80px;
+-webkit-transition: top 0.4s cubic-bezier(0, 0.8, 0.6, 1.5);
+-moz-transition: top 0.4s cubic-bezier(0, 0.8, 0.6, 1.5);
+-ms-transition: top 0.4s cubic-bezier(0, 0.8, 0.6, 1.5);
+-o-transition: top 0.4s cubic-bezier(0, 0.8, 0.6, 1.5);
+transition: top 0.4s cubic-bezier(0, 0.8, 0.6, 1.5); }
+
+
+/**
+ * Footer
+ */
+#footer {display: block; width: 100%; height: auto; padding: 40px 0 30px 0; background: #9b699e; color: #fff; }
+
+#footerlogo {float: left; }
+#footermenu  {float: right; margin-top: 10px; }
+#footermenu li a {color: #000; }
+
+#copyright {margin-top: 100px; text-align: right; font-size: 13px; font-family: "Swiss 721 BT Light", Helvetica, Arial, sans-serif; }
+
+
+
+/**
+ * Page: Contact
+ */
+.page-contact {position: relative; }
+.page-contact #header {position: absolute; z-index: 100; }
+
+
+/**
+ * Page: Login
+ */
+.page-login {position: relative; }
+.page-login #header {position: absolute; z-index: 100; }
+.page-login .floatingcontent {top: 50%; margin-top: -70px; }
+.forgot-password {font-family: "Swiss 721 BT Medium", Helvetica, Arial, sans-serif; font-size: 14px; line-height: 14px; color: #fff; text-decoration: none; }
+
+
+.page-brown #logo a {background-image: url(/images/skywork/logo-brown.png); }
+.page-brown #mainmenu li a:hover {color: #bf6957; }
+.page-brown .splitbg .leftpane  {background: #bf6957; }
+.page-brown .tabs li.active a {color: #bf6957; }
+
+.page-skyblue #logo a {background-image: url(/images/skywork/logo-skyblue.png); }
+.page-skyblue #mainmenu li a:hover {color: #8cc5d6; }
+.page-skyblue .splitbg .leftpane  {background: #8cc5d6; }
+.page-skyblue .tabs li.active a {color: #8cc5d6; }
+
+.page-paleblue #logo a {background-image: url(/images/skywork/logo-paleblue.png); }
+.page-paleblue #mainmenu li a:hover {color: #b5d6d7; }
+.page-paleblue .splitbg .leftpane  {background: #b5d6d7; }
+.page-paleblue .tabs li.active a {color: #b5d6d7; }
+
+.page-green #logo a {background-image: url(/images/skywork/logo-green.png); }
+.page-green #mainmenu li a:hover {color: #8EC1A9; }
+.page-green .splitbg .leftpane  {background: #8EC1A9; }
+.page-green .tabs li.active a {color: #8EC1A9; }
