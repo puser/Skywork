@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="/js/fancybox/jquery.fancybox.css" media="screen" />
 	<link type="text/css" rel="stylesheet" media="all" href="/css/style_skywork.css" />
 	
-	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="./favicon.ico" type="image/x-icon" rel="shortcut icon" />
+	<link rel="icon" type="image/jpeg" href="<?php echo $this->Html->url('/img/favi.jpg', true); ?>">
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
@@ -40,7 +40,7 @@
 	<section id="header">
 		<div class="inner">
 			<div id="logo">
-				<a href="#"></a>
+				<a href="http://getskywork.com"></a>
 			</div>
 			<nav id="mainmenu">
 				<ul>
