@@ -119,6 +119,8 @@
 		
 	</section>
 	
+	<span id="siteseal" style="position:absolute;bottom:0;right:3px;"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=PWTxJe4ZNlWlKlFkyKVHp7SdX0N4R35nZSyPdHGIvEuALrfg1H71"></script></span>
+	
 	<script type='text/javascript'>
 	
 	function check_signup_valid(){

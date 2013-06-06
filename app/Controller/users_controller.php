@@ -363,7 +363,7 @@ class UsersController extends AppController{
 			$new_user = array(	'User' =>
 													array(	'email'			=> strtolower($_REQUEST['login']),
 																	'login'			=> strtolower($_REQUEST['login']),
-																	'user_type'	=> $_REQUEST['user_type'],
+																	'user_type'	=> 'P',
 																	'firstname'	=> '',
 																	'lastname'	=> '',
 																	'password'	=> sha1($_REQUEST['password'].$this->salt),
