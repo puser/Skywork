@@ -25,7 +25,18 @@
 			$bodycolor = colors[index]; 
 			console.log(index); 
 			$("body").addClass($bodycolor); 
-		
+
+			$('.flatform li.submit').hover(
+				function(e) {
+					$(this).addClass('checked');
+					$(this).attr('text', $(this).find('input').attr('value'));
+					$(this).find('input').val('');
+				},
+				function(e) {
+					$(this).removeClass('checked');
+					$(this).find('input').val($(this).attr('text'));
+				}
+			);
 		}); 
 		
 	</script>
