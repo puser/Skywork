@@ -250,7 +250,7 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
  * Logo 
  */
 #logo {position: absolute; top: 13px; left: 30px;}
-#logo a {display:block; margin-left: 13px; width: 140px; height: 55px; background: url("/images/logo.png?v=1") no-repeat;}
+#logo a {display:block; margin-left: 13px; width: 140px; height: 55px; background: url("/images/logo.jpg") no-repeat;}
 
 
 /**
