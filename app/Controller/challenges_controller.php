@@ -33,9 +33,15 @@ class ChallengesController extends AppController{
 		$this->User->hasMany['Status']['conditions'] = 'Status.challenge_id IS NULL';
 		$this->User->hasMany['Status']['order'] = 'Status.id ASC';
 		$user = $this->User->findById($_SESSION['User']['id']);
-		$groups = array();
-		foreach(@$user['ClassSet'] as $g){
-			if($user['User']['user_type'] != 'L' || $g['owner_id'] == $user['User']['id']) $groups[$g['id']] = 1;
+		
+		if(@$_REQUEST['cid']){
+			$groups = array($_REQUEST['cid']=>1);
+			$this->set('class',$this->ClassSet->findById($_REQUEST['cid']));
+		}else{
+			$groups = array();
+			foreach(@$user['ClassSet'] as $g){
+				if($user['User']['user_type'] != 'L' || $g['owner_id'] == $user['User']['id']) $groups[$g['id']] = 1;
+			}
 		}
 		
 		if($groups){
@@ -43,11 +49,15 @@ class ChallengesController extends AppController{
 			$cids = $this->Challenge->query('select group_concat(distinct challenge_id separator ",") as g from challenges_classes where class_id in ('.$full_groups.') group by class_id');
 			$cs = '';
 			foreach($cids as $cid) $cs .= ($cs ? ',' : '') . $cid[0]['g'];
-			$cids = $this->Challenge->query('select group_concat(distinct challenge_id separator ",") as g from challenges_collaborators where user_id = '.$_SESSION['User']['id']);
-			$cs .= ($cs && $cids[0][0]['g'] ? ',' : '') . $cids[0][0]['g'];
-			if($cs){
-				$conditions[] = '(Challenge.id IN ('.$cs.') || Challenge.user_id = '.$_SESSION['User']['id'].')';
-			}
+			
+			if(!@$_REQUEST['cid']){
+				$cids = $this->Challenge->query('select group_concat(distinct challenge_id separator ",") as g from challenges_collaborators where user_id = '.$_SESSION['User']['id']);
+				$cs .= ($cs && $cids[0][0]['g'] ? ',' : '') . $cids[0][0]['g'];
+				if($cs){
+					$conditions[] = '(Challenge.id IN ('.$cs.') || Challenge.user_id = '.$_SESSION['User']['id'].')';
+				}
+			}elseif($cs) $conditions[] = 'Challenge.id IN ('.$cs.')';
+			else $conditions[] = '1 IS NULL';
 		}
 		
 		$challenges = $this->Challenge->find('all',array('conditions'=>$conditions,'order'=>$sort,'contain'=>array('Collaborator'=>array('fields'=>array('Collaborator.id','Collaborator.user_type','Collaborator.firstname','Collaborator.lastname')),'User','Question'=>array('fields'=>array('Question.id')),'Status','ClassSet'=>array('User'=>array('fields'=>array('User.id,User.firstname,User.lastname','User.email'))),'Group'=>array('User'=>array('fields'=>array('User.id,User.firstname,User.lastname,User.email'))))));
