@@ -403,7 +403,7 @@ class ChallengesController extends AppController{
 			$this->set('groups',$groups);
 		}
 		
-		if($view=='dashboard') $this->redirect('/dashboard/');
+		if($view=='dashboard') $this->redirect(@$_REQUEST['cid'] ? '/challenges/browse/?cid='.$_REQUEST['cid'] : '/dashboard/');
 		elseif($view=='account') $this->redirect('/challenges/update/0/template_basics/');
 		elseif($view) $this->render($view,strstr($view,'active') ? 'default' : 'ajax');
 		else{

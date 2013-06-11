@@ -178,6 +178,7 @@ class ClassesController extends AppController{
 			
 			$this->ClassSet->id = $id;
 			$this->ClassSet->saveField('syllabus',$filename);
+			$this->ClassSet->saveField('syllabus_name',substr(@$_FILES['syllabus']['name'],0,17) . (strlen(@$_FILES['syllabus']['name']) > 17 ? '...' : ''));
 		}
 		
 		$this->redirect('/challenges/browse/?cid=' . $id);

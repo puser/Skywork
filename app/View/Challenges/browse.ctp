@@ -18,10 +18,10 @@
 				<?php }else{ ?>
 					<li style="width:140px;">
 						<a href="#set_syllabus" class="show-overlay" style="display:inline-block;float:left;width:17px;height:25px;padding:0;"></a>
-						<a class="icon4 icon4-cycle2" href="/uploads/<?php echo $class['ClassSet']['syllabus']; ?>" target="_blank">Download Syllabus</a>
+						<a class="icon4 icon4-cycle2" href="/uploads/<?php echo $class['ClassSet']['syllabus']; ?>" target="_blank"><?php echo $class['ClassSet']['syllabus_name']; ?></a>
 					</li>
 				<?php } ?>
-				<li><a class="icon4 icon4-plus modal-link" href="/challenges/update/">Assignment</a></li>
+				<li><a class="icon4 icon4-plus modal-link" href="/challenges/update/?cid=<?php echo $class['ClassSet']['id']; ?>">Assignment</a></li>
 			<?php } ?>
 			</ul>
 		</div>
@@ -132,10 +132,10 @@
 					<td><?php echo date_format(date_create($challenge['Challenge']['date_modified']),'m/d/Y'); ?></td>
 					<td>
 						<?php if($_SESSION['User']['id'] == $challenge['Challenge']['user_id']){ ?>
-							<div style="width:32px;height:10px;">
+							<div style="width:32px;height:10px;position:relative;">
 								<div class="remove-class" style="height:10px;display:none;">
 									<a href="#modalDeleteChoices" class="show-overlay remove-class-icon" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');"></a>
-									<a href="#modalDeleteChoices" class="show-overlay remove-class-link icon-close rounded2" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');"><?php echo __('Delete') ?></a>
+									<a href="#modalDeleteChoices" class="show-overlay remove-class-link icon-close rounded2" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');" style="position:absolute;"><?php echo __('Delete') ?></a>
 								</div>
 							</div>
 						<?php } ?>
@@ -214,11 +214,11 @@
 			<?php if($total/10 > 1){ ?>
 				<?php if($page > 1){ ?>
 					<div class="alignleft pagination-prev">
-						<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($page-1); ?>'"><?php echo __('Previous') ?></a>
+						<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($page-1); ?>?cid=<?php echo $class['ClassSet']['id']; ?>'"><?php echo __('Previous') ?></a>
 					</div>
 				<?php }if($page < ceil(($total + ($_SESSION['User']['user_type'] == 'P' ? 1 : 3))/10)){ ?>
 					<div class="alignright pagination-next">
-						<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($page+1); ?>'"><?php echo __('Next') ?></a>
+						<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($page+1); ?>?cid=<?php echo $class['ClassSet']['id']; ?>'"><?php echo __('Next') ?></a>
 					</div>
 				<?php } ?>
 
@@ -226,7 +226,7 @@
 					<ul>
 						<?php for($i=0;$i<(($total + ($_SESSION['User']['user_type'] == 'P' ? 1 : 3))/10);$i++){ ?>
 						<li<?php if(($i + 1) == $page){ ?> class="active"<?php } ?>>
-							<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($i+1); ?>'"><?php echo ($i+1); ?></a>
+							<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($i+1); ?>?cid=<?php echo $class['ClassSet']['id']; ?>'"><?php echo ($i+1); ?></a>
 						</li>
 						<?php } ?>
 					</ul>

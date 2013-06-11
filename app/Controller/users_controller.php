@@ -23,7 +23,13 @@ class UsersController extends AppController{
 
 		if($show == 'classes' || $show == 'connections'){
 			$this->ClassSet->Behaviors->attach('Containable');
-			$user['ClassSet'] = $class_ids ? $this->ClassSet->find('all',array('conditions'=>"ClassSet.id IN($class_ids)","order"=>$sort,'contain'=>array('User'=>array('conditions'=>'User.user_type = "P"'),'Owner'))) : array();
+			$user['ClassSet'] = $class_ids ? $this->ClassSet->find('all',array('conditions'=>"ClassSet.id IN($class_ids)","order"=>$sort,'contain'=>array('User'=>array('conditions'=>'User.user_type = "P"'),'Owner','Challenge'))) : array();
+			foreach($user['ClassSet'] as $k=>$c){
+				$user['ClassSet'][$k]['active'] = 0;
+				foreach($c['Challenge'] as $ch){
+					if(!$ch['eval_complete']) $user['ClassSet'][$k]['active']++;
+				}
+			}
 			$this->set('user',$user);
 		
 			$current_groups = $requested_groups = $pending_groups = array();

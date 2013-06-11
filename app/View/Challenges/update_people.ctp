@@ -134,7 +134,7 @@
 	<?php }else{ ?>
 		<a <?php if($challenge['ClassSet']){ ?>style="display:none;"<?php } ?> onclick="$('#fieldValidate').show();return false;" class="btn2 btn-savecontinue aligncenter" id="create-challenge-validate"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
 		
-		<a href="#modalProgress" onclick="save_challenge_final();progressIndicator();" <?php if(!$challenge['ClassSet']){ ?>style="display:none;"<?php } ?> class="btn2 btn-savecontinue aligncenter show-overlay" id="create-challenge-now"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
+		<a href="#modalProgress" onclick="save_challenge_final(cid);progressIndicator();" <?php if(!$challenge['ClassSet']){ ?>style="display:none;"<?php } ?> class="btn2 btn-savecontinue aligncenter show-overlay" id="create-challenge-now"><span class="inner"><?php echo __('Save and Finish') ?></span></a>
 	<?php }
 }else{ ?>
 	<a href="/users/view/classes/?create=1" style="width:195px;" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Create my first class now') ?></span></a>
@@ -158,7 +158,7 @@
 			<div style="text-align:center;margin:20px;"><?php echo nl2br($warning_msg); ?></div>	
 			<br />
 			<div style="width: 200px; margin: 0 auto; ">
-				<a href="#" id="sendmail" class="btn2" style="width: 80px; float: left;" onclick="save_challenge_final();"><span><?php echo __('Send') ?></span></a>
+				<a href="#" id="sendmail" class="btn2" style="width: 80px; float: left;" onclick="save_challenge_final(cid);"><span><?php echo __('Send') ?></span></a>
 				<a id="mailsent" class="btn2" style="width: 80px; float: left; display:none" ><span><?php echo __('Send') ?></span></a>
 				<a href="#" class="btn3" style="width: 100px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Don\'t send yet') ?></span></a>
 				<div class="clear"></div>

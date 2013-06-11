@@ -2,7 +2,7 @@
 	
 	<ul>
 		<?php 
-		$colors = array('purple','orange','green');
+		$colors = array('purple','orange','green','lorange','lpurple','blue','teal');
 		$ex_groups = array();
 		$idx = 1;
 		foreach($user['ClassSet'] as $k=>$g){
@@ -11,9 +11,9 @@
 			$idx++;
 			?>
 		<li class="mooc-list-item <?php if($g['ClassSet']['completed']) echo "checked"; ?>">
-			<div class="mooc-item mooc-item-<?php echo $colors[($idx%3)]; ?>">
+			<div class="mooc-item mooc-item-<?php echo $colors[($idx%7)]; ?>">
 				<a href="/challenges/browse/?cid=<?php echo $g['ClassSet']['id']; ?>" class="mooc-item-title">
-					<?php echo (array_search($g['ClassSet']['id'],$requested_groups) !== false || array_search($g['ClassSet']['id'],$pending_groups) !== false ? '<span class="red">*</span> ' : '') . $g['ClassSet']['group_name']; ?>
+					<?php echo (array_search($g['ClassSet']['id'],$requested_groups) !== false || array_search($g['ClassSet']['id'],$pending_groups) !== false ? '<span class="red">*</span> ' : '') . substr($g['ClassSet']['group_name'],0,41) . (strlen($g['ClassSet']['group_name']) > 41 ? '...' : ''); ?>
 				</a>
 				
 				<div class="mooc-item-actions item-actions">
@@ -21,6 +21,7 @@
 					<div class="item-actions-popup rounded2">
 						<ul>
 							<?php if($g['Owner']['id']==$_SESSION['User']['id']){ ?>
+							<li><a href="/classes/update/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen show-overlay"><?php echo __('Edit Class') ?></a></li>
 							<li><a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_sharing" class="icon3 icon3-plus show-overlay"><?php echo __('Share Class') ?></a></li>
 							<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['ClassSet']['id']; ?>,'<?php echo $g['ClassSet']['group_name']; ?>','<?php echo ($g['ClassSet']['auth_token'] ? $g['ClassSet']['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link"><?php echo __('View Token') ?></a></li>
 							<li><a id="edit_student_<?php echo $g['ClassSet']['id']; ?>" href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen show-overlay"><?php echo __('Edit Students') ?></a></li>
@@ -34,7 +35,7 @@
 				
 				<div class="mooc-item-meta">
 					<ul>
-						<li>Created: <?php echo date_format(date_create($g['ClassSet']['date_created']),'m/d/Y'); ?></li>
+						<li><?php echo $g['active']; ?> assignments in use</li>
 						<li>Last Edit: <?php echo date_format(date_create($g['ClassSet']['date_created']),'m/d/Y'); ?></li>
 						<li><?php echo count($g['User']); ?> Students</li>
 					</ul>
