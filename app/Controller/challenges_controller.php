@@ -147,6 +147,7 @@ class ChallengesController extends AppController{
 		$challenges = array_filter($challenges);
 		
 		$limit_reached = $monthly_count = false;
+		/* PAYMENTS DEPRECIATED
 		if($_SESSION['User']['user_type'] == 'L'){
 			$monthly_count = $this->Challenge->find('count',array('conditions'=>array('Challenge.user_id'=>$_SESSION['User']['id'],'Challenge.date_modified BETWEEN DATE_SUB(NOW(),INTERVAL 1 MONTH) AND NOW()')));
 			if(($user['User']['account_tier'] == 'STANDARD' && $monthly_count >= 2) || ($user['User']['account_tier'] == 'PREMIUM' && $monthly_count >= 6)){
@@ -156,6 +157,7 @@ class ChallengesController extends AppController{
 			elseif($user['User']['account_tier'] == 'PREMIUM') $monthly_count = 6 - $monthly_count;
 			elseif($user['User']['account_tier'] == 'PLATINUM') $monthly_count = false;
 		}
+		*/
 		
 		$this->set('limit_reached',$limit_reached);
 		$this->set('monthly_count',$monthly_count);
@@ -262,12 +264,14 @@ class ChallengesController extends AppController{
 	function update($challenge_id=NULL,$view=NULL){
 		$this->checkAuth();
 		
+		/* PAYMENTS DEPRECIATED
 		$monthly_count = $this->Challenge->find('count',array('conditions'=>array('Challenge.user_id'=>$_SESSION['User']['id'],'Challenge.date_modified BETWEEN DATE_SUB(NOW(),INTERVAL 1 MONTH) AND NOW()')));
 		if(($_SESSION['User']['account_tier'] == 'STANDARD' && $monthly_count >= 3) || ($_SESSION['User']['account_tier'] == 'PREMIUM' && $monthly_count >= 7)) $this->redirect('/');
 		elseif($_SESSION['User']['account_tier'] == 'STANDARD') $monthly_count = 2 - $monthly_count;
 		elseif($_SESSION['User']['account_tier'] == 'PREMIUM') $monthly_count = 6 - $monthly_count;
 		elseif($_SESSION['User']['account_tier'] == 'PLATINUM') $monthly_count = false;
-		$this->set('monthly_count',$monthly_count);
+		*/
+		$this->set('monthly_count',false);
 	
 		if($challenge_id) $challenge_record = $this->Challenge->find('first',array('conditions'=>"Challenge.id = ".$challenge_id,'recursive'=>2));
 		if(@$_REQUEST['challenge']){
