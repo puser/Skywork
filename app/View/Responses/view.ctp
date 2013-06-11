@@ -426,6 +426,12 @@
 												for($i = 0;$i < @$_REQUEST['pos'];$i++) $wordpos = stripos(strtoupper($q['Response'][0]['response_body']),strtoupper($_REQUEST['highlight']),$wordpos + 1);
 												$q['Response'][0]['response_body'] = substr_replace($q['Response'][0]['response_body'],'<span id="activeFlag">' . $_REQUEST['highlight'] . '</span>',$wordpos,strlen($_REQUEST['highlight']));
 											}
+											
+											if(@$_REQUEST['max_words'] && @$_REQUEST['response_id'] == $q['Response'][0]['id']){
+												$wordpos = 0;
+												for($i = 0;$i < $_REQUEST['max_words'] - 2;$i++){ $wordpos = stripos($q['Response'][0]['response_body'],' ',$wordpos + 1);echo '<!-- !! '.stripos($q['Response'][0]['response_body'],' ',$wordpos + 2). ' -- ' . $i . ' !! -->';}
+												$q['Response'][0]['response_body'] = substr_replace($q['Response'][0]['response_body'],'<span id="activeFlag"> </span>',$wordpos,1);
+											}
 								
 											echo stripslashes($q['Response'][0]['response_body']);
 										?></p>

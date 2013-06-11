@@ -23,7 +23,7 @@
 			<span class="icon icon-pen"></span>
 			<h2 style="padding-top:9px;margin-bottom:5px;"><?php echo __('Edit') ?></h2>
 		</div>
-		<div class="modal-box-content" id="updateMeta">
+		<div class="modal-box-content" id="updateMeta"<?php if(@$_REQUEST['showComments']){ ?> style="display:none;"<?php } ?>>
 			<h3><?php echo __('Library Name') ?></h3>
 			<input type="text" name="library[CommentLibrary][name]" value="<?php echo $library['CommentLibrary']['name']; ?>" style="width:300px;" />
 			
@@ -63,7 +63,7 @@
 			<div class="clear"></div>
 		</div>
 		
-		<div class="modal-box-content" id="updateComments" style="display:none;">
+		<div class="modal-box-content" id="updateComments"<?php if(!@$_REQUEST['showComments']){ ?> style="display:none;"<?php } ?>>
 			<p><?php echo __('Write your comments') ?></p>
 			<?php foreach($library['Comment'] as $k=>$c){ ?>
 				<div onmouseover="$('.remove-class-link',this).show();" onmouseout="$('.remove-class-link',this).hide();">

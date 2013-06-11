@@ -111,7 +111,7 @@ class WordFlagsController extends AppController {
 				
 				$r = $q['Response'][0];
 				if(str_word_count($r['response_body']) > $challenge['Challenge']['max_response_length'] && $challenge['Challenge']['max_response_length']){
-					$flag_redirects[] = '/responses/view/'.$challenge['Challenge']['id'].'/'.$user_id.'?ajax=1';
+					$flag_redirects[] = '/responses/view/'.$challenge['Challenge']['id'].'/'.$user_id.'?ajax=1&max_words=' . $challenge['Challenge']['max_response_length'] . '&response_id='.$r['id'];
 					$flag_types[] = 'Assignment Maximum';
 				}
 			}

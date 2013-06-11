@@ -174,7 +174,7 @@ function create_library(){
 	}else{
 		$.ajax({url:'/comment_libraries/update/',data:$('#create_library').serialize(),type:'POST',success:function(r){
 			$('#newLibID').val(r);
-			$('#sharingBack').attr('href','/comment_libraries/update/' + r);
+			$('#sharingBack').attr('href','/comment_libraries/update/' + r + '?showComments=1');
 			$('#setSharingLink').click();
 		}});
 	}
