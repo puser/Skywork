@@ -13,7 +13,7 @@
 		<li class="mooc-list-item <?php if($g['ClassSet']['completed']) echo "checked"; ?>">
 			<div class="mooc-item mooc-item-<?php echo $colors[($idx%7)]; ?>">
 				<a href="/challenges/browse/?cid=<?php echo $g['ClassSet']['id']; ?>" class="mooc-item-title">
-					<?php echo (array_search($g['ClassSet']['id'],$requested_groups) !== false || array_search($g['ClassSet']['id'],$pending_groups) !== false ? '<span class="red">*</span> ' : '') . substr($g['ClassSet']['group_name'],0,41) . (strlen($g['ClassSet']['group_name']) > 41 ? '...' : ''); ?>
+					<?php echo (array_search($g['ClassSet']['id'],$requested_groups) !== false || array_search($g['ClassSet']['id'],$pending_groups) !== false ? '<span class="red">*</span> ' : '') . substr($g['ClassSet']['group_name'],0,34) . (strlen($g['ClassSet']['group_name']) > 34 ? '...' : ''); ?>
 				</a>
 				
 				<div class="mooc-item-actions item-actions">
