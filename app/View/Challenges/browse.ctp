@@ -1,6 +1,6 @@
 <div class="clear" style="padding-top:20px;"></div>
 
-<?php if($_SESSION['User']['user_type'] == 'L'){ ?>
+<?php if($_SESSION['User']['user_type'] == 'L' && !@$class){ ?>
 	<div id="startbridge" class="rounded box-white">
 		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="$('#maxbridge_warning_link').click();return false;"<?php } ?> class="btn1"><span><?php echo __('Begin') ?></span></a>
 		<a href="/challenges/update/" <?php if(@$limit_reached){ ?>onclick="$('#maxbridge_warning_link').click();return false;"<?php } ?> style="text-decoration:none !important;"><h2><?php echo __('Start an Assignment'); if($monthly_count !== false){ ?> <sup style="color:#ED1C24;font-size:12px;vertical-align:top;top:-6px;position:relative;" alt="Assignments left for this month" title="Assignments left for this month"><?php echo $monthly_count; ?></sup><?php } ?></h2></a> 
@@ -8,21 +8,25 @@
 	</div>
 <?php } ?>
 
-<div id="bridgelist" class="rounded box-white" style="overflow:hidden;margin-left:25px;position:relative;height:450px;">
+<div id="bridgelist" class="mooc-item-assignments-table rounded box-white" style="overflow:hidden;margin-left:25px;position:relative;height:450px;">
 	<div class="box-head" style="width:944px;">
-		<h2><?php echo __('My Portfolio') ?></h2>
-		<div class="filterbox">
-			<select class="cat" onchange="window.location = '/challenges/browse/'+$(this).val();" id="statusFilter">
-				<option value="" onclick="window.location = '/challenges/browse/';"><?php echo __('All') ?></option>
-				<option value="a"<?php if($status=='a') echo ' selected="selected";'; ?>><?php echo __('In Use') ?></option>
-				<?php if($_SESSION['User']['user_type'] == 'P'){ ?>
-					<option value="f"<?php if($status=='f') echo ' selected="selected";'; ?>><?php echo __('Feedback') ?></option>
+		<div class="box-actions">
+			<ul>
+			<?php if($_SESSION['User']['user_type'] == 'L'){ ?>
+				<?php if(!@$class['ClassSet']['syllabus']){ ?>
+					<li><a class="icon4 icon4-circlearrow-orange-up show-overlay" href="#set_syllabus">Upload Syllabus</a></li>
 				<?php }else{ ?>
-					<option value="d"<?php if($status=='d') echo ' selected="selected";'; ?>><?php echo __('Create') ?></option>
-					<option value="e"<?php if($status=='e') echo ' selected="selected";'; ?>><?php echo __('Evaluate') ?></option>
+					<li style="width:140px;">
+						<a href="#set_syllabus" class="show-overlay" style="display:inline-block;float:left;width:17px;height:25px;padding:0;"></a>
+						<a class="icon4 icon4-cycle2" href="/uploads/<?php echo $class['ClassSet']['syllabus']; ?>" target="_blank"><?php echo $class['ClassSet']['syllabus_name']; ?></a>
+					</li>
 				<?php } ?>
-			</select>
+				<li><a class="icon4 icon4-plus modal-link" href="/challenges/update/?cid=<?php echo $class['ClassSet']['id']; ?>">Assignment</a></li>
+			<?php } ?>
+			</ul>
 		</div>
+		
+		<h2><?php echo $class['ClassSet']['group_name']; ?></h2>
 		<div class="clear"></div>
 	</div>
 	
@@ -128,10 +132,10 @@
 					<td><?php echo date_format(date_create($challenge['Challenge']['date_modified']),'m/d/Y'); ?></td>
 					<td>
 						<?php if($_SESSION['User']['id'] == $challenge['Challenge']['user_id']){ ?>
-							<div style="width:32px;height:10px;">
+							<div style="width:32px;height:10px;position:relative;">
 								<div class="remove-class" style="height:10px;display:none;">
 									<a href="#modalDeleteChoices" class="show-overlay remove-class-icon" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');"></a>
-									<a href="#modalDeleteChoices" class="show-overlay remove-class-link icon-close rounded2" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');"><?php echo __('Delete') ?></a>
+									<a href="#modalDeleteChoices" class="show-overlay remove-class-link icon-close rounded2" onclick="$('#deleteBridgeLink').attr('href','/challenges/delete/<?php echo $challenge['Challenge']['id']; ?>/');" style="position:absolute;"><?php echo __('Delete') ?></a>
 								</div>
 							</div>
 						<?php } ?>
@@ -159,6 +163,7 @@
 				
 				<?php
 				$k = @$k ? $k + 1 : ($challenges ? 1 : 0);
+				/*
 				if($page >= ceil($total/10) && $_SESSION['User']['user_type'] == 'P' && $k < 10){  ?>
 					<tr<?php if(!(($k)%2)){ ?> class="alternate"<?php } ?>>
 						<td><a href="/static_samples/student_attachment/">Example of an Assignment</a></td>
@@ -193,6 +198,11 @@
 						<td><?php echo date_format(date_create(),'m/d/Y'); ?></td>
 						<td></td>
 					</tr>
+				<?php } */ ?>
+				<?php if(!$challenges){ ?>
+					<tr class="alternate">
+						<td colspan="6">First assignment not yet created</td>
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
@@ -204,11 +214,11 @@
 			<?php if($total/10 > 1){ ?>
 				<?php if($page > 1){ ?>
 					<div class="alignleft pagination-prev">
-						<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($page-1); ?>'"><?php echo __('Previous') ?></a>
+						<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($page-1); ?>?cid=<?php echo $class['ClassSet']['id']; ?>'"><?php echo __('Previous') ?></a>
 					</div>
 				<?php }if($page < ceil(($total + ($_SESSION['User']['user_type'] == 'P' ? 1 : 3))/10)){ ?>
 					<div class="alignright pagination-next">
-						<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($page+1); ?>'"><?php echo __('Next') ?></a>
+						<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($page+1); ?>?cid=<?php echo $class['ClassSet']['id']; ?>'"><?php echo __('Next') ?></a>
 					</div>
 				<?php } ?>
 
@@ -216,7 +226,7 @@
 					<ul>
 						<?php for($i=0;$i<(($total + ($_SESSION['User']['user_type'] == 'P' ? 1 : 3))/10);$i++){ ?>
 						<li<?php if(($i + 1) == $page){ ?> class="active"<?php } ?>>
-							<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($i+1); ?>'"><?php echo ($i+1); ?></a>
+							<a href="#" onclick="window.location = '/challenges/browse/' + ($('#statusFilter').val() || '0') + '/<?php echo ($i+1); ?>?cid=<?php echo $class['ClassSet']['id']; ?>'"><?php echo ($i+1); ?></a>
 						</li>
 						<?php } ?>
 					</ul>
@@ -232,6 +242,11 @@
 	<div class="clear"></div>
 </div>
 
+<?php if(!@$class['ClassSet']['completed'] && @$class && $_SESSION['User']['user_type'])?>
+<div class="mooc-item-finnish alignright">
+	<a href="#complete_class" class="show-overlay">Finish this MOOC &gt;</a>
+</div>
+
 <div id="home-leaderboard" class="alignright round round-white width50" style="display:none;width:0px;height:430px;"> </div>
 <div class="clear"></div>
 
@@ -240,7 +255,47 @@
 	<a href="#modal-duedate-warning" class="show-overlay" id="duedate_warning_link"> </a>
 	<a href="#modal-skipcollab-warning" class="show-overlay" id="skipcollab_warning_link"> </a>
 	<a href="" class="show-overlay" id="challenge_accept_link"> </a>
-	<div id="modal-duedate-warning" class="modal-wrapper" style="width: 600px;" >
+	
+	<div id="complete_class" class="modal-wrapper" style="width: 500px;">
+		<div class="modal-box-head">
+			<h2><?php echo __('Finish MOOC') ?></h2>
+		</div>
+		<div class="modal-box-content">
+			<div style="text-align:center;margin:20px;line-height:25px;">
+				<?php echo __('Are you sure you want to complete this MOOC?') ?>
+			</div>
+			<br />
+			<div class="clear"></div>
+			<div style="width: 210px; margin: 0 auto; ">
+				<a href="/classes/complete/<?php echo $class['ClassSet']['id']; ?>" class="btn2" style="width: 80px; float: left;"><span><?php echo __('Finish') ?></span></a>
+				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Close') ?></span></a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="set_syllabus" class="modal-wrapper" style="width: 500px;">
+		<div class="modal-box-head">
+			<h2><?php echo __('Upload Syllabus') ?></h2>
+		</div>
+		<div class="modal-box-content">
+			<div style="text-align:center;margin:20px;line-height:25px;">
+				<?php echo __('Select a file below:') ?><br />
+				<form method="POST" enctype="multipart/form-data" action="/classes/update_syllabus/<?php echo $class['ClassSet']['id']; ?>" id="syllabus_form" style="margin-top:12px;">
+					<input type="file" name="syllabus" />
+				</form>
+			</div>
+			<br />
+			<div class="clear"></div>
+			<div style="width: 210px; margin: 0 auto; ">
+				<a href="#" onclick="$('#syllabus_form').submit();return false;" class="btn2" style="width: 80px; float: left;"><span><?php echo __('Upload') ?></span></a>
+				<a href="#" class="btn3" style="width: 80px; float: right;" onclick="jQuery.fancybox.close(); return false; "><span><?php echo __('Cancel') ?></span></a>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modal-duedate-warning" class="modal-wrapper" style="width: 600px;">
 		<div class="modal-box-head">
 			<h2><?php echo __('Due Date 1') ?></h2>
 		</div>

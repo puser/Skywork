@@ -1,5 +1,5 @@
 <div id="sidebarleft">
-	<h1><?php echo __('My Account') ?></h1>
+	<!-- <h1><?php echo __('My Account') ?></h1> -->
 	<div id="sidemenu">
 		<ul>
 			<li><a class="icon icon-calendar" href="/users/view/"><?php echo __('My Account') ?></a></li>

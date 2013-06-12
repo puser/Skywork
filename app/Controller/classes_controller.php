@@ -168,6 +168,31 @@ class ClassesController extends AppController{
 		}
 	}
 	
+	function update_syllabus($id){
+		$this->checkAuth();
+		
+		if(@$_FILES['syllabus']){
+			// upload file
+			$filename = md5(uniqid(rand())).strrchr($_FILES['syllabus']['name'],'.');
+			if(!move_uploaded_file($_FILES['syllabus']['tmp_name'],$_SERVER['DOCUMENT_ROOT'].'/uploads/'.$filename)) die("<br>Upload error<br>");
+			
+			$this->ClassSet->id = $id;
+			$this->ClassSet->saveField('syllabus',$filename);
+			$this->ClassSet->saveField('syllabus_name',substr(@$_FILES['syllabus']['name'],0,17) . (strlen(@$_FILES['syllabus']['name']) > 17 ? '...' : ''));
+		}
+		
+		$this->redirect('/challenges/browse/?cid=' . $id);
+	}
+	
+	function complete($id){
+		$this->checkAuth();
+		
+		$this->ClassSet->id = $id;
+		$this->ClassSet->saveField('completed',1);
+		
+		$this->redirect('/dashboard/');
+	}
+	
 	function delete($id){
 		$this->checkAuth();
 		$group = $this->ClassSet->findById($id);

@@ -2,7 +2,7 @@
  * Author: Wen Cano
  */
 
-@import url("fonts/stylesheet.css");
+@import url("../fonts/stylesheet.css");
  
 /**
  * Defaults
@@ -250,17 +250,17 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
  * Logo 
  */
 #logo {position: absolute; top: 13px; left: 30px;}
-#logo a {display:block; margin-left: 13px; width: 140px; height: 55px; background: url("/images/logo.png?v=1") no-repeat;}
+#logo a {display:block; margin-left: 13px; width: 126px; height: 32px; background: url("/images/logo2.jpg?v=1") no-repeat;}
 
 
 /**
  * Top Menu 
  */
-#topmenu {position: absolute; right: 20px; top:10px; text-align: right;}
+#topmenu {position: absolute; right: 50px; top:10px; text-align: right;}
 #topmenu span {}
-#topmenu .user-name {margin-right: 30px;  }
+#topmenu .user-name {margin-right: 20px;  }
 #topmenu .user-name a {font-size: 14px; color: #0071bc; font-family: Arial; font-weight: normal; text-decoration: none;}
-#topmenu .user-home, #topmenu .user-account, #topmenu .user-logout, #topmenu .user-admin, #topmenu .user-login {margin-right: 10px;}
+#topmenu .user-home, #topmenu .user-account, #topmenu .user-logout, #topmenu .user-admin, #topmenu .user-login {margin-right: 20px;}
 #topmenu .user-home a, #topmenu .user-account a, #topmenu .user-logout a, #topmenu .user-admin a, #topmenu .user-login a {font-size: 14px; padding-left: 16px;  height: 12px; font-weight: normal; color: #808080;}
 #topmenu .user-logout a { font-size:12px !important; }
 #topmenu .user-home a:hover, #topmenu .user-account a:hover, #topmenu .user-logout a:hover, #topmenu .user-admin a:hover {text-decoration: underline;}
@@ -302,11 +302,13 @@ a{ cursor:pointer; }
 #bridgelist .pagination-pages li.first-child a {border-right: none;}
 */
 #bridgetable thead {text-align: left; font-size: 12px; }
+#bridgetable thead a {position: relative; padding-right: 15px; display: inline-block; }
 #bridgetable th {padding: 6px; }
 span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; height: 9px; background: url('/images/question.png') no-repeat; position: absolute; right: 0; top: -5px; }
 #bridgetable tbody tr td {padding: 6px; }
 #bridgetable tr.alternate {background: #f2f2f2; }
 #bridgetable tbody tr td:first-child a {position: relative; color: #666666; }
+#bridgetable tbody tr td:last-child a {position: relative; color: #666666; }
 #bridgetable a.small-chart {display: block; width: 23px; height: 22px; background: url('/images/chart-small.png') no-repeat; }
 #bridgetable {margin-bottom: 20px; }
 
@@ -317,9 +319,9 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .pagination-next a {display: block; padding-right: 10px; background: url("/images/arrow-right-blue.png") no-repeat center right; color: #808080;}
 .pagination-pages {display: block; width: 400px; text-align: center;}
 .pagination-pages li {display: inline; }
-.pagination-pages li a {padding: 1px 6px; border-right: 1px solid #808080; color: #808080; line-height: 14px; height: 14px; }
+.pagination-pages li a {padding: 1px 6px; border-right: 1px solid #808080; color: #808080; line-height: 10px; height: 10px; display: inline-block; }
 .pagination-pages li.active a {color: #0071bc;}
-.pagination-pages li.last-child a {border-right: none;}
+.pagination-pages li:last-child a, .pagination-pages li.last-child a {border-right: none;}
 .pagination-pages li.no-border a {border-right: none;}
 
 
@@ -328,6 +330,7 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 #maincolumn {float: right; padding: 15px 15px 0 0; margin-bottom: 30px; }
 
 #sidemenu {display: block;}
+#sidemenu ul {margin: 0; }
 #sidemenu li {padding-left: 0px; margin: 0; }
 #sidemenu li a, #sidemenu li span.no-link {display: block; padding: 13px 10px 13px 60px; margin: 0 0 0 0; font-size: 14px; font-weight: normal; font-family: Helvetica, Arial, serif; background-position: 15px center; background-repeat: no-repeat; width: 110px; color: #666666; text-decoration: none; }
 #sidemenu li a.no-icon {padding: 13px 10px; width: 160px; }
@@ -413,17 +416,19 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon-cycle {background-image: url('/images/icons/icon-cycle-24x23-bw.png'); }
 .icon-pen {background-image: url('/images/icons/icon-pen-23x23-bw.png'); }
 .icon-envelope {background-image: url('/images/icons/icon-envelope-25x25-bw.png'); }
-#sidemenu li a.icon-calendar {background-image: url('/images/icons/icon-calendar-23x21-bw.png'); background-position: 21px center; }
-#sidemenu li a.icon-pay {background-image: url('/images/icons/icon-pay-31x24-bw.png'); background-position: 16px center; }
-#sidemenu li.active a.icon-pay {background-image: url('/images/icons/icon-pay-31x24.png'); background-position: 12px center; }
-#sidemenu li a.icon-question {background-image: url('/images/icons/icon-question-31-bw.png'); background-position: 16px center; }
-#sidemenu li.active a.icon-question {background-image: url('/images/icons/icon-question-31.png'); background-position: 16px center; }
 .icon-class {background-image: url('/images/icons/icon-class-35x20-bw.png');}
 .icon-connection {background-image: url('/images/icons/icon-connection-27x24-bw.png');}
 .icon-token {background-image: url('/images/icons/icon-token-32x33.png'); }
 .icon-plus {background-image: url('/images/icons/icon-plus-29x29.png'); }
 .icon-customize {background-image: url('/images/icons/icon-customize-26x27.png'); }
 .icon-status {background-image: url('/images/icons/icon-status-28x8.png'); }
+#sidemenu li a.icon-calendar {background-image: url('/images/icons/icon-calendar-23x21-bw.png'); background-position: 21px center; }
+#sidemenu li a.icon-pay {background-image: url('/images/icons/icon-pay-31x24-bw.png'); background-position: 16px center; }
+#sidemenu li.active a.icon-pay {background-image: url('/images/icons/icon-pay-31x24.png'); background-position: 12px center; }
+#sidemenu li a.icon-question {background-image: url('/images/icons/icon-question-31-bw.png'); background-position: 16px center; }
+#sidemenu li.active a.icon-question {background-image: url('/images/icons/icon-question-31.png'); background-position: 16px center; }
+#sidemenu li a.icon-question2 {background-image: url('/images/icons/icon-question-24x22-gradientbw.png'); background-position: 16px center; }
+#sidemenu li.active a.icon-question2 {background-image: url('/images/icons/icon-question-24x22-gradient.png'); background-position: 16px center; }
 
 .active .icon-docinspect {background-image: url('/images/icons/icon-doc-inspect-27x29.png'); }
 .active .icon-docopen {background-image: url('/images/icons/icon-doc-open-25x24.png'); }
@@ -476,6 +481,8 @@ span.question,a.question,a.tooltip, span.tooltip {display: block; width: 9px; he
 .icon4-question {background-image: url('/images/icons/icon-question-24x22.png'); }
 .icon4-graph {background-image: url('/images/icons/icon-graph-20x19.png'); }
 .icon4-notes {background-image: url('/images/icons/icon-notes-16x20.png'); }
+.icon4-cycle2 {background-image: url('/images/icons/icon-cycle2-12x15.png'); }
+.icon4-circlearrow-orange-up {background-image: url('/images/icons/icon-circlearrow-orange-up-18x18.png'); }
 
 /** 30x30 */
 .icon5-shake {background-image: url('/images/icons/icon-shakehands-33x22.png'); }
@@ -920,6 +927,83 @@ a.studentwork-more:hover span {display: inline; }
 }
 
 
+
+/**
+ * Page: Mooc
+ */
+.page-mooc #header {border-bottom: 0; }
+.page-mooc #body {background: #fff url(/images/dot-fill.png) repeat; }
+.table-wrap {display: table; }
+.table-cell {display: table-cell; }
+
+.mooc-list {display: block; padding: 60px 75px; }
+.mooc-list li.mooc-list-item {float: left; width: 250px; height: 220px; background: #f2f2f2; border-radius: 8px; box-shadow: #999 0 0 10px; margin: 0 60px 60px 0; }
+.mooc-list li.mooc-list-item.start, .mooc-list li.mooc-list-item.add {box-shadow: none; box-sizing: border-box; border: 3px dashed #ccc; background: #fff; }
+.mooc-list li.mooc-list-item.start a, .mooc-list li.mooc-list-item.add a {display: table-cell; width: 250px; height: 220px; padding: 0; margin: 0; vertical-align: middle; text-align: center; text-decoration: none; color: #b76aaa; font-size: 31px; line-height: 1.2em; font-family: "Swiss 721 Black Condensed", Arial Narrow Bold, sans-serif; }
+.mooc-list li.mooc-list-item.add a {background: url(/images/plus-gray.png) no-repeat center center; }
+
+.mooc-list > ul > li.mooc-list-item:nth-child(3n) {margin-right: 0; }
+
+.mooc-list .mooc-item {display: block; width: 220px; height: 190px; position: relative; padding: 15px; }
+.mooc-list a.mooc-item-title {font-size: 31px; font-family: "Swiss 721 Black Condensed", Arial Narrow Bold, sans-serif; line-height: 1.2em; }
+.mooc-list .mooc-item-meta {position: absolute; bottom: 20px; left: 15px; color: #808080; }
+.mooc-list .mooc-item-meta ul {list-style: none; margin: 0; padding: 0; }
+.mooc-list .mooc-item-meta li {margin: 0; padding: 1px 0; background: none; float: none; box-shadow: none; border: none; border-radius: none; width: auto; height: auto; }
+.mooc-list li.checked .mooc-item {background: transparent url(/images/check-gray.png) no-repeat center center; }
+.mooc-item-purple .mooc-item-title {color: #b76aaa; }
+.mooc-item-orange .mooc-item-title {color: #f5866c; }
+.mooc-item-green .mooc-item-title {color: #7bc9b1; }
+.mooc-item-lorange .mooc-item-title {color: #eb9558; }
+.mooc-item-blue .mooc-item-title {color: #64a7d8; }
+.mooc-item-teal .mooc-item-title {color: #a1c2c3; }
+.mooc-item-lpurple .mooc-item-title {color: #7e7dbb; }
+
+.mooc-item-actions {position: absolute; top: 5px; right: 5px; display: none; }
+.mooc-item-actions.item-actions a.item-actions-icon {background-image: url(/images/icons/icon-gear-18x18.png);  }
+.mooc-item-actions.item-actions a.item-actions-icon:hover {background-image: url(/images/icons/icon-gear-18x18.png);  }
+.mooc-item-actions.item-actions li a {padding: 2px 0 2px 30px; }
+
+.mooc-list .mooc-item:hover .mooc-item-actions {display: block; }
+
+
+
+/**
+ * Page: Mooc Step 3, Step 4
+ * Body Class: page-mooc-item
+ */
+.page-mooc-item #body {padding: 30px; }
+.mooc-item-assignments-table {margin-bottom: 20px; }
+.mooc-item-assignments-table .box-head {padding: 5px 0; }
+.mooc-item-assignments-table .box-actions {padding-top: 0; margin-top: -4px; }
+.mooc-item-assignments-table h2 {font-size: 24px; font-family: "Swiss 721 Black Condensed", Arial Narrow Bold, sans-serif;  }
+.mooc-item-assignments-table .box-content {min-height: 250px; }
+
+.mooc-item-finnish { padding-right: 24px;padding-bottom: 20px; }
+.mooc-item-finnish a {color: #c1272d; }
+
+.mooc-assignment-types {padding: 30px; display: block; width: 460px; }
+.mooc-assignment-type {display: block; border: 3px solid #ccc; width: 190px; height: 160px; }
+.mooc-assignment-type a {display: table-cell; width: 190px; height: 160px; vertical-align: middle; text-align: center; color: #6d6e70; font-size: 19px; }
+.mooc-assignment-type-image {display: table-cell; width: 190px; height: 130px; vertical-align: middle; text-align: center; }
+
+
+
+/**
+ * Page: My Account
+ */
+.page-mooc #sidebarleft {background: #f2f2f2; width: 180px; margin: 40px 0 0 25px; padding: 10px 8px; }
+.page-mooc #sidemenu li a {margin-right: 0; border-left: 4px solid #f2f2f2; }
+.page-mooc #sidemenu li.active a {border-left: 4px solid #f5866c; }
+.page-mooc .box-startbridge {width: 710px; margin: 10px 30px 30px 0; box-shadow: #999 0 0 10px; }
+
+
+
+
+
+/**
+ * Others
+ */
+
 #ui-datepicker-div { clip:auto; }
 
 #sidemenu2 li a.active {
@@ -1056,3 +1140,6 @@ a.studentwork-more:hover span {display: inline; }
 }
 
 .textvalue p { margin:0; padding:0; }
+
+
+

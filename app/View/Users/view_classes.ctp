@@ -1,133 +1,64 @@
-<div id="sidebarleft">
-	<h1><?php echo __('Classes') ?></h1>
-	<div id="sidemenu">
-		<ul>
-			<li<?php if(!$connections){ ?> class="active"<?php } ?>><a class="icon icon-class" href="/users/view/classes/"><?php echo __('Classes') ?></a></li>
-			<?php if($_SESSION['User']['user_type'] != 'P'){ ?>
-				<li<?php if($connections){ ?> class="active"<?php } ?>><a class="icon icon-connection" href="/users/view/connections/"><?php echo __('Connections') ?></a></li>
-			<?php } ?>
-		</ul>
-	</div>
-</div>
-
-<div id="maincolumn">
-	<div id="classes-box" class="box-startbridge box-white rounded">
-		<div class="box-head">
-			
-			<div class="box-actions">
-				<ul>
-					<?php if($_SESSION['User']['user_type'] != 'P'){
-						if(!$connections && $_SESSION['User']['user_type'] == 'L'){ ?>
-							<li><a class="icon4 icon4-plus modal-link" href="#<?php echo ($_SESSION['User']['user_type'] == 'C' ? 'modal-collab-access' : 'modal-addclass'); ?>" id="createClassLink"><?php echo __('Create Class') ?></a></li>
-						<?php }else{ ?>
-							<li><a class="icon4 icon4-plus modal-link" href="#modal-joinsharedclass"><?php echo __('Find an instructor') ?></a></li>
-						<?php }
-					}else{ ?>
-						<li><a class="icon4 icon4-plus modal-link" href="#modal-joinstudentclass"><?php echo __('Join class') ?></a></li>
-					<?php } ?>
-				</ul>
-			</div>
-			
-			<span class="icon2 icon2-<?php echo ($connections ? 'connection' : 'class'); ?>" style="width:56px;"></span>
-			<h2><?php echo ($connections ? __('Connected Classes') : __('Your Classes')); ?></h2>
-			<div class="clear"></div>
-		</div>
-		<div class="box-content">
-			<table class="table-type-1" id="table-classes">
-				<thead>
-					<tr>
-<!-- 						<th><a href="/users/view/classes/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Class Name') ?></a></th>
-						<th><a href="/users/view/classes/?sort=modified&dir=<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Last Edit') ?></a></th>
-						<th><a href="#" class="sortdown"><?php echo __('Students') ?></a></th>
-						<th><a href="/users/view/classes/?sort=owner&dir=<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" class="sort<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"><?php echo __('Creator') ?></a></th>
- -->
-						<th><a href="/users/view/classes/?sort=name&dir=<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" 
-						<?php if(@$_REQUEST['sort']!='name' || @$_REQUEST['dir']==''){echo '';}else{?>class="sort<?php echo (@$_REQUEST['sort']=='name'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>" <?php } ?>><?php echo __('Class Name') ?></a></th>
-						<th><a href="/users/view/classes/?sort=modified&dir=<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" <?php if(@$_REQUEST['sort']!='modified' || @$_REQUEST['dir']==''){echo '';}else{?>class="sort<?php echo (@$_REQUEST['sort']=='modified'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"<?php } ?>><?php echo __('Last Edit') ?></a></th>
-						<th><a href="#"><?php echo __('Students') ?></a></th>
-						<th><a href="/users/view/classes/?sort=owner&dir=<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'d':'a'); ?>" 
-						<?php if(@$_REQUEST['sort']!='owner' || @$_REQUEST['dir']==''){echo '';}else{?>class="sort<?php echo (@$_REQUEST['sort']=='owner'&&@$_REQUEST['dir']=='a'?'up':'down'); ?>"<?php } ?>><?php echo __('Creator') ?></a></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php 
-					$ex_groups = array();
-					$idx = 1;
-					foreach($user['ClassSet'] as $k=>$g){
-						if($_SESSION['User']['user_type'] != 'P' && (($connections && $g['ClassSet']['owner_id'] == $_SESSION['User']['id']) || (!$connections && $g['ClassSet']['owner_id'] != $_SESSION['User']['id']))) continue;
-						$ex_groups[$g['ClassSet']['id']] = 1;
-						$idx++;
-						?>
-					<tr<?php if(!($idx%2)){ ?> class="alternate"<?php } ?> onmouseover="$(this).find('.deleteChallenge').show();" onmouseout="$(this).find('.deleteChallenge').hide();">
-						<td>
-							<?php if(array_search($g['ClassSet']['id'],$requested_groups) !== false){ ?>
-							<a href="/classes/view_request/<?php echo $g['ClassSet']['id']; ?>" class="show-overlay" id="viewGroupLink<?php echo $g['ClassSet']['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['ClassSet']['id']; ?>);">
-							<?php }else{ ?>
-							<a <?php if($_SESSION['User']['id']==$g['Owner']['id']){ ?>href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="show-overlay" <?php }else echo 'href="#"'; ?> id="viewGroupLink<?php echo $g['ClassSet']['id']; ?>" onclick="$('#inviteUserGroup').val(<?php echo $g['ClassSet']['id']; ?>);">
-							<?php } ?>
-								<?php echo (array_search($g['ClassSet']['id'],$requested_groups) !== false || array_search($g['ClassSet']['id'],$pending_groups) !== false ? '<span class="red">*</span> ' : '') . $g['ClassSet']['group_name']; ?>
-							</a>
-						</td>
-						<td><?php echo date_format(date_create($g['ClassSet']['date_created']),'m/d/Y'); ?></td>
-						<td><?php echo count($g['User']); ?></td>
-						<td><?php echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}"; ?></td>
-						<td>
+<div class="mooc-list">
+	
+	<ul>
+		<?php 
+		$colors = array('purple','orange','green','lorange','lpurple','blue','teal');
+		$ex_groups = array();
+		$idx = 1;
+		foreach($user['ClassSet'] as $k=>$g){
+			if($_SESSION['User']['user_type'] != 'P' && (($connections && $g['ClassSet']['owner_id'] == $_SESSION['User']['id']) || (!$connections && $g['ClassSet']['owner_id'] != $_SESSION['User']['id']))) continue;
+			$ex_groups[$g['ClassSet']['id']] = 1;
+			$idx++;
+			?>
+		<li class="mooc-list-item <?php if($g['ClassSet']['completed']) echo "checked"; ?>">
+			<div class="mooc-item mooc-item-<?php echo $colors[($idx%7)]; ?>">
+				<a href="/challenges/browse/?cid=<?php echo $g['ClassSet']['id']; ?>" class="mooc-item-title">
+					<?php echo (array_search($g['ClassSet']['id'],$requested_groups) !== false || array_search($g['ClassSet']['id'],$pending_groups) !== false ? '<span class="red">*</span> ' : '') . substr($g['ClassSet']['group_name'],0,34) . (strlen($g['ClassSet']['group_name']) > 34 ? '...' : ''); ?>
+				</a>
+				
+				<div class="mooc-item-actions item-actions">
+					<a href="#" class="item-actions-icon"></a>
+					<div class="item-actions-popup rounded2">
+						<ul>
 							<?php if($g['Owner']['id']==$_SESSION['User']['id']){ ?>
-								<div class="item-actions">
-									<a href="#" class="item-actions-icon"></a>
-									<div class="item-actions-popup rounded2">
-										<ul>
-											<li><a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_sharing" class="icon3 icon3-plus show-overlay"><?php echo __('Share Class') ?></a></li>
-											<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['ClassSet']['id']; ?>,'<?php echo $g['ClassSet']['group_name']; ?>','<?php echo ($g['ClassSet']['auth_token'] ? $g['ClassSet']['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link"><?php echo __('View Token') ?></a></li>
-											<li><a href="/classes/update/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen show-overlay"><?php echo __('Edit Class') ?></a></li>
-											<li><a id="edit_student_<?php echo $g['ClassSet']['id']; ?>" href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-sm_green show-overlay"><?php echo __('Edit Students') ?></a></li>
-											<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/classes/delete/<?php echo $g['ClassSet']['id']; ?>/');" class="icon3 icon3-close show-overlay"><?php echo __('Delete Class') ?></a></li>
-										</ul>
-									</div>
-								</div>
+							<li><a href="/classes/update/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen show-overlay"><?php echo __('Edit Class') ?></a></li>
+							<li><a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_sharing" class="icon3 icon3-plus show-overlay"><?php echo __('Share Class') ?></a></li>
+							<li><a href="#modal-viewtoken" onclick="view_token(<?php echo $g['ClassSet']['id']; ?>,'<?php echo $g['ClassSet']['group_name']; ?>','<?php echo ($g['ClassSet']['auth_token'] ? $g['ClassSet']['auth_token'] : '[ no token set ]'); ?>');" class="icon3 icon3-token modal-link"><?php echo __('View Token') ?></a></li>
+							<li><a id="edit_student_<?php echo $g['ClassSet']['id']; ?>" href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>" class="icon3 icon3-pen show-overlay"><?php echo __('Edit Students') ?></a></li>
+							<li><a href="#modalDeleteChoices" onclick="$('#deleteGroupLink').attr('href','/classes/delete/<?php echo $g['ClassSet']['id']; ?>/');" class="icon3 icon3-close modal-link"><?php echo __('Delete Class') ?></a></li>
 							<?php }elseif($_SESSION['User']['user_type'] != 'P'){ ?>
-								<div class="item-actions">
-									<a href="#" class="item-actions-icon"></a>
-									<div class="item-actions-popup rounded2">
-										<ul>
-											<li><a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $g['ClassSet']['id'].",".$_SESSION['User']['id']; ?>);jQuery.fancybox.close();$('#deleteMemberLink').unbind(); });return false;" class="icon3 icon3-close show-overlay"><?php echo __('Delete') ?></a></li>
-										</ul>
-									</div>
-								</div>
+							<li><a href="#modalDeleteMember" onclick="$('#deleteMemberLink').click(function(){ delete_class_member(<?php echo $g['ClassSet']['id'].",".$_SESSION['User']['id']; ?>);jQuery.fancybox.close();$('#deleteMemberLink').unbind(); });return false;" class="icon3 icon3-close show-overlay"><?php echo __('Delete') ?></a></li>
 							<?php } ?>
-						</td>
-					</tr>
-					<?php }if(@$invites){
-						foreach($invites as $k=>$g){
-							$ex_groups[$g['ClassSet']['id']] = 1;
-							?>
-							<tr<?php if(!(($k+$idx)%2)){ ?> class="alternate"<?php } ?>>
-								<td>
-									<a href="/classes/view_members/<?php echo $g['ClassSet']['id']; ?>/view_invite" class="show-overlay">
-										<?php echo '<span class="red">*</span> ' . $g['ClassSet']['group_name']; ?>
-									</a>
-								</td>
-								<td><?php echo date_format(date_create($g['ClassSet']['date_created']),'m/d/Y'); ?></td>
-								<td><?php echo count($g['User']); ?></td>
-								<td><?php echo "{$g['Owner']['firstname']} {$g['Owner']['lastname']}"?></td>
-								<td></td>
-							</tr>
-						<?php }
-					} ?>
-				</tbody>
-			</table>
-		</div>
-		<div class="foot"><div class="fl"></div><div class="fr"></div></div>
-	</div><!-- #myaccountGroupsForm-->
-	
-	<!--<a href="#" class="btn1 btn-savecontinue aligncenter"<?php if($saved){ ?> style="display:none;"<?php } ?> id="saveGroupsBtn" onclick="$('#newGroupForm').submit();$(this).hide();$('#savedNotify').show();return false;">
-		<span class="inner"><?php echo __('Save') ?></span>
-	</a>-->
-	<span id="savedNotify" style="display:none;">
-		<p style="display:block;text-align:center;color:#ff0000;"><?php echo __('Saved!') ?></p>
-	</span>
-	
-</div><!-- #maincol-->
+						</ul>
+					</div>
+				</div>
+				
+				<div class="mooc-item-meta">
+					<ul>
+						<li><?php echo $g['active']; ?> assignments in use</li>
+						<li>Last Edit: <?php echo date_format(date_create($g['ClassSet']['date_created']),'m/d/Y'); ?></li>
+						<li><?php echo count($g['User']); ?> Students</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<?php }if($_SESSION['User']['user_type'] != 'P'){
+			if($idx < 2){ ?>
+				<li class="mooc-list-item start">
+					<div class="table-wrap">
+						<a href="#modal-addclass" class="show-overlay">Click here to<br />start a Mooc</a>
+					</div>
+				</li>
+			<?php } ?>
+			<li class="mooc-list-item add" style="width:245px;">
+				<div class="table-wrap">
+					<a href="#modal-addclass" class="show-overlay"></a>
+				</div>
+			</li>
+		<?php } ?>
+	</ul>
+
+</div>
 
 <div class="clear"></div>
 

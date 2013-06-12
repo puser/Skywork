@@ -1,6 +1,5 @@
 <div id="sidebarleft">
-	<h1><?php echo __('Assignment'); if($monthly_count !== false){ ?> <sup style="
-  font-size:12px;vertical-align:top;top:-6px;position:relative;"><?php echo $monthly_count; ?></sup><?php } ?></h1>
+	<h1><?php echo __('Assignment'); ?></h1>
 	<div id="sidemenu">
 		<ul>
 			<li id="menu_challenge" class="active"><a class="icon icon-docinspect" onclick="$.bbq.pushState({view:'challenge'});"><?php echo __('Step 1') ?></a></li>
@@ -25,7 +24,7 @@
 	</div>
 	<div class="clear"></div>
 	
-	<form id="challenge_data" method="POST" action="/challenges/update/<?php echo (@$challenge ? $challenge['Challenge']['id'] : '0'); ?>/" enctype="multipart/form-data">
+	<form id="challenge_data" method="POST" action="/challenges/update/<?php echo (@$challenge ? $challenge['Challenge']['id'] : '0'); ?>/?cid=<?php echo $_REQUEST['cid']; ?>" enctype="multipart/form-data">
 		<input type="hidden" name="challenge[Challenge][id]" id="id" value="<?php echo (@$challenge ? $challenge['Challenge']['id'] : '0'); ?>" />
 		<input type="hidden" name="challenge[Challenge][challenge_type]" id="challenge_type" value="<?php echo (@$challenge ? $challenge['Challenge']['challenge_type'] : ''); ?>" />
 		<input type="hidden" name="challenge[Challenge][response_types]" id="response_types" value="<?php echo (@$challenge ? $challenge['Challenge']['response_types'] : ''); ?>" />
@@ -50,8 +49,8 @@
 			<div style="text-align:center;margin:20px;"><p class="caseclubFont18 blue textAlignCenter"><?php echo __('Would you like to save before returning to Home?') ?></p></div>
 			<br />
 			<div style="width: 335px; margin: 0 auto; ">
-				<a onclick="$('#challenge_data').attr('action','/challenges/update/0/dashboard/').submit();return false;" style="float:left;width:130px;" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save Current') ?></span></a>
-				<a href="/dashboard/" class="btn3 btn-savecontinue aligncenter" style="float:left;width:130px;"><span class="inner"><?php echo __('No, Don\'t Save') ?></span></a>
+				<a onclick="$('#challenge_data').attr('action','/challenges/update/0/dashboard/?cid='+cid).submit();return false;" style="float:left;width:130px;" class="btn2 btn-savecontinue aligncenter"><span class="inner"><?php echo __('Yes, Save Current') ?></span></a>
+				<a href="#" onclick="window.location='/challenges/browse/?cid='+cid;" class="btn3 btn-savecontinue aligncenter" style="float:left;width:130px;"><span class="inner"><?php echo __('No, Don\'t Save') ?></span></a>
 				<a onclick="jQuery.fancybox.close(); return false; " style="display:inline-block;padding-left:10px;padding-top:7px;"><?php echo __('Cancel') ?></a>
 			</div>
 		</div>
@@ -59,6 +58,8 @@
 </div>
 
 <script type="text/javascript">
+var cid = <?php echo $_REQUEST['cid']; ?>;
+
 $(function(){
 	setup_challenge_hashchange();
 	if(!$.bbq.getState('view')) $.bbq.pushState({view:'<?php echo (@$ini_view ? $ini_view : 'challenge'); ?>'});

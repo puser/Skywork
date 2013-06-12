@@ -6,7 +6,7 @@
 	<link rel='stylesheet' media="all" href="/js/jquery-ui/jquery-ui-1.8.11.custom.css" />
 	<link rel="stylesheet" media="all" href="/js/mcs/jquery.mCustomScrollbar.css" />
 	<link rel="stylesheet" href="/js/annotator/annotator.min.css">
-	<?php echo $this->Html->meta('favicon.ico',    '/favicon.ico',    array('type' => 'icon'));?> 
+	<link rel="icon" type="image/jpeg" href="http://getskywork.com/images/favi.png">
 	<link type="text/css" rel="stylesheet" media="all" href="/css/style.css?v=6" />
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
@@ -51,7 +51,7 @@
 	<![endif]-->
 	
 </head>
-<body class="page page-home">
+<body class="page page-home <?php if($this->request->params['controller'] == 'users' || $this->request->params['controller'] == 'comment_libraries'){ ?>page-mooc<?php } ?>">
 <div id="wrapper">
 
 	<div id="header" class="round round-main <?php if(!@$_SESSION['User']['id']){ ?>corp-website<?php } ?>">
@@ -67,7 +67,6 @@
 						echo $_SESSION['User']['email'];
 					}?></a></span>
 				<span class="user-home"><a <?php if($this->request->params['controller'] == 'challenges' && $this->request->params['action'] == 'view'){ ?>href="#modalExitChoices" class="show-overlay" <?php }else{ ?>href="<?php echo (@$_SESSION['User']['id']?'/dashboard/':'/'); ?>" <?php } ?>><?php echo __('Home') ?></a></span>
-				<span class="user-home"><a <?php if($this->request->params['controller'] == 'challenges' && $this->request->params['action'] == 'view'){ ?>href="#modalExitChoices" class="show-overlay" <?php }else{ ?>href="/users/view/classes/"<?php } ?>><?php echo __('Classes') ?></a></span>
 				<span class="user-account"><a <?php if($this->request->params['controller'] == 'challenges' && $this->request->params['action'] == 'view'){ ?>href="#modalExitChoices" class="show-overlay" <?php }else{ ?>href="/users/view/" <?php } ?>><?php echo __('Account') ?></a></span>
 				<span class="user-logout" style="padding-right:5px;"><img src="/images/icon-logout.png" style="padding-left:15px;vertical-align:middle;padding-bottom:3px;cursor:pointer;" onmouseover="$(this).next().show();" /><a style="display:none;" href="#logoutModal" class="show-overlay" onmouseout="$(this).hide();"><?php echo __('Logout') ?></a></span>
 			</div><!-- #topmenu -->

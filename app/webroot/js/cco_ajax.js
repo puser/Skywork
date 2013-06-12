@@ -789,7 +789,7 @@ function save_challenge(redirect){
 	}});
 }
 
-function save_challenge_final(){
+function save_challenge_final(cid){
 	$('#challengeStatus').val('C');
     var chk = document.getElementById('sendmail');
     chk.style.display="none";
@@ -800,7 +800,7 @@ function save_challenge_final(){
 		setTimeout('window.location = "/dashboard/";',1000);
 	}});
 	*/
-	window.location = '/challenges/update/0/dashboard?' + $('#challenge_data').serialize();
+	window.location = '/challenges/update/0/dashboard?cid=' + cid + '&' + $('#challenge_data').serialize();
 }
 
 function render_update_challenge(view){
@@ -808,7 +808,7 @@ function render_update_challenge(view){
 	$('#menu_' + view).addClass('active');
 	
 	// TODO: if id, serialize & save form
-	$('#edit_content').load('/challenges/update/' + ($('#id').val() ? $('#id').val() : '0') + '/update_' + view,function(){
+	$('#edit_content').load('/challenges/update/' + ($('#id').val() ? $('#id').val() : '0') + '/update_' + view + '?cid=' + cid,function(){
 		$(".accordion-trigger p").click(function(){
 			$("li.open .accordion-content", $(this).closest("ul.accordion")).slideUp(300); 
 			$("li", $(this).closest("ul.accordion")).removeClass("open"); 
