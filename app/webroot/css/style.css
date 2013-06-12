@@ -250,7 +250,7 @@ table.table-type-2 td, table.table-type-2 th {border: 1px solid #666666; border-
  * Logo 
  */
 #logo {position: absolute; top: 13px; left: 30px;}
-#logo a {display:block; margin-left: 13px; width: 160px; height: 55px; background: url("/images/skywork/logo.png?v=1") no-repeat;}
+#logo a {display:block; margin-left: 13px; width: 126px; height: 32px; background: url("/images/logo2.jpg?v=1") no-repeat;}
 
 
 /**
@@ -953,6 +953,10 @@ a.studentwork-more:hover span {display: inline; }
 .mooc-item-purple .mooc-item-title {color: #b76aaa; }
 .mooc-item-orange .mooc-item-title {color: #f5866c; }
 .mooc-item-green .mooc-item-title {color: #7bc9b1; }
+.mooc-item-lorange .mooc-item-title {color: #eb9558; }
+.mooc-item-blue .mooc-item-title {color: #64a7d8; }
+.mooc-item-teal .mooc-item-title {color: #a1c2c3; }
+.mooc-item-lpurple .mooc-item-title {color: #7e7dbb; }
 
 .mooc-item-actions {position: absolute; top: 5px; right: 5px; display: none; }
 .mooc-item-actions.item-actions a.item-actions-icon {background-image: url(/images/icons/icon-gear-18x18.png);  }
